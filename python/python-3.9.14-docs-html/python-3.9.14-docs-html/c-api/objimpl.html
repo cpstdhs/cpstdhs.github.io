@@ -1,0 +1,281 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ko">
+  <head>
+    <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>객체 구현 지원 &#8212; Python 3.9.14 문서</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="../_static/pydoctheme.css?2022.1" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/translations.js"></script>
+    
+    <script src="../_static/sidebar.js"></script>
+    
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Python 3.9.14 문서에서 찾기"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="이 문서 정보" href="../about.html" />
+    <link rel="index" title="색인" href="../genindex.html" />
+    <link rel="search" title="검색" href="../search.html" />
+    <link rel="copyright" title="저작권" href="../copyright.html" />
+    <link rel="next" title="힙에 객체 할당하기" href="allocation.html" />
+    <link rel="prev" title="메모리 관리" href="memory.html" />
+    <link rel="canonical" href="https://docs.python.org/3/c-api/objimpl.html" />
+    
+      
+    
+
+    
+    <style>
+      @media only screen {
+        table.full-width-table {
+            width: 100%;
+        }
+      }
+    </style>
+<link rel="shortcut icon" type="image/png" href="../_static/py.svg" />
+            <script type="text/javascript" src="../_static/copybutton.js"></script>
+            <script type="text/javascript" src="../_static/menu.js"></script> 
+
+  </head>
+<body>
+<div class="mobile-nav">
+    <input type="checkbox" id="menuToggler" class="toggler__input" aria-controls="navigation"
+           aria-pressed="false" aria-expanded="false" role="button" aria-label="Menu" />
+    <label for="menuToggler" class="toggler__label">
+        <span></span>
+    </label>
+    <nav class="nav-content" role="navigation">
+         <a href="https://www.python.org/" class="nav-logo">
+             <img src="../_static/py.svg" alt="Logo"/>
+         </a>
+        <div class="version_switcher_placeholder"></div>
+        <form role="search" class="search" action="../search.html" method="get">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" class="search-icon">
+                <path fill-rule="nonzero"
+                        d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 001.48-5.34c-.47-2.78-2.79-5-5.59-5.34a6.505 6.505 0 00-7.27 7.27c.34 2.8 2.56 5.12 5.34 5.59a6.5 6.5 0 005.34-1.48l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49 0 .41-.41.41-1.08 0-1.49L15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" fill="#444"></path>
+            </svg>
+            <input type="text" name="q" aria-label="빠른 검색"/>
+            <input type="submit" value="이동"/>
+        </form>
+    </nav>
+    <div class="menu-wrapper">
+        <nav class="menu" role="navigation" aria-label="main navigation">
+            <div class="language_switcher_placeholder"></div>
+  <h4>이전 항목</h4>
+  <p class="topless"><a href="memory.html"
+                        title="이전 장">메모리 관리</a></p>
+  <h4>다음 항목</h4>
+  <p class="topless"><a href="allocation.html"
+                        title="다음 장">힙에 객체 할당하기</a></p>
+  <div role="note" aria-label="source link">
+    <h3>현재 문서</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">버그 보고하기</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/3.9/Doc/c-api/objimpl.rst"
+            rel="nofollow">소스 보기
+        </a>
+      </li>
+    </ul>
+  </div>
+        </nav>
+    </div>
+</div>
+
+  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>탐색</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="전체 색인"
+             accesskey="I">색인</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 모듈 목록"
+             >모듈</a> |</li>
+        <li class="right" >
+          <a href="allocation.html" title="힙에 객체 할당하기"
+             accesskey="N">다음</a> |</li>
+        <li class="right" >
+          <a href="memory.html" title="메모리 관리"
+             accesskey="P">이전</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.9.14 Documentation</a> &#187;
+    </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">파이썬/C API 레퍼런스 설명서</a> &#187;</li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="빠른 검색" aria-label="빠른 검색" type="text" name="q" />
+          <input type="submit" value="이동" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </form>
+    </div>
+                     |
+                </li>
+            
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="object-implementation-support">
+<span id="newtypes"></span><h1>객체 구현 지원<a class="headerlink" href="#object-implementation-support" title="제목 주소">¶</a></h1>
+<p>이 장에서는 새 객체 형을 정의할 때 사용되는 함수, 형 및 매크로에 관해 설명합니다.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="allocation.html">힙에 객체 할당하기</a></li>
+<li class="toctree-l1"><a class="reference internal" href="structures.html">공통 객체 구조체</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="structures.html#base-object-types-and-macros">기본 객체 형과 매크로</a></li>
+<li class="toctree-l2"><a class="reference internal" href="structures.html#implementing-functions-and-methods">함수와 메서드 구현</a></li>
+<li class="toctree-l2"><a class="reference internal" href="structures.html#accessing-attributes-of-extension-types">확장형의 어트리뷰트 액세스</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="typeobj.html">형 객체</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="typeobj.html#quick-reference">간략 참조</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="typeobj.html#tp-slots">“tp 슬롯”</a></li>
+<li class="toctree-l3"><a class="reference internal" href="typeobj.html#sub-slots">서브 슬롯</a></li>
+<li class="toctree-l3"><a class="reference internal" href="typeobj.html#slot-typedefs">슬롯 typedef</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="typeobj.html#pytypeobject-definition">PyTypeObject 정의</a></li>
+<li class="toctree-l2"><a class="reference internal" href="typeobj.html#pyobject-slots">PyObject 슬롯</a></li>
+<li class="toctree-l2"><a class="reference internal" href="typeobj.html#pyvarobject-slots">PyVarObject 슬롯</a></li>
+<li class="toctree-l2"><a class="reference internal" href="typeobj.html#pytypeobject-slots">PyTypeObject 슬롯</a></li>
+<li class="toctree-l2"><a class="reference internal" href="typeobj.html#heap-types">힙 형</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="typeobj.html#number-object-structures">숫자 객체 구조체</a></li>
+<li class="toctree-l1"><a class="reference internal" href="typeobj.html#mapping-object-structures">매핑 객체 구조체</a></li>
+<li class="toctree-l1"><a class="reference internal" href="typeobj.html#sequence-object-structures">시퀀스 객체 구조체</a></li>
+<li class="toctree-l1"><a class="reference internal" href="typeobj.html#buffer-object-structures">버퍼 객체 구조체</a></li>
+<li class="toctree-l1"><a class="reference internal" href="typeobj.html#async-object-structures">비동기 객체 구조체</a></li>
+<li class="toctree-l1"><a class="reference internal" href="typeobj.html#slot-type-typedefs">슬롯 형 typedef</a></li>
+<li class="toctree-l1"><a class="reference internal" href="typeobj.html#examples">예</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gcsupport.html">순환 가비지 수집 지원</a></li>
+</ul>
+</div>
+</section>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>이전 항목</h4>
+  <p class="topless"><a href="memory.html"
+                        title="이전 장">메모리 관리</a></p>
+  <h4>다음 항목</h4>
+  <p class="topless"><a href="allocation.html"
+                        title="다음 장">힙에 객체 할당하기</a></p>
+  <div role="note" aria-label="source link">
+    <h3>현재 문서</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">버그 보고하기</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/3.9/Doc/c-api/objimpl.rst"
+            rel="nofollow">소스 보기
+        </a>
+      </li>
+    </ul>
+  </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>탐색</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="전체 색인"
+             >색인</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 모듈 목록"
+             >모듈</a> |</li>
+        <li class="right" >
+          <a href="allocation.html" title="힙에 객체 할당하기"
+             >다음</a> |</li>
+        <li class="right" >
+          <a href="memory.html" title="메모리 관리"
+             >이전</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.9.14 Documentation</a> &#187;
+    </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >파이썬/C API 레퍼런스 설명서</a> &#187;</li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="빠른 검색" aria-label="빠른 검색" type="text" name="q" />
+          <input type="submit" value="이동" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </form>
+    </div>
+                     |
+                </li>
+            
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">저작권</a> 2001-2022, Python Software Foundation.
+    <br />
+    This page is licensed under the Python Software Foundation License Version 2.
+    <br />
+    Examples, recipes, and other code in the documentation are additionally licensed under the Zero Clause BSD License.
+    <br />
+    See <a href="/license.html">History and License</a> for more information.<br />
+    <br />
+
+    The Python Software Foundation is a non-profit corporation.
+<a href="https://www.python.org/psf/donations/">Please donate.</a>
+<br />
+    <br />
+
+    최종 업데이트: 9월 11, 2022
+    <a href="/bugs.html">Found a bug</a>?
+    <br />
+
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 2.4.4.
+    </div>
+
+  </body>
+</html>

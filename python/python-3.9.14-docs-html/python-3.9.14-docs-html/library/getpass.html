@@ -1,0 +1,277 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ko">
+  <head>
+    <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>getpass — 이식성 있는 암호 입력 &#8212; Python 3.9.14 문서</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="../_static/pydoctheme.css?2022.1" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/translations.js"></script>
+    
+    <script src="../_static/sidebar.js"></script>
+    
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Python 3.9.14 문서에서 찾기"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="이 문서 정보" href="../about.html" />
+    <link rel="index" title="색인" href="../genindex.html" />
+    <link rel="search" title="검색" href="../search.html" />
+    <link rel="copyright" title="저작권" href="../copyright.html" />
+    <link rel="next" title="curses — 문자 셀 디스플레이를 위한 터미널 처리" href="curses.html" />
+    <link rel="prev" title="logging.handlers — 로깅 처리기" href="logging.handlers.html" />
+    <link rel="canonical" href="https://docs.python.org/3/library/getpass.html" />
+    
+      
+    
+
+    
+    <style>
+      @media only screen {
+        table.full-width-table {
+            width: 100%;
+        }
+      }
+    </style>
+<link rel="shortcut icon" type="image/png" href="../_static/py.svg" />
+            <script type="text/javascript" src="../_static/copybutton.js"></script>
+            <script type="text/javascript" src="../_static/menu.js"></script> 
+
+  </head>
+<body>
+<div class="mobile-nav">
+    <input type="checkbox" id="menuToggler" class="toggler__input" aria-controls="navigation"
+           aria-pressed="false" aria-expanded="false" role="button" aria-label="Menu" />
+    <label for="menuToggler" class="toggler__label">
+        <span></span>
+    </label>
+    <nav class="nav-content" role="navigation">
+         <a href="https://www.python.org/" class="nav-logo">
+             <img src="../_static/py.svg" alt="Logo"/>
+         </a>
+        <div class="version_switcher_placeholder"></div>
+        <form role="search" class="search" action="../search.html" method="get">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" class="search-icon">
+                <path fill-rule="nonzero"
+                        d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 001.48-5.34c-.47-2.78-2.79-5-5.59-5.34a6.505 6.505 0 00-7.27 7.27c.34 2.8 2.56 5.12 5.34 5.59a6.5 6.5 0 005.34-1.48l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49 0 .41-.41.41-1.08 0-1.49L15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" fill="#444"></path>
+            </svg>
+            <input type="text" name="q" aria-label="빠른 검색"/>
+            <input type="submit" value="이동"/>
+        </form>
+    </nav>
+    <div class="menu-wrapper">
+        <nav class="menu" role="navigation" aria-label="main navigation">
+            <div class="language_switcher_placeholder"></div>
+  <h4>이전 항목</h4>
+  <p class="topless"><a href="logging.handlers.html"
+                        title="이전 장"><code class="xref py py-mod docutils literal notranslate"><span class="pre">logging.handlers</span></code> — 로깅 처리기</a></p>
+  <h4>다음 항목</h4>
+  <p class="topless"><a href="curses.html"
+                        title="다음 장"><code class="xref py py-mod docutils literal notranslate"><span class="pre">curses</span></code> — 문자 셀 디스플레이를 위한 터미널 처리</a></p>
+  <div role="note" aria-label="source link">
+    <h3>현재 문서</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">버그 보고하기</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/3.9/Doc/library/getpass.rst"
+            rel="nofollow">소스 보기
+        </a>
+      </li>
+    </ul>
+  </div>
+        </nav>
+    </div>
+</div>
+
+  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>탐색</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="전체 색인"
+             accesskey="I">색인</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 모듈 목록"
+             >모듈</a> |</li>
+        <li class="right" >
+          <a href="curses.html" title="curses — 문자 셀 디스플레이를 위한 터미널 처리"
+             accesskey="N">다음</a> |</li>
+        <li class="right" >
+          <a href="logging.handlers.html" title="logging.handlers — 로깅 처리기"
+             accesskey="P">이전</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.9.14 Documentation</a> &#187;
+    </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >파이썬 표준 라이브러리</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="allos.html" accesskey="U">일반 운영 체제 서비스</a> &#187;</li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="빠른 검색" aria-label="빠른 검색" type="text" name="q" />
+          <input type="submit" value="이동" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </form>
+    </div>
+                     |
+                </li>
+            
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="module-getpass">
+<span id="getpass-portable-password-input"></span><h1><a class="reference internal" href="#module-getpass" title="getpass: Portable reading of passwords and retrieval of the userid."><code class="xref py py-mod docutils literal notranslate"><span class="pre">getpass</span></code></a> — 이식성 있는 암호 입력<a class="headerlink" href="#module-getpass" title="제목 주소">¶</a></h1>
+<p><strong>소스 코드:</strong> <a class="reference external" href="https://github.com/python/cpython/tree/3.9/Lib/getpass.py">Lib/getpass.py</a></p>
+<hr class="docutils" />
+<p><a class="reference internal" href="#module-getpass" title="getpass: Portable reading of passwords and retrieval of the userid."><code class="xref py py-mod docutils literal notranslate"><span class="pre">getpass</span></code></a> 모듈은 두 함수를 제공합니다:</p>
+<dl class="function">
+<dt id="getpass.getpass">
+<code class="sig-prename descclassname">getpass.</code><code class="sig-name descname">getpass</code><span class="sig-paren">(</span><em class="sig-param">prompt='Password: '</em>, <em class="sig-param">stream=None</em><span class="sig-paren">)</span><a class="headerlink" href="#getpass.getpass" title="정의 주소">¶</a></dt>
+<dd><p>에코 없이 사용자에게 암호를 묻습니다. 사용자는 <em>prompt</em> 문자열을 사용하여 프롬프트 됩니다. 기본값은 <code class="docutils literal notranslate"><span class="pre">'Password:</span> <span class="pre">'</span></code>입니다. 유닉스에서 프롬프트는 필요하다면 replace 에러 처리기를 사용하여 파일류 객체 <em>stream</em>에 기록됩니다. <em>stream</em>는 제어 터미널(<code class="file docutils literal notranslate"><span class="pre">/dev/tty</span></code>)이나 사용할 수 없으면 <code class="docutils literal notranslate"><span class="pre">sys.stderr</span></code>를 기본값으로 사용합니다 (이 인자는 윈도우에서 무시됩니다).</p>
+<p>에코가 없는 입력을 사용할 수 없으면, getpass()는 <em>stream</em>에 경고 메시지를 인쇄하고, <code class="docutils literal notranslate"><span class="pre">sys.stdin</span></code>에서 읽고, <a class="reference internal" href="#getpass.GetPassWarning" title="getpass.GetPassWarning"><code class="xref py py-exc docutils literal notranslate"><span class="pre">GetPassWarning</span></code></a>을 방출하는 것으로 돌아갑니다.</p>
+<div class="admonition note">
+<p class="admonition-title">참고</p>
+<p>IDLE 내에서 getpass를 호출하면, 대기 중인 창 자체가 아닌 IDLE을 시작한 터미널에서 입력이 수행될 수 있습니다.</p>
+</div>
+</dd></dl>
+
+<dl class="exception">
+<dt id="getpass.GetPassWarning">
+<em class="property">exception </em><code class="sig-prename descclassname">getpass.</code><code class="sig-name descname">GetPassWarning</code><a class="headerlink" href="#getpass.GetPassWarning" title="정의 주소">¶</a></dt>
+<dd><p>패스워드 입력이 에코 될 때 방출되는 <a class="reference internal" href="exceptions.html#UserWarning" title="UserWarning"><code class="xref py py-exc docutils literal notranslate"><span class="pre">UserWarning</span></code></a> 서브 클래스.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="getpass.getuser">
+<code class="sig-prename descclassname">getpass.</code><code class="sig-name descname">getuser</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#getpass.getuser" title="정의 주소">¶</a></dt>
+<dd><p>사용자의 “로그인 이름”을 반환합니다.</p>
+<p>이 함수는 환경 변수 <span class="target" id="index-8"></span><code class="xref std std-envvar docutils literal notranslate"><span class="pre">LOGNAME</span></code>, <span class="target" id="index-9"></span><code class="xref std std-envvar docutils literal notranslate"><span class="pre">USER</span></code>, <span class="target" id="index-10"></span><code class="xref std std-envvar docutils literal notranslate"><span class="pre">LNAME</span></code> 및 <span class="target" id="index-11"></span><code class="xref std std-envvar docutils literal notranslate"><span class="pre">USERNAME</span></code>를 순서대로 검사하고, 비어 있지 않은 문자열로 설정된 첫 번째 값을 반환합니다. 아무것도 설정되지 않았으면, <a class="reference internal" href="pwd.html#module-pwd" title="pwd: The password database (getpwnam() and friends). (Unix)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pwd</span></code></a> 모듈을 지원하는 시스템에서는 암호 데이터베이스의 로그인 이름이 반환되고, 그렇지 않으면 예외가 발생합니다.</p>
+<p>일반적으로, 이 함수는 <a class="reference internal" href="os.html#os.getlogin" title="os.getlogin"><code class="xref py py-func docutils literal notranslate"><span class="pre">os.getlogin()</span></code></a>보다 선호됩니다.</p>
+</dd></dl>
+
+</section>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>이전 항목</h4>
+  <p class="topless"><a href="logging.handlers.html"
+                        title="이전 장"><code class="xref py py-mod docutils literal notranslate"><span class="pre">logging.handlers</span></code> — 로깅 처리기</a></p>
+  <h4>다음 항목</h4>
+  <p class="topless"><a href="curses.html"
+                        title="다음 장"><code class="xref py py-mod docutils literal notranslate"><span class="pre">curses</span></code> — 문자 셀 디스플레이를 위한 터미널 처리</a></p>
+  <div role="note" aria-label="source link">
+    <h3>현재 문서</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">버그 보고하기</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/3.9/Doc/library/getpass.rst"
+            rel="nofollow">소스 보기
+        </a>
+      </li>
+    </ul>
+  </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>탐색</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="전체 색인"
+             >색인</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 모듈 목록"
+             >모듈</a> |</li>
+        <li class="right" >
+          <a href="curses.html" title="curses — 문자 셀 디스플레이를 위한 터미널 처리"
+             >다음</a> |</li>
+        <li class="right" >
+          <a href="logging.handlers.html" title="logging.handlers — 로깅 처리기"
+             >이전</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.9.14 Documentation</a> &#187;
+    </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >파이썬 표준 라이브러리</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="allos.html" >일반 운영 체제 서비스</a> &#187;</li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="빠른 검색" aria-label="빠른 검색" type="text" name="q" />
+          <input type="submit" value="이동" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </form>
+    </div>
+                     |
+                </li>
+            
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">저작권</a> 2001-2022, Python Software Foundation.
+    <br />
+    This page is licensed under the Python Software Foundation License Version 2.
+    <br />
+    Examples, recipes, and other code in the documentation are additionally licensed under the Zero Clause BSD License.
+    <br />
+    See <a href="/license.html">History and License</a> for more information.<br />
+    <br />
+
+    The Python Software Foundation is a non-profit corporation.
+<a href="https://www.python.org/psf/donations/">Please donate.</a>
+<br />
+    <br />
+
+    최종 업데이트: 9월 11, 2022
+    <a href="/bugs.html">Found a bug</a>?
+    <br />
+
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 2.4.4.
+    </div>
+
+  </body>
+</html>

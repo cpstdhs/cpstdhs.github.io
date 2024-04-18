@@ -1,0 +1,452 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ko">
+  <head>
+    <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>importlib.metadata 사용하기 &#8212; Python 3.9.14 문서</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="../_static/pydoctheme.css?2022.1" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/translations.js"></script>
+    
+    <script src="../_static/sidebar.js"></script>
+    
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Python 3.9.14 문서에서 찾기"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="이 문서 정보" href="../about.html" />
+    <link rel="index" title="색인" href="../genindex.html" />
+    <link rel="search" title="검색" href="../search.html" />
+    <link rel="copyright" title="저작권" href="../copyright.html" />
+    <link rel="next" title="파이썬 언어 서비스" href="language.html" />
+    <link rel="prev" title="importlib — import의 구현" href="importlib.html" />
+    <link rel="canonical" href="https://docs.python.org/3/library/importlib.metadata.html" />
+    
+      
+    
+
+    
+    <style>
+      @media only screen {
+        table.full-width-table {
+            width: 100%;
+        }
+      }
+    </style>
+<link rel="shortcut icon" type="image/png" href="../_static/py.svg" />
+            <script type="text/javascript" src="../_static/copybutton.js"></script>
+            <script type="text/javascript" src="../_static/menu.js"></script> 
+
+  </head>
+<body>
+<div class="mobile-nav">
+    <input type="checkbox" id="menuToggler" class="toggler__input" aria-controls="navigation"
+           aria-pressed="false" aria-expanded="false" role="button" aria-label="Menu" />
+    <label for="menuToggler" class="toggler__label">
+        <span></span>
+    </label>
+    <nav class="nav-content" role="navigation">
+         <a href="https://www.python.org/" class="nav-logo">
+             <img src="../_static/py.svg" alt="Logo"/>
+         </a>
+        <div class="version_switcher_placeholder"></div>
+        <form role="search" class="search" action="../search.html" method="get">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" class="search-icon">
+                <path fill-rule="nonzero"
+                        d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 001.48-5.34c-.47-2.78-2.79-5-5.59-5.34a6.505 6.505 0 00-7.27 7.27c.34 2.8 2.56 5.12 5.34 5.59a6.5 6.5 0 005.34-1.48l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49 0 .41-.41.41-1.08 0-1.49L15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" fill="#444"></path>
+            </svg>
+            <input type="text" name="q" aria-label="빠른 검색"/>
+            <input type="submit" value="이동"/>
+        </form>
+    </nav>
+    <div class="menu-wrapper">
+        <nav class="menu" role="navigation" aria-label="main navigation">
+            <div class="language_switcher_placeholder"></div>
+  <h3><a href="../contents.html">목차</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">importlib.metadata</span></code> 사용하기</a><ul>
+<li><a class="reference internal" href="#overview">개요</a></li>
+<li><a class="reference internal" href="#functional-api">기능적 API</a><ul>
+<li><a class="reference internal" href="#entry-points">진입 지점</a></li>
+<li><a class="reference internal" href="#distribution-metadata">배포 메타데이터</a></li>
+<li><a class="reference internal" href="#distribution-versions">배포 버전</a></li>
+<li><a class="reference internal" href="#distribution-files">배포 파일</a></li>
+<li><a class="reference internal" href="#distribution-requirements">배포 요구 사항</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#distributions">배포</a></li>
+<li><a class="reference internal" href="#extending-the-search-algorithm">검색 알고리즘 확장하기</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>이전 항목</h4>
+  <p class="topless"><a href="importlib.html"
+                        title="이전 장"><code class="xref py py-mod docutils literal notranslate"><span class="pre">importlib</span></code> — <code class="xref std std-keyword docutils literal notranslate"><span class="pre">import</span></code>의 구현</a></p>
+  <h4>다음 항목</h4>
+  <p class="topless"><a href="language.html"
+                        title="다음 장">파이썬 언어 서비스</a></p>
+  <div role="note" aria-label="source link">
+    <h3>현재 문서</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">버그 보고하기</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/3.9/Doc/library/importlib.metadata.rst"
+            rel="nofollow">소스 보기
+        </a>
+      </li>
+    </ul>
+  </div>
+        </nav>
+    </div>
+</div>
+
+  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>탐색</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="전체 색인"
+             accesskey="I">색인</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 모듈 목록"
+             >모듈</a> |</li>
+        <li class="right" >
+          <a href="language.html" title="파이썬 언어 서비스"
+             accesskey="N">다음</a> |</li>
+        <li class="right" >
+          <a href="importlib.html" title="importlib — import의 구현"
+             accesskey="P">이전</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.9.14 Documentation</a> &#187;
+    </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >파이썬 표준 라이브러리</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="modules.html" accesskey="U">모듈 임포트 하기</a> &#187;</li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="빠른 검색" aria-label="빠른 검색" type="text" name="q" />
+          <input type="submit" value="이동" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </form>
+    </div>
+                     |
+                </li>
+            
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="module-importlib.metadata">
+<span id="using-importlib-metadata"></span><span id="using"></span><h1><code class="xref py py-mod docutils literal notranslate"><span class="pre">importlib.metadata</span></code> 사용하기<a class="headerlink" href="#module-importlib.metadata" title="제목 주소">¶</a></h1>
+<p><strong>Source code:</strong> <a class="reference external" href="https://github.com/python/cpython/tree/3.9/Lib/importlib/metadata.py">Lib/importlib/metadata.py</a></p>
+<div class="versionadded">
+<p><span class="versionmodified added">버전 3.8에 추가.</span></p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">참고</p>
+<p>이 기능은 잠정적이며 표준 라이브러리의 일반적인 버전 의미와 다를 수 있습니다.</p>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">importlib.metadata</span></code>는 설치된 패키지 메타 데이터에 대한 액세스를 제공하는 라이브러리입니다. 파이썬의 임포트 시스템에 내장된 이 라이브러리는 <code class="docutils literal notranslate"><span class="pre">pkg_resources</span></code>의 <a class="reference external" href="https://setuptools.readthedocs.io/en/latest/pkg_resources.html#entry-points">진입 지점 API</a>와 <a class="reference external" href="https://setuptools.readthedocs.io/en/latest/pkg_resources.html#metadata-api">메타데이터 API</a>에서 유사한 기능을 대체하려고 합니다. 파이썬 3.7 이상의 <a class="reference internal" href="importlib.html#module-importlib.resources" title="importlib.resources: Package resource reading, opening, and access"><code class="xref py py-mod docutils literal notranslate"><span class="pre">importlib.resources</span></code></a>(이전 버전의 파이썬을 위해 <a class="reference external" href="https://importlib-resources.readthedocs.io/en/latest/index.html">importlib_resources</a>로 역 이식되었습니다)와 함께, 오래되고 덜 효율적인 <code class="docutils literal notranslate"><span class="pre">pkg_resources</span></code> 패키지를 사용할 필요를 제거합니다.</p>
+<p>“설치된 패키지”는 일반적으로 <a class="reference external" href="https://pypi.org/project/pip/">pip</a> 와 같은 도구를 통해 파이썬의 <code class="docutils literal notranslate"><span class="pre">site-packages</span></code> 디렉터리에 설치된 제삼자 패키지를 의미합니다. 특히, 발견 가능한 <code class="docutils literal notranslate"><span class="pre">dist-info</span></code>나 <code class="docutils literal notranslate"><span class="pre">egg-info</span></code> 디렉터리와 <span class="target" id="index-4"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0566"><strong>PEP 566</strong></a> 또는 이전 명세로 정의된 메타 데이터가 있는 패키지를 의미합니다. 기본적으로, 패키지 메타 데이터는 파일 시스템이나 <a class="reference internal" href="sys.html#sys.path" title="sys.path"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.path</span></code></a>의 zip 저장소에서 살 수 있습니다. 확장 메커니즘을 통해, 메타 데이터는 거의 모든 곳에서 살아갈 수 있습니다.</p>
+<section id="overview">
+<h2>개요<a class="headerlink" href="#overview" title="제목 주소">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">pip</span></code>를 사용하여 설치한 패키지의 버전 문자열을 얻고 싶다고 가정해 봅시다. 우선 가상 환경을 만들고 그 안에 뭔가 설치합니다:</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>python3 -m venv example
+<span class="gp">$ </span><span class="nb">source</span> example/bin/activate
+<span class="gp gp-VirtualEnv">(example)</span> <span class="gp">$ </span>pip install wheel
+</pre></div>
+</div>
+<p>다음을 실행하여 <code class="docutils literal notranslate"><span class="pre">wheel</span></code>에 대한 버전 문자열을 얻을 수 있습니다:</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="go">(example) $ python</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">importlib.metadata</span> <span class="kn">import</span> <span class="n">version</span>  
+<span class="gp">&gt;&gt;&gt; </span><span class="n">version</span><span class="p">(</span><span class="s1">&#39;wheel&#39;</span><span class="p">)</span>  
+<span class="go">&#39;0.32.3&#39;</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">console_scripts</span></code>, <code class="docutils literal notranslate"><span class="pre">distutils.commands</span></code>와 다른 것들과 같은 그룹 키로 진입 지점 집합을 얻을 수도 있습니다. 각 그룹은 <a class="reference internal" href="#entry-points"><span class="std std-ref">EntryPoint</span></a> 객체의 시퀀스를 포함합니다.</p>
+<p>여러분은 <a class="reference internal" href="#metadata"><span class="std std-ref">배포 메타데이터</span></a>를 얻을 수 있습니다:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">metadata</span><span class="p">(</span><span class="s1">&#39;wheel&#39;</span><span class="p">))</span>  
+<span class="go">[&#39;Metadata-Version&#39;, &#39;Name&#39;, &#39;Version&#39;, &#39;Summary&#39;, &#39;Home-page&#39;, &#39;Author&#39;, &#39;Author-email&#39;, &#39;Maintainer&#39;, &#39;Maintainer-email&#39;, &#39;License&#39;, &#39;Project-URL&#39;, &#39;Project-URL&#39;, &#39;Project-URL&#39;, &#39;Keywords&#39;, &#39;Platform&#39;, &#39;Classifier&#39;, &#39;Classifier&#39;, &#39;Classifier&#39;, &#39;Classifier&#39;, &#39;Classifier&#39;, &#39;Classifier&#39;, &#39;Classifier&#39;, &#39;Classifier&#39;, &#39;Classifier&#39;, &#39;Classifier&#39;, &#39;Classifier&#39;, &#39;Classifier&#39;, &#39;Requires-Python&#39;, &#39;Provides-Extra&#39;, &#39;Requires-Dist&#39;, &#39;Requires-Dist&#39;]</span>
+</pre></div>
+</div>
+<p>또한 <a class="reference internal" href="#version"><span class="std std-ref">배포의 버전 번호</span></a>를 가져오고, <a class="reference internal" href="#files"><span class="std std-ref">구성 파일</span></a>을 나열하고, 배포의 <a class="reference internal" href="#requirements"><span class="std std-ref">배포 요구 사항</span></a> 리스트를 얻을 수 있습니다.</p>
+</section>
+<section id="functional-api">
+<h2>기능적 API<a class="headerlink" href="#functional-api" title="제목 주소">¶</a></h2>
+<p>이 패키지는 공용 API를 통해 다음과 같은 기능을 제공합니다.</p>
+<section id="entry-points">
+<span id="id1"></span><h3>진입 지점<a class="headerlink" href="#entry-points" title="제목 주소">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">entry_points()</span></code> 함수는 그룹 키를 갖는 모든 진입 지점의 딕셔너리를 반환합니다. 진입 지점은 <code class="docutils literal notranslate"><span class="pre">EntryPoint</span></code> 인스턴스로 나타냅니다; 각 <code class="docutils literal notranslate"><span class="pre">EntryPoint</span></code>에는 <code class="docutils literal notranslate"><span class="pre">.name</span></code>, <code class="docutils literal notranslate"><span class="pre">.group</span></code> 및 <code class="docutils literal notranslate"><span class="pre">.value</span></code> 어트리뷰트가 있고 값을 결정하는 <code class="docutils literal notranslate"><span class="pre">.load()</span></code> 메서드가 있습니다. <code class="docutils literal notranslate"><span class="pre">.value</span></code> 어트리뷰트의 구성 요소를 가져오기 위한 <code class="docutils literal notranslate"><span class="pre">.module</span></code>, <code class="docutils literal notranslate"><span class="pre">.attr</span></code> 및 <code class="docutils literal notranslate"><span class="pre">.extras</span></code> 어트리뷰트도 있습니다:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">eps</span> <span class="o">=</span> <span class="n">entry_points</span><span class="p">()</span>  
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">eps</span><span class="p">)</span>  
+<span class="go">[&#39;console_scripts&#39;, &#39;distutils.commands&#39;, &#39;distutils.setup_keywords&#39;, &#39;egg_info.writers&#39;, &#39;setuptools.installation&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">scripts</span> <span class="o">=</span> <span class="n">eps</span><span class="p">[</span><span class="s1">&#39;console_scripts&#39;</span><span class="p">]</span>  
+<span class="gp">&gt;&gt;&gt; </span><span class="n">wheel</span> <span class="o">=</span> <span class="p">[</span><span class="n">ep</span> <span class="k">for</span> <span class="n">ep</span> <span class="ow">in</span> <span class="n">scripts</span> <span class="k">if</span> <span class="n">ep</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;wheel&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>  
+<span class="gp">&gt;&gt;&gt; </span><span class="n">wheel</span>  
+<span class="go">EntryPoint(name=&#39;wheel&#39;, value=&#39;wheel.cli:main&#39;, group=&#39;console_scripts&#39;)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">wheel</span><span class="o">.</span><span class="n">module</span>  
+<span class="go">&#39;wheel.cli&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">wheel</span><span class="o">.</span><span class="n">attr</span>  
+<span class="go">&#39;main&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">wheel</span><span class="o">.</span><span class="n">extras</span>  
+<span class="go">[]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">main</span> <span class="o">=</span> <span class="n">wheel</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>  
+<span class="gp">&gt;&gt;&gt; </span><span class="n">main</span>  
+<span class="go">&lt;function main at 0x103528488&gt;</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">group</span></code>과 <code class="docutils literal notranslate"><span class="pre">name</span></code>은 패키지 저자가 정의한 임의의 값이며 일반적으로 클라이언트는 특정 그룹에 대한 모든 진입 지점을 찾으려고 합니다. 진입 지점의 정의와 사용법에 대한 자세한 정보는 <a class="reference external" href="https://setuptools.readthedocs.io/en/latest/setuptools.html#dynamic-discovery-of-services-and-plugins">the setuptools docs</a>를 읽으십시오.</p>
+</section>
+<section id="distribution-metadata">
+<span id="metadata"></span><h3>배포 메타데이터<a class="headerlink" href="#distribution-metadata" title="제목 주소">¶</a></h3>
+<p>모든 배포는 <code class="docutils literal notranslate"><span class="pre">metadata()</span></code> 함수를 사용하여 추출할 수 있는 몇 가지 메타 데이터가 포함되어 있습니다:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">wheel_metadata</span> <span class="o">=</span> <span class="n">metadata</span><span class="p">(</span><span class="s1">&#39;wheel&#39;</span><span class="p">)</span>  
+</pre></div>
+</div>
+<p>반환된 데이터 구조의 <a class="footnote-reference brackets" href="#f1" id="id2">1</a> 키는 메타데이터 키워드의 이름을 지정하고, 해당 값은 배포 메타데이터에서 구문 분석하지 않은 채로 반환됩니다:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">wheel_metadata</span><span class="p">[</span><span class="s1">&#39;Requires-Python&#39;</span><span class="p">]</span>  
+<span class="go">&#39;&gt;=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*&#39;</span>
+</pre></div>
+</div>
+</section>
+<section id="distribution-versions">
+<span id="version"></span><h3>배포 버전<a class="headerlink" href="#distribution-versions" title="제목 주소">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">version()</span></code> 함수는 배포의 버전 번호를 문자열로 가져오는 가장 빠른 방법입니다:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">version</span><span class="p">(</span><span class="s1">&#39;wheel&#39;</span><span class="p">)</span>  
+<span class="go">&#39;0.32.3&#39;</span>
+</pre></div>
+</div>
+</section>
+<section id="distribution-files">
+<span id="files"></span><h3>배포 파일<a class="headerlink" href="#distribution-files" title="제목 주소">¶</a></h3>
+<p>You can also get the full set of files contained within a distribution.  The
+<code class="docutils literal notranslate"><span class="pre">files()</span></code> function takes a distribution package name and returns all of the
+files installed by this distribution.  Each file object returned is a
+<code class="docutils literal notranslate"><span class="pre">PackagePath</span></code>, a <a class="reference internal" href="pathlib.html#pathlib.PurePath" title="pathlib.PurePath"><code class="xref py py-class docutils literal notranslate"><span class="pre">pathlib.PurePath</span></code></a> derived object with additional <code class="docutils literal notranslate"><span class="pre">dist</span></code>,
+<code class="docutils literal notranslate"><span class="pre">size</span></code>, and <code class="docutils literal notranslate"><span class="pre">hash</span></code> properties as indicated by the metadata.  For example:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">util</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">files</span><span class="p">(</span><span class="s1">&#39;wheel&#39;</span><span class="p">)</span> <span class="k">if</span> <span class="s1">&#39;util.py&#39;</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">p</span><span class="p">)][</span><span class="mi">0</span><span class="p">]</span>  
+<span class="gp">&gt;&gt;&gt; </span><span class="n">util</span>  
+<span class="go">PackagePath(&#39;wheel/util.py&#39;)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">util</span><span class="o">.</span><span class="n">size</span>  
+<span class="go">859</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">util</span><span class="o">.</span><span class="n">dist</span>  
+<span class="go">&lt;importlib.metadata._hooks.PathDistribution object at 0x101e0cef0&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">util</span><span class="o">.</span><span class="n">hash</span>  
+<span class="go">&lt;FileHash mode: sha256 value: bYkw5oMccfazVCoYQwKkkemoVyMAFoR34mmKBx8R1NI&gt;</span>
+</pre></div>
+</div>
+<p>일단 파일을 얻으면, 내용을 읽을 수도 있습니다:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">util</span><span class="o">.</span><span class="n">read_text</span><span class="p">())</span>  
+<span class="go">import base64</span>
+<span class="go">import sys</span>
+<span class="gp">...</span>
+<span class="go">def as_bytes(s):</span>
+<span class="go">    if isinstance(s, text_type):</span>
+<span class="go">        return s.encode(&#39;utf-8&#39;)</span>
+<span class="go">    return s</span>
+</pre></div>
+</div>
+<p>You can also use the <code class="docutils literal notranslate"><span class="pre">locate</span></code> method to get a the absolute path to the
+file:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">util</span><span class="o">.</span><span class="n">locate</span><span class="p">()</span>  
+<span class="go">PosixPath(&#39;/home/gustav/example/lib/site-packages/wheel/util.py&#39;)</span>
+</pre></div>
+</div>
+<p>메타 데이터 파일 목록 파일(RECORD나 SOURCES.txt)이 누락된 경우, <code class="docutils literal notranslate"><span class="pre">files()</span></code>는 <code class="docutils literal notranslate"><span class="pre">None</span></code>을 반환합니다. 대상 배포에 메타 데이터가 있음이 알려지지 않았을 때, 이 조건에 대한 보호로 호출자는 <code class="docutils literal notranslate"><span class="pre">files()</span></code>에 대한 호출을 <a class="reference external" href="https://more-itertools.readthedocs.io/en/stable/api.html#more_itertools.always_iterable">always_iterable</a>이나 다른 것으로 감쌀 수 있습니다.</p>
+</section>
+<section id="distribution-requirements">
+<span id="requirements"></span><h3>배포 요구 사항<a class="headerlink" href="#distribution-requirements" title="제목 주소">¶</a></h3>
+<p>배포의 전체 요구 사항을 얻으려면, <code class="docutils literal notranslate"><span class="pre">requires()</span></code> 함수를 사용하십시오:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">requires</span><span class="p">(</span><span class="s1">&#39;wheel&#39;</span><span class="p">)</span>  
+<span class="go">[&quot;pytest (&gt;=3.0.0) ; extra == &#39;test&#39;&quot;, &quot;pytest-cov ; extra == &#39;test&#39;&quot;]</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="distributions">
+<span id="id3"></span><h2>배포<a class="headerlink" href="#distributions" title="제목 주소">¶</a></h2>
+<p>위의 API가 가장 일반적이며 편리한 사용법이지만, <code class="docutils literal notranslate"><span class="pre">Distribution</span></code> 클래스에서 모든 정보를 얻을 수 있습니다. <code class="docutils literal notranslate"><span class="pre">Distribution</span></code>은 파이썬 패키지의 메타 데이터를 나타내는 추상 객체입니다. <code class="docutils literal notranslate"><span class="pre">Distribution</span></code> 인스턴스를 얻을 수 있습니다:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">importlib.metadata</span> <span class="kn">import</span> <span class="n">distribution</span>  
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dist</span> <span class="o">=</span> <span class="n">distribution</span><span class="p">(</span><span class="s1">&#39;wheel&#39;</span><span class="p">)</span>  
+</pre></div>
+</div>
+<p>따라서, 버전 번호를 얻는 다른 방법은 <code class="docutils literal notranslate"><span class="pre">Distribution</span></code> 인스턴스를 사용하는 것입니다:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">dist</span><span class="o">.</span><span class="n">version</span>  
+<span class="go">&#39;0.32.3&#39;</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Distribution</span></code> 인스턴스에서 사용할 수 있는 모든 종류의 추가 메타 데이터가 있습니다:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">dist</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;Requires-Python&#39;</span><span class="p">]</span>  
+<span class="go">&#39;&gt;=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dist</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;License&#39;</span><span class="p">]</span>  
+<span class="go">&#39;MIT&#39;</span>
+</pre></div>
+</div>
+<p>사용 가능한 메타 데이터의 전체 집합은 여기에서 설명하지 않습니다. 자세한 내용은 <span class="target" id="index-5"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0566"><strong>PEP 566</strong></a>을 참조하십시오.</p>
+</section>
+<section id="extending-the-search-algorithm">
+<h2>검색 알고리즘 확장하기<a class="headerlink" href="#extending-the-search-algorithm" title="제목 주소">¶</a></h2>
+<p>패키지 메타 데이터는 <a class="reference internal" href="sys.html#sys.path" title="sys.path"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.path</span></code></a> 검색이나 패키지 로더를 통해 직접 사용할 수 없으므로, 패키지의 메타 데이터는 임포트 시스템 <a class="reference internal" href="../reference/import.html#finders-and-loaders"><span class="std std-ref">파인더</span></a>를 통해 찾습니다. 배포 패키지의 메타 데이터를 찾기 위해, <code class="docutils literal notranslate"><span class="pre">importlib.metadata</span></code>는 <a class="reference internal" href="sys.html#sys.meta_path" title="sys.meta_path"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.meta_path</span></code></a>의 <a class="reference internal" href="../glossary.html#term-meta-path-finder"><span class="xref std std-term">메타 경로 파인더</span></a>의 리스트를 조회합니다.</p>
+<p>파이썬의 기본 <code class="docutils literal notranslate"><span class="pre">PathFinder</span></code>에는 일반적인 파일 시스템 기반 경로에서 로드된 배포를 찾기 위해 <code class="docutils literal notranslate"><span class="pre">importlib.metadata.MetadataPathFinder</span></code>를 호출하는 훅이 포함되어 있습니다.</p>
+<p>추상 클래스 <a class="reference internal" href="importlib.html#importlib.abc.MetaPathFinder" title="importlib.abc.MetaPathFinder"><code class="xref py py-class docutils literal notranslate"><span class="pre">importlib.abc.MetaPathFinder</span></code></a>는 파이썬의 임포트 시스템에 의해 파인더가 기대하는 인터페이스를 정의합니다. <code class="docutils literal notranslate"><span class="pre">importlib.metadata</span></code>는 <a class="reference internal" href="sys.html#sys.meta_path" title="sys.meta_path"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.meta_path</span></code></a>의 파인더에서 선택적인 <code class="docutils literal notranslate"><span class="pre">find_distributions</span></code> 콜러블을 조회함으로써 이 프로토콜을 확장하고 이 확장된 인터페이스를 다음과 같은 추상 메서드를 정의하는 <code class="docutils literal notranslate"><span class="pre">DistributionFinder</span></code> 추상 베이스 클래스로 제공합니다:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
+<span class="k">def</span> <span class="nf">find_distributions</span><span class="p">(</span><span class="n">context</span><span class="o">=</span><span class="n">DistributionFinder</span><span class="o">.</span><span class="n">Context</span><span class="p">()):</span>
+    <span class="sd">&quot;&quot;&quot;Return an iterable of all Distribution instances capable of</span>
+<span class="sd">    loading the metadata for packages for the indicated ``context``.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">DistributionFinder.Context</span></code> 객체는 검색할 경로와 일치할 이름을 가리키는 <code class="docutils literal notranslate"><span class="pre">.path</span></code>와 <code class="docutils literal notranslate"><span class="pre">.name</span></code> 프로퍼티를 제공하고 다른 관련 문맥을 제공할 수 있습니다.</p>
+<p>이것이 실제로 의미하는 것은, 파일 시스템이 아닌 위치에서 배포 패키지 메타 데이터를 찾는 것을 지원하려면, <code class="docutils literal notranslate"><span class="pre">Distribution</span></code>을 서브 클래싱하고 추상 메서드를 구현해야 한다는 것입니다. 그런 다음 사용자 정의 파인더의 <code class="docutils literal notranslate"><span class="pre">find_distributions()</span></code> 메서드에서, 이 파생된 <code class="docutils literal notranslate"><span class="pre">Distribution</span></code>의 인스턴스를 반환하십시오.</p>
+<p class="rubric">각주</p>
+<dl class="footnote brackets">
+<dt class="label" id="f1"><span class="brackets"><a class="fn-backref" href="#id2">1</a></span></dt>
+<dd><p>기술적으로, 반환된 배포 메타 데이터 객체는 <a class="reference internal" href="email.message.html#email.message.EmailMessage" title="email.message.EmailMessage"><code class="xref py py-class docutils literal notranslate"><span class="pre">email.message.EmailMessage</span></code></a> 인스턴스이지만, 이것은 구현 세부 사항이며 안정 API의 일부는 아닙니다. 메타 데이터 내용에 액세스하려면, 딕셔너리와 같은 메서드와 문법을 사용해야 합니다.</p>
+</dd>
+</dl>
+</section>
+</section>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../contents.html">목차</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">importlib.metadata</span></code> 사용하기</a><ul>
+<li><a class="reference internal" href="#overview">개요</a></li>
+<li><a class="reference internal" href="#functional-api">기능적 API</a><ul>
+<li><a class="reference internal" href="#entry-points">진입 지점</a></li>
+<li><a class="reference internal" href="#distribution-metadata">배포 메타데이터</a></li>
+<li><a class="reference internal" href="#distribution-versions">배포 버전</a></li>
+<li><a class="reference internal" href="#distribution-files">배포 파일</a></li>
+<li><a class="reference internal" href="#distribution-requirements">배포 요구 사항</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#distributions">배포</a></li>
+<li><a class="reference internal" href="#extending-the-search-algorithm">검색 알고리즘 확장하기</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>이전 항목</h4>
+  <p class="topless"><a href="importlib.html"
+                        title="이전 장"><code class="xref py py-mod docutils literal notranslate"><span class="pre">importlib</span></code> — <code class="xref std std-keyword docutils literal notranslate"><span class="pre">import</span></code>의 구현</a></p>
+  <h4>다음 항목</h4>
+  <p class="topless"><a href="language.html"
+                        title="다음 장">파이썬 언어 서비스</a></p>
+  <div role="note" aria-label="source link">
+    <h3>현재 문서</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">버그 보고하기</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/3.9/Doc/library/importlib.metadata.rst"
+            rel="nofollow">소스 보기
+        </a>
+      </li>
+    </ul>
+  </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>탐색</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="전체 색인"
+             >색인</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 모듈 목록"
+             >모듈</a> |</li>
+        <li class="right" >
+          <a href="language.html" title="파이썬 언어 서비스"
+             >다음</a> |</li>
+        <li class="right" >
+          <a href="importlib.html" title="importlib — import의 구현"
+             >이전</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.9.14 Documentation</a> &#187;
+    </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >파이썬 표준 라이브러리</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="modules.html" >모듈 임포트 하기</a> &#187;</li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="빠른 검색" aria-label="빠른 검색" type="text" name="q" />
+          <input type="submit" value="이동" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </form>
+    </div>
+                     |
+                </li>
+            
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">저작권</a> 2001-2022, Python Software Foundation.
+    <br />
+    This page is licensed under the Python Software Foundation License Version 2.
+    <br />
+    Examples, recipes, and other code in the documentation are additionally licensed under the Zero Clause BSD License.
+    <br />
+    See <a href="/license.html">History and License</a> for more information.<br />
+    <br />
+
+    The Python Software Foundation is a non-profit corporation.
+<a href="https://www.python.org/psf/donations/">Please donate.</a>
+<br />
+    <br />
+
+    최종 업데이트: 9월 11, 2022
+    <a href="/bugs.html">Found a bug</a>?
+    <br />
+
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 2.4.4.
+    </div>
+
+  </body>
+</html>

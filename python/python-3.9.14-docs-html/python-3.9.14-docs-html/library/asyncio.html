@@ -1,0 +1,314 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ko">
+  <head>
+    <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>asyncio — 비동기 I/O &#8212; Python 3.9.14 문서</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="../_static/pydoctheme.css?2022.1" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/translations.js"></script>
+    
+    <script src="../_static/sidebar.js"></script>
+    
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Python 3.9.14 문서에서 찾기"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="이 문서 정보" href="../about.html" />
+    <link rel="index" title="색인" href="../genindex.html" />
+    <link rel="search" title="검색" href="../search.html" />
+    <link rel="copyright" title="저작권" href="../copyright.html" />
+    <link rel="next" title="코루틴과 태스크" href="asyncio-task.html" />
+    <link rel="prev" title="네트워킹과 프로세스 간 통신" href="ipc.html" />
+    <link rel="canonical" href="https://docs.python.org/3/library/asyncio.html" />
+    
+      
+    
+
+    
+    <style>
+      @media only screen {
+        table.full-width-table {
+            width: 100%;
+        }
+      }
+    </style>
+<link rel="shortcut icon" type="image/png" href="../_static/py.svg" />
+            <script type="text/javascript" src="../_static/copybutton.js"></script>
+            <script type="text/javascript" src="../_static/menu.js"></script> 
+
+  </head>
+<body>
+<div class="mobile-nav">
+    <input type="checkbox" id="menuToggler" class="toggler__input" aria-controls="navigation"
+           aria-pressed="false" aria-expanded="false" role="button" aria-label="Menu" />
+    <label for="menuToggler" class="toggler__label">
+        <span></span>
+    </label>
+    <nav class="nav-content" role="navigation">
+         <a href="https://www.python.org/" class="nav-logo">
+             <img src="../_static/py.svg" alt="Logo"/>
+         </a>
+        <div class="version_switcher_placeholder"></div>
+        <form role="search" class="search" action="../search.html" method="get">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" class="search-icon">
+                <path fill-rule="nonzero"
+                        d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 001.48-5.34c-.47-2.78-2.79-5-5.59-5.34a6.505 6.505 0 00-7.27 7.27c.34 2.8 2.56 5.12 5.34 5.59a6.5 6.5 0 005.34-1.48l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49 0 .41-.41.41-1.08 0-1.49L15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" fill="#444"></path>
+            </svg>
+            <input type="text" name="q" aria-label="빠른 검색"/>
+            <input type="submit" value="이동"/>
+        </form>
+    </nav>
+    <div class="menu-wrapper">
+        <nav class="menu" role="navigation" aria-label="main navigation">
+            <div class="language_switcher_placeholder"></div>
+  <h4>이전 항목</h4>
+  <p class="topless"><a href="ipc.html"
+                        title="이전 장">네트워킹과 프로세스 간 통신</a></p>
+  <h4>다음 항목</h4>
+  <p class="topless"><a href="asyncio-task.html"
+                        title="다음 장">코루틴과 태스크</a></p>
+  <div role="note" aria-label="source link">
+    <h3>현재 문서</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">버그 보고하기</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/3.9/Doc/library/asyncio.rst"
+            rel="nofollow">소스 보기
+        </a>
+      </li>
+    </ul>
+  </div>
+        </nav>
+    </div>
+</div>
+
+  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>탐색</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="전체 색인"
+             accesskey="I">색인</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 모듈 목록"
+             >모듈</a> |</li>
+        <li class="right" >
+          <a href="asyncio-task.html" title="코루틴과 태스크"
+             accesskey="N">다음</a> |</li>
+        <li class="right" >
+          <a href="ipc.html" title="네트워킹과 프로세스 간 통신"
+             accesskey="P">이전</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.9.14 Documentation</a> &#187;
+    </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >파이썬 표준 라이브러리</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="ipc.html" accesskey="U">네트워킹과 프로세스 간 통신</a> &#187;</li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="빠른 검색" aria-label="빠른 검색" type="text" name="q" />
+          <input type="submit" value="이동" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </form>
+    </div>
+                     |
+                </li>
+            
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="module-asyncio">
+<span id="asyncio-asynchronous-i-o"></span><h1><a class="reference internal" href="#module-asyncio" title="asyncio: Asynchronous I/O."><code class="xref py py-mod docutils literal notranslate"><span class="pre">asyncio</span></code></a> — 비동기 I/O<a class="headerlink" href="#module-asyncio" title="제목 주소">¶</a></h1>
+<hr class="docutils" />
+<aside class="sidebar">
+<p class="sidebar-title">Hello World!</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">asyncio</span>
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Hello ...&#39;</span><span class="p">)</span>
+    <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;... World!&#39;</span><span class="p">)</span>
+
+<span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">main</span><span class="p">())</span>
+</pre></div>
+</div>
+</aside>
+<p>asyncio는 <strong>async/await</strong> 구문을 사용하여 <strong>동시성</strong> 코드를 작성하는 라이브러리입니다.</p>
+<p>asyncio는 고성능 네트워크 및 웹 서버, 데이터베이스 연결 라이브러리, 분산 작업 큐 등을 제공하는 여러 파이썬 비동기 프레임워크의 기반으로 사용됩니다.</p>
+<p>asyncio는 종종 IO 병목이면서 고수준의 <strong>구조화된</strong> 네트워크 코드에 가장 적합합니다.</p>
+<p>asyncio는 다음과 같은 작업을 위한 <strong>고수준</strong> API 집합을 제공합니다:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="asyncio-task.html#coroutine"><span class="std std-ref">파이썬 코루틴들</span></a>을 동시에 실행하고 실행을 완전히 제어할 수 있습니다.</p></li>
+<li><p><a class="reference internal" href="asyncio-stream.html#asyncio-streams"><span class="std std-ref">네트워크 IO와 IPC</span></a>를 수행합니다;</p></li>
+<li><p><a class="reference internal" href="asyncio-subprocess.html#asyncio-subprocess"><span class="std std-ref">자식 프로세스</span></a>를 제어합니다;</p></li>
+<li><p><a class="reference internal" href="asyncio-queue.html#asyncio-queues"><span class="std std-ref">큐</span></a>를 통해 작업을 분산합니다;</p></li>
+<li><p>동시성 코드를 <a class="reference internal" href="asyncio-sync.html#asyncio-sync"><span class="std std-ref">동기화</span></a>합니다;</p></li>
+</ul>
+<p>또한, <em>라이브러리와 프레임워크 개발자</em>가 다음과 같은 작업을 할 수 있도록 하는 <strong>저수준</strong> API가 있습니다:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="asyncio-eventloop.html#asyncio.loop.create_server" title="asyncio.loop.create_server"><code class="xref py py-meth docutils literal notranslate"><span class="pre">네트워킹</span></code></a>, <a class="reference internal" href="asyncio-eventloop.html#asyncio.loop.subprocess_exec" title="asyncio.loop.subprocess_exec"><code class="xref py py-meth docutils literal notranslate"><span class="pre">자식</span> <span class="pre">프로세스</span></code></a> 실행, <a class="reference internal" href="asyncio-eventloop.html#asyncio.loop.add_signal_handler" title="asyncio.loop.add_signal_handler"><code class="xref py py-meth docutils literal notranslate"><span class="pre">OS</span> <span class="pre">시그널</span></code></a> 처리 등의 비동기 API를 제공하는 <a class="reference internal" href="asyncio-eventloop.html#asyncio-event-loop"><span class="std std-ref">이벤트 루프</span></a>를 만들고 관리합니다.</p></li>
+<li><p><a class="reference internal" href="asyncio-protocol.html#asyncio-transports-protocols"><span class="std std-ref">트랜스포트</span></a>를 사용하여 효율적인 프로토콜을 구현합니다.</p></li>
+<li><p>콜백 기반 라이브러리와 async/await 구문을 사용한 코드 간에 <a class="reference internal" href="asyncio-future.html#asyncio-futures"><span class="std std-ref">다리를 놓습니다</span></a>.</p></li>
+</ul>
+<p class="rubric">레퍼런스</p>
+<div class="toctree-wrapper compound">
+<p><span class="caption-text">고수준 API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="asyncio-task.html">코루틴과 태스크</a></li>
+<li class="toctree-l1"><a class="reference internal" href="asyncio-stream.html">스트림</a></li>
+<li class="toctree-l1"><a class="reference internal" href="asyncio-sync.html">동기화 프리미티브</a></li>
+<li class="toctree-l1"><a class="reference internal" href="asyncio-subprocess.html">서브 프로세스</a></li>
+<li class="toctree-l1"><a class="reference internal" href="asyncio-queue.html">큐</a></li>
+<li class="toctree-l1"><a class="reference internal" href="asyncio-exceptions.html">예외</a></li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p><span class="caption-text">저수준 API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="asyncio-eventloop.html">이벤트 루프</a></li>
+<li class="toctree-l1"><a class="reference internal" href="asyncio-future.html">퓨처</a></li>
+<li class="toctree-l1"><a class="reference internal" href="asyncio-protocol.html">트랜스포트와 프로토콜</a></li>
+<li class="toctree-l1"><a class="reference internal" href="asyncio-policy.html">정책</a></li>
+<li class="toctree-l1"><a class="reference internal" href="asyncio-platforms.html">플랫폼 지원</a></li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p><span class="caption-text">가이드 및 자습서</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="asyncio-api-index.html">고수준 API 색인</a></li>
+<li class="toctree-l1"><a class="reference internal" href="asyncio-llapi-index.html">저수준 API 색인</a></li>
+<li class="toctree-l1"><a class="reference internal" href="asyncio-dev.html">asyncio로 개발하기</a></li>
+</ul>
+</div>
+<div class="admonition note">
+<p class="admonition-title">참고</p>
+<p>asyncio의 소스 코드는 <a class="reference external" href="https://github.com/python/cpython/tree/3.9/Lib/asyncio/">Lib/asyncio/</a>에서 찾을 수 있습니다.</p>
+</div>
+</section>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>이전 항목</h4>
+  <p class="topless"><a href="ipc.html"
+                        title="이전 장">네트워킹과 프로세스 간 통신</a></p>
+  <h4>다음 항목</h4>
+  <p class="topless"><a href="asyncio-task.html"
+                        title="다음 장">코루틴과 태스크</a></p>
+  <div role="note" aria-label="source link">
+    <h3>현재 문서</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">버그 보고하기</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/3.9/Doc/library/asyncio.rst"
+            rel="nofollow">소스 보기
+        </a>
+      </li>
+    </ul>
+  </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>탐색</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="전체 색인"
+             >색인</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 모듈 목록"
+             >모듈</a> |</li>
+        <li class="right" >
+          <a href="asyncio-task.html" title="코루틴과 태스크"
+             >다음</a> |</li>
+        <li class="right" >
+          <a href="ipc.html" title="네트워킹과 프로세스 간 통신"
+             >이전</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.9.14 Documentation</a> &#187;
+    </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >파이썬 표준 라이브러리</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="ipc.html" >네트워킹과 프로세스 간 통신</a> &#187;</li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="빠른 검색" aria-label="빠른 검색" type="text" name="q" />
+          <input type="submit" value="이동" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </form>
+    </div>
+                     |
+                </li>
+            
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">저작권</a> 2001-2022, Python Software Foundation.
+    <br />
+    This page is licensed under the Python Software Foundation License Version 2.
+    <br />
+    Examples, recipes, and other code in the documentation are additionally licensed under the Zero Clause BSD License.
+    <br />
+    See <a href="/license.html">History and License</a> for more information.<br />
+    <br />
+
+    The Python Software Foundation is a non-profit corporation.
+<a href="https://www.python.org/psf/donations/">Please donate.</a>
+<br />
+    <br />
+
+    최종 업데이트: 9월 11, 2022
+    <a href="/bugs.html">Found a bug</a>?
+    <br />
+
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 2.4.4.
+    </div>
+
+  </body>
+</html>

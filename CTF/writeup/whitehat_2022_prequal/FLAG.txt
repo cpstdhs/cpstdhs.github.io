@@ -1,0 +1,28 @@
+- D-1
+FLAG{192.168.35.199}
+- F-1
+FLAG{4dvers4ry_h1jack_lnk}
+- F-4
+FLAG{CURL_C4NMalicous!!}
+- A-1
+FLAG{4faa930fa19224d628ebcebe62f8969dc9e4a511}
+- B-1
+FLAG{HOffice2022_Viewer.exe_20221013185040}
+- C-3
+FLAG{kidonar267@lutota.com_TteeEmP2@1!3#}
+- B-2
+FLAG{Apache_2.4.52}
+- C-2
+FLAG{rclone.exe_20221013185157}
+- H-2
+FLAG{lazarus_l@2@ruz!!}
+- H-1
+FLAG{wh0_steal_myscreeN!!}
+- F-3
+FLAG{http://192.168.35.85:8000/upload_winlog.tar}
+- D-3
+FLAG{Gnuwnkfi.exe_20221013185316}
+- D-2
+FLAG{psexec.exe_SMB}
+- E-2
+FLAG{1836311903}

@@ -1,0 +1,282 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ko">
+  <head>
+    <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>mailcap — Mailcap 파일 처리 &#8212; Python 3.9.14 문서</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="../_static/pydoctheme.css?2022.1" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/translations.js"></script>
+    
+    <script src="../_static/sidebar.js"></script>
+    
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Python 3.9.14 문서에서 찾기"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="이 문서 정보" href="../about.html" />
+    <link rel="index" title="색인" href="../genindex.html" />
+    <link rel="search" title="검색" href="../search.html" />
+    <link rel="copyright" title="저작권" href="../copyright.html" />
+    <link rel="next" title="msilib — Read and write Microsoft Installer files" href="msilib.html" />
+    <link rel="prev" title="imp — Access the import internals" href="imp.html" />
+    <link rel="canonical" href="https://docs.python.org/3/library/mailcap.html" />
+    
+      
+    
+
+    
+    <style>
+      @media only screen {
+        table.full-width-table {
+            width: 100%;
+        }
+      }
+    </style>
+<link rel="shortcut icon" type="image/png" href="../_static/py.svg" />
+            <script type="text/javascript" src="../_static/copybutton.js"></script>
+            <script type="text/javascript" src="../_static/menu.js"></script> 
+
+  </head>
+<body>
+<div class="mobile-nav">
+    <input type="checkbox" id="menuToggler" class="toggler__input" aria-controls="navigation"
+           aria-pressed="false" aria-expanded="false" role="button" aria-label="Menu" />
+    <label for="menuToggler" class="toggler__label">
+        <span></span>
+    </label>
+    <nav class="nav-content" role="navigation">
+         <a href="https://www.python.org/" class="nav-logo">
+             <img src="../_static/py.svg" alt="Logo"/>
+         </a>
+        <div class="version_switcher_placeholder"></div>
+        <form role="search" class="search" action="../search.html" method="get">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" class="search-icon">
+                <path fill-rule="nonzero"
+                        d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 001.48-5.34c-.47-2.78-2.79-5-5.59-5.34a6.505 6.505 0 00-7.27 7.27c.34 2.8 2.56 5.12 5.34 5.59a6.5 6.5 0 005.34-1.48l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49 0 .41-.41.41-1.08 0-1.49L15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" fill="#444"></path>
+            </svg>
+            <input type="text" name="q" aria-label="빠른 검색"/>
+            <input type="submit" value="이동"/>
+        </form>
+    </nav>
+    <div class="menu-wrapper">
+        <nav class="menu" role="navigation" aria-label="main navigation">
+            <div class="language_switcher_placeholder"></div>
+  <h4>이전 항목</h4>
+  <p class="topless"><a href="imp.html"
+                        title="이전 장"><code class="xref py py-mod docutils literal notranslate"><span class="pre">imp</span></code> — Access the <span class="xref std std-ref">import</span> internals</a></p>
+  <h4>다음 항목</h4>
+  <p class="topless"><a href="msilib.html"
+                        title="다음 장"><code class="xref py py-mod docutils literal notranslate"><span class="pre">msilib</span></code> — Read and write Microsoft Installer files</a></p>
+  <div role="note" aria-label="source link">
+    <h3>현재 문서</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">버그 보고하기</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/3.9/Doc/library/mailcap.rst"
+            rel="nofollow">소스 보기
+        </a>
+      </li>
+    </ul>
+  </div>
+        </nav>
+    </div>
+</div>
+
+  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>탐색</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="전체 색인"
+             accesskey="I">색인</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 모듈 목록"
+             >모듈</a> |</li>
+        <li class="right" >
+          <a href="msilib.html" title="msilib — Read and write Microsoft Installer files"
+             accesskey="N">다음</a> |</li>
+        <li class="right" >
+          <a href="imp.html" title="imp — Access the import internals"
+             accesskey="P">이전</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.9.14 Documentation</a> &#187;
+    </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >파이썬 표준 라이브러리</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="superseded.html" accesskey="U">대체된 모듈</a> &#187;</li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="빠른 검색" aria-label="빠른 검색" type="text" name="q" />
+          <input type="submit" value="이동" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </form>
+    </div>
+                     |
+                </li>
+            
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="module-mailcap">
+<span id="mailcap-mailcap-file-handling"></span><h1><a class="reference internal" href="#module-mailcap" title="mailcap: Mailcap file handling. (deprecated)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mailcap</span></code></a> — Mailcap 파일 처리<a class="headerlink" href="#module-mailcap" title="제목 주소">¶</a></h1>
+<p><strong>소스 코드:</strong> <a class="reference external" href="https://github.com/python/cpython/tree/3.9/Lib/mailcap.py">Lib/mailcap.py</a></p>
+<div class="deprecated">
+<p><span class="versionmodified deprecated">버전 3.11부터 폐지: </span>The <a class="reference internal" href="#module-mailcap" title="mailcap: Mailcap file handling. (deprecated)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mailcap</span></code></a> module is deprecated
+(see <span class="target" id="index-0"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0594#mailcap"><strong>PEP 594</strong></a> for details).
+The <a class="reference internal" href="mimetypes.html#module-mimetypes" title="mimetypes: Mapping of filename extensions to MIME types."><code class="xref py py-mod docutils literal notranslate"><span class="pre">mimetypes</span></code></a> module provides an alternative.</p>
+</div>
+<hr class="docutils" />
+<p>Mailcap 파일은 메일 리더와 웹 브라우저와 같은 MIME 인식 응용 프로그램이 MIME 형식의 파일에 따라 반응하는 방식을 구성하는 데 사용됩니다. (“mailcap” 이라는 이름은 “mail capability” 라는 구문에서 왔습니다.) 예를 들어, mailcap 파일에는 <code class="docutils literal notranslate"><span class="pre">video/mpeg;</span> <span class="pre">xmpeg</span> <span class="pre">%s</span></code>와 같은 줄이 있을 수 있습니다. 그러면, 사용자가 MIME 유형이 <em class="mimetype">video/mpeg</em> 인 전자 메일 메시지 또는 웹 문서를 만나면, <code class="docutils literal notranslate"><span class="pre">%s</span></code>가 파일명(대개 임시 파일에 속한 파일)으로 치환되고 <strong class="program">xmpeg</strong> 프로그램을 자동으로 시작하여 파일을 볼 수 있습니다.</p>
+<p>mailcap 형식은 <span class="target" id="index-5"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc1524.html"><strong>RFC 1524</strong></a>, “A User Agent Configuration Mechanism For Multimedia Mail Format Information”에 설명되어 있지만, 인터넷 표준은 아닙니다. 그러나, mailcap 파일은 대부분 유닉스 시스템에서 지원됩니다.</p>
+<dl class="function">
+<dt id="mailcap.findmatch">
+<code class="sig-prename descclassname">mailcap.</code><code class="sig-name descname">findmatch</code><span class="sig-paren">(</span><em class="sig-param">caps</em>, <em class="sig-param">MIMEtype</em>, <em class="sig-param">key='view'</em>, <em class="sig-param">filename='/dev/null'</em>, <em class="sig-param">plist=[]</em><span class="sig-paren">)</span><a class="headerlink" href="#mailcap.findmatch" title="정의 주소">¶</a></dt>
+<dd><p>2-튜플을 반환합니다; 첫 번째 요소는 실행될 명령 줄(<a class="reference internal" href="os.html#os.system" title="os.system"><code class="xref py py-func docutils literal notranslate"><span class="pre">os.system()</span></code></a>에 전달될 수 있음)을 포함하는 문자열이고, 두 번째 요소는 지정된 MIME 유형에 대한 mailcap 항목입니다. 일치하는 MIME 유형을 찾을 수 없으면 <code class="docutils literal notranslate"><span class="pre">(None,</span> <span class="pre">None)</span></code>이 반환됩니다.</p>
+<p><em>key</em>는 원하는 이름인데, 수행할 활동의 유형을 나타냅니다; 가장 흔히 MIME 형식의 데이터 본문을 보고만 싶으므로 기본값은 ‘view’ 입니다. 주어진 MIME 유형의 새 본문을 만들거나 기존 본문 데이터를 변경하려고 할 때, 다른 가능한 값으로 ‘compose’ 이나 ‘edit’ 가 있습니다. 이 필드의 전체 목록은 <span class="target" id="index-6"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc1524.html"><strong>RFC 1524</strong></a>를 참조하십시오.</p>
+<p><em>filename</em>은 명령 줄에서 <code class="docutils literal notranslate"><span class="pre">%s</span></code>에 치환될 파일명입니다. 기본값은 <code class="docutils literal notranslate"><span class="pre">'/dev/null'</span></code> 이지만, 거의 확실하게 원하는 것이 아닐 것이기 때문에, 보통 파일명을 지정하여 이를 대체합니다.</p>
+<p><em>plist</em>는 이름있는 매개 변수를 포함하는 리스트일 수 있습니다; 기본값은 단순히 빈 리스트입니다. 리스트의 각 항목은 매개 변수 이름, 등호(<code class="docutils literal notranslate"><span class="pre">'='</span></code>) 및 매개 변수의 값이 포함된 문자열이어야 합니다. Mailcap 항목은 <code class="docutils literal notranslate"><span class="pre">%{foo}</span></code>와 같은 이름있는 매개 변수를 포함할 수 있는데, ‘foo’ 라는 이름의 매개 변수의 값으로 치환됩니다. 예를 들어, 명령 줄 <code class="docutils literal notranslate"><span class="pre">showpartial</span> <span class="pre">%{id}</span> <span class="pre">%{number}</span> <span class="pre">%{total}</span></code>이 mailcap 파일에 있고, <em>plist</em>가 <code class="docutils literal notranslate"><span class="pre">['id=1',</span> <span class="pre">'number=2',</span> <span class="pre">'total=3']</span></code>로 설정되었으면, 결과 명령 줄은 <code class="docutils literal notranslate"><span class="pre">'showpartial</span> <span class="pre">1</span> <span class="pre">2</span> <span class="pre">3'</span></code>가 됩니다.</p>
+<p>mailcap 파일에서, “test” 필드를 선택적으로 지정하여 mailcap 줄이 적용되는지를 판단하기 위해 일부 외부 조건(가령 기계 아키텍처나 사용 중인 윈도우 시스템)을 검사할 수 있습니다. <a class="reference internal" href="#mailcap.findmatch" title="mailcap.findmatch"><code class="xref py py-func docutils literal notranslate"><span class="pre">findmatch()</span></code></a>는 자동으로 그러한 조건을 검사하고 검사가 실패하면 항목을 건너뜁니다.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="mailcap.getcaps">
+<code class="sig-prename descclassname">mailcap.</code><code class="sig-name descname">getcaps</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mailcap.getcaps" title="정의 주소">¶</a></dt>
+<dd><p>MIME 유형을 mailcap 파일 항목 리스트에 매핑하는 딕셔너리를 반환합니다. 이 딕셔너리는 <a class="reference internal" href="#mailcap.findmatch" title="mailcap.findmatch"><code class="xref py py-func docutils literal notranslate"><span class="pre">findmatch()</span></code></a> 함수에 전달되어야 합니다. 항목은 딕셔너리의 리스트로 저장되지만, 이 표현의 세부 사항을 알 필요는 없습니다.</p>
+<p>이 정보는 시스템에서 발견된 모든 mailcap 파일에서 파생됩니다. 사용자의 mailcap 파일 <code class="file docutils literal notranslate"><span class="pre">$HOME/.mailcap</span></code>의 설정은 시스템 mailcap 파일 <code class="file docutils literal notranslate"><span class="pre">/etc/mailcap</span></code>, <code class="file docutils literal notranslate"><span class="pre">/usr/etc/mailcap</span></code> 및 <code class="file docutils literal notranslate"><span class="pre">/usr/local/etc/mailcap</span></code>의 설정보다 우선합니다.</p>
+</dd></dl>
+
+<p>사용 예:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">mailcap</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">d</span> <span class="o">=</span> <span class="n">mailcap</span><span class="o">.</span><span class="n">getcaps</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mailcap</span><span class="o">.</span><span class="n">findmatch</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="s1">&#39;video/mpeg&#39;</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s1">&#39;tmp1223&#39;</span><span class="p">)</span>
+<span class="go">(&#39;xmpeg tmp1223&#39;, {&#39;view&#39;: &#39;xmpeg %s&#39;})</span>
+</pre></div>
+</div>
+</section>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>이전 항목</h4>
+  <p class="topless"><a href="imp.html"
+                        title="이전 장"><code class="xref py py-mod docutils literal notranslate"><span class="pre">imp</span></code> — Access the <span class="xref std std-ref">import</span> internals</a></p>
+  <h4>다음 항목</h4>
+  <p class="topless"><a href="msilib.html"
+                        title="다음 장"><code class="xref py py-mod docutils literal notranslate"><span class="pre">msilib</span></code> — Read and write Microsoft Installer files</a></p>
+  <div role="note" aria-label="source link">
+    <h3>현재 문서</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">버그 보고하기</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/3.9/Doc/library/mailcap.rst"
+            rel="nofollow">소스 보기
+        </a>
+      </li>
+    </ul>
+  </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>탐색</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="전체 색인"
+             >색인</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 모듈 목록"
+             >모듈</a> |</li>
+        <li class="right" >
+          <a href="msilib.html" title="msilib — Read and write Microsoft Installer files"
+             >다음</a> |</li>
+        <li class="right" >
+          <a href="imp.html" title="imp — Access the import internals"
+             >이전</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.9.14 Documentation</a> &#187;
+    </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >파이썬 표준 라이브러리</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="superseded.html" >대체된 모듈</a> &#187;</li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="빠른 검색" aria-label="빠른 검색" type="text" name="q" />
+          <input type="submit" value="이동" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </form>
+    </div>
+                     |
+                </li>
+            
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">저작권</a> 2001-2022, Python Software Foundation.
+    <br />
+    This page is licensed under the Python Software Foundation License Version 2.
+    <br />
+    Examples, recipes, and other code in the documentation are additionally licensed under the Zero Clause BSD License.
+    <br />
+    See <a href="/license.html">History and License</a> for more information.<br />
+    <br />
+
+    The Python Software Foundation is a non-profit corporation.
+<a href="https://www.python.org/psf/donations/">Please donate.</a>
+<br />
+    <br />
+
+    최종 업데이트: 9월 11, 2022
+    <a href="/bugs.html">Found a bug</a>?
+    <br />
+
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 2.4.4.
+    </div>
+
+  </body>
+</html>

@@ -1,0 +1,374 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ko">
+  <head>
+    <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>curses.panel — curses 용 패널 스택 확장 &#8212; Python 3.9.14 문서</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="../_static/pydoctheme.css?2022.1" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/translations.js"></script>
+    
+    <script src="../_static/sidebar.js"></script>
+    
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Python 3.9.14 문서에서 찾기"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="이 문서 정보" href="../about.html" />
+    <link rel="index" title="색인" href="../genindex.html" />
+    <link rel="search" title="검색" href="../search.html" />
+    <link rel="copyright" title="저작권" href="../copyright.html" />
+    <link rel="next" title="platform — 하부 플랫폼의 식별 데이터에 대한 액세스" href="platform.html" />
+    <link rel="prev" title="curses.ascii — ASCII 문자용 유틸리티" href="curses.ascii.html" />
+    <link rel="canonical" href="https://docs.python.org/3/library/curses.panel.html" />
+    
+      
+    
+
+    
+    <style>
+      @media only screen {
+        table.full-width-table {
+            width: 100%;
+        }
+      }
+    </style>
+<link rel="shortcut icon" type="image/png" href="../_static/py.svg" />
+            <script type="text/javascript" src="../_static/copybutton.js"></script>
+            <script type="text/javascript" src="../_static/menu.js"></script> 
+
+  </head>
+<body>
+<div class="mobile-nav">
+    <input type="checkbox" id="menuToggler" class="toggler__input" aria-controls="navigation"
+           aria-pressed="false" aria-expanded="false" role="button" aria-label="Menu" />
+    <label for="menuToggler" class="toggler__label">
+        <span></span>
+    </label>
+    <nav class="nav-content" role="navigation">
+         <a href="https://www.python.org/" class="nav-logo">
+             <img src="../_static/py.svg" alt="Logo"/>
+         </a>
+        <div class="version_switcher_placeholder"></div>
+        <form role="search" class="search" action="../search.html" method="get">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" class="search-icon">
+                <path fill-rule="nonzero"
+                        d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 001.48-5.34c-.47-2.78-2.79-5-5.59-5.34a6.505 6.505 0 00-7.27 7.27c.34 2.8 2.56 5.12 5.34 5.59a6.5 6.5 0 005.34-1.48l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49 0 .41-.41.41-1.08 0-1.49L15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" fill="#444"></path>
+            </svg>
+            <input type="text" name="q" aria-label="빠른 검색"/>
+            <input type="submit" value="이동"/>
+        </form>
+    </nav>
+    <div class="menu-wrapper">
+        <nav class="menu" role="navigation" aria-label="main navigation">
+            <div class="language_switcher_placeholder"></div>
+  <h3><a href="../contents.html">목차</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">curses.panel</span></code> — curses 용 패널 스택 확장</a><ul>
+<li><a class="reference internal" href="#functions">함수</a></li>
+<li><a class="reference internal" href="#panel-objects">Panel 객체</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>이전 항목</h4>
+  <p class="topless"><a href="curses.ascii.html"
+                        title="이전 장"><code class="xref py py-mod docutils literal notranslate"><span class="pre">curses.ascii</span></code> — ASCII 문자용 유틸리티</a></p>
+  <h4>다음 항목</h4>
+  <p class="topless"><a href="platform.html"
+                        title="다음 장"><code class="xref py py-mod docutils literal notranslate"><span class="pre">platform</span></code> — 하부 플랫폼의 식별 데이터에 대한 액세스</a></p>
+  <div role="note" aria-label="source link">
+    <h3>현재 문서</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">버그 보고하기</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/3.9/Doc/library/curses.panel.rst"
+            rel="nofollow">소스 보기
+        </a>
+      </li>
+    </ul>
+  </div>
+        </nav>
+    </div>
+</div>
+
+  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>탐색</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="전체 색인"
+             accesskey="I">색인</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 모듈 목록"
+             >모듈</a> |</li>
+        <li class="right" >
+          <a href="platform.html" title="platform — 하부 플랫폼의 식별 데이터에 대한 액세스"
+             accesskey="N">다음</a> |</li>
+        <li class="right" >
+          <a href="curses.ascii.html" title="curses.ascii — ASCII 문자용 유틸리티"
+             accesskey="P">이전</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.9.14 Documentation</a> &#187;
+    </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >파이썬 표준 라이브러리</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="allos.html" accesskey="U">일반 운영 체제 서비스</a> &#187;</li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="빠른 검색" aria-label="빠른 검색" type="text" name="q" />
+          <input type="submit" value="이동" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </form>
+    </div>
+                     |
+                </li>
+            
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="module-curses.panel">
+<span id="curses-panel-a-panel-stack-extension-for-curses"></span><h1><a class="reference internal" href="#module-curses.panel" title="curses.panel: A panel stack extension that adds depth to  curses windows."><code class="xref py py-mod docutils literal notranslate"><span class="pre">curses.panel</span></code></a> — curses 용 패널 스택 확장<a class="headerlink" href="#module-curses.panel" title="제목 주소">¶</a></h1>
+<hr class="docutils" />
+<p>패널은 깊이 기능이 추가된 창이라서, 서로의 위에 쌓을 수 있으며, 각 창의 보이는 부분만 표시됩니다. 패널을 추가하고, 스택에서 위나 아래로 옮기고, 제거할 수 있습니다.</p>
+<section id="functions">
+<span id="cursespanel-functions"></span><h2>함수<a class="headerlink" href="#functions" title="제목 주소">¶</a></h2>
+<p><a class="reference internal" href="#module-curses.panel" title="curses.panel: A panel stack extension that adds depth to  curses windows."><code class="xref py py-mod docutils literal notranslate"><span class="pre">curses.panel</span></code></a> 모듈은 다음 함수를 정의합니다:</p>
+<dl class="function">
+<dt id="curses.panel.bottom_panel">
+<code class="sig-prename descclassname">curses.panel.</code><code class="sig-name descname">bottom_panel</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#curses.panel.bottom_panel" title="정의 주소">¶</a></dt>
+<dd><p>패널 스택에서 최하단 패널을 반환합니다.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="curses.panel.new_panel">
+<code class="sig-prename descclassname">curses.panel.</code><code class="sig-name descname">new_panel</code><span class="sig-paren">(</span><em class="sig-param">win</em><span class="sig-paren">)</span><a class="headerlink" href="#curses.panel.new_panel" title="정의 주소">¶</a></dt>
+<dd><p>주어진 창 <em>win</em>과 연관 지어진 패널 객체를 반환합니다. 반환된 패널 객체가 명시적으로 참조되도록 유지해야 합니다. 그렇지 않으면 패널 객체는 가비지 수집되어 패널 스택에서 제거됩니다.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="curses.panel.top_panel">
+<code class="sig-prename descclassname">curses.panel.</code><code class="sig-name descname">top_panel</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#curses.panel.top_panel" title="정의 주소">¶</a></dt>
+<dd><p>패널 스택의 최상단 패널을 반환합니다.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="curses.panel.update_panels">
+<code class="sig-prename descclassname">curses.panel.</code><code class="sig-name descname">update_panels</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#curses.panel.update_panels" title="정의 주소">¶</a></dt>
+<dd><p>패널 스택이 변경된 후 가상 화면을 갱신합니다. 이것은 <a class="reference internal" href="curses.html#curses.doupdate" title="curses.doupdate"><code class="xref py py-func docutils literal notranslate"><span class="pre">curses.doupdate()</span></code></a>를 호출하지 않아서, 여러분이 직접 해야 합니다.</p>
+</dd></dl>
+
+</section>
+<section id="panel-objects">
+<span id="curses-panel-objects"></span><h2>Panel 객체<a class="headerlink" href="#panel-objects" title="제목 주소">¶</a></h2>
+<p>위의 <a class="reference internal" href="#curses.panel.new_panel" title="curses.panel.new_panel"><code class="xref py py-func docutils literal notranslate"><span class="pre">new_panel()</span></code></a>에 의해 반환된 패널 객체는 쌓인 순서가 있는 창입니다. 패널과 연관된 창이 항상 있고, 창이 내용을 결정합니다. 패널 메서드는 패널 스택에서 창의 깊이를 담당합니다.</p>
+<p>패널 객체에는 다음과 같은 메서드가 있습니다:</p>
+<dl class="method">
+<dt id="curses.panel.Panel.above">
+<code class="sig-prename descclassname">Panel.</code><code class="sig-name descname">above</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#curses.panel.Panel.above" title="정의 주소">¶</a></dt>
+<dd><p>현재 패널 위의 패널을 반환합니다.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="curses.panel.Panel.below">
+<code class="sig-prename descclassname">Panel.</code><code class="sig-name descname">below</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#curses.panel.Panel.below" title="정의 주소">¶</a></dt>
+<dd><p>현재 패널 아래의 패널을 반환합니다.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="curses.panel.Panel.bottom">
+<code class="sig-prename descclassname">Panel.</code><code class="sig-name descname">bottom</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#curses.panel.Panel.bottom" title="정의 주소">¶</a></dt>
+<dd><p>패널을 스택 맨 아래로 밉니다.”</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="curses.panel.Panel.hidden">
+<code class="sig-prename descclassname">Panel.</code><code class="sig-name descname">hidden</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#curses.panel.Panel.hidden" title="정의 주소">¶</a></dt>
+<dd><p>패널이 숨겨져 있으면 (보이지 않으면) <code class="docutils literal notranslate"><span class="pre">True</span></code>를, 그렇지 않으면 <code class="docutils literal notranslate"><span class="pre">False</span></code>를 반환합니다.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="curses.panel.Panel.hide">
+<code class="sig-prename descclassname">Panel.</code><code class="sig-name descname">hide</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#curses.panel.Panel.hide" title="정의 주소">¶</a></dt>
+<dd><p>패널을 숨깁니다. 이것은 객체를 삭제하지 않고, 화면의 창을 보이지 않게 합니다.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="curses.panel.Panel.move">
+<code class="sig-prename descclassname">Panel.</code><code class="sig-name descname">move</code><span class="sig-paren">(</span><em class="sig-param">y</em>, <em class="sig-param">x</em><span class="sig-paren">)</span><a class="headerlink" href="#curses.panel.Panel.move" title="정의 주소">¶</a></dt>
+<dd><p>패널을 화면 좌표 <code class="docutils literal notranslate"><span class="pre">(y,</span> <span class="pre">x)</span></code>로 이동합니다.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="curses.panel.Panel.replace">
+<code class="sig-prename descclassname">Panel.</code><code class="sig-name descname">replace</code><span class="sig-paren">(</span><em class="sig-param">win</em><span class="sig-paren">)</span><a class="headerlink" href="#curses.panel.Panel.replace" title="정의 주소">¶</a></dt>
+<dd><p>패널과 연관된 창을 창 <em>win</em>으로 변경합니다.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="curses.panel.Panel.set_userptr">
+<code class="sig-prename descclassname">Panel.</code><code class="sig-name descname">set_userptr</code><span class="sig-paren">(</span><em class="sig-param">obj</em><span class="sig-paren">)</span><a class="headerlink" href="#curses.panel.Panel.set_userptr" title="정의 주소">¶</a></dt>
+<dd><p>패널의 사용자 포인터를 <em>obj</em>로 설정합니다. 이것은 임의의 데이터를 패널과 연관시키는 데 사용되며, 임의의 파이썬 객체가 될 수 있습니다.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="curses.panel.Panel.show">
+<code class="sig-prename descclassname">Panel.</code><code class="sig-name descname">show</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#curses.panel.Panel.show" title="정의 주소">¶</a></dt>
+<dd><p>(숨겼을 수도 있는) 패널을 표시합니다.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="curses.panel.Panel.top">
+<code class="sig-prename descclassname">Panel.</code><code class="sig-name descname">top</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#curses.panel.Panel.top" title="정의 주소">¶</a></dt>
+<dd><p>패널을 스택 맨 위로 밉니다.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="curses.panel.Panel.userptr">
+<code class="sig-prename descclassname">Panel.</code><code class="sig-name descname">userptr</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#curses.panel.Panel.userptr" title="정의 주소">¶</a></dt>
+<dd><p>패널의 사용자 포인터를 반환합니다. 이것은 임의의 파이썬 객체일 수 있습니다.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="curses.panel.Panel.window">
+<code class="sig-prename descclassname">Panel.</code><code class="sig-name descname">window</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#curses.panel.Panel.window" title="정의 주소">¶</a></dt>
+<dd><p>패널과 연관된 창 객체를 반환합니다.</p>
+</dd></dl>
+
+</section>
+</section>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../contents.html">목차</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">curses.panel</span></code> — curses 용 패널 스택 확장</a><ul>
+<li><a class="reference internal" href="#functions">함수</a></li>
+<li><a class="reference internal" href="#panel-objects">Panel 객체</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>이전 항목</h4>
+  <p class="topless"><a href="curses.ascii.html"
+                        title="이전 장"><code class="xref py py-mod docutils literal notranslate"><span class="pre">curses.ascii</span></code> — ASCII 문자용 유틸리티</a></p>
+  <h4>다음 항목</h4>
+  <p class="topless"><a href="platform.html"
+                        title="다음 장"><code class="xref py py-mod docutils literal notranslate"><span class="pre">platform</span></code> — 하부 플랫폼의 식별 데이터에 대한 액세스</a></p>
+  <div role="note" aria-label="source link">
+    <h3>현재 문서</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">버그 보고하기</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/3.9/Doc/library/curses.panel.rst"
+            rel="nofollow">소스 보기
+        </a>
+      </li>
+    </ul>
+  </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>탐색</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="전체 색인"
+             >색인</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 모듈 목록"
+             >모듈</a> |</li>
+        <li class="right" >
+          <a href="platform.html" title="platform — 하부 플랫폼의 식별 데이터에 대한 액세스"
+             >다음</a> |</li>
+        <li class="right" >
+          <a href="curses.ascii.html" title="curses.ascii — ASCII 문자용 유틸리티"
+             >이전</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.9.14 Documentation</a> &#187;
+    </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >파이썬 표준 라이브러리</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="allos.html" >일반 운영 체제 서비스</a> &#187;</li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="빠른 검색" aria-label="빠른 검색" type="text" name="q" />
+          <input type="submit" value="이동" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </form>
+    </div>
+                     |
+                </li>
+            
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">저작권</a> 2001-2022, Python Software Foundation.
+    <br />
+    This page is licensed under the Python Software Foundation License Version 2.
+    <br />
+    Examples, recipes, and other code in the documentation are additionally licensed under the Zero Clause BSD License.
+    <br />
+    See <a href="/license.html">History and License</a> for more information.<br />
+    <br />
+
+    The Python Software Foundation is a non-profit corporation.
+<a href="https://www.python.org/psf/donations/">Please donate.</a>
+<br />
+    <br />
+
+    최종 업데이트: 9월 11, 2022
+    <a href="/bugs.html">Found a bug</a>?
+    <br />
+
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 2.4.4.
+    </div>
+
+  </body>
+</html>

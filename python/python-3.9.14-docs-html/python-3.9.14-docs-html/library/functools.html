@@ -1,0 +1,778 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ko">
+  <head>
+    <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>functools — 고차 함수와 콜러블 객체에 대한 연산 &#8212; Python 3.9.14 문서</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="../_static/pydoctheme.css?2022.1" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/translations.js"></script>
+    
+    <script src="../_static/sidebar.js"></script>
+    
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Python 3.9.14 문서에서 찾기"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="이 문서 정보" href="../about.html" />
+    <link rel="index" title="색인" href="../genindex.html" />
+    <link rel="search" title="검색" href="../search.html" />
+    <link rel="copyright" title="저작권" href="../copyright.html" />
+    <link rel="next" title="operator — 함수로서의 표준 연산자" href="operator.html" />
+    <link rel="prev" title="itertools — 효율적인 루핑을 위한 이터레이터를 만드는 함수" href="itertools.html" />
+    <link rel="canonical" href="https://docs.python.org/3/library/functools.html" />
+    
+      
+    
+
+    
+    <style>
+      @media only screen {
+        table.full-width-table {
+            width: 100%;
+        }
+      }
+    </style>
+<link rel="shortcut icon" type="image/png" href="../_static/py.svg" />
+            <script type="text/javascript" src="../_static/copybutton.js"></script>
+            <script type="text/javascript" src="../_static/menu.js"></script> 
+
+  </head>
+<body>
+<div class="mobile-nav">
+    <input type="checkbox" id="menuToggler" class="toggler__input" aria-controls="navigation"
+           aria-pressed="false" aria-expanded="false" role="button" aria-label="Menu" />
+    <label for="menuToggler" class="toggler__label">
+        <span></span>
+    </label>
+    <nav class="nav-content" role="navigation">
+         <a href="https://www.python.org/" class="nav-logo">
+             <img src="../_static/py.svg" alt="Logo"/>
+         </a>
+        <div class="version_switcher_placeholder"></div>
+        <form role="search" class="search" action="../search.html" method="get">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" class="search-icon">
+                <path fill-rule="nonzero"
+                        d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 001.48-5.34c-.47-2.78-2.79-5-5.59-5.34a6.505 6.505 0 00-7.27 7.27c.34 2.8 2.56 5.12 5.34 5.59a6.5 6.5 0 005.34-1.48l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49 0 .41-.41.41-1.08 0-1.49L15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" fill="#444"></path>
+            </svg>
+            <input type="text" name="q" aria-label="빠른 검색"/>
+            <input type="submit" value="이동"/>
+        </form>
+    </nav>
+    <div class="menu-wrapper">
+        <nav class="menu" role="navigation" aria-label="main navigation">
+            <div class="language_switcher_placeholder"></div>
+  <h3><a href="../contents.html">목차</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">functools</span></code> — 고차 함수와 콜러블 객체에 대한 연산</a><ul>
+<li><a class="reference internal" href="#partial-objects"><code class="xref py py-class docutils literal notranslate"><span class="pre">partial</span></code> 객체</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>이전 항목</h4>
+  <p class="topless"><a href="itertools.html"
+                        title="이전 장"><code class="xref py py-mod docutils literal notranslate"><span class="pre">itertools</span></code> — 효율적인 루핑을 위한 이터레이터를 만드는 함수</a></p>
+  <h4>다음 항목</h4>
+  <p class="topless"><a href="operator.html"
+                        title="다음 장"><code class="xref py py-mod docutils literal notranslate"><span class="pre">operator</span></code> — 함수로서의 표준 연산자</a></p>
+  <div role="note" aria-label="source link">
+    <h3>현재 문서</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">버그 보고하기</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/3.9/Doc/library/functools.rst"
+            rel="nofollow">소스 보기
+        </a>
+      </li>
+    </ul>
+  </div>
+        </nav>
+    </div>
+</div>
+
+  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>탐색</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="전체 색인"
+             accesskey="I">색인</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 모듈 목록"
+             >모듈</a> |</li>
+        <li class="right" >
+          <a href="operator.html" title="operator — 함수로서의 표준 연산자"
+             accesskey="N">다음</a> |</li>
+        <li class="right" >
+          <a href="itertools.html" title="itertools — 효율적인 루핑을 위한 이터레이터를 만드는 함수"
+             accesskey="P">이전</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.9.14 Documentation</a> &#187;
+    </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >파이썬 표준 라이브러리</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="functional.html" accesskey="U">함수형 프로그래밍 모듈</a> &#187;</li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="빠른 검색" aria-label="빠른 검색" type="text" name="q" />
+          <input type="submit" value="이동" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </form>
+    </div>
+                     |
+                </li>
+            
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="module-functools">
+<span id="functools-higher-order-functions-and-operations-on-callable-objects"></span><h1><a class="reference internal" href="#module-functools" title="functools: Higher-order functions and operations on callable objects."><code class="xref py py-mod docutils literal notranslate"><span class="pre">functools</span></code></a> — 고차 함수와 콜러블 객체에 대한 연산<a class="headerlink" href="#module-functools" title="제목 주소">¶</a></h1>
+<p><strong>소스 코드:</strong> <a class="reference external" href="https://github.com/python/cpython/tree/3.9/Lib/functools.py">Lib/functools.py</a></p>
+<hr class="docutils" />
+<p><a class="reference internal" href="#module-functools" title="functools: Higher-order functions and operations on callable objects."><code class="xref py py-mod docutils literal notranslate"><span class="pre">functools</span></code></a> 모듈은 고차 함수를 위한 것입니다: 다른 함수에 작용하거나 다른 함수를 반환하는 함수. 일반적으로, 모든 콜러블 객체는 이 모듈의 목적상 함수로 취급될 수 있습니다.</p>
+<p><a class="reference internal" href="#module-functools" title="functools: Higher-order functions and operations on callable objects."><code class="xref py py-mod docutils literal notranslate"><span class="pre">functools</span></code></a> 모듈은 다음 함수를 정의합니다:</p>
+<dl class="function">
+<dt id="functools.cache">
+<code class="sig-prename descclassname">&#64;</code><code class="sig-prename descclassname">functools.</code><code class="sig-name descname">cache</code><span class="sig-paren">(</span><em class="sig-param">user_function</em><span class="sig-paren">)</span><a class="headerlink" href="#functools.cache" title="정의 주소">¶</a></dt>
+<dd><p>단순하고 가벼운 무제한 함수 캐시. 때때로 <a class="reference external" href="https://en.wikipedia.org/wiki/Memoization">“memoize”</a>라고도 합니다.</p>
+<p><code class="docutils literal notranslate"><span class="pre">lru_cache(maxsize=None)</span></code>와 같은 것을 반환하여, 함수 인자의 딕셔너리 조회 주위로 얇은 래퍼를 만듭니다. 이전 값을 제거할 필요가 없어서, 크기 제한이 있는 <a class="reference internal" href="#functools.lru_cache" title="functools.lru_cache"><code class="xref py py-func docutils literal notranslate"><span class="pre">lru_cache()</span></code></a>보다 작고 빠릅니다.</p>
+<p>예를 들면:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="nd">@cache</span>
+<span class="k">def</span> <span class="nf">factorial</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">n</span> <span class="o">*</span> <span class="n">factorial</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="k">if</span> <span class="n">n</span> <span class="k">else</span> <span class="mi">1</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">factorial</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>      <span class="c1"># no previously cached result, makes 11 recursive calls</span>
+<span class="mi">3628800</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">factorial</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>       <span class="c1"># just looks up cached value result</span>
+<span class="mi">120</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">factorial</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span>      <span class="c1"># makes two new recursive calls, the other 10 are cached</span>
+<span class="mi">479001600</span>
+</pre></div>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified added">버전 3.9에 추가.</span></p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="functools.cached_property">
+<code class="sig-prename descclassname">&#64;</code><code class="sig-prename descclassname">functools.</code><code class="sig-name descname">cached_property</code><span class="sig-paren">(</span><em class="sig-param">func</em><span class="sig-paren">)</span><a class="headerlink" href="#functools.cached_property" title="정의 주소">¶</a></dt>
+<dd><p>클래스의 메서드를 값이 한 번 계산된 다음 인스턴스 수명 동안 일반 어트리뷰트로 캐시 되는 프로퍼티로 변환합니다. <a class="reference internal" href="functions.html#property" title="property"><code class="xref py py-func docutils literal notranslate"><span class="pre">property()</span></code></a>와 유사하고, 캐싱이 추가되었습니다. 비싸게 계산되고 그 외에는 사실상 불변인 인스턴스의 프로퍼티에 유용합니다.</p>
+<p>예:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">DataSet</span><span class="p">:</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sequence_of_numbers</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_data</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">sequence_of_numbers</span><span class="p">)</span>
+
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span> <span class="nf">stdev</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">statistics</span><span class="o">.</span><span class="n">stdev</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><a class="reference internal" href="#functools.cached_property" title="functools.cached_property"><code class="xref py py-func docutils literal notranslate"><span class="pre">cached_property()</span></code></a>의 메커니즘은 <a class="reference internal" href="functions.html#property" title="property"><code class="xref py py-func docutils literal notranslate"><span class="pre">property()</span></code></a>와 다소 다릅니다. 일반 프로퍼티는 setter가 정의되지 않은 경우 어트리뷰트 쓰기를 차단합니다. 이와는 달리, <em>cached_property</em>는 쓰기를 허용합니다.</p>
+<p><em>cached_property</em> 데코레이터는 조회 시에만, 같은 이름의 어트리뷰트가 존재하지 않을 때만 실행됩니다. 실행되면, <em>cached_property</em>는 같은 이름의 어트리뷰트에 기록합니다. 후속 어트리뷰트 읽기와 쓰기는 <em>cached_property</em> 메서드보다 우선하며 일반 어트리뷰트처럼 작동합니다.</p>
+<p>캐시 된 값은 어트리뷰트를 삭제하여 지울 수 있습니다. 이렇게 하면 <em>cached_property</em> 메서드가 다시 실행됩니다.</p>
+<p>이 데코레이터는 <span class="target" id="index-2"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0412"><strong>PEP 412</strong></a> 키 공유 딕셔너리의 작동을 방해함에 유의하십시오. 이는 인스턴스 딕셔너리가 평소보다 더 많은 공간을 차지할 수 있음을 의미합니다.</p>
+<p>또한, 이 데코레이터는 각 인스턴스의 <code class="docutils literal notranslate"><span class="pre">__dict__</span></code> 어트리뷰트가 가변 매핑일 것을 요구합니다. 이는 메타 클래스(형 인스턴스의 <code class="docutils literal notranslate"><span class="pre">__dict__</span></code> 어트리뷰트가 클래스 이름 공간에 대한 읽기 전용 프락시이기 때문에)와 <code class="docutils literal notranslate"><span class="pre">__dict__</span></code>를 정의된 슬롯 중 하나로 포함하지 않고 <code class="docutils literal notranslate"><span class="pre">__slots__</span></code>를 지정하는 것(이러한 클래스는 <code class="docutils literal notranslate"><span class="pre">__dict__</span></code> 어트리뷰트를 전혀 제공하지 않기 때문에)과 같은 일부 형에서 작동하지 않음을 의미합니다.</p>
+<p>가변 매핑을 사용할 수 없거나 공간 효율적인 키 공유가 필요하면, <a class="reference internal" href="#functools.cache" title="functools.cache"><code class="xref py py-func docutils literal notranslate"><span class="pre">cache()</span></code></a> 위에 <a class="reference internal" href="functions.html#property" title="property"><code class="xref py py-func docutils literal notranslate"><span class="pre">property()</span></code></a>를 쌓아서 <a class="reference internal" href="#functools.cached_property" title="functools.cached_property"><code class="xref py py-func docutils literal notranslate"><span class="pre">cached_property()</span></code></a>와 유사한 효과를 얻을 수 있습니다:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">DataSet</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sequence_of_numbers</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_data</span> <span class="o">=</span> <span class="n">sequence_of_numbers</span>
+
+    <span class="nd">@property</span>
+    <span class="nd">@cache</span>
+    <span class="k">def</span> <span class="nf">stdev</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">statistics</span><span class="o">.</span><span class="n">stdev</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified added">버전 3.8에 추가.</span></p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="functools.cmp_to_key">
+<code class="sig-prename descclassname">functools.</code><code class="sig-name descname">cmp_to_key</code><span class="sig-paren">(</span><em class="sig-param">func</em><span class="sig-paren">)</span><a class="headerlink" href="#functools.cmp_to_key" title="정의 주소">¶</a></dt>
+<dd><p>구식 비교 함수를 <a class="reference internal" href="../glossary.html#term-key-function"><span class="xref std std-term">키 함수</span></a>로 변환합니다. (<a class="reference internal" href="functions.html#sorted" title="sorted"><code class="xref py py-func docutils literal notranslate"><span class="pre">sorted()</span></code></a>, <a class="reference internal" href="functions.html#min" title="min"><code class="xref py py-func docutils literal notranslate"><span class="pre">min()</span></code></a>, <a class="reference internal" href="functions.html#max" title="max"><code class="xref py py-func docutils literal notranslate"><span class="pre">max()</span></code></a>, <a class="reference internal" href="heapq.html#heapq.nlargest" title="heapq.nlargest"><code class="xref py py-func docutils literal notranslate"><span class="pre">heapq.nlargest()</span></code></a>, <a class="reference internal" href="heapq.html#heapq.nsmallest" title="heapq.nsmallest"><code class="xref py py-func docutils literal notranslate"><span class="pre">heapq.nsmallest()</span></code></a>, <a class="reference internal" href="itertools.html#itertools.groupby" title="itertools.groupby"><code class="xref py py-func docutils literal notranslate"><span class="pre">itertools.groupby()</span></code></a>와 같은) 키 함수를 받아들이는 도구와 함께 사용됩니다. 이 함수는 주로 비교 함수 사용을 지원하는 파이썬 2에서 변환되는 프로그램의 전이 도구로 사용됩니다.</p>
+<p>비교 함수는 두 개의 인자를 받아들이고, 그들을 비교하여, 작으면 음수, 같으면 0, 크면 양수를 반환하는 콜러블입니다. 키 함수는 하나의 인자를 받아들이고 정렬 키로 사용할 다른 값을 반환하는 콜러블입니다.</p>
+<p>예:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="nb">sorted</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">cmp_to_key</span><span class="p">(</span><span class="n">locale</span><span class="o">.</span><span class="n">strcoll</span><span class="p">))</span>  <span class="c1"># locale-aware sort order</span>
+</pre></div>
+</div>
+<p>정렬 예제와 간략한 정렬 자습서는 <a class="reference internal" href="../howto/sorting.html#sortinghowto"><span class="std std-ref">정렬 HOW TO</span></a>를 참조하십시오.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">버전 3.2에 추가.</span></p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="functools.lru_cache">
+<code class="sig-prename descclassname">&#64;</code><code class="sig-prename descclassname">functools.</code><code class="sig-name descname">lru_cache</code><span class="sig-paren">(</span><em class="sig-param">user_function</em><span class="sig-paren">)</span><a class="headerlink" href="#functools.lru_cache" title="정의 주소">¶</a></dt>
+<dt>
+<code class="sig-prename descclassname">&#64;</code><code class="sig-prename descclassname">functools.</code><code class="sig-name descname">lru_cache</code><span class="sig-paren">(</span><em class="sig-param">maxsize=128</em>, <em class="sig-param">typed=False</em><span class="sig-paren">)</span></dt>
+<dd><p>가장 최근의 <em>maxsize</em> 호출까지 저장하는 기억하는(memoizing) 콜러블 함수를 감싸는 데코레이터. 비싸거나 I/O 병목 함수가 같은 인자로 주기적으로 호출될 때 시간을 절약할 수 있습니다.</p>
+<p>결과를 캐시 하는 데 딕셔너리가 사용되기 때문에, 함수에 대한 위치와 키워드 인자는 해시 가능해야 합니다.</p>
+<p>서도 다른 인자 패턴은 별도의 캐시 항목을 갖는 별개의 호출로 간주할 수 있습니다. 예를 들어, <cite>f(a=1, b=2)</cite>와 <cite>f(b=2, a=1)</cite>은 키워드 인자 순서가 다르며 두 개의 개별 캐시 항목을 가질 수 있습니다.</p>
+<p><em>user_function</em>이 지정되면, 콜러블이어야 합니다. 이는 <em>lru_cache</em> 데코레이터를 사용자 함수에 직접 적용 할 수 있도록 하며, <em>maxsize</em>를 기본값 128로 유지합니다:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="nd">@lru_cache</span>
+<span class="k">def</span> <span class="nf">count_vowels</span><span class="p">(</span><span class="n">sentence</span><span class="p">):</span>
+    <span class="n">sentence</span> <span class="o">=</span> <span class="n">sentence</span><span class="o">.</span><span class="n">casefold</span><span class="p">()</span>
+    <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">sentence</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">vowel</span><span class="p">)</span> <span class="k">for</span> <span class="n">vowel</span> <span class="ow">in</span> <span class="s1">&#39;aeiou&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><em>maxsize</em>가 <code class="docutils literal notranslate"><span class="pre">None</span></code>으로 설정되면, LRU 기능이 비활성화되고 캐시가 제한 없이 커질 수 있습니다.</p>
+<p><em>typed</em>가 참으로 설정되면, 다른 형의 함수 인자가 별도로 캐시 됩니다. 예를 들어, <code class="docutils literal notranslate"><span class="pre">f(3)</span></code>과 <code class="docutils literal notranslate"><span class="pre">f(3.0)</span></code>은 별개의 결과를 가진 별개의 호출로 취급됩니다.</p>
+<p>래핑 된 함수는 <em>maxsize</em>와 <em>typed</em>의 값을 표시하는 새 <a class="reference internal" href="stdtypes.html#dict" title="dict"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a>를 반환하는 <code class="xref py py-func docutils literal notranslate"><span class="pre">cache_parameters()</span></code> 함수로 인스트루먼트 됩니다. 이것은 정보 제공만을 위한 것입니다. 값을 변경해도 효과가 없습니다.</p>
+<p>캐시의 효과를 측정하고 <em>maxsize</em> 매개 변수를 조정하는 것을 돕기 위해, 래핑 된 함수는 <em>hits</em>, <em>misses</em>, <em>maxsize</em> 및 <em>currsize</em>를 표시하는 <a class="reference internal" href="../glossary.html#term-named-tuple"><span class="xref std std-term">네임드 튜플</span></a>을 반환하는 <code class="xref py py-func docutils literal notranslate"><span class="pre">cache_info()</span></code> 함수로 인스트루먼트 됩니다. 다중 스레드 환경에서, hits와 misses는 근사적(approximate)입니다.</p>
+<p>데코레이터는 캐시를 지우거나 무효로 하기 위한 <code class="xref py py-func docutils literal notranslate"><span class="pre">cache_clear()</span></code> 함수도 제공합니다.</p>
+<p>원래의 하부 함수는 <code class="xref py py-attr docutils literal notranslate"><span class="pre">__wrapped__</span></code> 어트리뷰트를 통해 액세스 할 수 있습니다. 이것은 인트로스펙션, 캐시 우회 또는 다른 캐시로 함수를 다시 래핑하는 데 유용합니다.</p>
+<p><a class="reference external" href="https://en.wikipedia.org/wiki/Cache_replacement_policies#Least_recently_used_(LRU)">LRU (least recently used) 캐시</a>는 가장 최근 호출이 향후 호출에 대한 최상의 예측일 때 가장 잘 작동합니다 (예를 들어, 뉴스 서버에서 가장 인기 있는 기사는 매일 바뀌는 경향이 있습니다). 캐시의 크기 제한은 웹 서버와 같은 오래 실행되는 프로세스에서 제한 없이 캐시가 커지지 않도록 합니다.</p>
+<p>일반적으로, LRU 캐시는 이전에 계산된 값을 재사용하려고 할 때만 사용해야 합니다. 따라서, 부작용이 있는 함수, 각 호출에서 고유한 가변 객체를 만들어야 하는 함수, time()이나 random()과 같은 비순수(impure) 함수를 캐시 하는 것은 의미가 없습니다.</p>
+<p>정적 웹 콘텐츠를 위한 LRU 캐시의 예:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="nd">@lru_cache</span><span class="p">(</span><span class="n">maxsize</span><span class="o">=</span><span class="mi">32</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">get_pep</span><span class="p">(</span><span class="n">num</span><span class="p">):</span>
+    <span class="s1">&#39;Retrieve text of a Python Enhancement Proposal&#39;</span>
+    <span class="n">resource</span> <span class="o">=</span> <span class="s1">&#39;https://www.python.org/dev/peps/pep-</span><span class="si">%04d</span><span class="s1">/&#39;</span> <span class="o">%</span> <span class="n">num</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">with</span> <span class="n">urllib</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="n">resource</span><span class="p">)</span> <span class="k">as</span> <span class="n">s</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">s</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+    <span class="k">except</span> <span class="n">urllib</span><span class="o">.</span><span class="n">error</span><span class="o">.</span><span class="n">HTTPError</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s1">&#39;Not Found&#39;</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">290</span><span class="p">,</span> <span class="mi">308</span><span class="p">,</span> <span class="mi">320</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">218</span><span class="p">,</span> <span class="mi">320</span><span class="p">,</span> <span class="mi">279</span><span class="p">,</span> <span class="mi">289</span><span class="p">,</span> <span class="mi">320</span><span class="p">,</span> <span class="mi">9991</span><span class="p">:</span>
+<span class="o">...</span>     <span class="n">pep</span> <span class="o">=</span> <span class="n">get_pep</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+<span class="o">...</span>     <span class="nb">print</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">pep</span><span class="p">))</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">get_pep</span><span class="o">.</span><span class="n">cache_info</span><span class="p">()</span>
+<span class="n">CacheInfo</span><span class="p">(</span><span class="n">hits</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">misses</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">maxsize</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">currsize</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="https://en.wikipedia.org/wiki/Dynamic_programming">동적 프로그래밍(dynamic programming)</a> 기법을 구현하기 위해 캐시를 사용하여 <a class="reference external" href="https://en.wikipedia.org/wiki/Fibonacci_number">피보나치 수</a>를 효율적으로 계산하는 예:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="nd">@lru_cache</span><span class="p">(</span><span class="n">maxsize</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">fib</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">n</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">n</span>
+    <span class="k">return</span> <span class="n">fib</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">fib</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="p">[</span><span class="n">fib</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">16</span><span class="p">)]</span>
+<span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="mi">34</span><span class="p">,</span> <span class="mi">55</span><span class="p">,</span> <span class="mi">89</span><span class="p">,</span> <span class="mi">144</span><span class="p">,</span> <span class="mi">233</span><span class="p">,</span> <span class="mi">377</span><span class="p">,</span> <span class="mi">610</span><span class="p">]</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">fib</span><span class="o">.</span><span class="n">cache_info</span><span class="p">()</span>
+<span class="n">CacheInfo</span><span class="p">(</span><span class="n">hits</span><span class="o">=</span><span class="mi">28</span><span class="p">,</span> <span class="n">misses</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">maxsize</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">currsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified added">버전 3.2에 추가.</span></p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">버전 3.3에서 변경: </span><em>typed</em> 옵션을 추가했습니다.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">버전 3.8에서 변경: </span><em>user_function</em> 옵션을 추가했습니다.</p>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified added">버전 3.9에 추가: </span><code class="xref py py-func docutils literal notranslate"><span class="pre">cache_parameters()</span></code> 함수를 추가했습니다</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="functools.total_ordering">
+<code class="sig-prename descclassname">&#64;</code><code class="sig-prename descclassname">functools.</code><code class="sig-name descname">total_ordering</code><a class="headerlink" href="#functools.total_ordering" title="정의 주소">¶</a></dt>
+<dd><p>하나 이상의 풍부한 비교(rich comparison) 순서 메서드를 정의하는 클래스를 주면, 이 클래스 데코레이터가 나머지를 제공합니다. 가능한 모든 풍부한 비교 연산을 지정하는 데 드는 노력이 단순화됩니다:</p>
+<p>클래스는 <a class="reference internal" href="../reference/datamodel.html#object.__lt__" title="object.__lt__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">__lt__()</span></code></a>, <a class="reference internal" href="../reference/datamodel.html#object.__le__" title="object.__le__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">__le__()</span></code></a>, <a class="reference internal" href="../reference/datamodel.html#object.__gt__" title="object.__gt__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">__gt__()</span></code></a> 또는 <a class="reference internal" href="../reference/datamodel.html#object.__ge__" title="object.__ge__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">__ge__()</span></code></a> 중 하나를 정의해야 합니다. 또한, 클래스는 <a class="reference internal" href="../reference/datamodel.html#object.__eq__" title="object.__eq__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">__eq__()</span></code></a> 메서드를 제공해야 합니다.</p>
+<p>예를 들면:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="nd">@total_ordering</span>
+<span class="k">class</span> <span class="nc">Student</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">_is_valid_operand</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">(</span><span class="nb">hasattr</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="s2">&quot;lastname&quot;</span><span class="p">)</span> <span class="ow">and</span>
+                <span class="nb">hasattr</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="s2">&quot;firstname&quot;</span><span class="p">))</span>
+    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_valid_operand</span><span class="p">(</span><span class="n">other</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">NotImplemented</span>
+        <span class="k">return</span> <span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">lastname</span><span class="o">.</span><span class="n">lower</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">firstname</span><span class="o">.</span><span class="n">lower</span><span class="p">())</span> <span class="o">==</span>
+                <span class="p">(</span><span class="n">other</span><span class="o">.</span><span class="n">lastname</span><span class="o">.</span><span class="n">lower</span><span class="p">(),</span> <span class="n">other</span><span class="o">.</span><span class="n">firstname</span><span class="o">.</span><span class="n">lower</span><span class="p">()))</span>
+    <span class="k">def</span> <span class="fm">__lt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_valid_operand</span><span class="p">(</span><span class="n">other</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">NotImplemented</span>
+        <span class="k">return</span> <span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">lastname</span><span class="o">.</span><span class="n">lower</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">firstname</span><span class="o">.</span><span class="n">lower</span><span class="p">())</span> <span class="o">&lt;</span>
+                <span class="p">(</span><span class="n">other</span><span class="o">.</span><span class="n">lastname</span><span class="o">.</span><span class="n">lower</span><span class="p">(),</span> <span class="n">other</span><span class="o">.</span><span class="n">firstname</span><span class="o">.</span><span class="n">lower</span><span class="p">()))</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">참고</p>
+<p>이 데코레이터를 사용하면 올바르게 동작하는 전 순서(totally ordered) 형을 쉽게 만들 수 있지만, 파생된 비교 메서드에서 실행 속도가 느려지고 스택 트레이스가 더 복잡해지는 대가를 지불합니다. 성능 벤치마킹이 이것이 특정 응용 프로그램의 병목임을 가리키면, 6가지의 풍부한 비교 메서드를 모두 구현하여 속도를 쉽게 높일 수 있습니다.</p>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified added">버전 3.2에 추가.</span></p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">버전 3.4에서 변경: </span>인식할 수 없는 형에 대해 하부 비교 함수에서 NotImplemented를 반환하는 것이 이제 지원됩니다.</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="functools.partial">
+<code class="sig-prename descclassname">functools.</code><code class="sig-name descname">partial</code><span class="sig-paren">(</span><em class="sig-param">func</em>, <em class="sig-param">/</em>, <em class="sig-param">*args</em>, <em class="sig-param">**keywords</em><span class="sig-paren">)</span><a class="headerlink" href="#functools.partial" title="정의 주소">¶</a></dt>
+<dd><p>호출될 때 위치 인자 <em>args</em>와 키워드 인자 <em>keywords</em>로 호출된 <em>func</em>처럼 동작하는 새 <a class="reference internal" href="#partial-objects"><span class="std std-ref">partial 객체</span></a>를 반환합니다. 더 많은 인자가 호출에 제공되면, <em>args</em>에 추가됩니다. 추가 키워드 인자가 제공되면, <em>keywords</em>를 확장하고 대체합니다. 대략 다음과 동등합니다:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">partial</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="o">/</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">keywords</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">newfunc</span><span class="p">(</span><span class="o">*</span><span class="n">fargs</span><span class="p">,</span> <span class="o">**</span><span class="n">fkeywords</span><span class="p">):</span>
+        <span class="n">newkeywords</span> <span class="o">=</span> <span class="p">{</span><span class="o">**</span><span class="n">keywords</span><span class="p">,</span> <span class="o">**</span><span class="n">fkeywords</span><span class="p">}</span>
+        <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">*</span><span class="n">fargs</span><span class="p">,</span> <span class="o">**</span><span class="n">newkeywords</span><span class="p">)</span>
+    <span class="n">newfunc</span><span class="o">.</span><span class="n">func</span> <span class="o">=</span> <span class="n">func</span>
+    <span class="n">newfunc</span><span class="o">.</span><span class="n">args</span> <span class="o">=</span> <span class="n">args</span>
+    <span class="n">newfunc</span><span class="o">.</span><span class="n">keywords</span> <span class="o">=</span> <span class="n">keywords</span>
+    <span class="k">return</span> <span class="n">newfunc</span>
+</pre></div>
+</div>
+<p><a class="reference internal" href="#functools.partial" title="functools.partial"><code class="xref py py-func docutils literal notranslate"><span class="pre">partial()</span></code></a>은 함수의 인자 및/또는 키워드의 일부를 “고정”하여 서명이 단순화된 새 객체를 생성하는 부분 함수 응용에 사용됩니다. 예를 들어, <a class="reference internal" href="#functools.partial" title="functools.partial"><code class="xref py py-func docutils literal notranslate"><span class="pre">partial()</span></code></a>을 사용하여 <em>base</em> 인자의 기본값이 2이면서 <a class="reference internal" href="functions.html#int" title="int"><code class="xref py py-func docutils literal notranslate"><span class="pre">int()</span></code></a> 함수 같은 동작을 하는 콜러블을 만들 수 있습니다:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">partial</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">basetwo</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="n">base</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">basetwo</span><span class="o">.</span><span class="vm">__doc__</span> <span class="o">=</span> <span class="s1">&#39;Convert base 2 string to an int.&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">basetwo</span><span class="p">(</span><span class="s1">&#39;10010&#39;</span><span class="p">)</span>
+<span class="go">18</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="class">
+<dt id="functools.partialmethod">
+<em class="property">class </em><code class="sig-prename descclassname">functools.</code><code class="sig-name descname">partialmethod</code><span class="sig-paren">(</span><em class="sig-param">func</em>, <em class="sig-param">/</em>, <em class="sig-param">*args</em>, <em class="sig-param">**keywords</em><span class="sig-paren">)</span><a class="headerlink" href="#functools.partialmethod" title="정의 주소">¶</a></dt>
+<dd><p>직접 호출하기보다는 메서드 정의로 사용되도록 설계된 것을 제외하고는 <a class="reference internal" href="#functools.partial" title="functools.partial"><code class="xref py py-class docutils literal notranslate"><span class="pre">partial</span></code></a>과 같이 동작하는 새 <a class="reference internal" href="#functools.partialmethod" title="functools.partialmethod"><code class="xref py py-class docutils literal notranslate"><span class="pre">partialmethod</span></code></a> 디스크립터를 반환합니다.</p>
+<p><em>func</em>는 <a class="reference internal" href="../glossary.html#term-descriptor"><span class="xref std std-term">디스크립터</span></a>나 콜러블이어야 합니다 (일반 함수처럼 둘 모두인 객체는 디스크립터로 처리됩니다).</p>
+<p><em>func</em>가 디스크립터(가령 일반 파이썬 함수, <a class="reference internal" href="functions.html#classmethod" title="classmethod"><code class="xref py py-func docutils literal notranslate"><span class="pre">classmethod()</span></code></a>, <a class="reference internal" href="functions.html#staticmethod" title="staticmethod"><code class="xref py py-func docutils literal notranslate"><span class="pre">staticmethod()</span></code></a>, <code class="xref py py-func docutils literal notranslate"><span class="pre">abstractmethod()</span></code> 또는 <a class="reference internal" href="#functools.partialmethod" title="functools.partialmethod"><code class="xref py py-class docutils literal notranslate"><span class="pre">partialmethod</span></code></a>의 다른 인스턴스)이면, <code class="docutils literal notranslate"><span class="pre">__get__</span></code>에 대한 호출은 하부 디스크립터에 위임되고, 적절한 <a class="reference internal" href="#partial-objects"><span class="std std-ref">partial 객체</span></a>가 결과로 반환됩니다.</p>
+<p><em>func</em>가 디스크립터가 아닌 콜러블이면, 적절한 연결된 메서드가 동적으로 만들어집니다. 이것은 메서드로 사용될 때 일반 파이썬 함수처럼 작동합니다: <a class="reference internal" href="#functools.partialmethod" title="functools.partialmethod"><code class="xref py py-class docutils literal notranslate"><span class="pre">partialmethod</span></code></a> 생성자에 제공된 <em>args</em>와 <em>keywords</em>보다도 전에 <em>self</em> 인자가 첫 번째 위치 인자로 삽입됩니다.</p>
+<p>예:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">Cell</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="gp">... </span>        <span class="bp">self</span><span class="o">.</span><span class="n">_alive</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="gp">... </span>    <span class="nd">@property</span>
+<span class="gp">... </span>    <span class="k">def</span> <span class="nf">alive</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="gp">... </span>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_alive</span>
+<span class="gp">... </span>    <span class="k">def</span> <span class="nf">set_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+<span class="gp">... </span>        <span class="bp">self</span><span class="o">.</span><span class="n">_alive</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="n">set_alive</span> <span class="o">=</span> <span class="n">partialmethod</span><span class="p">(</span><span class="n">set_state</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="n">set_dead</span> <span class="o">=</span> <span class="n">partialmethod</span><span class="p">(</span><span class="n">set_state</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">c</span> <span class="o">=</span> <span class="n">Cell</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">c</span><span class="o">.</span><span class="n">alive</span>
+<span class="go">False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">c</span><span class="o">.</span><span class="n">set_alive</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">c</span><span class="o">.</span><span class="n">alive</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified added">버전 3.4에 추가.</span></p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="functools.reduce">
+<code class="sig-prename descclassname">functools.</code><code class="sig-name descname">reduce</code><span class="sig-paren">(</span><em class="sig-param">function</em>, <em class="sig-param">iterable</em><span class="optional">[</span>, <em class="sig-param">initializer</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#functools.reduce" title="정의 주소">¶</a></dt>
+<dd><p>두 인자의 <em>function</em>을 왼쪽에서 오른쪽으로 <em>iterable</em>의 항목에 누적적으로 적용해서, 이터러블을 단일 값으로 줄입니다. 예를 들어, <code class="docutils literal notranslate"><span class="pre">reduce(lambda</span> <span class="pre">x,</span> <span class="pre">y:</span> <span class="pre">x+y,</span> <span class="pre">[1,</span> <span class="pre">2,</span> <span class="pre">3,</span> <span class="pre">4,</span> <span class="pre">5])</span></code>는 <code class="docutils literal notranslate"><span class="pre">((((1+2)+3)+4)+5)</span></code>를 계산합니다. 왼쪽 인자 <em>x</em>는 누적값이고 오른쪽 인자 <em>y</em>는 <em>iterable</em>에서 온 갱신 값입니다. 선택적 <em>initializer</em>가 있으면, 계산에서 이터러블의 항목 앞에 배치되고, 이터러블이 비어있을 때 기본값의 역할을 합니다. <em>initializer</em>가 제공되지 않고 <em>iterable</em>에 하나의 항목만 포함되면, 첫 번째 항목이 반환됩니다.</p>
+<p>대략 다음과 동등합니다:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">reduce</span><span class="p">(</span><span class="n">function</span><span class="p">,</span> <span class="n">iterable</span><span class="p">,</span> <span class="n">initializer</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="n">it</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">iterable</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">initializer</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">it</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="n">initializer</span>
+    <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">it</span><span class="p">:</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="n">function</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">element</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">value</span>
+</pre></div>
+</div>
+<p>모든 중간값을 산출하는 이터레이터는 <a class="reference internal" href="itertools.html#itertools.accumulate" title="itertools.accumulate"><code class="xref py py-func docutils literal notranslate"><span class="pre">itertools.accumulate()</span></code></a>를 참조하십시오.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="functools.singledispatch">
+<code class="sig-prename descclassname">&#64;</code><code class="sig-prename descclassname">functools.</code><code class="sig-name descname">singledispatch</code><a class="headerlink" href="#functools.singledispatch" title="정의 주소">¶</a></dt>
+<dd><p>함수를 <a class="reference internal" href="../glossary.html#term-single-dispatch"><span class="xref std std-term">싱글 디스패치</span></a> <a class="reference internal" href="../glossary.html#term-generic-function"><span class="xref std std-term">제네릭 함수</span></a>로 변환합니다.</p>
+<p>To define a generic function, decorate it with the <code class="docutils literal notranslate"><span class="pre">&#64;singledispatch</span></code>
+decorator. When defining a function using <code class="docutils literal notranslate"><span class="pre">&#64;singledispatch</span></code>, note that the
+dispatch happens on the type of the first argument:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">singledispatch</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nd">@singledispatch</span>
+<span class="gp">... </span><span class="k">def</span> <span class="nf">fun</span><span class="p">(</span><span class="n">arg</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+<span class="gp">... </span>        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Let me just say,&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>To add overloaded implementations to the function, use the <code class="xref py py-func docutils literal notranslate"><span class="pre">register()</span></code>
+attribute of the generic function, which can be used as a decorator.  For
+functions annotated with types, the decorator will infer the type of the
+first argument automatically:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nd">@fun</span><span class="o">.</span><span class="n">register</span>
+<span class="gp">... </span><span class="k">def</span> <span class="nf">_</span><span class="p">(</span><span class="n">arg</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+<span class="gp">... </span>        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Strength in numbers, eh?&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nd">@fun</span><span class="o">.</span><span class="n">register</span>
+<span class="gp">... </span><span class="k">def</span> <span class="nf">_</span><span class="p">(</span><span class="n">arg</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+<span class="gp">... </span>        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Enumerate this:&quot;</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">elem</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">arg</span><span class="p">):</span>
+<span class="gp">... </span>        <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">elem</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>형 어노테이션을 사용하지 않는 코드의 경우, 적절한 형 인자를 데코레이터 자체에 명시적으로 전달할 수 있습니다:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nd">@fun</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="nb">complex</span><span class="p">)</span>
+<span class="gp">... </span><span class="k">def</span> <span class="nf">_</span><span class="p">(</span><span class="n">arg</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+<span class="gp">... </span>        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Better than complicated.&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="n">arg</span><span class="o">.</span><span class="n">real</span><span class="p">,</span> <span class="n">arg</span><span class="o">.</span><span class="n">imag</span><span class="p">)</span>
+<span class="gp">...</span>
+</pre></div>
+</div>
+<p>To enable registering <a class="reference internal" href="../glossary.html#term-lambda"><span class="xref std std-term">lambdas</span></a> and pre-existing functions,
+the <code class="xref py py-func docutils literal notranslate"><span class="pre">register()</span></code> attribute can also be used in a functional form:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">nothing</span><span class="p">(</span><span class="n">arg</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Nothing.&quot;</span><span class="p">)</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fun</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="kc">None</span><span class="p">),</span> <span class="n">nothing</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The <code class="xref py py-func docutils literal notranslate"><span class="pre">register()</span></code> attribute returns the undecorated function. This
+enables decorator stacking, <a class="reference internal" href="pickle.html#module-pickle" title="pickle: Convert Python objects to streams of bytes and back."><code class="xref py py-mod docutils literal notranslate"><span class="pre">pickling</span></code></a>, and the creation
+of unit tests for each variant independently:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nd">@fun</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+<span class="gp">... </span><span class="nd">@fun</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">Decimal</span><span class="p">)</span>
+<span class="gp">... </span><span class="k">def</span> <span class="nf">fun_num</span><span class="p">(</span><span class="n">arg</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+<span class="gp">... </span>        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Half of your number:&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="n">arg</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fun_num</span> <span class="ow">is</span> <span class="n">fun</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+<p>호출되면, 제네릭 함수는 첫 번째 인자의 형에 따라 디스패치 합니다:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">fun</span><span class="p">(</span><span class="s2">&quot;Hello, world.&quot;</span><span class="p">)</span>
+<span class="go">Hello, world.</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fun</span><span class="p">(</span><span class="s2">&quot;test.&quot;</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="go">Let me just say, test.</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fun</span><span class="p">(</span><span class="mi">42</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="go">Strength in numbers, eh? 42</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fun</span><span class="p">([</span><span class="s1">&#39;spam&#39;</span><span class="p">,</span> <span class="s1">&#39;spam&#39;</span><span class="p">,</span> <span class="s1">&#39;eggs&#39;</span><span class="p">,</span> <span class="s1">&#39;spam&#39;</span><span class="p">],</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="go">Enumerate this:</span>
+<span class="go">0 spam</span>
+<span class="go">1 spam</span>
+<span class="go">2 eggs</span>
+<span class="go">3 spam</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fun</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+<span class="go">Nothing.</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fun</span><span class="p">(</span><span class="mf">1.23</span><span class="p">)</span>
+<span class="go">0.615</span>
+</pre></div>
+</div>
+<p>Where there is no registered implementation for a specific type, its
+method resolution order is used to find a more generic implementation.
+The original function decorated with <code class="docutils literal notranslate"><span class="pre">&#64;singledispatch</span></code> is registered
+for the base <a class="reference internal" href="functions.html#object" title="object"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a> type, which means it is used if no better
+implementation is found.</p>
+<p>If an implementation is registered to an <a class="reference internal" href="../glossary.html#term-abstract-base-class"><span class="xref std std-term">abstract base class</span></a>,
+virtual subclasses of the base class will be dispatched to that
+implementation:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">collections.abc</span> <span class="kn">import</span> <span class="n">Mapping</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nd">@fun</span><span class="o">.</span><span class="n">register</span>
+<span class="gp">... </span><span class="k">def</span> <span class="nf">_</span><span class="p">(</span><span class="n">arg</span><span class="p">:</span> <span class="n">Mapping</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+<span class="gp">... </span>        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Keys &amp; Values&quot;</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">arg</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+<span class="gp">... </span>        <span class="nb">print</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="s2">&quot;=&gt;&quot;</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fun</span><span class="p">({</span><span class="s2">&quot;a&quot;</span><span class="p">:</span> <span class="s2">&quot;b&quot;</span><span class="p">})</span>
+<span class="go">a =&gt; b</span>
+</pre></div>
+</div>
+<p>To check which implementation the generic function will choose for
+a given type, use the <code class="docutils literal notranslate"><span class="pre">dispatch()</span></code> attribute:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">fun</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+<span class="go">&lt;function fun_num at 0x1035a2840&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fun</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="nb">dict</span><span class="p">)</span>    <span class="c1"># note: default implementation</span>
+<span class="go">&lt;function fun at 0x103fe0000&gt;</span>
+</pre></div>
+</div>
+<p>등록된 모든 구현에 액세스하려면, 읽기 전용 <code class="docutils literal notranslate"><span class="pre">registry</span></code> 어트리뷰트를 사용하십시오:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">fun</span><span class="o">.</span><span class="n">registry</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+<span class="go">dict_keys([&lt;class &#39;NoneType&#39;&gt;, &lt;class &#39;int&#39;&gt;, &lt;class &#39;object&#39;&gt;,</span>
+<span class="go">          &lt;class &#39;decimal.Decimal&#39;&gt;, &lt;class &#39;list&#39;&gt;,</span>
+<span class="go">          &lt;class &#39;float&#39;&gt;])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fun</span><span class="o">.</span><span class="n">registry</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span>
+<span class="go">&lt;function fun_num at 0x1035a2840&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fun</span><span class="o">.</span><span class="n">registry</span><span class="p">[</span><span class="nb">object</span><span class="p">]</span>
+<span class="go">&lt;function fun at 0x103fe0000&gt;</span>
+</pre></div>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified added">버전 3.4에 추가.</span></p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">버전 3.7에서 변경: </span>The <code class="xref py py-func docutils literal notranslate"><span class="pre">register()</span></code> attribute now supports using type annotations.</p>
+</div>
+</dd></dl>
+
+<dl class="class">
+<dt id="functools.singledispatchmethod">
+<em class="property">class </em><code class="sig-prename descclassname">functools.</code><code class="sig-name descname">singledispatchmethod</code><span class="sig-paren">(</span><em class="sig-param">func</em><span class="sig-paren">)</span><a class="headerlink" href="#functools.singledispatchmethod" title="정의 주소">¶</a></dt>
+<dd><p>메서드를 <a class="reference internal" href="../glossary.html#term-single-dispatch"><span class="xref std std-term">싱글 디스패치</span></a> <a class="reference internal" href="../glossary.html#term-generic-function"><span class="xref std std-term">제네릭 함수</span></a>로 변환합니다.</p>
+<p>To define a generic method, decorate it with the <code class="docutils literal notranslate"><span class="pre">&#64;singledispatchmethod</span></code>
+decorator. When defining a function using <code class="docutils literal notranslate"><span class="pre">&#64;singledispatchmethod</span></code>, note
+that the dispatch happens on the type of the first non-<em>self</em> or non-<em>cls</em>
+argument:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Negator</span><span class="p">:</span>
+    <span class="nd">@singledispatchmethod</span>
+    <span class="k">def</span> <span class="nf">neg</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">arg</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;Cannot negate a&quot;</span><span class="p">)</span>
+
+    <span class="nd">@neg</span><span class="o">.</span><span class="n">register</span>
+    <span class="k">def</span> <span class="nf">_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">arg</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="k">return</span> <span class="o">-</span><span class="n">arg</span>
+
+    <span class="nd">@neg</span><span class="o">.</span><span class="n">register</span>
+    <span class="k">def</span> <span class="nf">_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">arg</span><span class="p">:</span> <span class="nb">bool</span><span class="p">):</span>
+        <span class="k">return</span> <span class="ow">not</span> <span class="n">arg</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">&#64;singledispatchmethod</span></code> supports nesting with other decorators such as
+<a class="reference internal" href="functions.html#classmethod" title="classmethod"><code class="xref py py-func docutils literal notranslate"><span class="pre">&#64;classmethod</span></code></a>. Note that to allow for
+<code class="docutils literal notranslate"><span class="pre">dispatcher.register</span></code>, <code class="docutils literal notranslate"><span class="pre">singledispatchmethod</span></code> must be the <em>outer most</em>
+decorator. Here is the <code class="docutils literal notranslate"><span class="pre">Negator</span></code> class with the <code class="docutils literal notranslate"><span class="pre">neg</span></code> methods bound to
+the class, rather than an instance of the class:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Negator</span><span class="p">:</span>
+    <span class="nd">@singledispatchmethod</span>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">neg</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">arg</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;Cannot negate a&quot;</span><span class="p">)</span>
+
+    <span class="nd">@neg</span><span class="o">.</span><span class="n">register</span>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">_</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">arg</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="k">return</span> <span class="o">-</span><span class="n">arg</span>
+
+    <span class="nd">@neg</span><span class="o">.</span><span class="n">register</span>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">_</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">arg</span><span class="p">:</span> <span class="nb">bool</span><span class="p">):</span>
+        <span class="k">return</span> <span class="ow">not</span> <span class="n">arg</span>
+</pre></div>
+</div>
+<p>The same pattern can be used for other similar decorators:
+<a class="reference internal" href="functions.html#staticmethod" title="staticmethod"><code class="xref py py-func docutils literal notranslate"><span class="pre">&#64;staticmethod</span></code></a>,
+<a class="reference internal" href="abc.html#abc.abstractmethod" title="abc.abstractmethod"><code class="xref py py-func docutils literal notranslate"><span class="pre">&#64;abstractmethod</span></code></a>, and others.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">버전 3.8에 추가.</span></p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="functools.update_wrapper">
+<code class="sig-prename descclassname">functools.</code><code class="sig-name descname">update_wrapper</code><span class="sig-paren">(</span><em class="sig-param">wrapper</em>, <em class="sig-param">wrapped</em>, <em class="sig-param">assigned=WRAPPER_ASSIGNMENTS</em>, <em class="sig-param">updated=WRAPPER_UPDATES</em><span class="sig-paren">)</span><a class="headerlink" href="#functools.update_wrapper" title="정의 주소">¶</a></dt>
+<dd><p><em>wrapped</em> 함수처럼 보이도록 <em>wrapper</em> 함수를 갱신합니다. 선택적 인자는 원래 함수의 어떤 어트리뷰트가 wrapper 함수의 일치하는 어트리뷰트에 직접 대입되고 wrapper 함수의 어떤 어트리뷰트가 원래 함수의 해당 어트리뷰트로 갱신되는지 지정하는 튜플입니다. 이 인자들의 기본값은 모듈 수준 상수 <code class="docutils literal notranslate"><span class="pre">WRAPPER_ASSIGNMENTS</span></code>(wrapper 함수의 <code class="docutils literal notranslate"><span class="pre">__module__</span></code>, <code class="docutils literal notranslate"><span class="pre">__name__</span></code>, <code class="docutils literal notranslate"><span class="pre">__qualname__</span></code>, <code class="docutils literal notranslate"><span class="pre">__annotations__</span></code> 및 <code class="docutils literal notranslate"><span class="pre">__doc__</span></code> 독스트링에 대입합니다)와 <code class="docutils literal notranslate"><span class="pre">WRAPPER_UPDATES</span></code>(wrapper 함수의 <code class="docutils literal notranslate"><span class="pre">__dict__</span></code>, 즉 인스턴스 딕셔너리를 갱신합니다)입니다.</p>
+<p>내부 검사와 기타 목적(예를 들어 <a class="reference internal" href="#functools.lru_cache" title="functools.lru_cache"><code class="xref py py-func docutils literal notranslate"><span class="pre">lru_cache()</span></code></a>와 같은 캐싱 데코레이터 우회)을 위해 원래 함수에 액세스 할 수 있도록, 이 함수는 래핑 되는 함수를 가리키는 <code class="docutils literal notranslate"><span class="pre">__wrapped__</span></code> 어트리뷰트를 wrapper에 자동으로 추가합니다.</p>
+<p>이 함수의 주요 용도는 데코레이트 된 함수를 래핑하고 wrapper를 반환하는 <a class="reference internal" href="../glossary.html#term-decorator"><span class="xref std std-term">데코레이터</span></a> 함수에서 사용하는 것입니다. wrapper 함수가 갱신되지 않으면, 반환된 함수의 메타 데이터는 원래 함수 정의가 아닌 wrapper 정의를 반영하게 되어 일반적으로 도움이 되지 않습니다.</p>
+<p><a class="reference internal" href="#functools.update_wrapper" title="functools.update_wrapper"><code class="xref py py-func docutils literal notranslate"><span class="pre">update_wrapper()</span></code></a>는 함수 이외의 콜러블과 함께 사용할 수 있습니다. 래핑 되는 객체에서 누락된 <em>assigned</em>나 <em>updated</em>로 이름 지정된 어트리뷰트는 무시됩니다 (즉, 이 함수는 wrapper 함수에서 그 어트리뷰트를 설정하려고 시도하지 않습니다). wrapper 함수 자체에 <em>updated</em>에 이름 지정된 어트리뷰트가 없으면 여전히 <a class="reference internal" href="exceptions.html#AttributeError" title="AttributeError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">AttributeError</span></code></a>가 발생합니다.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">버전 3.2에 추가: </span><code class="docutils literal notranslate"><span class="pre">__wrapped__</span></code> 어트리뷰트 자동 추가.</p>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified added">버전 3.2에 추가: </span>기본적으로 <code class="docutils literal notranslate"><span class="pre">__annotations__</span></code> 어트리뷰트의 복사.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">버전 3.2에서 변경: </span>누락된 어트리뷰트는 더는 <a class="reference internal" href="exceptions.html#AttributeError" title="AttributeError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">AttributeError</span></code></a>를 발생시키지 않습니다.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">버전 3.4에서 변경: </span><code class="docutils literal notranslate"><span class="pre">__wrapped__</span></code> 어트리뷰트는 이제 해당 함수가 <code class="docutils literal notranslate"><span class="pre">__wrapped__</span></code> 어트리뷰트를 정의한 경우에도 항상 래핑 된 함수를 참조합니다. (<a class="reference external" href="https://bugs.python.org/issue?&#64;action=redirect&amp;bpo=17482">bpo-17482</a>를 참조하십시오)</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="functools.wraps">
+<code class="sig-prename descclassname">&#64;</code><code class="sig-prename descclassname">functools.</code><code class="sig-name descname">wraps</code><span class="sig-paren">(</span><em class="sig-param">wrapped</em>, <em class="sig-param">assigned=WRAPPER_ASSIGNMENTS</em>, <em class="sig-param">updated=WRAPPER_UPDATES</em><span class="sig-paren">)</span><a class="headerlink" href="#functools.wraps" title="정의 주소">¶</a></dt>
+<dd><p>래퍼 함수를 정의할 때 함수 데코레이터로 <a class="reference internal" href="#functools.update_wrapper" title="functools.update_wrapper"><code class="xref py py-func docutils literal notranslate"><span class="pre">update_wrapper()</span></code></a>를 호출하기 위한 편의 함수입니다. <code class="docutils literal notranslate"><span class="pre">partial(update_wrapper,</span> <span class="pre">wrapped=wrapped,</span> <span class="pre">assigned=assigned,</span> <span class="pre">updated=updated)</span></code>와 동등합니다. 예를 들면:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">wraps</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">my_decorator</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="nd">@wraps</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">):</span>
+<span class="gp">... </span>        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Calling decorated function&#39;</span><span class="p">)</span>
+<span class="gp">... </span>        <span class="k">return</span> <span class="n">f</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="k">return</span> <span class="n">wrapper</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nd">@my_decorator</span>
+<span class="gp">... </span><span class="k">def</span> <span class="nf">example</span><span class="p">():</span>
+<span class="gp">... </span>    <span class="sd">&quot;&quot;&quot;Docstring&quot;&quot;&quot;</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Called example function&#39;</span><span class="p">)</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">example</span><span class="p">()</span>
+<span class="go">Calling decorated function</span>
+<span class="go">Called example function</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">example</span><span class="o">.</span><span class="vm">__name__</span>
+<span class="go">&#39;example&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">example</span><span class="o">.</span><span class="vm">__doc__</span>
+<span class="go">&#39;Docstring&#39;</span>
+</pre></div>
+</div>
+<p>이 데코레이터 팩토리를 사용하지 않으면, example 함수의 이름은 <code class="docutils literal notranslate"><span class="pre">'wrapper'</span></code>가 되고, 원래 <code class="xref py py-func docutils literal notranslate"><span class="pre">example()</span></code>의 독스트링은 잃어버리게 됩니다.</p>
+</dd></dl>
+
+<section id="partial-objects">
+<span id="id1"></span><h2><a class="reference internal" href="#functools.partial" title="functools.partial"><code class="xref py py-class docutils literal notranslate"><span class="pre">partial</span></code></a> 객체<a class="headerlink" href="#partial-objects" title="제목 주소">¶</a></h2>
+<p><a class="reference internal" href="#functools.partial" title="functools.partial"><code class="xref py py-class docutils literal notranslate"><span class="pre">partial</span></code></a> 객체는 <a class="reference internal" href="#functools.partial" title="functools.partial"><code class="xref py py-func docutils literal notranslate"><span class="pre">partial()</span></code></a>이 만든 콜러블 객체입니다. 세 가지 읽기 전용 어트리뷰트가 있습니다:</p>
+<dl class="attribute">
+<dt id="functools.partial.func">
+<code class="sig-prename descclassname">partial.</code><code class="sig-name descname">func</code><a class="headerlink" href="#functools.partial.func" title="정의 주소">¶</a></dt>
+<dd><p>콜러블 객체나 함수. <a class="reference internal" href="#functools.partial" title="functools.partial"><code class="xref py py-class docutils literal notranslate"><span class="pre">partial</span></code></a> 객체에 대한 호출은 새로운 인자와 키워드와 함께 <a class="reference internal" href="#functools.partial.func" title="functools.partial.func"><code class="xref py py-attr docutils literal notranslate"><span class="pre">func</span></code></a>로 전달됩니다.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="functools.partial.args">
+<code class="sig-prename descclassname">partial.</code><code class="sig-name descname">args</code><a class="headerlink" href="#functools.partial.args" title="정의 주소">¶</a></dt>
+<dd><p><a class="reference internal" href="#functools.partial" title="functools.partial"><code class="xref py py-class docutils literal notranslate"><span class="pre">partial</span></code></a> 객체 호출에 제공되는 위치 인자 앞에 추가될 가장 왼쪽 위치 인자들입니다.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="functools.partial.keywords">
+<code class="sig-prename descclassname">partial.</code><code class="sig-name descname">keywords</code><a class="headerlink" href="#functools.partial.keywords" title="정의 주소">¶</a></dt>
+<dd><p><a class="reference internal" href="#functools.partial" title="functools.partial"><code class="xref py py-class docutils literal notranslate"><span class="pre">partial</span></code></a> 객체가 호출될 때 제공될 키워드 인자들입니다.</p>
+</dd></dl>
+
+<p><a class="reference internal" href="#functools.partial" title="functools.partial"><code class="xref py py-class docutils literal notranslate"><span class="pre">partial</span></code></a> 객체는 콜러블이고, 약한 참조 가능하며, 어트리뷰트를 가질 수 있다는 점에서 <code class="xref py py-class docutils literal notranslate"><span class="pre">function</span></code> 객체와 같습니다. 몇 가지 중요한 차이점이 있습니다. 예를 들어, <a class="reference internal" href="stdtypes.html#definition.__name__" title="definition.__name__"><code class="xref py py-attr docutils literal notranslate"><span class="pre">__name__</span></code></a>과 <code class="xref py py-attr docutils literal notranslate"><span class="pre">__doc__</span></code> 어트리뷰트는 자동으로 만들어지지 않습니다. 또한, 클래스에 정의된 <a class="reference internal" href="#functools.partial" title="functools.partial"><code class="xref py py-class docutils literal notranslate"><span class="pre">partial</span></code></a> 객체는 정적 메서드처럼 동작하며 인스턴스 어트리뷰트 조회 중에 연결된 메서드로 변환되지 않습니다.</p>
+</section>
+</section>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../contents.html">목차</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">functools</span></code> — 고차 함수와 콜러블 객체에 대한 연산</a><ul>
+<li><a class="reference internal" href="#partial-objects"><code class="xref py py-class docutils literal notranslate"><span class="pre">partial</span></code> 객체</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>이전 항목</h4>
+  <p class="topless"><a href="itertools.html"
+                        title="이전 장"><code class="xref py py-mod docutils literal notranslate"><span class="pre">itertools</span></code> — 효율적인 루핑을 위한 이터레이터를 만드는 함수</a></p>
+  <h4>다음 항목</h4>
+  <p class="topless"><a href="operator.html"
+                        title="다음 장"><code class="xref py py-mod docutils literal notranslate"><span class="pre">operator</span></code> — 함수로서의 표준 연산자</a></p>
+  <div role="note" aria-label="source link">
+    <h3>현재 문서</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">버그 보고하기</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/3.9/Doc/library/functools.rst"
+            rel="nofollow">소스 보기
+        </a>
+      </li>
+    </ul>
+  </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>탐색</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="전체 색인"
+             >색인</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 모듈 목록"
+             >모듈</a> |</li>
+        <li class="right" >
+          <a href="operator.html" title="operator — 함수로서의 표준 연산자"
+             >다음</a> |</li>
+        <li class="right" >
+          <a href="itertools.html" title="itertools — 효율적인 루핑을 위한 이터레이터를 만드는 함수"
+             >이전</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.9.14 Documentation</a> &#187;
+    </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >파이썬 표준 라이브러리</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="functional.html" >함수형 프로그래밍 모듈</a> &#187;</li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="빠른 검색" aria-label="빠른 검색" type="text" name="q" />
+          <input type="submit" value="이동" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </form>
+    </div>
+                     |
+                </li>
+            
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">저작권</a> 2001-2022, Python Software Foundation.
+    <br />
+    This page is licensed under the Python Software Foundation License Version 2.
+    <br />
+    Examples, recipes, and other code in the documentation are additionally licensed under the Zero Clause BSD License.
+    <br />
+    See <a href="/license.html">History and License</a> for more information.<br />
+    <br />
+
+    The Python Software Foundation is a non-profit corporation.
+<a href="https://www.python.org/psf/donations/">Please donate.</a>
+<br />
+    <br />
+
+    최종 업데이트: 9월 11, 2022
+    <a href="/bugs.html">Found a bug</a>?
+    <br />
+
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 2.4.4.
+    </div>
+
+  </body>
+</html>

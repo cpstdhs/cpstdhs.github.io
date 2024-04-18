@@ -1,0 +1,391 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ko">
+  <head>
+    <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>pyclbr — 파이썬 모듈 브라우저 지원 &#8212; Python 3.9.14 문서</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="../_static/pydoctheme.css?2022.1" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/translations.js"></script>
+    
+    <script src="../_static/sidebar.js"></script>
+    
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Python 3.9.14 문서에서 찾기"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="이 문서 정보" href="../about.html" />
+    <link rel="index" title="색인" href="../genindex.html" />
+    <link rel="search" title="검색" href="../search.html" />
+    <link rel="copyright" title="저작권" href="../copyright.html" />
+    <link rel="next" title="py_compile — 파이썬 소스 파일 컴파일" href="py_compile.html" />
+    <link rel="prev" title="tabnanny — 모호한 들여쓰기 감지" href="tabnanny.html" />
+    <link rel="canonical" href="https://docs.python.org/3/library/pyclbr.html" />
+    
+      
+    
+
+    
+    <style>
+      @media only screen {
+        table.full-width-table {
+            width: 100%;
+        }
+      }
+    </style>
+<link rel="shortcut icon" type="image/png" href="../_static/py.svg" />
+            <script type="text/javascript" src="../_static/copybutton.js"></script>
+            <script type="text/javascript" src="../_static/menu.js"></script> 
+
+  </head>
+<body>
+<div class="mobile-nav">
+    <input type="checkbox" id="menuToggler" class="toggler__input" aria-controls="navigation"
+           aria-pressed="false" aria-expanded="false" role="button" aria-label="Menu" />
+    <label for="menuToggler" class="toggler__label">
+        <span></span>
+    </label>
+    <nav class="nav-content" role="navigation">
+         <a href="https://www.python.org/" class="nav-logo">
+             <img src="../_static/py.svg" alt="Logo"/>
+         </a>
+        <div class="version_switcher_placeholder"></div>
+        <form role="search" class="search" action="../search.html" method="get">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" class="search-icon">
+                <path fill-rule="nonzero"
+                        d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 001.48-5.34c-.47-2.78-2.79-5-5.59-5.34a6.505 6.505 0 00-7.27 7.27c.34 2.8 2.56 5.12 5.34 5.59a6.5 6.5 0 005.34-1.48l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49 0 .41-.41.41-1.08 0-1.49L15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" fill="#444"></path>
+            </svg>
+            <input type="text" name="q" aria-label="빠른 검색"/>
+            <input type="submit" value="이동"/>
+        </form>
+    </nav>
+    <div class="menu-wrapper">
+        <nav class="menu" role="navigation" aria-label="main navigation">
+            <div class="language_switcher_placeholder"></div>
+  <h3><a href="../contents.html">목차</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pyclbr</span></code> — 파이썬 모듈 브라우저 지원</a><ul>
+<li><a class="reference internal" href="#function-objects">Function 객체</a></li>
+<li><a class="reference internal" href="#class-objects">Class 객체</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>이전 항목</h4>
+  <p class="topless"><a href="tabnanny.html"
+                        title="이전 장"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tabnanny</span></code> — 모호한 들여쓰기 감지</a></p>
+  <h4>다음 항목</h4>
+  <p class="topless"><a href="py_compile.html"
+                        title="다음 장"><code class="xref py py-mod docutils literal notranslate"><span class="pre">py_compile</span></code> — 파이썬 소스 파일 컴파일</a></p>
+  <div role="note" aria-label="source link">
+    <h3>현재 문서</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">버그 보고하기</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/3.9/Doc/library/pyclbr.rst"
+            rel="nofollow">소스 보기
+        </a>
+      </li>
+    </ul>
+  </div>
+        </nav>
+    </div>
+</div>
+
+  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>탐색</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="전체 색인"
+             accesskey="I">색인</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 모듈 목록"
+             >모듈</a> |</li>
+        <li class="right" >
+          <a href="py_compile.html" title="py_compile — 파이썬 소스 파일 컴파일"
+             accesskey="N">다음</a> |</li>
+        <li class="right" >
+          <a href="tabnanny.html" title="tabnanny — 모호한 들여쓰기 감지"
+             accesskey="P">이전</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.9.14 Documentation</a> &#187;
+    </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >파이썬 표준 라이브러리</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="language.html" accesskey="U">파이썬 언어 서비스</a> &#187;</li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="빠른 검색" aria-label="빠른 검색" type="text" name="q" />
+          <input type="submit" value="이동" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </form>
+    </div>
+                     |
+                </li>
+            
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="module-pyclbr">
+<span id="pyclbr-python-module-browser-support"></span><h1><a class="reference internal" href="#module-pyclbr" title="pyclbr: Supports information extraction for a Python module browser."><code class="xref py py-mod docutils literal notranslate"><span class="pre">pyclbr</span></code></a> — 파이썬 모듈 브라우저 지원<a class="headerlink" href="#module-pyclbr" title="제목 주소">¶</a></h1>
+<p><strong>소스 코드:</strong> <a class="reference external" href="https://github.com/python/cpython/tree/3.9/Lib/pyclbr.py">Lib/pyclbr.py</a></p>
+<hr class="docutils" />
+<p><a class="reference internal" href="#module-pyclbr" title="pyclbr: Supports information extraction for a Python module browser."><code class="xref py py-mod docutils literal notranslate"><span class="pre">pyclbr</span></code></a> 모듈은 파이썬 코드 모듈에 정의된 함수, 클래스 및 메서드에 대한 제한된 정보를 제공합니다. 이 정보는 모듈 브라우저를 구현하기에 충분합니다. 정보는 모듈을 임포트 하기보다는 파이썬 소스 코드에서 추출되므로 이 모듈은 신뢰할 수 없는 코드와 함께 사용하는 것이 안전합니다. 이 제한으로 인해 이 모듈을 모든 표준 및 선택 확장 모듈을 포함하여 파이썬으로 구현되지 않은 모듈에 사용할 수 없습니다.</p>
+<dl class="function">
+<dt id="pyclbr.readmodule">
+<code class="sig-prename descclassname">pyclbr.</code><code class="sig-name descname">readmodule</code><span class="sig-paren">(</span><em class="sig-param">module</em>, <em class="sig-param">path=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pyclbr.readmodule" title="정의 주소">¶</a></dt>
+<dd><p>모듈 수준의 클래스 이름을 클래스 설명자에 매핑하는 딕셔너리를 돌려줍니다. 가능하면, 임포트 된 베이스 클래스에 관한 설명자가 포함됩니다. 매개 변수 <em>module</em>은 읽을 모듈 이름이 들어있는 문자열입니다; 패키지 내의 모듈 이름일 수 있습니다. 주어지면, <em>path</em>는 <code class="docutils literal notranslate"><span class="pre">sys.path</span></code> 앞에 추가된 디렉터리 경로 시퀀스인데, 모듈 소스 코드의 위치를 찾는 데 사용됩니다.</p>
+<p>이 함수는 원래 인터페이스이며 이전 버전과의 호환성을 위해서만 유지됩니다. 다음 함수의 필터링 된 버전을 반환합니다.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyclbr.readmodule_ex">
+<code class="sig-prename descclassname">pyclbr.</code><code class="sig-name descname">readmodule_ex</code><span class="sig-paren">(</span><em class="sig-param">module</em>, <em class="sig-param">path=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pyclbr.readmodule_ex" title="정의 주소">¶</a></dt>
+<dd><p><code class="docutils literal notranslate"><span class="pre">def</span></code> 나 <code class="docutils literal notranslate"><span class="pre">class</span></code> 문을 사용하여 모듈에 정의된 각 함수 및 클래스에 대한 함수나 클래스 설명자를 포함하는 딕셔너리 기반 트리를 반환합니다. 반환된 딕셔너리는 모듈 수준의 함수와 클래스 이름을 해당 설명자에 대응합니다. 중첩된 객체는 그들의 parent의 children 딕셔너리에 들어갑니다. readmodule과 마찬가지로, <em>module</em>은 읽을 모듈의 이름을 지정하고 <em>path</em>는 sys.path의 앞에 추가됩니다. 읽히는 모듈이 패키지면, 반환된 딕셔너리는 키 <code class="docutils literal notranslate"><span class="pre">'__path__'</span></code>를 가지는데, 값은 패키지 검색 경로를 포함하는 리스트입니다.</p>
+</dd></dl>
+
+<div class="versionadded">
+<p><span class="versionmodified added">버전 3.7에 추가: </span>중첩된 정의에 대한 설명자. 새로운 children 어트리뷰트를 통해 액세스할 수 있습니다. 각에는 새로운 parent 어트리뷰트가 있습니다.</p>
+</div>
+<p>이러한 함수에 의해 반환되는 설명자는 Function과 Class 클래스의 인스턴스입니다. 사용자가 이러한 클래스의 인스턴스를 만들 것으로 기대하지 않습니다.</p>
+<section id="function-objects">
+<span id="pyclbr-function-objects"></span><h2>Function 객체<a class="headerlink" href="#function-objects" title="제목 주소">¶</a></h2>
+<p>클래스 <code class="xref py py-class docutils literal notranslate"><span class="pre">Function</span></code> 인스턴스는 def 문으로 정의된 함수를 설명합니다. 다음과 같은 어트리뷰트를 가지고 있습니다 :</p>
+<dl class="attribute">
+<dt id="pyclbr.Function.file">
+<code class="sig-prename descclassname">Function.</code><code class="sig-name descname">file</code><a class="headerlink" href="#pyclbr.Function.file" title="정의 주소">¶</a></dt>
+<dd><p>함수가 정의된 파일의 이름.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyclbr.Function.module">
+<code class="sig-prename descclassname">Function.</code><code class="sig-name descname">module</code><a class="headerlink" href="#pyclbr.Function.module" title="정의 주소">¶</a></dt>
+<dd><p>설명된 함수를 정의하는 모듈의 이름.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyclbr.Function.name">
+<code class="sig-prename descclassname">Function.</code><code class="sig-name descname">name</code><a class="headerlink" href="#pyclbr.Function.name" title="정의 주소">¶</a></dt>
+<dd><p>함수의 이름.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyclbr.Function.lineno">
+<code class="sig-prename descclassname">Function.</code><code class="sig-name descname">lineno</code><a class="headerlink" href="#pyclbr.Function.lineno" title="정의 주소">¶</a></dt>
+<dd><p>정의가 시작되는 파일의 줄 번호.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyclbr.Function.parent">
+<code class="sig-prename descclassname">Function.</code><code class="sig-name descname">parent</code><a class="headerlink" href="#pyclbr.Function.parent" title="정의 주소">¶</a></dt>
+<dd><p>최상위 함수면, None. 중첩된 함수면, 부모.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">버전 3.7에 추가.</span></p>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyclbr.Function.children">
+<code class="sig-prename descclassname">Function.</code><code class="sig-name descname">children</code><a class="headerlink" href="#pyclbr.Function.children" title="정의 주소">¶</a></dt>
+<dd><p>이름을 중첩된 함수와 클래스에 관한 설명자로 매핑하는 딕셔너리.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">버전 3.7에 추가.</span></p>
+</div>
+</dd></dl>
+
+</section>
+<section id="class-objects">
+<span id="pyclbr-class-objects"></span><h2>Class 객체<a class="headerlink" href="#class-objects" title="제목 주소">¶</a></h2>
+<p>클래스 <code class="xref py py-class docutils literal notranslate"><span class="pre">Class</span></code> 인스턴스는 class 문으로 정의된 클래스를 설명합니다. Function과 같은 어트리뷰트에 더해 두 개의 어트리뷰트가 더 있습니다.</p>
+<dl class="attribute">
+<dt id="pyclbr.Class.file">
+<code class="sig-prename descclassname">Class.</code><code class="sig-name descname">file</code><a class="headerlink" href="#pyclbr.Class.file" title="정의 주소">¶</a></dt>
+<dd><p>클래스가 정의된 파일의 이름.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyclbr.Class.module">
+<code class="sig-prename descclassname">Class.</code><code class="sig-name descname">module</code><a class="headerlink" href="#pyclbr.Class.module" title="정의 주소">¶</a></dt>
+<dd><p>설명된 클래스를 정의하는 모듈의 이름.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyclbr.Class.name">
+<code class="sig-prename descclassname">Class.</code><code class="sig-name descname">name</code><a class="headerlink" href="#pyclbr.Class.name" title="정의 주소">¶</a></dt>
+<dd><p>클래스의 이름.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyclbr.Class.lineno">
+<code class="sig-prename descclassname">Class.</code><code class="sig-name descname">lineno</code><a class="headerlink" href="#pyclbr.Class.lineno" title="정의 주소">¶</a></dt>
+<dd><p>정의가 시작되는 파일의 줄 번호.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyclbr.Class.parent">
+<code class="sig-prename descclassname">Class.</code><code class="sig-name descname">parent</code><a class="headerlink" href="#pyclbr.Class.parent" title="정의 주소">¶</a></dt>
+<dd><p>최상위 클래스면, None. 중첩된 클래스면, 부모.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">버전 3.7에 추가.</span></p>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyclbr.Class.children">
+<code class="sig-prename descclassname">Class.</code><code class="sig-name descname">children</code><a class="headerlink" href="#pyclbr.Class.children" title="정의 주소">¶</a></dt>
+<dd><p>이름을 중첩된 함수와 클래스에 관한 설명자로 매핑하는 딕셔너리.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">버전 3.7에 추가.</span></p>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyclbr.Class.super">
+<code class="sig-prename descclassname">Class.</code><code class="sig-name descname">super</code><a class="headerlink" href="#pyclbr.Class.super" title="정의 주소">¶</a></dt>
+<dd><p>설명되는 클래스의 직접적인 베이스 클래스를 설명하는 <code class="xref py py-class docutils literal notranslate"><span class="pre">Class</span></code> 객체의 리스트. 슈퍼 클래스로 명명되었지만 <a class="reference internal" href="#pyclbr.readmodule_ex" title="pyclbr.readmodule_ex"><code class="xref py py-func docutils literal notranslate"><span class="pre">readmodule_ex()</span></code></a>가 찾을 수 없는 클래스는 <code class="xref py py-class docutils literal notranslate"><span class="pre">Class</span></code> 객체가 아니라 클래스 이름을 담은 문자열로 나열됩니다.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyclbr.Class.methods">
+<code class="sig-prename descclassname">Class.</code><code class="sig-name descname">methods</code><a class="headerlink" href="#pyclbr.Class.methods" title="정의 주소">¶</a></dt>
+<dd><p>메서드 이름을 줄 번호에 매핑하는 딕셔너리. 최신 children 딕셔너리에서 파생될 수 있지만, 이전 버전과의 호환성을 위해 남아있습니다.</p>
+</dd></dl>
+
+</section>
+</section>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../contents.html">목차</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pyclbr</span></code> — 파이썬 모듈 브라우저 지원</a><ul>
+<li><a class="reference internal" href="#function-objects">Function 객체</a></li>
+<li><a class="reference internal" href="#class-objects">Class 객체</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>이전 항목</h4>
+  <p class="topless"><a href="tabnanny.html"
+                        title="이전 장"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tabnanny</span></code> — 모호한 들여쓰기 감지</a></p>
+  <h4>다음 항목</h4>
+  <p class="topless"><a href="py_compile.html"
+                        title="다음 장"><code class="xref py py-mod docutils literal notranslate"><span class="pre">py_compile</span></code> — 파이썬 소스 파일 컴파일</a></p>
+  <div role="note" aria-label="source link">
+    <h3>현재 문서</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">버그 보고하기</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/3.9/Doc/library/pyclbr.rst"
+            rel="nofollow">소스 보기
+        </a>
+      </li>
+    </ul>
+  </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>탐색</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="전체 색인"
+             >색인</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 모듈 목록"
+             >모듈</a> |</li>
+        <li class="right" >
+          <a href="py_compile.html" title="py_compile — 파이썬 소스 파일 컴파일"
+             >다음</a> |</li>
+        <li class="right" >
+          <a href="tabnanny.html" title="tabnanny — 모호한 들여쓰기 감지"
+             >이전</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.9.14 Documentation</a> &#187;
+    </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >파이썬 표준 라이브러리</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="language.html" >파이썬 언어 서비스</a> &#187;</li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="빠른 검색" aria-label="빠른 검색" type="text" name="q" />
+          <input type="submit" value="이동" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </form>
+    </div>
+                     |
+                </li>
+            
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">저작권</a> 2001-2022, Python Software Foundation.
+    <br />
+    This page is licensed under the Python Software Foundation License Version 2.
+    <br />
+    Examples, recipes, and other code in the documentation are additionally licensed under the Zero Clause BSD License.
+    <br />
+    See <a href="/license.html">History and License</a> for more information.<br />
+    <br />
+
+    The Python Software Foundation is a non-profit corporation.
+<a href="https://www.python.org/psf/donations/">Please donate.</a>
+<br />
+    <br />
+
+    최종 업데이트: 9월 11, 2022
+    <a href="/bugs.html">Found a bug</a>?
+    <br />
+
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 2.4.4.
+    </div>
+
+  </body>
+</html>

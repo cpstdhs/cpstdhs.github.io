@@ -1,0 +1,389 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ko">
+  <head>
+    <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>컨텍스트 변수 객체 &#8212; Python 3.9.14 문서</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="../_static/pydoctheme.css?2022.1" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/translations.js"></script>
+    
+    <script src="../_static/sidebar.js"></script>
+    
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Python 3.9.14 문서에서 찾기"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="이 문서 정보" href="../about.html" />
+    <link rel="index" title="색인" href="../genindex.html" />
+    <link rel="search" title="검색" href="../search.html" />
+    <link rel="copyright" title="저작권" href="../copyright.html" />
+    <link rel="next" title="DateTime 객체" href="datetime.html" />
+    <link rel="prev" title="코루틴 객체" href="coro.html" />
+    <link rel="canonical" href="https://docs.python.org/3/c-api/contextvars.html" />
+    
+      
+    
+
+    
+    <style>
+      @media only screen {
+        table.full-width-table {
+            width: 100%;
+        }
+      }
+    </style>
+<link rel="shortcut icon" type="image/png" href="../_static/py.svg" />
+            <script type="text/javascript" src="../_static/copybutton.js"></script>
+            <script type="text/javascript" src="../_static/menu.js"></script> 
+
+  </head>
+<body>
+<div class="mobile-nav">
+    <input type="checkbox" id="menuToggler" class="toggler__input" aria-controls="navigation"
+           aria-pressed="false" aria-expanded="false" role="button" aria-label="Menu" />
+    <label for="menuToggler" class="toggler__label">
+        <span></span>
+    </label>
+    <nav class="nav-content" role="navigation">
+         <a href="https://www.python.org/" class="nav-logo">
+             <img src="../_static/py.svg" alt="Logo"/>
+         </a>
+        <div class="version_switcher_placeholder"></div>
+        <form role="search" class="search" action="../search.html" method="get">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" class="search-icon">
+                <path fill-rule="nonzero"
+                        d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 001.48-5.34c-.47-2.78-2.79-5-5.59-5.34a6.505 6.505 0 00-7.27 7.27c.34 2.8 2.56 5.12 5.34 5.59a6.5 6.5 0 005.34-1.48l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49 0 .41-.41.41-1.08 0-1.49L15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" fill="#444"></path>
+            </svg>
+            <input type="text" name="q" aria-label="빠른 검색"/>
+            <input type="submit" value="이동"/>
+        </form>
+    </nav>
+    <div class="menu-wrapper">
+        <nav class="menu" role="navigation" aria-label="main navigation">
+            <div class="language_switcher_placeholder"></div>
+  <h4>이전 항목</h4>
+  <p class="topless"><a href="coro.html"
+                        title="이전 장">코루틴 객체</a></p>
+  <h4>다음 항목</h4>
+  <p class="topless"><a href="datetime.html"
+                        title="다음 장">DateTime 객체</a></p>
+  <div role="note" aria-label="source link">
+    <h3>현재 문서</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">버그 보고하기</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/3.9/Doc/c-api/contextvars.rst"
+            rel="nofollow">소스 보기
+        </a>
+      </li>
+    </ul>
+  </div>
+        </nav>
+    </div>
+</div>
+
+  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>탐색</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="전체 색인"
+             accesskey="I">색인</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 모듈 목록"
+             >모듈</a> |</li>
+        <li class="right" >
+          <a href="datetime.html" title="DateTime 객체"
+             accesskey="N">다음</a> |</li>
+        <li class="right" >
+          <a href="coro.html" title="코루틴 객체"
+             accesskey="P">이전</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.9.14 Documentation</a> &#187;
+    </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >파이썬/C API 레퍼런스 설명서</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="concrete.html" accesskey="U">구상 객체 계층</a> &#187;</li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="빠른 검색" aria-label="빠른 검색" type="text" name="q" />
+          <input type="submit" value="이동" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </form>
+    </div>
+                     |
+                </li>
+            
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="context-variables-objects">
+<span id="contextvarsobjects"></span><h1>컨텍스트 변수 객체<a class="headerlink" href="#context-variables-objects" title="제목 주소">¶</a></h1>
+<div class="versionchanged" id="contextvarsobjects-pointertype-change">
+<div class="admonition note">
+<p class="admonition-title">참고</p>
+<span class="versionmodified changed">버전 3.7.1에서 변경: </span><p>파이썬 3.7.1에서 모든 컨텍스트 변수 C API의 서명이 <a class="reference internal" href="#c.PyContext" title="PyContext"><code class="xref c c-type docutils literal notranslate"><span class="pre">PyContext</span></code></a>, <a class="reference internal" href="#c.PyContextVar" title="PyContextVar"><code class="xref c c-type docutils literal notranslate"><span class="pre">PyContextVar</span></code></a> 및 <a class="reference internal" href="#c.PyContextToken" title="PyContextToken"><code class="xref c c-type docutils literal notranslate"><span class="pre">PyContextToken</span></code></a> 대신 <a class="reference internal" href="structures.html#c.PyObject" title="PyObject"><code class="xref c c-type docutils literal notranslate"><span class="pre">PyObject</span></code></a> 포인터를 사용하도록 <strong>변경되었습니다</strong>, 예를 들어:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="c1">// in 3.7.0:</span>
+<span class="n">PyContext</span><span class="w"> </span><span class="o">*</span><span class="nf">PyContext_New</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span><span class="w"></span>
+
+<span class="c1">// in 3.7.1+:</span>
+<span class="n">PyObject</span><span class="w"> </span><span class="o">*</span><span class="nf">PyContext_New</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+<p>자세한 내용은 <a class="reference external" href="https://bugs.python.org/issue?&#64;action=redirect&amp;bpo=34762">bpo-34762</a>를 참조하십시오.</p>
+</div>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified added">버전 3.7에 추가.</span></p>
+</div>
+<p>이 절에서는 <a class="reference internal" href="../library/contextvars.html#module-contextvars" title="contextvars: Context Variables"><code class="xref py py-mod docutils literal notranslate"><span class="pre">contextvars</span></code></a> 모듈을 위한 공용 C API에 대해 자세히 설명합니다.</p>
+<dl class="type">
+<dt id="c.PyContext">
+<code class="sig-name descname">PyContext</code><a class="headerlink" href="#c.PyContext" title="정의 주소">¶</a></dt>
+<dd><p><a class="reference internal" href="../library/contextvars.html#contextvars.Context" title="contextvars.Context"><code class="xref py py-class docutils literal notranslate"><span class="pre">contextvars.Context</span></code></a> 객체를 나타내는 데 사용되는 C 구조체.</p>
+</dd></dl>
+
+<dl class="type">
+<dt id="c.PyContextVar">
+<code class="sig-name descname">PyContextVar</code><a class="headerlink" href="#c.PyContextVar" title="정의 주소">¶</a></dt>
+<dd><p><a class="reference internal" href="../library/contextvars.html#contextvars.ContextVar" title="contextvars.ContextVar"><code class="xref py py-class docutils literal notranslate"><span class="pre">contextvars.ContextVar</span></code></a> 객체를 나타내는 데 사용되는 C 구조체.</p>
+</dd></dl>
+
+<dl class="type">
+<dt id="c.PyContextToken">
+<code class="sig-name descname">PyContextToken</code><a class="headerlink" href="#c.PyContextToken" title="정의 주소">¶</a></dt>
+<dd><p><a class="reference internal" href="../library/contextvars.html#contextvars.Token" title="contextvars.Token"><code class="xref py py-class docutils literal notranslate"><span class="pre">contextvars.Token</span></code></a> 객체를 나타내는 데 사용되는 C 구조체.</p>
+</dd></dl>
+
+<dl class="var">
+<dt id="c.PyContext_Type">
+<a class="reference internal" href="type.html#c.PyTypeObject" title="PyTypeObject">PyTypeObject</a> <code class="sig-name descname">PyContext_Type</code><a class="headerlink" href="#c.PyContext_Type" title="정의 주소">¶</a></dt>
+<dd><p><em>context</em> 형을 나타내는 형 객체.</p>
+</dd></dl>
+
+<dl class="var">
+<dt id="c.PyContextVar_Type">
+<a class="reference internal" href="type.html#c.PyTypeObject" title="PyTypeObject">PyTypeObject</a> <code class="sig-name descname">PyContextVar_Type</code><a class="headerlink" href="#c.PyContextVar_Type" title="정의 주소">¶</a></dt>
+<dd><p><em>컨텍스트 변수</em> 형을 나타내는 형 객체.</p>
+</dd></dl>
+
+<dl class="var">
+<dt id="c.PyContextToken_Type">
+<a class="reference internal" href="type.html#c.PyTypeObject" title="PyTypeObject">PyTypeObject</a> <code class="sig-name descname">PyContextToken_Type</code><a class="headerlink" href="#c.PyContextToken_Type" title="정의 주소">¶</a></dt>
+<dd><p><em>컨텍스트 변수 토큰</em> 형을 나타내는 형 객체.</p>
+</dd></dl>
+
+<p>형 검사 매크로:</p>
+<dl class="function">
+<dt id="c.PyContext_CheckExact">
+int <code class="sig-name descname">PyContext_CheckExact</code><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em> *o</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyContext_CheckExact" title="정의 주소">¶</a></dt>
+<dd><p><em>o</em>가 <a class="reference internal" href="#c.PyContext_Type" title="PyContext_Type"><code class="xref c c-data docutils literal notranslate"><span class="pre">PyContext_Type</span></code></a> 형이면 참을 돌려줍니다. <em>o</em>는 <code class="docutils literal notranslate"><span class="pre">NULL</span></code>이 아니어야 합니다. 이 함수는 항상 성공합니다.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyContextVar_CheckExact">
+int <code class="sig-name descname">PyContextVar_CheckExact</code><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em> *o</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyContextVar_CheckExact" title="정의 주소">¶</a></dt>
+<dd><p><em>o</em>가 <a class="reference internal" href="#c.PyContextVar_Type" title="PyContextVar_Type"><code class="xref c c-data docutils literal notranslate"><span class="pre">PyContextVar_Type</span></code></a> 형이면 참을 돌려줍니다. <em>o</em>는 <code class="docutils literal notranslate"><span class="pre">NULL</span></code>이 아니어야 합니다. 이 함수는 항상 성공합니다.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyContextToken_CheckExact">
+int <code class="sig-name descname">PyContextToken_CheckExact</code><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em> *o</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyContextToken_CheckExact" title="정의 주소">¶</a></dt>
+<dd><p><em>o</em>가 <a class="reference internal" href="#c.PyContextToken_Type" title="PyContextToken_Type"><code class="xref c c-data docutils literal notranslate"><span class="pre">PyContextToken_Type</span></code></a> 형이면 참을 돌려줍니다. <em>o</em>는 <code class="docutils literal notranslate"><span class="pre">NULL</span></code>이 아니어야 합니다. 이 함수는 항상 성공합니다.</p>
+</dd></dl>
+
+<p>컨텍스트 객체 관리 함수:</p>
+<dl class="function">
+<dt id="c.PyContext_New">
+<a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a> *<code class="sig-name descname">PyContext_New</code><span class="sig-paren">(</span>void<span class="sig-paren">)</span><a class="headerlink" href="#c.PyContext_New" title="정의 주소">¶</a></dt>
+<dd><em class="refcount">Return value: New reference.</em><p>새로운 빈 컨텍스트 객체를 만듭니다. 에러가 발생하면 <code class="docutils literal notranslate"><span class="pre">NULL</span></code>를 반환합니다.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyContext_Copy">
+<a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a> *<code class="sig-name descname">PyContext_Copy</code><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em> *ctx</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyContext_Copy" title="정의 주소">¶</a></dt>
+<dd><em class="refcount">Return value: New reference.</em><p>전달된 <em>ctx</em> 컨텍스트 객체의 얕은 복사본을 만듭니다. 에러가 발생하면 <code class="docutils literal notranslate"><span class="pre">NULL</span></code>을 반환합니다.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyContext_CopyCurrent">
+<a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a> *<code class="sig-name descname">PyContext_CopyCurrent</code><span class="sig-paren">(</span>void<span class="sig-paren">)</span><a class="headerlink" href="#c.PyContext_CopyCurrent" title="정의 주소">¶</a></dt>
+<dd><em class="refcount">Return value: New reference.</em><p>현재 스레드 컨텍스트의 얕은 복사본을 만듭니다. 에러가 발생하면 <code class="docutils literal notranslate"><span class="pre">NULL</span></code>을 반환합니다.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyContext_Enter">
+int <code class="sig-name descname">PyContext_Enter</code><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em> *ctx</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyContext_Enter" title="정의 주소">¶</a></dt>
+<dd><p>현재 스레드의 현재 컨텍스트로 <em>ctx</em>를 설정합니다. 성공 시 <code class="docutils literal notranslate"><span class="pre">0</span></code>을 반환하고, 에러 시 <code class="docutils literal notranslate"><span class="pre">-1</span></code>을 반환합니다.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyContext_Exit">
+int <code class="sig-name descname">PyContext_Exit</code><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em> *ctx</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyContext_Exit" title="정의 주소">¶</a></dt>
+<dd><p><em>ctx</em> 컨텍스트를 비활성화하고 이전 컨텍스트를 현재 스레드의 현재 컨텍스트로 복원합니다. 성공 시 <code class="docutils literal notranslate"><span class="pre">0</span></code>을 반환하고, 에러 시 <code class="docutils literal notranslate"><span class="pre">-1</span></code>을 반환합니다.</p>
+</dd></dl>
+
+<p>컨텍스트 변수 함수:</p>
+<dl class="function">
+<dt id="c.PyContextVar_New">
+<a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a> *<code class="sig-name descname">PyContextVar_New</code><span class="sig-paren">(</span>const char<em> *name</em>, <a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em> *def</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyContextVar_New" title="정의 주소">¶</a></dt>
+<dd><em class="refcount">Return value: New reference.</em><p>Create a new <code class="docutils literal notranslate"><span class="pre">ContextVar</span></code> object.  The <em>name</em> parameter is used
+for introspection and debug purposes.  The <em>def</em> parameter specifies
+a default value for the context variable, or <code class="docutils literal notranslate"><span class="pre">NULL</span></code> for no default.
+If an error has occurred, this function returns <code class="docutils literal notranslate"><span class="pre">NULL</span></code>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyContextVar_Get">
+int <code class="sig-name descname">PyContextVar_Get</code><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em> *var</em>, <a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em> *default_value</em>, <a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em> **value</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyContextVar_Get" title="정의 주소">¶</a></dt>
+<dd><p>컨텍스트 변수의 값을 가져옵니다. 조회하는 동안 에러가 발생하면 <code class="docutils literal notranslate"><span class="pre">-1</span></code>을 반환하고, 값이 있는지와 상관없이 에러가 발생하지 않으면 <code class="docutils literal notranslate"><span class="pre">0</span></code>을 반환합니다.</p>
+<p>컨텍스트 변수가 발견되면, <em>value</em>는 그것을 가리키는 포인터가 됩니다. 컨텍스트 변수가 발견되지 <em>않으면</em>, <em>value</em>는 다음을 가리 킵니다:</p>
+<ul class="simple">
+<li><p><em>default_value</em>, <code class="docutils literal notranslate"><span class="pre">NULL</span></code>이 아니면;</p></li>
+<li><p><em>var</em>의 기본값, <code class="docutils literal notranslate"><span class="pre">NULL</span></code>이 아니면;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">NULL</span></code></p></li>
+</ul>
+<p>Except for <code class="docutils literal notranslate"><span class="pre">NULL</span></code>, the function returns a new reference.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyContextVar_Set">
+<a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a> *<code class="sig-name descname">PyContextVar_Set</code><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em> *var</em>, <a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em> *value</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyContextVar_Set" title="정의 주소">¶</a></dt>
+<dd><em class="refcount">Return value: New reference.</em><p>Set the value of <em>var</em> to <em>value</em> in the current context.  Returns
+a new token object for this change, or <code class="docutils literal notranslate"><span class="pre">NULL</span></code> if an error has occurred.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyContextVar_Reset">
+int <code class="sig-name descname">PyContextVar_Reset</code><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em> *var</em>, <a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em> *token</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyContextVar_Reset" title="정의 주소">¶</a></dt>
+<dd><p><em>var</em> 컨텍스트 변수의 상태를 <em>token</em>을 반환한 <a class="reference internal" href="#c.PyContextVar_Set" title="PyContextVar_Set"><code class="xref c c-func docutils literal notranslate"><span class="pre">PyContextVar_Set()</span></code></a> 호출 전의 상태로 재설정합니다. 이 함수는 성공 시 <code class="docutils literal notranslate"><span class="pre">0</span></code>을 반환하고, 에러 시 <code class="docutils literal notranslate"><span class="pre">-1</span></code>을 반환합니다.</p>
+</dd></dl>
+
+</section>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>이전 항목</h4>
+  <p class="topless"><a href="coro.html"
+                        title="이전 장">코루틴 객체</a></p>
+  <h4>다음 항목</h4>
+  <p class="topless"><a href="datetime.html"
+                        title="다음 장">DateTime 객체</a></p>
+  <div role="note" aria-label="source link">
+    <h3>현재 문서</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">버그 보고하기</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/3.9/Doc/c-api/contextvars.rst"
+            rel="nofollow">소스 보기
+        </a>
+      </li>
+    </ul>
+  </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>탐색</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="전체 색인"
+             >색인</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 모듈 목록"
+             >모듈</a> |</li>
+        <li class="right" >
+          <a href="datetime.html" title="DateTime 객체"
+             >다음</a> |</li>
+        <li class="right" >
+          <a href="coro.html" title="코루틴 객체"
+             >이전</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.9.14 Documentation</a> &#187;
+    </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >파이썬/C API 레퍼런스 설명서</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="concrete.html" >구상 객체 계층</a> &#187;</li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="빠른 검색" aria-label="빠른 검색" type="text" name="q" />
+          <input type="submit" value="이동" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </form>
+    </div>
+                     |
+                </li>
+            
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">저작권</a> 2001-2022, Python Software Foundation.
+    <br />
+    This page is licensed under the Python Software Foundation License Version 2.
+    <br />
+    Examples, recipes, and other code in the documentation are additionally licensed under the Zero Clause BSD License.
+    <br />
+    See <a href="/license.html">History and License</a> for more information.<br />
+    <br />
+
+    The Python Software Foundation is a non-profit corporation.
+<a href="https://www.python.org/psf/donations/">Please donate.</a>
+<br />
+    <br />
+
+    최종 업데이트: 9월 11, 2022
+    <a href="/bugs.html">Found a bug</a>?
+    <br />
+
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 2.4.4.
+    </div>
+
+  </body>
+</html>

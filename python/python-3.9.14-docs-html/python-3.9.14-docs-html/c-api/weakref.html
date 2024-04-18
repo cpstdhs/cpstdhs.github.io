@@ -1,0 +1,296 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ko">
+  <head>
+    <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>약한 참조 객체 &#8212; Python 3.9.14 문서</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="../_static/pydoctheme.css?2022.1" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/translations.js"></script>
+    
+    <script src="../_static/sidebar.js"></script>
+    
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Python 3.9.14 문서에서 찾기"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="이 문서 정보" href="../about.html" />
+    <link rel="index" title="색인" href="../genindex.html" />
+    <link rel="search" title="검색" href="../search.html" />
+    <link rel="copyright" title="저작권" href="../copyright.html" />
+    <link rel="next" title="캡슐" href="capsule.html" />
+    <link rel="prev" title="MemoryView 객체" href="memoryview.html" />
+    <link rel="canonical" href="https://docs.python.org/3/c-api/weakref.html" />
+    
+      
+    
+
+    
+    <style>
+      @media only screen {
+        table.full-width-table {
+            width: 100%;
+        }
+      }
+    </style>
+<link rel="shortcut icon" type="image/png" href="../_static/py.svg" />
+            <script type="text/javascript" src="../_static/copybutton.js"></script>
+            <script type="text/javascript" src="../_static/menu.js"></script> 
+
+  </head>
+<body>
+<div class="mobile-nav">
+    <input type="checkbox" id="menuToggler" class="toggler__input" aria-controls="navigation"
+           aria-pressed="false" aria-expanded="false" role="button" aria-label="Menu" />
+    <label for="menuToggler" class="toggler__label">
+        <span></span>
+    </label>
+    <nav class="nav-content" role="navigation">
+         <a href="https://www.python.org/" class="nav-logo">
+             <img src="../_static/py.svg" alt="Logo"/>
+         </a>
+        <div class="version_switcher_placeholder"></div>
+        <form role="search" class="search" action="../search.html" method="get">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" class="search-icon">
+                <path fill-rule="nonzero"
+                        d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 001.48-5.34c-.47-2.78-2.79-5-5.59-5.34a6.505 6.505 0 00-7.27 7.27c.34 2.8 2.56 5.12 5.34 5.59a6.5 6.5 0 005.34-1.48l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49 0 .41-.41.41-1.08 0-1.49L15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" fill="#444"></path>
+            </svg>
+            <input type="text" name="q" aria-label="빠른 검색"/>
+            <input type="submit" value="이동"/>
+        </form>
+    </nav>
+    <div class="menu-wrapper">
+        <nav class="menu" role="navigation" aria-label="main navigation">
+            <div class="language_switcher_placeholder"></div>
+  <h4>이전 항목</h4>
+  <p class="topless"><a href="memoryview.html"
+                        title="이전 장">MemoryView 객체</a></p>
+  <h4>다음 항목</h4>
+  <p class="topless"><a href="capsule.html"
+                        title="다음 장">캡슐</a></p>
+  <div role="note" aria-label="source link">
+    <h3>현재 문서</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">버그 보고하기</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/3.9/Doc/c-api/weakref.rst"
+            rel="nofollow">소스 보기
+        </a>
+      </li>
+    </ul>
+  </div>
+        </nav>
+    </div>
+</div>
+
+  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>탐색</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="전체 색인"
+             accesskey="I">색인</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 모듈 목록"
+             >모듈</a> |</li>
+        <li class="right" >
+          <a href="capsule.html" title="캡슐"
+             accesskey="N">다음</a> |</li>
+        <li class="right" >
+          <a href="memoryview.html" title="MemoryView 객체"
+             accesskey="P">이전</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.9.14 Documentation</a> &#187;
+    </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >파이썬/C API 레퍼런스 설명서</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="concrete.html" accesskey="U">구상 객체 계층</a> &#187;</li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="빠른 검색" aria-label="빠른 검색" type="text" name="q" />
+          <input type="submit" value="이동" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </form>
+    </div>
+                     |
+                </li>
+            
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="weak-reference-objects">
+<span id="weakrefobjects"></span><h1>약한 참조 객체<a class="headerlink" href="#weak-reference-objects" title="제목 주소">¶</a></h1>
+<p>파이썬은 <em>약한 참조</em>를 1급 객체로 지원합니다. 약한 참조를 직접 구현하는 두 가지 구체적인 객체 형이 있습니다. 첫 번째는 간단한 참조 객체이며, 두 번째는 가능한 한 원래 객체의 프락시 역할을 합니다.</p>
+<dl class="function">
+<dt id="c.PyWeakref_Check">
+int <code class="sig-name descname">PyWeakref_Check</code><span class="sig-paren">(</span>ob<span class="sig-paren">)</span><a class="headerlink" href="#c.PyWeakref_Check" title="정의 주소">¶</a></dt>
+<dd><p><em>ob</em>가 참조 객체나 프락시 객체면 참을 반환합니다. 이 함수는 항상 성공합니다.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyWeakref_CheckRef">
+int <code class="sig-name descname">PyWeakref_CheckRef</code><span class="sig-paren">(</span>ob<span class="sig-paren">)</span><a class="headerlink" href="#c.PyWeakref_CheckRef" title="정의 주소">¶</a></dt>
+<dd><p><em>ob</em>가 참조 객체면 참을 반환합니다. 이 함수는 항상 성공합니다.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyWeakref_CheckProxy">
+int <code class="sig-name descname">PyWeakref_CheckProxy</code><span class="sig-paren">(</span>ob<span class="sig-paren">)</span><a class="headerlink" href="#c.PyWeakref_CheckProxy" title="정의 주소">¶</a></dt>
+<dd><p><em>ob</em>가 프락시 객체면 참을 반환합니다. 이 함수는 항상 성공합니다.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyWeakref_NewRef">
+<a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a>* <code class="sig-name descname">PyWeakref_NewRef</code><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em> *ob</em>, <a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em> *callback</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyWeakref_NewRef" title="정의 주소">¶</a></dt>
+<dd><em class="refcount">Return value: New reference.</em><p><em>ob</em> 객체에 대한 약한 참조 객체를 반환합니다. 이것은 항상 새로운 참조를 돌려주지만, 새로운 객체를 생성하는 것이 보장되지는 않습니다; 기존 참조 객체가 반환될 수 있습니다. 두 번째 매개 변수인 <em>callback</em>은 <em>ob</em>가 가비지 수집될 때 알림을 받는 콜러블 객체가 될 수 있습니다; 하나의 매개 변수를 받아들여야 하는데, 약한 참조 객체 자체입니다. <em>callback</em>은 <code class="docutils literal notranslate"><span class="pre">None</span></code> 이나 <code class="docutils literal notranslate"><span class="pre">NULL</span></code> 일 수도 있습니다. <em>ob</em>가 약하게 참조할 수 있는 객체가 아니거나, <em>callback</em>이 콜러블, <code class="docutils literal notranslate"><span class="pre">None</span></code> 또는 <code class="docutils literal notranslate"><span class="pre">NULL</span></code>이 아니면, <code class="docutils literal notranslate"><span class="pre">NULL</span></code>을 반환하고 <a class="reference internal" href="../library/exceptions.html#TypeError" title="TypeError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">TypeError</span></code></a>를 발생시킵니다.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyWeakref_NewProxy">
+<a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a>* <code class="sig-name descname">PyWeakref_NewProxy</code><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em> *ob</em>, <a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em> *callback</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyWeakref_NewProxy" title="정의 주소">¶</a></dt>
+<dd><em class="refcount">Return value: New reference.</em><p><em>ob</em> 객체에 대한 약한 참조 프락시 객체를 반환합니다. 이것은 항상 새로운 참조를 돌려주지만, 새로운 객체를 생성하는 것이 보장되지는 않습니다; 기존 프락시 객체가 반환될 수 있습니다. 두 번째 매개 변수인 <em>callback</em>은 <em>ob</em>가 가비지 수집될 때 알림을 받는 콜러블 객체가 될 수 있습니다; 하나의 매개 변수를 받아들여야 하는데, 약한 참조 객체 자체입니다. <em>callback</em>은 <code class="docutils literal notranslate"><span class="pre">None</span></code> 이나 <code class="docutils literal notranslate"><span class="pre">NULL</span></code> 일 수도 있습니다. <em>ob</em>가 약하게 참조할 수 있는 객체가 아니거나, <em>callback</em>이 콜러블, <code class="docutils literal notranslate"><span class="pre">None</span></code> 또는 <code class="docutils literal notranslate"><span class="pre">NULL</span></code>이 아니면, <code class="docutils literal notranslate"><span class="pre">NULL</span></code>을 반환하고 <a class="reference internal" href="../library/exceptions.html#TypeError" title="TypeError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">TypeError</span></code></a>를 발생시킵니다.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyWeakref_GetObject">
+<a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a>* <code class="sig-name descname">PyWeakref_GetObject</code><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em> *ref</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyWeakref_GetObject" title="정의 주소">¶</a></dt>
+<dd><em class="refcount">Return value: Borrowed reference.</em><p>약한 참조(<em>ref</em>)로부터 참조된 객체를 반환합니다. 참조가 더는 살아있지 않으면, <code class="xref py py-const docutils literal notranslate"><span class="pre">Py_None</span></code>을 반환합니다.</p>
+<div class="admonition note">
+<p class="admonition-title">참고</p>
+<p>이 함수는 참조된 객체에 대한 <strong>빌린 참조</strong>를 반환합니다. 이는 객체를 계속 사용하는 동안 객체가 파괴될 수 없음을 알고 있을 때를 제외하고, 객체에 대해 항상 <a class="reference internal" href="refcounting.html#c.Py_INCREF" title="Py_INCREF"><code class="xref c c-func docutils literal notranslate"><span class="pre">Py_INCREF()</span></code></a>를 호출해야 함을 뜻합니다.</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyWeakref_GET_OBJECT">
+<a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a>* <code class="sig-name descname">PyWeakref_GET_OBJECT</code><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em> *ref</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyWeakref_GET_OBJECT" title="정의 주소">¶</a></dt>
+<dd><em class="refcount">Return value: Borrowed reference.</em><p><a class="reference internal" href="#c.PyWeakref_GetObject" title="PyWeakref_GetObject"><code class="xref c c-func docutils literal notranslate"><span class="pre">PyWeakref_GetObject()</span></code></a>와 유사하지만, 에러 검사를 수행하지 않는 매크로로 구현됩니다.</p>
+</dd></dl>
+
+</section>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>이전 항목</h4>
+  <p class="topless"><a href="memoryview.html"
+                        title="이전 장">MemoryView 객체</a></p>
+  <h4>다음 항목</h4>
+  <p class="topless"><a href="capsule.html"
+                        title="다음 장">캡슐</a></p>
+  <div role="note" aria-label="source link">
+    <h3>현재 문서</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">버그 보고하기</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/3.9/Doc/c-api/weakref.rst"
+            rel="nofollow">소스 보기
+        </a>
+      </li>
+    </ul>
+  </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>탐색</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="전체 색인"
+             >색인</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 모듈 목록"
+             >모듈</a> |</li>
+        <li class="right" >
+          <a href="capsule.html" title="캡슐"
+             >다음</a> |</li>
+        <li class="right" >
+          <a href="memoryview.html" title="MemoryView 객체"
+             >이전</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.9.14 Documentation</a> &#187;
+    </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >파이썬/C API 레퍼런스 설명서</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="concrete.html" >구상 객체 계층</a> &#187;</li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="빠른 검색" aria-label="빠른 검색" type="text" name="q" />
+          <input type="submit" value="이동" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </form>
+    </div>
+                     |
+                </li>
+            
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">저작권</a> 2001-2022, Python Software Foundation.
+    <br />
+    This page is licensed under the Python Software Foundation License Version 2.
+    <br />
+    Examples, recipes, and other code in the documentation are additionally licensed under the Zero Clause BSD License.
+    <br />
+    See <a href="/license.html">History and License</a> for more information.<br />
+    <br />
+
+    The Python Software Foundation is a non-profit corporation.
+<a href="https://www.python.org/psf/donations/">Please donate.</a>
+<br />
+    <br />
+
+    최종 업데이트: 9월 11, 2022
+    <a href="/bugs.html">Found a bug</a>?
+    <br />
+
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 2.4.4.
+    </div>
+
+  </body>
+</html>

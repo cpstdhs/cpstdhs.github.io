@@ -1,0 +1,478 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ko">
+  <head>
+    <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>platform — 하부 플랫폼의 식별 데이터에 대한 액세스 &#8212; Python 3.9.14 문서</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="../_static/pydoctheme.css?2022.1" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/translations.js"></script>
+    
+    <script src="../_static/sidebar.js"></script>
+    
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Python 3.9.14 문서에서 찾기"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="이 문서 정보" href="../about.html" />
+    <link rel="index" title="색인" href="../genindex.html" />
+    <link rel="search" title="검색" href="../search.html" />
+    <link rel="copyright" title="저작권" href="../copyright.html" />
+    <link rel="next" title="errno — 표준 errno 시스템 기호" href="errno.html" />
+    <link rel="prev" title="curses.panel — curses 용 패널 스택 확장" href="curses.panel.html" />
+    <link rel="canonical" href="https://docs.python.org/3/library/platform.html" />
+    
+      
+    
+
+    
+    <style>
+      @media only screen {
+        table.full-width-table {
+            width: 100%;
+        }
+      }
+    </style>
+<link rel="shortcut icon" type="image/png" href="../_static/py.svg" />
+            <script type="text/javascript" src="../_static/copybutton.js"></script>
+            <script type="text/javascript" src="../_static/menu.js"></script> 
+
+  </head>
+<body>
+<div class="mobile-nav">
+    <input type="checkbox" id="menuToggler" class="toggler__input" aria-controls="navigation"
+           aria-pressed="false" aria-expanded="false" role="button" aria-label="Menu" />
+    <label for="menuToggler" class="toggler__label">
+        <span></span>
+    </label>
+    <nav class="nav-content" role="navigation">
+         <a href="https://www.python.org/" class="nav-logo">
+             <img src="../_static/py.svg" alt="Logo"/>
+         </a>
+        <div class="version_switcher_placeholder"></div>
+        <form role="search" class="search" action="../search.html" method="get">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" class="search-icon">
+                <path fill-rule="nonzero"
+                        d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 001.48-5.34c-.47-2.78-2.79-5-5.59-5.34a6.505 6.505 0 00-7.27 7.27c.34 2.8 2.56 5.12 5.34 5.59a6.5 6.5 0 005.34-1.48l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49 0 .41-.41.41-1.08 0-1.49L15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" fill="#444"></path>
+            </svg>
+            <input type="text" name="q" aria-label="빠른 검색"/>
+            <input type="submit" value="이동"/>
+        </form>
+    </nav>
+    <div class="menu-wrapper">
+        <nav class="menu" role="navigation" aria-label="main navigation">
+            <div class="language_switcher_placeholder"></div>
+  <h3><a href="../contents.html">목차</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">platform</span></code> — 하부 플랫폼의 식별 데이터에 대한 액세스</a><ul>
+<li><a class="reference internal" href="#cross-platform">크로스 플랫폼</a></li>
+<li><a class="reference internal" href="#java-platform">자바 플랫폼</a></li>
+<li><a class="reference internal" href="#windows-platform">윈도우 플랫폼</a></li>
+<li><a class="reference internal" href="#macos-platform">macOS Platform</a></li>
+<li><a class="reference internal" href="#unix-platforms">유닉스 플랫폼</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>이전 항목</h4>
+  <p class="topless"><a href="curses.panel.html"
+                        title="이전 장"><code class="xref py py-mod docutils literal notranslate"><span class="pre">curses.panel</span></code> — curses 용 패널 스택 확장</a></p>
+  <h4>다음 항목</h4>
+  <p class="topless"><a href="errno.html"
+                        title="다음 장"><code class="xref py py-mod docutils literal notranslate"><span class="pre">errno</span></code> — 표준 errno 시스템 기호</a></p>
+  <div role="note" aria-label="source link">
+    <h3>현재 문서</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">버그 보고하기</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/3.9/Doc/library/platform.rst"
+            rel="nofollow">소스 보기
+        </a>
+      </li>
+    </ul>
+  </div>
+        </nav>
+    </div>
+</div>
+
+  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>탐색</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="전체 색인"
+             accesskey="I">색인</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 모듈 목록"
+             >모듈</a> |</li>
+        <li class="right" >
+          <a href="errno.html" title="errno — 표준 errno 시스템 기호"
+             accesskey="N">다음</a> |</li>
+        <li class="right" >
+          <a href="curses.panel.html" title="curses.panel — curses 용 패널 스택 확장"
+             accesskey="P">이전</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.9.14 Documentation</a> &#187;
+    </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >파이썬 표준 라이브러리</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="allos.html" accesskey="U">일반 운영 체제 서비스</a> &#187;</li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="빠른 검색" aria-label="빠른 검색" type="text" name="q" />
+          <input type="submit" value="이동" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </form>
+    </div>
+                     |
+                </li>
+            
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="module-platform">
+<span id="platform-access-to-underlying-platform-s-identifying-data"></span><h1><a class="reference internal" href="#module-platform" title="platform: Retrieves as much platform identifying data as possible."><code class="xref py py-mod docutils literal notranslate"><span class="pre">platform</span></code></a> — 하부 플랫폼의 식별 데이터에 대한 액세스<a class="headerlink" href="#module-platform" title="제목 주소">¶</a></h1>
+<p><strong>소스 코드:</strong> <a class="reference external" href="https://github.com/python/cpython/tree/3.9/Lib/platform.py">Lib/platform.py</a></p>
+<hr class="docutils" />
+<div class="admonition note">
+<p class="admonition-title">참고</p>
+<p>각 플랫폼은 알파벳순으로 나열되고, 리눅스는 유닉스 절에 포함됩니다.</p>
+</div>
+<section id="cross-platform">
+<h2>크로스 플랫폼<a class="headerlink" href="#cross-platform" title="제목 주소">¶</a></h2>
+<dl class="function">
+<dt id="platform.architecture">
+<code class="sig-prename descclassname">platform.</code><code class="sig-name descname">architecture</code><span class="sig-paren">(</span><em class="sig-param">executable=sys.executable</em>, <em class="sig-param">bits=''</em>, <em class="sig-param">linkage=''</em><span class="sig-paren">)</span><a class="headerlink" href="#platform.architecture" title="정의 주소">¶</a></dt>
+<dd><p>다양한 아키텍처 정보에 대해 주어진 실행 파일(기본값은 파이썬 인터프리터 바이너리)을 조회합니다.</p>
+<p>실행 파일에 사용된 비트 아키텍처와 링크 형식에 대한 정보가 들어있는 튜플 <code class="docutils literal notranslate"><span class="pre">(bits,</span> <span class="pre">linkage)</span></code>를 반환합니다. 두 값은 모두 문자열로 반환됩니다.</p>
+<p>결정할 수 없는 값은 매개 변수 사전 설정에 따라 반환됩니다. bits가 <code class="docutils literal notranslate"><span class="pre">''</span></code>로 주어지면, <code class="docutils literal notranslate"><span class="pre">sizeof(pointer)</span></code>(또는 파이썬 버전 &lt; 1.5.2 에서는 <code class="docutils literal notranslate"><span class="pre">sizeof(long)</span></code>)가 지원되는 포인터 크기를 나타내는 데 사용됩니다.</p>
+<p>함수는 시스템의 <code class="file docutils literal notranslate"><span class="pre">file</span></code> 명령을 사용하여 실제 작업을 수행합니다. 이것은 대부분(전부가 아니라면)의 유닉스 플랫폼과 일부 유닉스가 아닌 플랫폼에서 가능하며 실행 파일이 파이썬 인터프리터를 가리키는 경우에만 가능합니다. 위의 요구가 충족되지 않으면 합리적인 기본값이 사용됩니다.</p>
+<div class="admonition note">
+<p class="admonition-title">참고</p>
+<p>On macOS (and perhaps other platforms), executable files may be
+universal files containing multiple architectures.</p>
+<p>현재 인터프리터가 “64-비트” 인지를 판단하려면, <a class="reference internal" href="sys.html#sys.maxsize" title="sys.maxsize"><code class="xref py py-attr docutils literal notranslate"><span class="pre">sys.maxsize</span></code></a> 어트리뷰트를 조회하는 것이 더 신뢰성 있습니다.:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">is_64bits</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">maxsize</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="o">**</span><span class="mi">32</span>
+</pre></div>
+</div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="platform.machine">
+<code class="sig-prename descclassname">platform.</code><code class="sig-name descname">machine</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#platform.machine" title="정의 주소">¶</a></dt>
+<dd><p>기계 유형을 반환합니다, 예를 들어 <code class="docutils literal notranslate"><span class="pre">'i386'</span></code>. 값을 판별할 수 없으면 빈 문자열이 반환됩니다.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="platform.node">
+<code class="sig-prename descclassname">platform.</code><code class="sig-name descname">node</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#platform.node" title="정의 주소">¶</a></dt>
+<dd><p>컴퓨터의 네트워크 이름을 반환합니다 (완전히 정규화되지 않았을 수 있습니다!). 값을 판별할 수 없으면 빈 문자열이 반환됩니다.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="platform.platform">
+<code class="sig-prename descclassname">platform.</code><code class="sig-name descname">platform</code><span class="sig-paren">(</span><em class="sig-param">aliased=0</em>, <em class="sig-param">terse=0</em><span class="sig-paren">)</span><a class="headerlink" href="#platform.platform" title="정의 주소">¶</a></dt>
+<dd><p>하부 플랫폼을 식별하는 가능한 한 많은 유용한 정보를 포함하는 단일 문자열을 반환합니다.</p>
+<p>출력은 기계가 구문 분석하기보다는 <em>사람이 읽을 수</em> 있도록 합니다. 다른 플랫폼에서는 다르게 보일 수 있는데, 이는 의도 된 것입니다.</p>
+<p><em>aliased</em>가 참이면, 함수는 일반 이름과 다른 시스템 이름을 보고하는 다양한 플랫폼에 대해 별칭을 사용합니다, 예를 들어 SunOS는 Solaris로 보고됩니다. 이를 구현하는 데 <a class="reference internal" href="#platform.system_alias" title="platform.system_alias"><code class="xref py py-func docutils literal notranslate"><span class="pre">system_alias()</span></code></a> 함수가 사용됩니다.</p>
+<p><em>terse</em>를 참으로 설정하면 함수가 플랫폼을 식별하는 데 필요한 절대적으로 최소한의 정보만 반환합니다.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">버전 3.8에서 변경: </span>macOS에서, 이 함수는 이제 darwin 버전 대신 macOS 버전을 얻기 위해 <a class="reference internal" href="#platform.mac_ver" title="platform.mac_ver"><code class="xref py py-func docutils literal notranslate"><span class="pre">mac_ver()</span></code></a> 를 사용합니다 (비어 있지 않은 릴리스 문자열을 반환한다면).</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="platform.processor">
+<code class="sig-prename descclassname">platform.</code><code class="sig-name descname">processor</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#platform.processor" title="정의 주소">¶</a></dt>
+<dd><p>(실제) 프로세서 이름을 반환합니다, 예를 들어 <code class="docutils literal notranslate"><span class="pre">'amdk6'</span></code>.</p>
+<p>값을 판별할 수 없으면 빈 문자열이 반환됩니다. 많은 플랫폼이 이 정보를 제공하지 않거나 단순히 <a class="reference internal" href="#platform.machine" title="platform.machine"><code class="xref py py-func docutils literal notranslate"><span class="pre">machine()</span></code></a>과 같은 값을 반환함에 유의하십시오. NetBSD가 그렇습니다.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="platform.python_build">
+<code class="sig-prename descclassname">platform.</code><code class="sig-name descname">python_build</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#platform.python_build" title="정의 주소">¶</a></dt>
+<dd><p>파이썬 빌드 번호와 날짜를 문자열로 나타내는 튜플 <code class="docutils literal notranslate"><span class="pre">(buildno,</span> <span class="pre">builddate)</span></code>를 반환합니다.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="platform.python_compiler">
+<code class="sig-prename descclassname">platform.</code><code class="sig-name descname">python_compiler</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#platform.python_compiler" title="정의 주소">¶</a></dt>
+<dd><p>파이썬 컴파일에 사용된 컴파일러를 식별하는 문자열을 반환합니다.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="platform.python_branch">
+<code class="sig-prename descclassname">platform.</code><code class="sig-name descname">python_branch</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#platform.python_branch" title="정의 주소">¶</a></dt>
+<dd><p>파이썬 구현 SCM 브랜치를 식별하는 문자열을 반환합니다.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="platform.python_implementation">
+<code class="sig-prename descclassname">platform.</code><code class="sig-name descname">python_implementation</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#platform.python_implementation" title="정의 주소">¶</a></dt>
+<dd><p>파이썬 구현을 식별하는 문자열을 반환합니다. 가능한 반환 값은 이렇습니다: ‘CPython’, ‘IronPython’, ‘Jython’, ‘PyPy’.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="platform.python_revision">
+<code class="sig-prename descclassname">platform.</code><code class="sig-name descname">python_revision</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#platform.python_revision" title="정의 주소">¶</a></dt>
+<dd><p>파이썬 구현 SCM 리비전을 식별하는 문자열을 반환합니다.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="platform.python_version">
+<code class="sig-prename descclassname">platform.</code><code class="sig-name descname">python_version</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#platform.python_version" title="정의 주소">¶</a></dt>
+<dd><p>파이썬 버전을 문자열 <code class="docutils literal notranslate"><span class="pre">'major.minor.patchlevel'</span></code>로 반환합니다.</p>
+<p>파이썬 <code class="docutils literal notranslate"><span class="pre">sys.version</span></code>과 달리, 반환 값은 항상 patchlevel을 포함함에 유의하십시오 (기본값은 0입니다).</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="platform.python_version_tuple">
+<code class="sig-prename descclassname">platform.</code><code class="sig-name descname">python_version_tuple</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#platform.python_version_tuple" title="정의 주소">¶</a></dt>
+<dd><p>파이썬 버전을 문자열의 튜플 <code class="docutils literal notranslate"><span class="pre">(major,</span> <span class="pre">minor,</span> <span class="pre">patchlevel)</span></code>로 반환합니다.</p>
+<p>파이썬 <code class="docutils literal notranslate"><span class="pre">sys.version</span></code>과 달리, 반환 값은 항상 patchlevel을 포함함에 유의하십시오 (기본값은 <code class="docutils literal notranslate"><span class="pre">'0'</span></code>입니다).</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="platform.release">
+<code class="sig-prename descclassname">platform.</code><code class="sig-name descname">release</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#platform.release" title="정의 주소">¶</a></dt>
+<dd><p>Returns the system’s release, e.g. <code class="docutils literal notranslate"><span class="pre">'2.2.0'</span></code> or <code class="docutils literal notranslate"><span class="pre">'NT'</span></code>. An empty string is
+returned if the value cannot be determined.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="platform.system">
+<code class="sig-prename descclassname">platform.</code><code class="sig-name descname">system</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#platform.system" title="정의 주소">¶</a></dt>
+<dd><p>시스템/OS 이름을 반환합니다, 가령 <code class="docutils literal notranslate"><span class="pre">'Linux'</span></code>, <code class="docutils literal notranslate"><span class="pre">'Darwin'</span></code>, <code class="docutils literal notranslate"><span class="pre">'Java'</span></code>, <code class="docutils literal notranslate"><span class="pre">'Windows'</span></code>. 값을 판별할 수 없으면 빈 문자열이 반환됩니다.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="platform.system_alias">
+<code class="sig-prename descclassname">platform.</code><code class="sig-name descname">system_alias</code><span class="sig-paren">(</span><em class="sig-param">system</em>, <em class="sig-param">release</em>, <em class="sig-param">version</em><span class="sig-paren">)</span><a class="headerlink" href="#platform.system_alias" title="정의 주소">¶</a></dt>
+<dd><p>일부 시스템에서 사용되는 상용 마케팅 이름으로 별칭 된 <code class="docutils literal notranslate"><span class="pre">(system,</span> <span class="pre">release,</span> <span class="pre">version)</span></code>을 반환합니다. 혼동을 일으킬 수 있는 일부 경우에 정보의 순서를 변경하기도 합니다.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="platform.version">
+<code class="sig-prename descclassname">platform.</code><code class="sig-name descname">version</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#platform.version" title="정의 주소">¶</a></dt>
+<dd><p>시스템의 릴리스 버전을 반환합니다, 예를 들어 <code class="docutils literal notranslate"><span class="pre">'#3</span> <span class="pre">on</span> <span class="pre">degas'</span></code>. 값을 판별할 수 없으면 빈 문자열이 반환됩니다.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="platform.uname">
+<code class="sig-prename descclassname">platform.</code><code class="sig-name descname">uname</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#platform.uname" title="정의 주소">¶</a></dt>
+<dd><p>꽤 이식성 있는 uname 인터페이스. <a class="reference internal" href="#platform.system" title="platform.system"><code class="xref py py-attr docutils literal notranslate"><span class="pre">system</span></code></a>, <a class="reference internal" href="#platform.node" title="platform.node"><code class="xref py py-attr docutils literal notranslate"><span class="pre">node</span></code></a>, <a class="reference internal" href="#platform.release" title="platform.release"><code class="xref py py-attr docutils literal notranslate"><span class="pre">release</span></code></a>, <a class="reference internal" href="#platform.version" title="platform.version"><code class="xref py py-attr docutils literal notranslate"><span class="pre">version</span></code></a>, <a class="reference internal" href="#platform.machine" title="platform.machine"><code class="xref py py-attr docutils literal notranslate"><span class="pre">machine</span></code></a>, <a class="reference internal" href="#platform.processor" title="platform.processor"><code class="xref py py-attr docutils literal notranslate"><span class="pre">processor</span></code></a>의 6개의 어트리뷰트를 포함한 <a class="reference internal" href="collections.html#collections.namedtuple" title="collections.namedtuple"><code class="xref py py-func docutils literal notranslate"><span class="pre">namedtuple()</span></code></a>를 반환합니다.</p>
+<p>이것이 <a class="reference internal" href="os.html#os.uname" title="os.uname"><code class="xref py py-func docutils literal notranslate"><span class="pre">os.uname()</span></code></a> 결과에 없는 여섯 번째 어트리뷰트(<a class="reference internal" href="#platform.processor" title="platform.processor"><code class="xref py py-attr docutils literal notranslate"><span class="pre">processor</span></code></a>)를 추가한다는 것에 유의하십시오. 또한, 어트리뷰트 이름은 처음 두 어트리뷰트에서 다릅니다; <a class="reference internal" href="os.html#os.uname" title="os.uname"><code class="xref py py-func docutils literal notranslate"><span class="pre">os.uname()</span></code></a>의 이름은 <code class="xref py py-attr docutils literal notranslate"><span class="pre">sysname</span></code>과 <code class="xref py py-attr docutils literal notranslate"><span class="pre">nodename</span></code>입니다.</p>
+<p>결정할 수 없는 항목은 <code class="docutils literal notranslate"><span class="pre">''</span></code>로 설정됩니다.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">버전 3.3에서 변경: </span>Result changed from a tuple to a <a class="reference internal" href="collections.html#collections.namedtuple" title="collections.namedtuple"><code class="xref py py-func docutils literal notranslate"><span class="pre">namedtuple()</span></code></a>.</p>
+</div>
+</dd></dl>
+
+</section>
+<section id="java-platform">
+<h2>자바 플랫폼<a class="headerlink" href="#java-platform" title="제목 주소">¶</a></h2>
+<dl class="function">
+<dt id="platform.java_ver">
+<code class="sig-prename descclassname">platform.</code><code class="sig-name descname">java_ver</code><span class="sig-paren">(</span><em class="sig-param">release=''</em>, <em class="sig-param">vendor=''</em>, <em class="sig-param">vminfo=(''</em>, <em class="sig-param">''</em>, <em class="sig-param">'')</em>, <em class="sig-param">osinfo=(''</em>, <em class="sig-param">''</em>, <em class="sig-param">'')</em><span class="sig-paren">)</span><a class="headerlink" href="#platform.java_ver" title="정의 주소">¶</a></dt>
+<dd><p>Jython의 버전 인터페이스.</p>
+<p>튜플 <code class="docutils literal notranslate"><span class="pre">(release,</span> <span class="pre">vendor,</span> <span class="pre">vminfo,</span> <span class="pre">osinfo)</span></code>를 반환하는데, <em>vminfo</em>는 튜플 <code class="docutils literal notranslate"><span class="pre">(vm_name,</span> <span class="pre">vm_release,</span> <span class="pre">vm_vendor)</span></code>이고, <em>osinfo</em>는 튜플 <code class="docutils literal notranslate"><span class="pre">(os_name,</span> <span class="pre">os_version,</span> <span class="pre">os_arch)</span></code>입니다. 결정할 수 없는 값은 매개 변수로 지정된 기본값으로 설정됩니다 (기본값은 모두 <code class="docutils literal notranslate"><span class="pre">''</span></code>입니다).</p>
+</dd></dl>
+
+</section>
+<section id="windows-platform">
+<h2>윈도우 플랫폼<a class="headerlink" href="#windows-platform" title="제목 주소">¶</a></h2>
+<dl class="function">
+<dt id="platform.win32_ver">
+<code class="sig-prename descclassname">platform.</code><code class="sig-name descname">win32_ver</code><span class="sig-paren">(</span><em class="sig-param">release=''</em>, <em class="sig-param">version=''</em>, <em class="sig-param">csd=''</em>, <em class="sig-param">ptype=''</em><span class="sig-paren">)</span><a class="headerlink" href="#platform.win32_ver" title="정의 주소">¶</a></dt>
+<dd><p>Get additional version information from the Windows Registry and return a tuple
+<code class="docutils literal notranslate"><span class="pre">(release,</span> <span class="pre">version,</span> <span class="pre">csd,</span> <span class="pre">ptype)</span></code> referring to OS release, version number,
+CSD level (service pack) and OS type (multi/single processor). Values which
+cannot be determined are set to the defaults given as parameters (which all
+default to an empty string).</p>
+<p>힌트: <em>ptype</em>은 단일 프로세서 NT 기계에서는 <code class="docutils literal notranslate"><span class="pre">'Uniprocessor</span> <span class="pre">Free'</span></code>이고 다중 프로세서 기계에서는 <code class="docutils literal notranslate"><span class="pre">'Multiprocessor</span> <span class="pre">Free'</span></code>입니다. <em>‘Free’</em>는 디버깅 코드가 없는 OS 버전을 나타냅니다. 또한 <em>‘Checked’</em>를 언급할 수 있는데, OS 버전이 디버깅 코드, 즉 인자, 범위 등을 검사하는 코드를 사용한다는 것을 뜻합니다.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="platform.win32_edition">
+<code class="sig-prename descclassname">platform.</code><code class="sig-name descname">win32_edition</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#platform.win32_edition" title="정의 주소">¶</a></dt>
+<dd><p>Returns a string representing the current Windows edition, or <code class="docutils literal notranslate"><span class="pre">None</span></code> if the
+value cannot be determined.  Possible values include but are not limited to
+<code class="docutils literal notranslate"><span class="pre">'Enterprise'</span></code>, <code class="docutils literal notranslate"><span class="pre">'IoTUAP'</span></code>, <code class="docutils literal notranslate"><span class="pre">'ServerStandard'</span></code>, and <code class="docutils literal notranslate"><span class="pre">'nanoserver'</span></code>.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">버전 3.8에 추가.</span></p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="platform.win32_is_iot">
+<code class="sig-prename descclassname">platform.</code><code class="sig-name descname">win32_is_iot</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#platform.win32_is_iot" title="정의 주소">¶</a></dt>
+<dd><p><a class="reference internal" href="#platform.win32_edition" title="platform.win32_edition"><code class="xref py py-func docutils literal notranslate"><span class="pre">win32_edition()</span></code></a>에 의해 반환된 윈도우 에디션이 IoT 에디션으로 인식되면 <code class="docutils literal notranslate"><span class="pre">True</span></code>를 반환합니다.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">버전 3.8에 추가.</span></p>
+</div>
+</dd></dl>
+
+</section>
+<section id="macos-platform">
+<h2>macOS Platform<a class="headerlink" href="#macos-platform" title="제목 주소">¶</a></h2>
+<dl class="function">
+<dt id="platform.mac_ver">
+<code class="sig-prename descclassname">platform.</code><code class="sig-name descname">mac_ver</code><span class="sig-paren">(</span><em class="sig-param">release=''</em>, <em class="sig-param">versioninfo=(''</em>, <em class="sig-param">''</em>, <em class="sig-param">'')</em>, <em class="sig-param">machine=''</em><span class="sig-paren">)</span><a class="headerlink" href="#platform.mac_ver" title="정의 주소">¶</a></dt>
+<dd><p>Get macOS version information and return it as tuple <code class="docutils literal notranslate"><span class="pre">(release,</span> <span class="pre">versioninfo,</span>
+<span class="pre">machine)</span></code> with <em>versioninfo</em> being a tuple <code class="docutils literal notranslate"><span class="pre">(version,</span> <span class="pre">dev_stage,</span>
+<span class="pre">non_release_version)</span></code>.</p>
+<p>결정할 수 없는 항목은 <code class="docutils literal notranslate"><span class="pre">''</span></code>로 설정됩니다. 모든 튜플 항목은 문자열입니다.</p>
+</dd></dl>
+
+</section>
+<section id="unix-platforms">
+<h2>유닉스 플랫폼<a class="headerlink" href="#unix-platforms" title="제목 주소">¶</a></h2>
+<dl class="function">
+<dt id="platform.libc_ver">
+<code class="sig-prename descclassname">platform.</code><code class="sig-name descname">libc_ver</code><span class="sig-paren">(</span><em class="sig-param">executable=sys.executable</em>, <em class="sig-param">lib=''</em>, <em class="sig-param">version=''</em>, <em class="sig-param">chunksize=16384</em><span class="sig-paren">)</span><a class="headerlink" href="#platform.libc_ver" title="정의 주소">¶</a></dt>
+<dd><p>파일 executable(기본값은 파이썬 인터프리터입니다)이 링크된 libc 버전을 확인하려고 시도합니다. 문자열의 튜플 <code class="docutils literal notranslate"><span class="pre">(lib,</span> <span class="pre">version)</span></code>을 반환하는데, 조회가 실패하면 지정된 매개 변수를 기본값으로 사용합니다.</p>
+<p>다른 libc 버전이 실행 파일에 심볼을 추가하는 방법에 대해 이 함수가 가진 지식은 아마도 <strong class="program">gcc</strong>로 컴파일된 실행 파일에서만 사용 가능하다는 것에 유의하십시오.</p>
+<p>파일은 <em>chunksize</em> 바이트의 청크 단위로 읽고 스캔됩니다.</p>
+</dd></dl>
+
+</section>
+</section>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../contents.html">목차</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">platform</span></code> — 하부 플랫폼의 식별 데이터에 대한 액세스</a><ul>
+<li><a class="reference internal" href="#cross-platform">크로스 플랫폼</a></li>
+<li><a class="reference internal" href="#java-platform">자바 플랫폼</a></li>
+<li><a class="reference internal" href="#windows-platform">윈도우 플랫폼</a></li>
+<li><a class="reference internal" href="#macos-platform">macOS Platform</a></li>
+<li><a class="reference internal" href="#unix-platforms">유닉스 플랫폼</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>이전 항목</h4>
+  <p class="topless"><a href="curses.panel.html"
+                        title="이전 장"><code class="xref py py-mod docutils literal notranslate"><span class="pre">curses.panel</span></code> — curses 용 패널 스택 확장</a></p>
+  <h4>다음 항목</h4>
+  <p class="topless"><a href="errno.html"
+                        title="다음 장"><code class="xref py py-mod docutils literal notranslate"><span class="pre">errno</span></code> — 표준 errno 시스템 기호</a></p>
+  <div role="note" aria-label="source link">
+    <h3>현재 문서</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">버그 보고하기</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/3.9/Doc/library/platform.rst"
+            rel="nofollow">소스 보기
+        </a>
+      </li>
+    </ul>
+  </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>탐색</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="전체 색인"
+             >색인</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 모듈 목록"
+             >모듈</a> |</li>
+        <li class="right" >
+          <a href="errno.html" title="errno — 표준 errno 시스템 기호"
+             >다음</a> |</li>
+        <li class="right" >
+          <a href="curses.panel.html" title="curses.panel — curses 용 패널 스택 확장"
+             >이전</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.9.14 Documentation</a> &#187;
+    </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >파이썬 표준 라이브러리</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="allos.html" >일반 운영 체제 서비스</a> &#187;</li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="빠른 검색" aria-label="빠른 검색" type="text" name="q" />
+          <input type="submit" value="이동" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </form>
+    </div>
+                     |
+                </li>
+            
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">저작권</a> 2001-2022, Python Software Foundation.
+    <br />
+    This page is licensed under the Python Software Foundation License Version 2.
+    <br />
+    Examples, recipes, and other code in the documentation are additionally licensed under the Zero Clause BSD License.
+    <br />
+    See <a href="/license.html">History and License</a> for more information.<br />
+    <br />
+
+    The Python Software Foundation is a non-profit corporation.
+<a href="https://www.python.org/psf/donations/">Please donate.</a>
+<br />
+    <br />
+
+    최종 업데이트: 9월 11, 2022
+    <a href="/bugs.html">Found a bug</a>?
+    <br />
+
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 2.4.4.
+    </div>
+
+  </body>
+</html>

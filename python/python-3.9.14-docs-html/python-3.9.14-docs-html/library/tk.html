@@ -1,0 +1,423 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ko">
+  <head>
+    <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Tk를 사용한 그래픽 사용자 인터페이스 &#8212; Python 3.9.14 문서</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="../_static/pydoctheme.css?2022.1" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/translations.js"></script>
+    
+    <script src="../_static/sidebar.js"></script>
+    
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Python 3.9.14 문서에서 찾기"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="이 문서 정보" href="../about.html" />
+    <link rel="index" title="색인" href="../genindex.html" />
+    <link rel="search" title="검색" href="../search.html" />
+    <link rel="copyright" title="저작권" href="../copyright.html" />
+    <link rel="next" title="tkinter — Tcl/Tk 파이썬 인터페이스" href="tkinter.html" />
+    <link rel="prev" title="shlex — 간단한 어휘 분석" href="shlex.html" />
+    <link rel="canonical" href="https://docs.python.org/3/library/tk.html" />
+    
+      
+    
+
+    
+    <style>
+      @media only screen {
+        table.full-width-table {
+            width: 100%;
+        }
+      }
+    </style>
+<link rel="shortcut icon" type="image/png" href="../_static/py.svg" />
+            <script type="text/javascript" src="../_static/copybutton.js"></script>
+            <script type="text/javascript" src="../_static/menu.js"></script> 
+
+  </head>
+<body>
+<div class="mobile-nav">
+    <input type="checkbox" id="menuToggler" class="toggler__input" aria-controls="navigation"
+           aria-pressed="false" aria-expanded="false" role="button" aria-label="Menu" />
+    <label for="menuToggler" class="toggler__label">
+        <span></span>
+    </label>
+    <nav class="nav-content" role="navigation">
+         <a href="https://www.python.org/" class="nav-logo">
+             <img src="../_static/py.svg" alt="Logo"/>
+         </a>
+        <div class="version_switcher_placeholder"></div>
+        <form role="search" class="search" action="../search.html" method="get">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" class="search-icon">
+                <path fill-rule="nonzero"
+                        d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 001.48-5.34c-.47-2.78-2.79-5-5.59-5.34a6.505 6.505 0 00-7.27 7.27c.34 2.8 2.56 5.12 5.34 5.59a6.5 6.5 0 005.34-1.48l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49 0 .41-.41.41-1.08 0-1.49L15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" fill="#444"></path>
+            </svg>
+            <input type="text" name="q" aria-label="빠른 검색"/>
+            <input type="submit" value="이동"/>
+        </form>
+    </nav>
+    <div class="menu-wrapper">
+        <nav class="menu" role="navigation" aria-label="main navigation">
+            <div class="language_switcher_placeholder"></div>
+  <h4>이전 항목</h4>
+  <p class="topless"><a href="shlex.html"
+                        title="이전 장"><code class="xref py py-mod docutils literal notranslate"><span class="pre">shlex</span></code> — 간단한 어휘 분석</a></p>
+  <h4>다음 항목</h4>
+  <p class="topless"><a href="tkinter.html"
+                        title="다음 장"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter</span></code> — Tcl/Tk 파이썬 인터페이스</a></p>
+  <div role="note" aria-label="source link">
+    <h3>현재 문서</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">버그 보고하기</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/3.9/Doc/library/tk.rst"
+            rel="nofollow">소스 보기
+        </a>
+      </li>
+    </ul>
+  </div>
+        </nav>
+    </div>
+</div>
+
+  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>탐색</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="전체 색인"
+             accesskey="I">색인</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 모듈 목록"
+             >모듈</a> |</li>
+        <li class="right" >
+          <a href="tkinter.html" title="tkinter — Tcl/Tk 파이썬 인터페이스"
+             accesskey="N">다음</a> |</li>
+        <li class="right" >
+          <a href="shlex.html" title="shlex — 간단한 어휘 분석"
+             accesskey="P">이전</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.9.14 Documentation</a> &#187;
+    </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">파이썬 표준 라이브러리</a> &#187;</li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="빠른 검색" aria-label="빠른 검색" type="text" name="q" />
+          <input type="submit" value="이동" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </form>
+    </div>
+                     |
+                </li>
+            
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="graphical-user-interfaces-with-tk">
+<span id="tkinter"></span><h1>Tk를 사용한 그래픽 사용자 인터페이스<a class="headerlink" href="#graphical-user-interfaces-with-tk" title="제목 주소">¶</a></h1>
+<p id="index-0">Tk/Tcl은 오랫동안 파이썬의 중요한 부분이었습니다. 견고하고 플랫폼 독립적인 윈도우 도구상자(파이썬 프로그래머는 <a class="reference internal" href="tkinter.html#module-tkinter" title="tkinter: Interface to Tcl/Tk for graphical user interfaces"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter</span></code></a> 패키지를 통해 사용할 수 있습니다)와 그 확장(<a class="reference internal" href="tkinter.tix.html#module-tkinter.tix" title="tkinter.tix: Tk Extension Widgets for Tkinter"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter.tix</span></code></a>와 <a class="reference internal" href="tkinter.ttk.html#module-tkinter.ttk" title="tkinter.ttk: Tk themed widget set"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter.ttk</span></code></a> 모듈)을 제공합니다.</p>
+<p>The <a class="reference internal" href="tkinter.html#module-tkinter" title="tkinter: Interface to Tcl/Tk for graphical user interfaces"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter</span></code></a> package is a thin object-oriented layer on top of Tcl/Tk. To
+use <a class="reference internal" href="tkinter.html#module-tkinter" title="tkinter: Interface to Tcl/Tk for graphical user interfaces"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter</span></code></a>, you don’t need to write Tcl code, but you will need to
+consult the Tk documentation, and occasionally the Tcl documentation.
+<a class="reference internal" href="tkinter.html#module-tkinter" title="tkinter: Interface to Tcl/Tk for graphical user interfaces"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter</span></code></a> is a set of wrappers that implement the Tk widgets as Python
+classes.</p>
+<p><a class="reference internal" href="tkinter.html#module-tkinter" title="tkinter: Interface to Tcl/Tk for graphical user interfaces"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter</span></code></a>’s chief virtues are that it is fast, and that it usually comes
+bundled with Python. Although its standard documentation is weak, good
+material is available, which includes: references, tutorials, a book and
+others. <a class="reference internal" href="tkinter.html#module-tkinter" title="tkinter: Interface to Tcl/Tk for graphical user interfaces"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter</span></code></a> is also famous for having an outdated look and feel,
+which has been vastly improved in Tk 8.5. Nevertheless, there are many other
+GUI libraries that you could be interested in. The Python wiki lists several
+alternative <a class="reference external" href="https://wiki.python.org/moin/GuiProgramming">GUI frameworks and tools</a>.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="tkinter.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter</span></code> — Tcl/Tk 파이썬 인터페이스</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tkinter.html#tkinter-modules">Tkinter 모듈</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tkinter.html#tkinter-life-preserver">Tkinter 구명조끼</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tkinter.html#how-to-use-this-section">이 절을 사용하는 방법</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tkinter.html#a-simple-hello-world-program">간단한 Hello World 프로그램</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tkinter.html#a-very-quick-look-at-tcl-tk">Tcl/Tk (아주 빨리) 훑어보기</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tkinter.html#mapping-basic-tk-into-tkinter">기본 Tk를 Tkinter로 매핑하기</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tkinter.html#how-tk-and-tkinter-are-related">Tk와 Tkinter의 관계</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tkinter.html#handy-reference">간편한 레퍼런스</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tkinter.html#setting-options">옵션 설정</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tkinter.html#the-packer">패커</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tkinter.html#packer-options">패커 옵션</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tkinter.html#coupling-widget-variables">위젯 변수 결합하기</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tkinter.html#the-window-manager">창 관리자</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tkinter.html#tk-option-data-types">Tk 옵션 데이터형</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tkinter.html#bindings-and-events">바인딩과 이벤트</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tkinter.html#the-index-parameter">index 매개 변수</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tkinter.html#images">이미지</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tkinter.html#file-handlers">파일 처리기</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tkinter.colorchooser.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter.colorchooser</span></code> — 색상 선택 대화 상자</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tkinter.font.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter.font</span></code> — Tkinter 글꼴 래퍼</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dialog.html">Tkinter 대화 상자</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="dialog.html#module-tkinter.simpledialog"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter.simpledialog</span></code> — 표준 Tkinter 입력 대화 상자</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dialog.html#module-tkinter.filedialog"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter.filedialog</span></code> — 파일 선택 대화 상자</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="dialog.html#native-load-save-dialogs">네이티브 로드/저장 대화 상자</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="dialog.html#module-tkinter.commondialog"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter.commondialog</span></code> — 대화창 템플릿</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tkinter.messagebox.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter.messagebox</span></code> — Tkinter 메시지 프롬프트</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tkinter.scrolledtext.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter.scrolledtext</span></code> — 스크롤 되는 Text 위젯</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tkinter.dnd.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter.dnd</span></code> — 드래그 앤드 드롭 지원</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tkinter.ttk.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter.ttk</span></code> — Tk 테마 위젯</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tkinter.ttk.html#using-ttk">Ttk 사용하기</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tkinter.ttk.html#ttk-widgets">Ttk 위젯</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tkinter.ttk.html#widget">Widget</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tkinter.ttk.html#standard-options">표준 옵션</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tkinter.ttk.html#scrollable-widget-options">스크롤 가능한 위젯 옵션</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tkinter.ttk.html#label-options">레이블 옵션</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tkinter.ttk.html#compatibility-options">호환성 옵션</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tkinter.ttk.html#widget-states">위젯 상태</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tkinter.ttk.html#ttk-widget">ttk.Widget</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tkinter.ttk.html#combobox">Combobox</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tkinter.ttk.html#options">옵션</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tkinter.ttk.html#virtual-events">가상 이벤트</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tkinter.ttk.html#ttk-combobox">ttk.Combobox</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tkinter.ttk.html#spinbox">Spinbox</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tkinter.ttk.html#id1">옵션</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tkinter.ttk.html#id2">가상 이벤트</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tkinter.ttk.html#ttk-spinbox">ttk.Spinbox</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tkinter.ttk.html#notebook">Notebook</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tkinter.ttk.html#id3">옵션</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tkinter.ttk.html#tab-options">탭 옵션</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tkinter.ttk.html#tab-identifiers">탭 식별자</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tkinter.ttk.html#id4">가상 이벤트</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tkinter.ttk.html#ttk-notebook">ttk.Notebook</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tkinter.ttk.html#progressbar">Progressbar</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tkinter.ttk.html#id5">옵션</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tkinter.ttk.html#ttk-progressbar">ttk.Progressbar</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tkinter.ttk.html#separator">Separator</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tkinter.ttk.html#id6">옵션</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tkinter.ttk.html#sizegrip">Sizegrip</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tkinter.ttk.html#platform-specific-notes">플랫폼별 노트</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tkinter.ttk.html#bugs">버그</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tkinter.ttk.html#treeview">Treeview</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tkinter.ttk.html#id7">옵션</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tkinter.ttk.html#item-options">항목 옵션</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tkinter.ttk.html#tag-options">태그 옵션</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tkinter.ttk.html#column-identifiers">열 식별자</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tkinter.ttk.html#id8">가상 이벤트</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tkinter.ttk.html#ttk-treeview">ttk.Treeview</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tkinter.ttk.html#ttk-styling">Ttk 스타일링</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tkinter.ttk.html#layouts">레이아웃</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tkinter.tix.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter.tix</span></code> — Extension widgets for Tk</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tkinter.tix.html#using-tix">Using Tix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tkinter.tix.html#tix-widgets">Tix Widgets</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tkinter.tix.html#basic-widgets">Basic Widgets</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tkinter.tix.html#file-selectors">File Selectors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tkinter.tix.html#hierarchical-listbox">Hierarchical ListBox</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tkinter.tix.html#tabular-listbox">Tabular ListBox</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tkinter.tix.html#manager-widgets">Manager Widgets</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tkinter.tix.html#image-types">Image Types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tkinter.tix.html#miscellaneous-widgets">Miscellaneous Widgets</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tkinter.tix.html#form-geometry-manager">Form Geometry Manager</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tkinter.tix.html#tix-commands">Tix Commands</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="idle.html">IDLE</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="idle.html#menus">메뉴</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="idle.html#file-menu-shell-and-editor">File 메뉴 (셸과 편집기)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="idle.html#edit-menu-shell-and-editor">Edit 메뉴 (셸과 편집기)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="idle.html#format-menu-editor-window-only">Format 메뉴 (편집기 창 전용)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="idle.html#run-menu-editor-window-only">Run 메뉴 (편집기 창 전용)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="idle.html#shell-menu-shell-window-only">Shell 메뉴 (셸 창 전용)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="idle.html#debug-menu-shell-window-only">Debug 메뉴 (셸 창 전용)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="idle.html#options-menu-shell-and-editor">Options 메뉴 (셸과 편집기)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="idle.html#window-menu-shell-and-editor">Window 메뉴 (셸과 편집기)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="idle.html#help-menu-shell-and-editor">Help 메뉴 (셸과 편집기)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="idle.html#context-menus">문맥 메뉴</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="idle.html#editing-and-navigation">편집과 탐색</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="idle.html#editor-windows">편집기 창</a></li>
+<li class="toctree-l3"><a class="reference internal" href="idle.html#key-bindings">키 바인딩</a></li>
+<li class="toctree-l3"><a class="reference internal" href="idle.html#automatic-indentation">자동 들여쓰기</a></li>
+<li class="toctree-l3"><a class="reference internal" href="idle.html#completions">완성</a></li>
+<li class="toctree-l3"><a class="reference internal" href="idle.html#calltips">콜팁</a></li>
+<li class="toctree-l3"><a class="reference internal" href="idle.html#code-context">코드 컨텍스트</a></li>
+<li class="toctree-l3"><a class="reference internal" href="idle.html#python-shell-window">파이썬 셸 창</a></li>
+<li class="toctree-l3"><a class="reference internal" href="idle.html#text-colors">텍스트 색상</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="idle.html#startup-and-code-execution">시작과 코드 실행</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="idle.html#command-line-usage">명령 줄 사용법</a></li>
+<li class="toctree-l3"><a class="reference internal" href="idle.html#startup-failure">시작 실패</a></li>
+<li class="toctree-l3"><a class="reference internal" href="idle.html#running-user-code">사용자 코드 실행하기</a></li>
+<li class="toctree-l3"><a class="reference internal" href="idle.html#user-output-in-shell">셸의 사용자 출력</a></li>
+<li class="toctree-l3"><a class="reference internal" href="idle.html#developing-tkinter-applications">tkinter 응용 프로그램 개발하기</a></li>
+<li class="toctree-l3"><a class="reference internal" href="idle.html#running-without-a-subprocess">서브 프로세스 없이 실행하기</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="idle.html#help-and-preferences">도움말과 환경 설정</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="idle.html#help-sources">도움말 소스</a></li>
+<li class="toctree-l3"><a class="reference internal" href="idle.html#setting-preferences">환경 설정</a></li>
+<li class="toctree-l3"><a class="reference internal" href="idle.html#idle-on-macos">macOS의 IDLE</a></li>
+<li class="toctree-l3"><a class="reference internal" href="idle.html#extensions">확장</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>이전 항목</h4>
+  <p class="topless"><a href="shlex.html"
+                        title="이전 장"><code class="xref py py-mod docutils literal notranslate"><span class="pre">shlex</span></code> — 간단한 어휘 분석</a></p>
+  <h4>다음 항목</h4>
+  <p class="topless"><a href="tkinter.html"
+                        title="다음 장"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter</span></code> — Tcl/Tk 파이썬 인터페이스</a></p>
+  <div role="note" aria-label="source link">
+    <h3>현재 문서</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">버그 보고하기</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/3.9/Doc/library/tk.rst"
+            rel="nofollow">소스 보기
+        </a>
+      </li>
+    </ul>
+  </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>탐색</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="전체 색인"
+             >색인</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 모듈 목록"
+             >모듈</a> |</li>
+        <li class="right" >
+          <a href="tkinter.html" title="tkinter — Tcl/Tk 파이썬 인터페이스"
+             >다음</a> |</li>
+        <li class="right" >
+          <a href="shlex.html" title="shlex — 간단한 어휘 분석"
+             >이전</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.9.14 Documentation</a> &#187;
+    </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >파이썬 표준 라이브러리</a> &#187;</li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="빠른 검색" aria-label="빠른 검색" type="text" name="q" />
+          <input type="submit" value="이동" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </form>
+    </div>
+                     |
+                </li>
+            
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">저작권</a> 2001-2022, Python Software Foundation.
+    <br />
+    This page is licensed under the Python Software Foundation License Version 2.
+    <br />
+    Examples, recipes, and other code in the documentation are additionally licensed under the Zero Clause BSD License.
+    <br />
+    See <a href="/license.html">History and License</a> for more information.<br />
+    <br />
+
+    The Python Software Foundation is a non-profit corporation.
+<a href="https://www.python.org/psf/donations/">Please donate.</a>
+<br />
+    <br />
+
+    최종 업데이트: 9월 11, 2022
+    <a href="/bugs.html">Found a bug</a>?
+    <br />
+
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 2.4.4.
+    </div>
+
+  </body>
+</html>

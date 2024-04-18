@@ -1,0 +1,468 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ko">
+  <head>
+    <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>queue — 동기화된 큐 클래스 &#8212; Python 3.9.14 문서</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="../_static/pydoctheme.css?2022.1" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/translations.js"></script>
+    
+    <script src="../_static/sidebar.js"></script>
+    
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Python 3.9.14 문서에서 찾기"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="이 문서 정보" href="../about.html" />
+    <link rel="index" title="색인" href="../genindex.html" />
+    <link rel="search" title="검색" href="../search.html" />
+    <link rel="copyright" title="저작권" href="../copyright.html" />
+    <link rel="next" title="contextvars — 컨텍스트 변수" href="contextvars.html" />
+    <link rel="prev" title="sched — 이벤트 스케줄러" href="sched.html" />
+    <link rel="canonical" href="https://docs.python.org/3/library/queue.html" />
+    
+      
+    
+
+    
+    <style>
+      @media only screen {
+        table.full-width-table {
+            width: 100%;
+        }
+      }
+    </style>
+<link rel="shortcut icon" type="image/png" href="../_static/py.svg" />
+            <script type="text/javascript" src="../_static/copybutton.js"></script>
+            <script type="text/javascript" src="../_static/menu.js"></script> 
+
+  </head>
+<body>
+<div class="mobile-nav">
+    <input type="checkbox" id="menuToggler" class="toggler__input" aria-controls="navigation"
+           aria-pressed="false" aria-expanded="false" role="button" aria-label="Menu" />
+    <label for="menuToggler" class="toggler__label">
+        <span></span>
+    </label>
+    <nav class="nav-content" role="navigation">
+         <a href="https://www.python.org/" class="nav-logo">
+             <img src="../_static/py.svg" alt="Logo"/>
+         </a>
+        <div class="version_switcher_placeholder"></div>
+        <form role="search" class="search" action="../search.html" method="get">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" class="search-icon">
+                <path fill-rule="nonzero"
+                        d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 001.48-5.34c-.47-2.78-2.79-5-5.59-5.34a6.505 6.505 0 00-7.27 7.27c.34 2.8 2.56 5.12 5.34 5.59a6.5 6.5 0 005.34-1.48l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49 0 .41-.41.41-1.08 0-1.49L15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" fill="#444"></path>
+            </svg>
+            <input type="text" name="q" aria-label="빠른 검색"/>
+            <input type="submit" value="이동"/>
+        </form>
+    </nav>
+    <div class="menu-wrapper">
+        <nav class="menu" role="navigation" aria-label="main navigation">
+            <div class="language_switcher_placeholder"></div>
+  <h3><a href="../contents.html">목차</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">queue</span></code> — 동기화된 큐 클래스</a><ul>
+<li><a class="reference internal" href="#queue-objects">큐 객체</a></li>
+<li><a class="reference internal" href="#simplequeue-objects">SimpleQueue 객체</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>이전 항목</h4>
+  <p class="topless"><a href="sched.html"
+                        title="이전 장"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sched</span></code> — 이벤트 스케줄러</a></p>
+  <h4>다음 항목</h4>
+  <p class="topless"><a href="contextvars.html"
+                        title="다음 장"><code class="xref py py-mod docutils literal notranslate"><span class="pre">contextvars</span></code> — 컨텍스트 변수</a></p>
+  <div role="note" aria-label="source link">
+    <h3>현재 문서</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">버그 보고하기</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/3.9/Doc/library/queue.rst"
+            rel="nofollow">소스 보기
+        </a>
+      </li>
+    </ul>
+  </div>
+        </nav>
+    </div>
+</div>
+
+  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>탐색</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="전체 색인"
+             accesskey="I">색인</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 모듈 목록"
+             >모듈</a> |</li>
+        <li class="right" >
+          <a href="contextvars.html" title="contextvars — 컨텍스트 변수"
+             accesskey="N">다음</a> |</li>
+        <li class="right" >
+          <a href="sched.html" title="sched — 이벤트 스케줄러"
+             accesskey="P">이전</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.9.14 Documentation</a> &#187;
+    </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >파이썬 표준 라이브러리</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="concurrency.html" accesskey="U">동시 실행</a> &#187;</li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="빠른 검색" aria-label="빠른 검색" type="text" name="q" />
+          <input type="submit" value="이동" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </form>
+    </div>
+                     |
+                </li>
+            
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="module-queue">
+<span id="queue-a-synchronized-queue-class"></span><h1><a class="reference internal" href="#module-queue" title="queue: A synchronized queue class."><code class="xref py py-mod docutils literal notranslate"><span class="pre">queue</span></code></a> — 동기화된 큐 클래스<a class="headerlink" href="#module-queue" title="제목 주소">¶</a></h1>
+<p><strong>소스 코드:</strong> <a class="reference external" href="https://github.com/python/cpython/tree/3.9/Lib/queue.py">Lib/queue.py</a></p>
+<hr class="docutils" />
+<p><a class="reference internal" href="#module-queue" title="queue: A synchronized queue class."><code class="xref py py-mod docutils literal notranslate"><span class="pre">queue</span></code></a> 모듈은 다중 생산자, 다중 소비자 큐를 구현합니다. 정보가 여러 스레드 간에 안전하게 교환되어야 할 때 스레드 프로그래밍에서 특히 유용합니다. 이 모듈의 <a class="reference internal" href="#queue.Queue" title="queue.Queue"><code class="xref py py-class docutils literal notranslate"><span class="pre">Queue</span></code></a> 클래스는 필요한 모든 로킹 개념을 구현합니다.</p>
+<p>모듈은 항목을 꺼내는 순서 만 다른 3가지 유형의 큐를 구현합니다. <abbr title="선입선출, first-in, first-out">FIFO</abbr> 큐에서는, 추가된 첫 번째 작업이 처음으로 꺼내지는 작업입니다. <abbr title="후입선출, last-in, first-out">LIFO</abbr> 큐에서는, 가장 최근에 추가된 항목이 처음으로 꺼내지는 항목입니다 (스택처럼 작동합니다). 우선순위(priority) 큐에서는, 항목이 정렬된 상태로 유지되고 (<a class="reference internal" href="heapq.html#module-heapq" title="heapq: Heap queue algorithm (a.k.a. priority queue)."><code class="xref py py-mod docutils literal notranslate"><span class="pre">heapq</span></code></a> 모듈을 사용합니다) 가장 낮은 값을 갖는 항목이 먼저 꺼내집니다.</p>
+<p>내부적으로, 이러한 3가지 유형의 큐는 록을 사용하여 경쟁 스레드를 일시적으로 블록합니다; 그러나, 스레드 내에서의 재진입을 처리하도록 설계되지는 않았습니다.</p>
+<p>또한, 이 모듈은 “간단한” <abbr title="선입선출, first-in, first-out">FIFO</abbr> 큐 유형인 <a class="reference internal" href="#queue.SimpleQueue" title="queue.SimpleQueue"><code class="xref py py-class docutils literal notranslate"><span class="pre">SimpleQueue</span></code></a>를 구현합니다. 이 특정 구현은 작은 기능을 포기하는 대신 추가 보장을 제공합니다.</p>
+<p><a class="reference internal" href="#module-queue" title="queue: A synchronized queue class."><code class="xref py py-mod docutils literal notranslate"><span class="pre">queue</span></code></a> 모듈은 다음 클래스와 예외를 정의합니다:</p>
+<dl class="class">
+<dt id="queue.Queue">
+<em class="property">class </em><code class="sig-prename descclassname">queue.</code><code class="sig-name descname">Queue</code><span class="sig-paren">(</span><em class="sig-param">maxsize=0</em><span class="sig-paren">)</span><a class="headerlink" href="#queue.Queue" title="정의 주소">¶</a></dt>
+<dd><p><abbr title="선입선출, first-in, first-out">FIFO</abbr> 큐의 생성자. <em>maxsize</em>는 큐에 배치할 수 있는 항목 수에 대한 상한을 설정하는 정수입니다. 일단, 이 크기에 도달하면, 큐 항목이 소비될 때까지 삽입이 블록 됩니다. <em>maxsize</em>가 0보다 작거나 같으면, 큐 크기는 무한합니다.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="queue.LifoQueue">
+<em class="property">class </em><code class="sig-prename descclassname">queue.</code><code class="sig-name descname">LifoQueue</code><span class="sig-paren">(</span><em class="sig-param">maxsize=0</em><span class="sig-paren">)</span><a class="headerlink" href="#queue.LifoQueue" title="정의 주소">¶</a></dt>
+<dd><p><abbr title="후임선출, last-in, first-out">LIFO</abbr> 큐의 생성자. <em>maxsize</em>는 큐에 배치할 수 있는 항목 수에 대한 상한을 설정하는 정수입니다. 일단, 이 크기에 도달하면, 큐 항목이 소비될 때까지 삽입이 블록 됩니다. <em>maxsize</em>가 0보다 작거나 같으면, 큐 크기는 무한합니다.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="queue.PriorityQueue">
+<em class="property">class </em><code class="sig-prename descclassname">queue.</code><code class="sig-name descname">PriorityQueue</code><span class="sig-paren">(</span><em class="sig-param">maxsize=0</em><span class="sig-paren">)</span><a class="headerlink" href="#queue.PriorityQueue" title="정의 주소">¶</a></dt>
+<dd><p>우선순위 큐의 생성자. <em>maxsize</em>는 큐에 배치할 수 있는 항목 수에 대한 상한을 설정하는 정수입니다. 일단, 이 크기에 도달하면, 큐 항목이 소비될 때까지 삽입이 블록 됩니다. <em>maxsize</em>가 0보다 작거나 같으면, 큐 크기는 무한합니다.</p>
+<p>가장 낮은 값을 갖는 항목이 먼저 꺼내집니다 (가장 낮은 값을 갖는 항목은 <code class="docutils literal notranslate"><span class="pre">sorted(list(entries))[0]</span></code> 에 의해 반환되는 항목입니다). 항목의 전형적인 패턴은 <code class="docutils literal notranslate"><span class="pre">(priority_number,</span> <span class="pre">data)</span></code> 형식의 튜플입니다.</p>
+<p><em>data</em> 요소를 비교할 수 없으면, 데이터는 데이터 항목을 무시하고 우선순위 숫자만 비교하는 클래스로 감쌀 수 있습니다:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span><span class="p">,</span> <span class="n">field</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span>
+
+<span class="nd">@dataclass</span><span class="p">(</span><span class="n">order</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">PrioritizedItem</span><span class="p">:</span>
+    <span class="n">priority</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">item</span><span class="p">:</span> <span class="n">Any</span><span class="o">=</span><span class="n">field</span><span class="p">(</span><span class="n">compare</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="class">
+<dt id="queue.SimpleQueue">
+<em class="property">class </em><code class="sig-prename descclassname">queue.</code><code class="sig-name descname">SimpleQueue</code><a class="headerlink" href="#queue.SimpleQueue" title="정의 주소">¶</a></dt>
+<dd><p>상한 없는 <abbr title="선입선출, first-in, first-out">FIFO</abbr> 큐의 생성자. 단순 큐에는 작업 추적과 같은 고급 기능이 없습니다.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">버전 3.7에 추가.</span></p>
+</div>
+</dd></dl>
+
+<dl class="exception">
+<dt id="queue.Empty">
+<em class="property">exception </em><code class="sig-prename descclassname">queue.</code><code class="sig-name descname">Empty</code><a class="headerlink" href="#queue.Empty" title="정의 주소">¶</a></dt>
+<dd><p>비 블로킹 <a class="reference internal" href="#queue.Queue.get" title="queue.Queue.get"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get()</span></code></a>(또는 <a class="reference internal" href="#queue.Queue.get_nowait" title="queue.Queue.get_nowait"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_nowait()</span></code></a>)이 비어있는 <a class="reference internal" href="#queue.Queue" title="queue.Queue"><code class="xref py py-class docutils literal notranslate"><span class="pre">Queue</span></code></a> 객체에 호출될 때 발생하는 예외.</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="queue.Full">
+<em class="property">exception </em><code class="sig-prename descclassname">queue.</code><code class="sig-name descname">Full</code><a class="headerlink" href="#queue.Full" title="정의 주소">¶</a></dt>
+<dd><p>비 블로킹 <a class="reference internal" href="#queue.Queue.put" title="queue.Queue.put"><code class="xref py py-meth docutils literal notranslate"><span class="pre">put()</span></code></a>(또는 <a class="reference internal" href="#queue.Queue.put_nowait" title="queue.Queue.put_nowait"><code class="xref py py-meth docutils literal notranslate"><span class="pre">put_nowait()</span></code></a>)이 가득 찬 <a class="reference internal" href="#queue.Queue" title="queue.Queue"><code class="xref py py-class docutils literal notranslate"><span class="pre">Queue</span></code></a> 객체에 호출될 때 발생하는 예외.</p>
+</dd></dl>
+
+<section id="queue-objects">
+<span id="queueobjects"></span><h2>큐 객체<a class="headerlink" href="#queue-objects" title="제목 주소">¶</a></h2>
+<p>큐 객체(<a class="reference internal" href="#queue.Queue" title="queue.Queue"><code class="xref py py-class docutils literal notranslate"><span class="pre">Queue</span></code></a>, <a class="reference internal" href="#queue.LifoQueue" title="queue.LifoQueue"><code class="xref py py-class docutils literal notranslate"><span class="pre">LifoQueue</span></code></a> 또는 <a class="reference internal" href="#queue.PriorityQueue" title="queue.PriorityQueue"><code class="xref py py-class docutils literal notranslate"><span class="pre">PriorityQueue</span></code></a>)는 아래에 설명된 공용 메서드를 제공합니다.</p>
+<dl class="method">
+<dt id="queue.Queue.qsize">
+<code class="sig-prename descclassname">Queue.</code><code class="sig-name descname">qsize</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#queue.Queue.qsize" title="정의 주소">¶</a></dt>
+<dd><p>큐의 대략의 크기를 돌려줍니다. 주의하십시오, qsize() &gt; 0 은 후속 get()이 블록 되지 않는다는 것을 보장하지 않으며, qsize() &lt; maxsize 도 put()이 블록 되지 않는다고 보장하지 않습니다.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="queue.Queue.empty">
+<code class="sig-prename descclassname">Queue.</code><code class="sig-name descname">empty</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#queue.Queue.empty" title="정의 주소">¶</a></dt>
+<dd><p>큐가 비어 있으면 <code class="docutils literal notranslate"><span class="pre">True</span></code>를, 그렇지 않으면 <code class="docutils literal notranslate"><span class="pre">False</span></code>를 반환합니다. empty()가 <code class="docutils literal notranslate"><span class="pre">True</span></code>를 반환하면, put()에 대한 후속 호출이 블록 되지 않는다고 보장하는 것은 아닙니다. 마찬가지로 empty()가 <code class="docutils literal notranslate"><span class="pre">False</span></code>를 반환하면, get()에 대한 후속 호출이 블록 되지 않는다고 보장하는 것은 아닙니다.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="queue.Queue.full">
+<code class="sig-prename descclassname">Queue.</code><code class="sig-name descname">full</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#queue.Queue.full" title="정의 주소">¶</a></dt>
+<dd><p>큐가 가득 차면 <code class="docutils literal notranslate"><span class="pre">True</span></code>를, 그렇지 않으면 <code class="docutils literal notranslate"><span class="pre">False</span></code>를 반환합니다. full()이 <code class="docutils literal notranslate"><span class="pre">True</span></code>를 반환하면, get()에 대한 후속 호출이 블록 되지 않는다고 보장하는 것은 아닙니다. 마찬가지로 full()이 <code class="docutils literal notranslate"><span class="pre">False</span></code>를 반환하면, put()에 대한 후속 호출이 블록 되지 않는다고 보장하는 것은 아닙니다.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="queue.Queue.put">
+<code class="sig-prename descclassname">Queue.</code><code class="sig-name descname">put</code><span class="sig-paren">(</span><em class="sig-param">item</em>, <em class="sig-param">block=True</em>, <em class="sig-param">timeout=None</em><span class="sig-paren">)</span><a class="headerlink" href="#queue.Queue.put" title="정의 주소">¶</a></dt>
+<dd><p>큐에 <em>item</em>을 넣습니다. 선택적 인자 <em>block</em>이 참이고 <em>timeout</em>이 <code class="docutils literal notranslate"><span class="pre">None</span></code>(기본값)이면, 사용 가능한 슬롯이 확보될 때까지 필요하면 블록합니다. <em>timeout</em>이 양수면, 최대 <em>timeout</em> 초 동안 블록하고 그 시간 내에 사용 가능한 슬롯이 없으면 <a class="reference internal" href="#queue.Full" title="queue.Full"><code class="xref py py-exc docutils literal notranslate"><span class="pre">Full</span></code></a> 예외가 발생합니다. 그렇지 않으면 (<em>block</em>이 거짓), 빈 슬롯이 즉시 사용할 수 있으면 큐에 항목을 넣고, 그렇지 않으면 <a class="reference internal" href="#queue.Full" title="queue.Full"><code class="xref py py-exc docutils literal notranslate"><span class="pre">Full</span></code></a> 예외를 발생시킵니다 (이때 <em>timeout</em>은 무시됩니다).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="queue.Queue.put_nowait">
+<code class="sig-prename descclassname">Queue.</code><code class="sig-name descname">put_nowait</code><span class="sig-paren">(</span><em class="sig-param">item</em><span class="sig-paren">)</span><a class="headerlink" href="#queue.Queue.put_nowait" title="정의 주소">¶</a></dt>
+<dd><p>Equivalent to <code class="docutils literal notranslate"><span class="pre">put(item,</span> <span class="pre">block=False)</span></code>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="queue.Queue.get">
+<code class="sig-prename descclassname">Queue.</code><code class="sig-name descname">get</code><span class="sig-paren">(</span><em class="sig-param">block=True</em>, <em class="sig-param">timeout=None</em><span class="sig-paren">)</span><a class="headerlink" href="#queue.Queue.get" title="정의 주소">¶</a></dt>
+<dd><p>큐에서 항목을 제거하고 반환합니다. 선택적 인자 <em>block</em>이 참이고 <em>timeout</em>이 <code class="docutils literal notranslate"><span class="pre">None</span></code>(기본값)이면, 항목이 사용 가능할 때까지 필요하면 블록합니다. <em>timeout</em>이 양수면, 최대 <em>timeout</em> 초 동안 블록하고 그 시간 내에 사용 가능한 항목이 없으면 <a class="reference internal" href="#queue.Empty" title="queue.Empty"><code class="xref py py-exc docutils literal notranslate"><span class="pre">Empty</span></code></a> 예외가 발생합니다. 그렇지 않으면 (<em>block</em>이 거짓), 즉시 사용할 수 있는 항목이 있으면 반환하고, 그렇지 않으면 <a class="reference internal" href="#queue.Empty" title="queue.Empty"><code class="xref py py-exc docutils literal notranslate"><span class="pre">Empty</span></code></a> 예외를 발생시킵니다 (이때 <em>timeout</em>은 무시됩니다).</p>
+<p>POSIX 시스템에서 3.0 이전에서, 윈도우의 모든 버전에서, <em>block</em>이 참이고 <em>timeout</em>이 <code class="docutils literal notranslate"><span class="pre">None</span></code>이면, 이 연산은 하부 록에 대한 중단되지 않는(uninterruptible) 대기로 들어갑니다. 이는 어떤 예외도 발생할 수 없음을 뜻하고, 특히 SIGINT가 <a class="reference internal" href="exceptions.html#KeyboardInterrupt" title="KeyboardInterrupt"><code class="xref py py-exc docutils literal notranslate"><span class="pre">KeyboardInterrupt</span></code></a>를 일으키지 않습니다.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="queue.Queue.get_nowait">
+<code class="sig-prename descclassname">Queue.</code><code class="sig-name descname">get_nowait</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#queue.Queue.get_nowait" title="정의 주소">¶</a></dt>
+<dd><p><code class="docutils literal notranslate"><span class="pre">get(False)</span></code>와 동등합니다.</p>
+</dd></dl>
+
+<p>큐에 넣은 작업이 데몬 소비자 스레드에 의해 완전히 처리되었는지를 추적하는 것을 지원하는 두 가지 메서드가 제공됩니다.</p>
+<dl class="method">
+<dt id="queue.Queue.task_done">
+<code class="sig-prename descclassname">Queue.</code><code class="sig-name descname">task_done</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#queue.Queue.task_done" title="정의 주소">¶</a></dt>
+<dd><p>앞서 큐에 넣은 작업이 완료되었음을 나타냅니다. 큐 소비자 스레드에서 사용됩니다. 작업을 꺼내는 데 사용되는 <a class="reference internal" href="#queue.Queue.get" title="queue.Queue.get"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get()</span></code></a>마다, 후속 <a class="reference internal" href="#queue.Queue.task_done" title="queue.Queue.task_done"><code class="xref py py-meth docutils literal notranslate"><span class="pre">task_done()</span></code></a> 호출은 작업에 대한 처리가 완료되었음을 큐에 알려줍니다.</p>
+<p><a class="reference internal" href="#queue.Queue.join" title="queue.Queue.join"><code class="xref py py-meth docutils literal notranslate"><span class="pre">join()</span></code></a>이 현재 블로킹 중이면, 모든 항목이 처리되면 (큐로 <a class="reference internal" href="#queue.Queue.put" title="queue.Queue.put"><code class="xref py py-meth docutils literal notranslate"><span class="pre">put()</span></code></a> 된 모든 항목에 대해 <a class="reference internal" href="#queue.Queue.task_done" title="queue.Queue.task_done"><code class="xref py py-meth docutils literal notranslate"><span class="pre">task_done()</span></code></a> 호출이 수신되었음을 뜻합니다) 재개됩니다.</p>
+<p>큐에 있는 항목보다 더 많이 호출되면 <a class="reference internal" href="exceptions.html#ValueError" title="ValueError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code></a>를 발생시킵니다.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="queue.Queue.join">
+<code class="sig-prename descclassname">Queue.</code><code class="sig-name descname">join</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#queue.Queue.join" title="정의 주소">¶</a></dt>
+<dd><p>큐의 모든 항목을 꺼내서 처리할 때까지 블록합니다.</p>
+<p>완료되지 않은 작업 카운트는 항목이 큐에 추가될 때마다 올라갑니다. 소비자 스레드가 <a class="reference internal" href="#queue.Queue.task_done" title="queue.Queue.task_done"><code class="xref py py-meth docutils literal notranslate"><span class="pre">task_done()</span></code></a>을 호출해서 항목을 꺼내고 작업이 모두 완료되었음을 나타낼 때마다 카운트가 내려갑니다. 완료되지 않은 작업 카운트가 0으로 떨어지면, <a class="reference internal" href="#queue.Queue.join" title="queue.Queue.join"><code class="xref py py-meth docutils literal notranslate"><span class="pre">join()</span></code></a>이 블록 해제됩니다.</p>
+</dd></dl>
+
+<p>큐에 포함된 작업이 완료될 때까지 대기하는 방법의 예:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">threading</span><span class="o">,</span> <span class="nn">queue</span>
+
+<span class="n">q</span> <span class="o">=</span> <span class="n">queue</span><span class="o">.</span><span class="n">Queue</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">worker</span><span class="p">():</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">item</span> <span class="o">=</span> <span class="n">q</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Working on </span><span class="si">{</span><span class="n">item</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Finished </span><span class="si">{</span><span class="n">item</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="n">q</span><span class="o">.</span><span class="n">task_done</span><span class="p">()</span>
+
+<span class="c1"># turn-on the worker thread</span>
+<span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">worker</span><span class="p">,</span> <span class="n">daemon</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+<span class="c1"># send thirty task requests to the worker</span>
+<span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">30</span><span class="p">):</span>
+    <span class="n">q</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;All task requests sent</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+
+<span class="c1"># block until all tasks are done</span>
+<span class="n">q</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;All work completed&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="simplequeue-objects">
+<h2>SimpleQueue 객체<a class="headerlink" href="#simplequeue-objects" title="제목 주소">¶</a></h2>
+<p><a class="reference internal" href="#queue.SimpleQueue" title="queue.SimpleQueue"><code class="xref py py-class docutils literal notranslate"><span class="pre">SimpleQueue</span></code></a> 객체는 아래에서 설명하는 공용 메서드를 제공합니다.</p>
+<dl class="method">
+<dt id="queue.SimpleQueue.qsize">
+<code class="sig-prename descclassname">SimpleQueue.</code><code class="sig-name descname">qsize</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#queue.SimpleQueue.qsize" title="정의 주소">¶</a></dt>
+<dd><p>큐의 대략의 크기를 돌려줍니다.  주의하십시오, qsize() &gt; 0 은 후속 get()이 블록 되지 않는다는 것을 보장하지 않습니다.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="queue.SimpleQueue.empty">
+<code class="sig-prename descclassname">SimpleQueue.</code><code class="sig-name descname">empty</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#queue.SimpleQueue.empty" title="정의 주소">¶</a></dt>
+<dd><p>큐가 비어 있으면 <code class="docutils literal notranslate"><span class="pre">True</span></code>를, 그렇지 않으면 <code class="docutils literal notranslate"><span class="pre">False</span></code>를 반환합니다. empty()가 <code class="docutils literal notranslate"><span class="pre">False</span></code>를 반환하면, get()에 대한 후속 호출이 블록 되지 않는다는 것을 보장하지는 않습니다.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="queue.SimpleQueue.put">
+<code class="sig-prename descclassname">SimpleQueue.</code><code class="sig-name descname">put</code><span class="sig-paren">(</span><em class="sig-param">item</em>, <em class="sig-param">block=True</em>, <em class="sig-param">timeout=None</em><span class="sig-paren">)</span><a class="headerlink" href="#queue.SimpleQueue.put" title="정의 주소">¶</a></dt>
+<dd><p><em>item</em>을 큐에 넣습니다. 이 메서드는 결코 블록하지 않고 항상 성공합니다 (메모리 할당 실패와 같은 잠재적 저수준 에러 제외). 선택적 인자 <em>block</em>과 <em>timeout</em>은 무시되고 <a class="reference internal" href="#queue.Queue.put" title="queue.Queue.put"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Queue.put()</span></code></a>과의 호환성을 위해서만 제공됩니다.</p>
+<div class="impl-detail compound">
+<p><strong>CPython implementation detail:</strong> This method has a C implementation which is reentrant.  That is, a
+<code class="docutils literal notranslate"><span class="pre">put()</span></code> or <code class="docutils literal notranslate"><span class="pre">get()</span></code> call can be interrupted by another <code class="docutils literal notranslate"><span class="pre">put()</span></code>
+call in the same thread without deadlocking or corrupting internal
+state inside the queue.  This makes it appropriate for use in
+destructors such as <code class="docutils literal notranslate"><span class="pre">__del__</span></code> methods or <a class="reference internal" href="weakref.html#module-weakref" title="weakref: Support for weak references and weak dictionaries."><code class="xref py py-mod docutils literal notranslate"><span class="pre">weakref</span></code></a> callbacks.</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="queue.SimpleQueue.put_nowait">
+<code class="sig-prename descclassname">SimpleQueue.</code><code class="sig-name descname">put_nowait</code><span class="sig-paren">(</span><em class="sig-param">item</em><span class="sig-paren">)</span><a class="headerlink" href="#queue.SimpleQueue.put_nowait" title="정의 주소">¶</a></dt>
+<dd><p>Equivalent to <code class="docutils literal notranslate"><span class="pre">put(item,</span> <span class="pre">block=False)</span></code>, provided for compatibility with
+<a class="reference internal" href="#queue.Queue.put_nowait" title="queue.Queue.put_nowait"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Queue.put_nowait()</span></code></a>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="queue.SimpleQueue.get">
+<code class="sig-prename descclassname">SimpleQueue.</code><code class="sig-name descname">get</code><span class="sig-paren">(</span><em class="sig-param">block=True</em>, <em class="sig-param">timeout=None</em><span class="sig-paren">)</span><a class="headerlink" href="#queue.SimpleQueue.get" title="정의 주소">¶</a></dt>
+<dd><p>큐에서 항목을 제거하고 반환합니다. 선택적 인자 <em>block</em>이 참이고 <em>timeout</em>이 <code class="docutils literal notranslate"><span class="pre">None</span></code>(기본값)이면, 항목이 사용 가능할 때까지 필요하면 블록합니다. <em>timeout</em>이 양수면, 최대 <em>timeout</em> 초 동안 블록하고 그 시간 내에 사용 가능한 항목이 없으면 <a class="reference internal" href="#queue.Empty" title="queue.Empty"><code class="xref py py-exc docutils literal notranslate"><span class="pre">Empty</span></code></a> 예외가 발생합니다. 그렇지 않으면 (<em>block</em>이 거짓), 즉시 사용할 수 있는 항목이 있으면 반환하고, 그렇지 않으면 <a class="reference internal" href="#queue.Empty" title="queue.Empty"><code class="xref py py-exc docutils literal notranslate"><span class="pre">Empty</span></code></a> 예외를 발생시킵니다 (이때 <em>timeout</em>은 무시됩니다).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="queue.SimpleQueue.get_nowait">
+<code class="sig-prename descclassname">SimpleQueue.</code><code class="sig-name descname">get_nowait</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#queue.SimpleQueue.get_nowait" title="정의 주소">¶</a></dt>
+<dd><p><code class="docutils literal notranslate"><span class="pre">get(False)</span></code>와 동등합니다.</p>
+</dd></dl>
+
+<div class="admonition seealso">
+<p class="admonition-title">더 보기</p>
+<dl class="simple">
+<dt><a class="reference internal" href="multiprocessing.html#multiprocessing.Queue" title="multiprocessing.Queue"><code class="xref py py-class docutils literal notranslate"><span class="pre">multiprocessing.Queue</span></code></a> 클래스</dt><dd><p>(다중 스레드 대신) 다중 프로세스 문맥에서 사용하기 위한 큐 클래스.</p>
+</dd>
+</dl>
+<p><a class="reference internal" href="collections.html#collections.deque" title="collections.deque"><code class="xref py py-class docutils literal notranslate"><span class="pre">collections.deque</span></code></a>는 록을 필요로하지 않고 인덱싱을 지원하는 빠른 원자적 <a class="reference internal" href="collections.html#collections.deque.append" title="collections.deque.append"><code class="xref py py-meth docutils literal notranslate"><span class="pre">append()</span></code></a>와 <a class="reference internal" href="collections.html#collections.deque.popleft" title="collections.deque.popleft"><code class="xref py py-meth docutils literal notranslate"><span class="pre">popleft()</span></code></a> 연산을 제공하는 크기 제한 없는 큐의 대체 구현입니다.</p>
+</div>
+</section>
+</section>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../contents.html">목차</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">queue</span></code> — 동기화된 큐 클래스</a><ul>
+<li><a class="reference internal" href="#queue-objects">큐 객체</a></li>
+<li><a class="reference internal" href="#simplequeue-objects">SimpleQueue 객체</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>이전 항목</h4>
+  <p class="topless"><a href="sched.html"
+                        title="이전 장"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sched</span></code> — 이벤트 스케줄러</a></p>
+  <h4>다음 항목</h4>
+  <p class="topless"><a href="contextvars.html"
+                        title="다음 장"><code class="xref py py-mod docutils literal notranslate"><span class="pre">contextvars</span></code> — 컨텍스트 변수</a></p>
+  <div role="note" aria-label="source link">
+    <h3>현재 문서</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">버그 보고하기</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/3.9/Doc/library/queue.rst"
+            rel="nofollow">소스 보기
+        </a>
+      </li>
+    </ul>
+  </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>탐색</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="전체 색인"
+             >색인</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 모듈 목록"
+             >모듈</a> |</li>
+        <li class="right" >
+          <a href="contextvars.html" title="contextvars — 컨텍스트 변수"
+             >다음</a> |</li>
+        <li class="right" >
+          <a href="sched.html" title="sched — 이벤트 스케줄러"
+             >이전</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.9.14 Documentation</a> &#187;
+    </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >파이썬 표준 라이브러리</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="concurrency.html" >동시 실행</a> &#187;</li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="빠른 검색" aria-label="빠른 검색" type="text" name="q" />
+          <input type="submit" value="이동" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </form>
+    </div>
+                     |
+                </li>
+            
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">저작권</a> 2001-2022, Python Software Foundation.
+    <br />
+    This page is licensed under the Python Software Foundation License Version 2.
+    <br />
+    Examples, recipes, and other code in the documentation are additionally licensed under the Zero Clause BSD License.
+    <br />
+    See <a href="/license.html">History and License</a> for more information.<br />
+    <br />
+
+    The Python Software Foundation is a non-profit corporation.
+<a href="https://www.python.org/psf/donations/">Please donate.</a>
+<br />
+    <br />
+
+    최종 업데이트: 9월 11, 2022
+    <a href="/bugs.html">Found a bug</a>?
+    <br />
+
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 2.4.4.
+    </div>
+
+  </body>
+</html>

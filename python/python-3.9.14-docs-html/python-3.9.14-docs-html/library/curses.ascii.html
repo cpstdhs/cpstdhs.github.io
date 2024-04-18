@@ -1,0 +1,498 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ko">
+  <head>
+    <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>curses.ascii — ASCII 문자용 유틸리티 &#8212; Python 3.9.14 문서</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="../_static/pydoctheme.css?2022.1" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/translations.js"></script>
+    
+    <script src="../_static/sidebar.js"></script>
+    
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Python 3.9.14 문서에서 찾기"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="이 문서 정보" href="../about.html" />
+    <link rel="index" title="색인" href="../genindex.html" />
+    <link rel="search" title="검색" href="../search.html" />
+    <link rel="copyright" title="저작권" href="../copyright.html" />
+    <link rel="next" title="curses.panel — curses 용 패널 스택 확장" href="curses.panel.html" />
+    <link rel="prev" title="curses — 문자 셀 디스플레이를 위한 터미널 처리" href="curses.html" />
+    <link rel="canonical" href="https://docs.python.org/3/library/curses.ascii.html" />
+    
+      
+    
+
+    
+    <style>
+      @media only screen {
+        table.full-width-table {
+            width: 100%;
+        }
+      }
+    </style>
+<link rel="shortcut icon" type="image/png" href="../_static/py.svg" />
+            <script type="text/javascript" src="../_static/copybutton.js"></script>
+            <script type="text/javascript" src="../_static/menu.js"></script> 
+
+  </head>
+<body>
+<div class="mobile-nav">
+    <input type="checkbox" id="menuToggler" class="toggler__input" aria-controls="navigation"
+           aria-pressed="false" aria-expanded="false" role="button" aria-label="Menu" />
+    <label for="menuToggler" class="toggler__label">
+        <span></span>
+    </label>
+    <nav class="nav-content" role="navigation">
+         <a href="https://www.python.org/" class="nav-logo">
+             <img src="../_static/py.svg" alt="Logo"/>
+         </a>
+        <div class="version_switcher_placeholder"></div>
+        <form role="search" class="search" action="../search.html" method="get">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" class="search-icon">
+                <path fill-rule="nonzero"
+                        d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 001.48-5.34c-.47-2.78-2.79-5-5.59-5.34a6.505 6.505 0 00-7.27 7.27c.34 2.8 2.56 5.12 5.34 5.59a6.5 6.5 0 005.34-1.48l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49 0 .41-.41.41-1.08 0-1.49L15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" fill="#444"></path>
+            </svg>
+            <input type="text" name="q" aria-label="빠른 검색"/>
+            <input type="submit" value="이동"/>
+        </form>
+    </nav>
+    <div class="menu-wrapper">
+        <nav class="menu" role="navigation" aria-label="main navigation">
+            <div class="language_switcher_placeholder"></div>
+  <h4>이전 항목</h4>
+  <p class="topless"><a href="curses.html"
+                        title="이전 장"><code class="xref py py-mod docutils literal notranslate"><span class="pre">curses</span></code> — 문자 셀 디스플레이를 위한 터미널 처리</a></p>
+  <h4>다음 항목</h4>
+  <p class="topless"><a href="curses.panel.html"
+                        title="다음 장"><code class="xref py py-mod docutils literal notranslate"><span class="pre">curses.panel</span></code> — curses 용 패널 스택 확장</a></p>
+  <div role="note" aria-label="source link">
+    <h3>현재 문서</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">버그 보고하기</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/3.9/Doc/library/curses.ascii.rst"
+            rel="nofollow">소스 보기
+        </a>
+      </li>
+    </ul>
+  </div>
+        </nav>
+    </div>
+</div>
+
+  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>탐색</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="전체 색인"
+             accesskey="I">색인</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 모듈 목록"
+             >모듈</a> |</li>
+        <li class="right" >
+          <a href="curses.panel.html" title="curses.panel — curses 용 패널 스택 확장"
+             accesskey="N">다음</a> |</li>
+        <li class="right" >
+          <a href="curses.html" title="curses — 문자 셀 디스플레이를 위한 터미널 처리"
+             accesskey="P">이전</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.9.14 Documentation</a> &#187;
+    </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >파이썬 표준 라이브러리</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="allos.html" accesskey="U">일반 운영 체제 서비스</a> &#187;</li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="빠른 검색" aria-label="빠른 검색" type="text" name="q" />
+          <input type="submit" value="이동" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </form>
+    </div>
+                     |
+                </li>
+            
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="module-curses.ascii">
+<span id="curses-ascii-utilities-for-ascii-characters"></span><h1><a class="reference internal" href="#module-curses.ascii" title="curses.ascii: Constants and set-membership functions for ASCII characters."><code class="xref py py-mod docutils literal notranslate"><span class="pre">curses.ascii</span></code></a> — ASCII 문자용 유틸리티<a class="headerlink" href="#module-curses.ascii" title="제목 주소">¶</a></h1>
+<hr class="docutils" />
+<p><a class="reference internal" href="#module-curses.ascii" title="curses.ascii: Constants and set-membership functions for ASCII characters."><code class="xref py py-mod docutils literal notranslate"><span class="pre">curses.ascii</span></code></a> 모듈은 ASCII 문자에 대한 이름 상수와 다양한 ASCII 문자 클래스에서 멤버십을 검사하는 함수를 제공합니다. 제공된 상수는 다음과 같이 제어 문자의 이름입니다:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 23%" />
+<col style="width: 77%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>이름</p></th>
+<th class="head"><p>의미</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="xref py py-const docutils literal notranslate"><span class="pre">NUL</span></code></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-const docutils literal notranslate"><span class="pre">SOH</span></code></p></td>
+<td><p>헤딩의 시작(Start of heading), 콘솔 인터럽트</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-const docutils literal notranslate"><span class="pre">STX</span></code></p></td>
+<td><p>텍스트의 시작(Start of text)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-const docutils literal notranslate"><span class="pre">ETX</span></code></p></td>
+<td><p>텍스트 끝(End of text)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-const docutils literal notranslate"><span class="pre">EOT</span></code></p></td>
+<td><p>전송 끝(End of transmission)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-const docutils literal notranslate"><span class="pre">ENQ</span></code></p></td>
+<td><p>문의(Enquiry), <code class="xref py py-const docutils literal notranslate"><span class="pre">ACK</span></code> 흐름 제어와 함께 제공</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-const docutils literal notranslate"><span class="pre">ACK</span></code></p></td>
+<td><p>확인(Acknowledgement)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-const docutils literal notranslate"><span class="pre">BEL</span></code></p></td>
+<td><p>벨(Bell)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-const docutils literal notranslate"><span class="pre">BS</span></code></p></td>
+<td><p>백스페이스(Backspace)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-const docutils literal notranslate"><span class="pre">TAB</span></code></p></td>
+<td><p>탭(Tab)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-const docutils literal notranslate"><span class="pre">HT</span></code></p></td>
+<td><p><code class="xref py py-const docutils literal notranslate"><span class="pre">TAB</span></code>의 별칭: “가로 탭(Horizontal tab)”</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-const docutils literal notranslate"><span class="pre">LF</span></code></p></td>
+<td><p>줄 바꿈(Line feed)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-const docutils literal notranslate"><span class="pre">NL</span></code></p></td>
+<td><p><code class="xref py py-const docutils literal notranslate"><span class="pre">LF</span></code>의 별칭: “새 줄(New line)”</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-const docutils literal notranslate"><span class="pre">VT</span></code></p></td>
+<td><p>세로 탭(Vertical tab)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-const docutils literal notranslate"><span class="pre">FF</span></code></p></td>
+<td><p>용지 공급(Form feed)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-const docutils literal notranslate"><span class="pre">CR</span></code></p></td>
+<td><p>캐리지 리턴(Carriage return)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-const docutils literal notranslate"><span class="pre">SO</span></code></p></td>
+<td><p>시프트 아웃(Shift-out), 대체 문자 집합 시작</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-const docutils literal notranslate"><span class="pre">SI</span></code></p></td>
+<td><p>시프트 인(Shift-in), 기본 문자 집합 재개</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-const docutils literal notranslate"><span class="pre">DLE</span></code></p></td>
+<td><p>데이터 링크 이스케이프(Data-link escape)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-const docutils literal notranslate"><span class="pre">DC1</span></code></p></td>
+<td><p>XON, 흐름 제어용</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-const docutils literal notranslate"><span class="pre">DC2</span></code></p></td>
+<td><p>장치 제어(Device control) 2, 블록 모드 흐름 제어</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-const docutils literal notranslate"><span class="pre">DC3</span></code></p></td>
+<td><p>XOFF, 흐름 제어용</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-const docutils literal notranslate"><span class="pre">DC4</span></code></p></td>
+<td><p>장치 제어(Device control) 4</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-const docutils literal notranslate"><span class="pre">NAK</span></code></p></td>
+<td><p>부정적 확인(Negative acknowledgement)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-const docutils literal notranslate"><span class="pre">SYN</span></code></p></td>
+<td><p>동기 대기(Synchronous idle)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-const docutils literal notranslate"><span class="pre">ETB</span></code></p></td>
+<td><p>전송 블록 종료(End transmission block)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-const docutils literal notranslate"><span class="pre">CAN</span></code></p></td>
+<td><p>취소(Cancel)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-const docutils literal notranslate"><span class="pre">EM</span></code></p></td>
+<td><p>매체의 끝(End of medium)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-const docutils literal notranslate"><span class="pre">SUB</span></code></p></td>
+<td><p>치환(Substitute)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-const docutils literal notranslate"><span class="pre">ESC</span></code></p></td>
+<td><p>탈출(Escape)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-const docutils literal notranslate"><span class="pre">FS</span></code></p></td>
+<td><p>파일 구분자(File separator)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-const docutils literal notranslate"><span class="pre">GS</span></code></p></td>
+<td><p>그룹 구분자(Group separator)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-const docutils literal notranslate"><span class="pre">RS</span></code></p></td>
+<td><p>레코드 구분자(Record separator), 블록 모드 종료자</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-const docutils literal notranslate"><span class="pre">US</span></code></p></td>
+<td><p>단위 구분자(Unit separator)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-const docutils literal notranslate"><span class="pre">SP</span></code></p></td>
+<td><p>스페이스(Space)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-const docutils literal notranslate"><span class="pre">DEL</span></code></p></td>
+<td><p>삭제(Delete)</p></td>
+</tr>
+</tbody>
+</table>
+<p>이들 중 많은 것들이 현대적인 사용법에서 실질적인 중요성을 거의 가지고 있지 않습니다. 니모닉은 디지털 컴퓨터 이전의 텔레 프린터 규칙에서 파생되었습니다.</p>
+<p>이 모듈은 표준 C 라이브러리의 함수에 따라 다음 함수를 제공합니다:</p>
+<dl class="function">
+<dt id="curses.ascii.isalnum">
+<code class="sig-prename descclassname">curses.ascii.</code><code class="sig-name descname">isalnum</code><span class="sig-paren">(</span><em class="sig-param">c</em><span class="sig-paren">)</span><a class="headerlink" href="#curses.ascii.isalnum" title="정의 주소">¶</a></dt>
+<dd><p>ASCII 영숫자를 확인합니다; <code class="docutils literal notranslate"><span class="pre">isalpha(c)</span> <span class="pre">or</span> <span class="pre">isdigit(c)</span></code>와 동등합니다.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="curses.ascii.isalpha">
+<code class="sig-prename descclassname">curses.ascii.</code><code class="sig-name descname">isalpha</code><span class="sig-paren">(</span><em class="sig-param">c</em><span class="sig-paren">)</span><a class="headerlink" href="#curses.ascii.isalpha" title="정의 주소">¶</a></dt>
+<dd><p>ASCII 알파벳 문자를 확인합니다. <code class="docutils literal notranslate"><span class="pre">isupper(c)</span> <span class="pre">or</span> <span class="pre">islower(c)</span></code>와 동등합니다.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="curses.ascii.isascii">
+<code class="sig-prename descclassname">curses.ascii.</code><code class="sig-name descname">isascii</code><span class="sig-paren">(</span><em class="sig-param">c</em><span class="sig-paren">)</span><a class="headerlink" href="#curses.ascii.isascii" title="정의 주소">¶</a></dt>
+<dd><p>7비트 ASCII 집합에 맞는 문자 값을 확인합니다.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="curses.ascii.isblank">
+<code class="sig-prename descclassname">curses.ascii.</code><code class="sig-name descname">isblank</code><span class="sig-paren">(</span><em class="sig-param">c</em><span class="sig-paren">)</span><a class="headerlink" href="#curses.ascii.isblank" title="정의 주소">¶</a></dt>
+<dd><p>ASCII 공백 문자를 확인합니다; 스페이스나 가로 탭.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="curses.ascii.iscntrl">
+<code class="sig-prename descclassname">curses.ascii.</code><code class="sig-name descname">iscntrl</code><span class="sig-paren">(</span><em class="sig-param">c</em><span class="sig-paren">)</span><a class="headerlink" href="#curses.ascii.iscntrl" title="정의 주소">¶</a></dt>
+<dd><p>ASCII 제어 문자를 확인합니다 (0x00에서 0x1f 범위에 있거나 0x7f).</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="curses.ascii.isdigit">
+<code class="sig-prename descclassname">curses.ascii.</code><code class="sig-name descname">isdigit</code><span class="sig-paren">(</span><em class="sig-param">c</em><span class="sig-paren">)</span><a class="headerlink" href="#curses.ascii.isdigit" title="정의 주소">¶</a></dt>
+<dd><p>ASCII 십진 숫자, <code class="docutils literal notranslate"><span class="pre">'0'</span></code> 에서 <code class="docutils literal notranslate"><span class="pre">'9'</span></code>를 확인합니다. 이것은 <code class="docutils literal notranslate"><span class="pre">c</span> <span class="pre">in</span> <span class="pre">string.digits</span></code>와 동등합니다.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="curses.ascii.isgraph">
+<code class="sig-prename descclassname">curses.ascii.</code><code class="sig-name descname">isgraph</code><span class="sig-paren">(</span><em class="sig-param">c</em><span class="sig-paren">)</span><a class="headerlink" href="#curses.ascii.isgraph" title="정의 주소">¶</a></dt>
+<dd><p>스페이스를 제외한 인쇄 가능한 ASCII 문자를 확인합니다.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="curses.ascii.islower">
+<code class="sig-prename descclassname">curses.ascii.</code><code class="sig-name descname">islower</code><span class="sig-paren">(</span><em class="sig-param">c</em><span class="sig-paren">)</span><a class="headerlink" href="#curses.ascii.islower" title="정의 주소">¶</a></dt>
+<dd><p>ASCII 소문자를 확인합니다.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="curses.ascii.isprint">
+<code class="sig-prename descclassname">curses.ascii.</code><code class="sig-name descname">isprint</code><span class="sig-paren">(</span><em class="sig-param">c</em><span class="sig-paren">)</span><a class="headerlink" href="#curses.ascii.isprint" title="정의 주소">¶</a></dt>
+<dd><p>스페이스를 포함하여 인쇄 가능한 ASCII 문자를 확인합니다.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="curses.ascii.ispunct">
+<code class="sig-prename descclassname">curses.ascii.</code><code class="sig-name descname">ispunct</code><span class="sig-paren">(</span><em class="sig-param">c</em><span class="sig-paren">)</span><a class="headerlink" href="#curses.ascii.ispunct" title="정의 주소">¶</a></dt>
+<dd><p>스페이스나 영숫자가 아닌 인쇄 가능한 ASCII 문자를 확인합니다.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="curses.ascii.isspace">
+<code class="sig-prename descclassname">curses.ascii.</code><code class="sig-name descname">isspace</code><span class="sig-paren">(</span><em class="sig-param">c</em><span class="sig-paren">)</span><a class="headerlink" href="#curses.ascii.isspace" title="정의 주소">¶</a></dt>
+<dd><p>ASCII 공백 문자를 확인합니다; 스페이스, 줄 바꿈, 캐리지 리턴, 용지 공급, 가로 탭, 세로 탭.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="curses.ascii.isupper">
+<code class="sig-prename descclassname">curses.ascii.</code><code class="sig-name descname">isupper</code><span class="sig-paren">(</span><em class="sig-param">c</em><span class="sig-paren">)</span><a class="headerlink" href="#curses.ascii.isupper" title="정의 주소">¶</a></dt>
+<dd><p>ASCII 대문자를 확인합니다.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="curses.ascii.isxdigit">
+<code class="sig-prename descclassname">curses.ascii.</code><code class="sig-name descname">isxdigit</code><span class="sig-paren">(</span><em class="sig-param">c</em><span class="sig-paren">)</span><a class="headerlink" href="#curses.ascii.isxdigit" title="정의 주소">¶</a></dt>
+<dd><p>ASCII 16진수를 확인합니다. 이것은 <code class="docutils literal notranslate"><span class="pre">c</span> <span class="pre">in</span> <span class="pre">string.hexdigits</span></code>와 동등합니다.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="curses.ascii.isctrl">
+<code class="sig-prename descclassname">curses.ascii.</code><code class="sig-name descname">isctrl</code><span class="sig-paren">(</span><em class="sig-param">c</em><span class="sig-paren">)</span><a class="headerlink" href="#curses.ascii.isctrl" title="정의 주소">¶</a></dt>
+<dd><p>ASCII 제어 문자를 확인합니다 (정숫값 0에서 31).</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="curses.ascii.ismeta">
+<code class="sig-prename descclassname">curses.ascii.</code><code class="sig-name descname">ismeta</code><span class="sig-paren">(</span><em class="sig-param">c</em><span class="sig-paren">)</span><a class="headerlink" href="#curses.ascii.ismeta" title="정의 주소">¶</a></dt>
+<dd><p>비 ASCII 문자를 확인합니다 (0x80 이상의 정수 값).</p>
+</dd></dl>
+
+<p>이 함수는 정수나 단일 문자 문자열을 받아들입니다; 인자가 문자열이면, 내장 함수 <a class="reference internal" href="functions.html#ord" title="ord"><code class="xref py py-func docutils literal notranslate"><span class="pre">ord()</span></code></a>를 사용하여 먼저 변환됩니다.</p>
+<p>이 모든 함수는 전달한 문자열의 문자에서 파생된 서수 비트 값을 확인합니다; 호스트 기계의 문자 인코딩에 대해서는 실제로 아무것도 모릅니다.</p>
+<p>다음 두 함수는 단일 문자 문자열이나 정수 바이트 값을 취합니다; 이들은 같은 유형의 값을 반환합니다.</p>
+<dl class="function">
+<dt id="curses.ascii.ascii">
+<code class="sig-prename descclassname">curses.ascii.</code><code class="sig-name descname">ascii</code><span class="sig-paren">(</span><em class="sig-param">c</em><span class="sig-paren">)</span><a class="headerlink" href="#curses.ascii.ascii" title="정의 주소">¶</a></dt>
+<dd><p><em>c</em>의 하위 7비트에 해당하는 ASCII 값을 반환합니다.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="curses.ascii.ctrl">
+<code class="sig-prename descclassname">curses.ascii.</code><code class="sig-name descname">ctrl</code><span class="sig-paren">(</span><em class="sig-param">c</em><span class="sig-paren">)</span><a class="headerlink" href="#curses.ascii.ctrl" title="정의 주소">¶</a></dt>
+<dd><p>주어진 문자에 해당하는 제어 문자를 반환합니다 (문자 비트 값은 0x1f와 비트별 and 됩니다).</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="curses.ascii.alt">
+<code class="sig-prename descclassname">curses.ascii.</code><code class="sig-name descname">alt</code><span class="sig-paren">(</span><em class="sig-param">c</em><span class="sig-paren">)</span><a class="headerlink" href="#curses.ascii.alt" title="정의 주소">¶</a></dt>
+<dd><p>주어진 ASCII 문자에 해당하는 8비트 문자를 반환합니다 (문자 비트 값은 0x80과 비트별 or 됩니다).</p>
+</dd></dl>
+
+<p>다음 함수는 단일 문자 문자열이나 정숫값을 취합니다; 문자열을 반환합니다.</p>
+<span class="target" id="index-0"></span><dl class="function">
+<dt id="curses.ascii.unctrl">
+<code class="sig-prename descclassname">curses.ascii.</code><code class="sig-name descname">unctrl</code><span class="sig-paren">(</span><em class="sig-param">c</em><span class="sig-paren">)</span><a class="headerlink" href="#curses.ascii.unctrl" title="정의 주소">¶</a></dt>
+<dd><p>ASCII 문자 <em>c</em>의 문자열 표현을 반환합니다. <em>c</em>가 인쇄 가능하면, 이 문자열은 문자 자체입니다. 문자가 제어 문자(0x00–0x1f)이면 문자열은 캐럿(<code class="docutils literal notranslate"><span class="pre">'^'</span></code>)과 그 뒤에 오는 해당 대문자로 구성됩니다. 문자가 ASCII 삭제(0x7f)이면 문자열은 <code class="docutils literal notranslate"><span class="pre">'^?'</span></code>입니다. 문자에 메타 비트(0x80)가 설정되어 있으면, 메타 비트가 제거되고, 앞의 규칙을 적용한 후, <code class="docutils literal notranslate"><span class="pre">'!'</span></code>를 결과 앞에 붙입니다.</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="curses.ascii.controlnames">
+<code class="sig-prename descclassname">curses.ascii.</code><code class="sig-name descname">controlnames</code><a class="headerlink" href="#curses.ascii.controlnames" title="정의 주소">¶</a></dt>
+<dd><p>0(NUL)에서 0x1f(US)까지 32개의 ASCII 제어 문자에 대한 ASCII 니모닉과 (순서대로), 스페이스 문자를 위한 니모닉 <code class="docutils literal notranslate"><span class="pre">SP</span></code>를 포함하는 33요소 문자열 배열입니다.</p>
+</dd></dl>
+
+</section>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>이전 항목</h4>
+  <p class="topless"><a href="curses.html"
+                        title="이전 장"><code class="xref py py-mod docutils literal notranslate"><span class="pre">curses</span></code> — 문자 셀 디스플레이를 위한 터미널 처리</a></p>
+  <h4>다음 항목</h4>
+  <p class="topless"><a href="curses.panel.html"
+                        title="다음 장"><code class="xref py py-mod docutils literal notranslate"><span class="pre">curses.panel</span></code> — curses 용 패널 스택 확장</a></p>
+  <div role="note" aria-label="source link">
+    <h3>현재 문서</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">버그 보고하기</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/3.9/Doc/library/curses.ascii.rst"
+            rel="nofollow">소스 보기
+        </a>
+      </li>
+    </ul>
+  </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>탐색</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="전체 색인"
+             >색인</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 모듈 목록"
+             >모듈</a> |</li>
+        <li class="right" >
+          <a href="curses.panel.html" title="curses.panel — curses 용 패널 스택 확장"
+             >다음</a> |</li>
+        <li class="right" >
+          <a href="curses.html" title="curses — 문자 셀 디스플레이를 위한 터미널 처리"
+             >이전</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.9.14 Documentation</a> &#187;
+    </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >파이썬 표준 라이브러리</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="allos.html" >일반 운영 체제 서비스</a> &#187;</li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="빠른 검색" aria-label="빠른 검색" type="text" name="q" />
+          <input type="submit" value="이동" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </form>
+    </div>
+                     |
+                </li>
+            
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">저작권</a> 2001-2022, Python Software Foundation.
+    <br />
+    This page is licensed under the Python Software Foundation License Version 2.
+    <br />
+    Examples, recipes, and other code in the documentation are additionally licensed under the Zero Clause BSD License.
+    <br />
+    See <a href="/license.html">History and License</a> for more information.<br />
+    <br />
+
+    The Python Software Foundation is a non-profit corporation.
+<a href="https://www.python.org/psf/donations/">Please donate.</a>
+<br />
+    <br />
+
+    최종 업데이트: 9월 11, 2022
+    <a href="/bugs.html">Found a bug</a>?
+    <br />
+
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 2.4.4.
+    </div>
+
+  </body>
+</html>

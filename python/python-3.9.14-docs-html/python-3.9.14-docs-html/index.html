@@ -1,0 +1,332 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ko">
+  <head>
+    <meta charset="utf-8" /><title>3.9.14 Documentation</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="_static/pydoctheme.css?2022.1" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script src="_static/translations.js"></script>
+    
+    <script src="_static/sidebar.js"></script>
+    
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Python 3.9.14 문서에서 찾기"
+          href="_static/opensearch.xml"/>
+    <link rel="author" title="이 문서 정보" href="about.html" />
+    <link rel="index" title="색인" href="genindex.html" />
+    <link rel="search" title="검색" href="search.html" />
+    <link rel="copyright" title="저작권" href="copyright.html" />
+    <link rel="canonical" href="https://docs.python.org/3/index.html" />
+    
+      
+    
+
+    
+    <style>
+      @media only screen {
+        table.full-width-table {
+            width: 100%;
+        }
+      }
+    </style>
+<link rel="shortcut icon" type="image/png" href="_static/py.svg" />
+            <script type="text/javascript" src="_static/copybutton.js"></script>
+            <script type="text/javascript" src="_static/menu.js"></script> 
+
+  </head>
+<body>
+<div class="mobile-nav">
+    <input type="checkbox" id="menuToggler" class="toggler__input" aria-controls="navigation"
+           aria-pressed="false" aria-expanded="false" role="button" aria-label="Menu" />
+    <label for="menuToggler" class="toggler__label">
+        <span></span>
+    </label>
+    <nav class="nav-content" role="navigation">
+         <a href="https://www.python.org/" class="nav-logo">
+             <img src="_static/py.svg" alt="Logo"/>
+         </a>
+        <div class="version_switcher_placeholder"></div>
+        <form role="search" class="search" action="search.html" method="get">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" class="search-icon">
+                <path fill-rule="nonzero"
+                        d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 001.48-5.34c-.47-2.78-2.79-5-5.59-5.34a6.505 6.505 0 00-7.27 7.27c.34 2.8 2.56 5.12 5.34 5.59a6.5 6.5 0 005.34-1.48l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49 0 .41-.41.41-1.08 0-1.49L15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" fill="#444"></path>
+            </svg>
+            <input type="text" name="q" aria-label="빠른 검색"/>
+            <input type="submit" value="이동"/>
+        </form>
+    </nav>
+    <div class="menu-wrapper">
+        <nav class="menu" role="navigation" aria-label="main navigation">
+            <div class="language_switcher_placeholder"></div>
+
+
+<h3>내려받기</h3>
+<p><a href="download.html">이 문서 내려받기</a></p>
+
+
+<h3>버전별 설명서</h3>
+<ul>
+  
+  <li><a href="https://docs.python.org/3.12/">Python 3.12 (in development)</a></li>
+  
+  <li><a href="https://docs.python.org/3.11/">Python 3.11 (pre-release)</a></li>
+  
+  <li><a href="https://docs.python.org/3.10/">Python 3.10 (stable)</a></li>
+  
+  <li><a href="https://docs.python.org/3.9/">Python 3.9 (stable)</a></li>
+  
+  <li><a href="https://docs.python.org/3.8/">Python 3.8 (security-fixes)</a></li>
+  
+  <li><a href="https://docs.python.org/3.7/">Python 3.7 (security-fixes)</a></li>
+  
+  <li><a href="https://docs.python.org/3.6/">Python 3.6 (EOL)</a></li>
+  
+  <li><a href="https://docs.python.org/3.5/">Python 3.5 (EOL)</a></li>
+  
+  <li><a href="https://docs.python.org/2.7/">Python 2.7 (EOL)</a></li>
+  
+  <li><a href="https://www.python.org/doc/versions/">모든 버전</a></li>
+</ul>
+
+
+<h3>기타 자원</h3>
+<ul>
+  
+  <li><a href="https://www.python.org/dev/peps/">PEP 색인</a></li>
+  <li><a href="https://wiki.python.org/moin/BeginnersGuide">초보자 가이드</a></li>
+  <li><a href="https://wiki.python.org/moin/PythonBooks">도서 목록</a></li>
+  <li><a href="https://www.python.org/doc/av/">오디오/비디오 토크</a></li>
+  <li><a href="https://devguide.python.org/">파이썬 개발자 지침서</a></li>
+</ul>
+        </nav>
+    </div>
+</div>
+
+  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>탐색</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="전체 색인"
+             accesskey="I">색인</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python 모듈 목록"
+             >모듈</a> |</li>
+
+          <li><img src="_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="#">3.9.14 Documentation</a> &#187;
+    </li>
+
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="search.html" method="get">
+          <input placeholder="빠른 검색" aria-label="빠른 검색" type="text" name="q" />
+          <input type="submit" value="이동" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </form>
+    </div>
+                     |
+                </li>
+            
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Python 3.9.14 문서</h1>
+  <p>
+  Welcome! This is the official documentation for Python 3.9.14.
+  </p>
+  <p><strong>설명서의 파트들:</strong></p>
+  <table class="contentstable" align="center"><tr>
+    <td width="50%">
+      <p class="biglink"><a class="biglink" href="whatsnew/3.9.html">파이썬 3.9 의 새로운 기능은?</a><br/>
+        <span class="linkdescr"> 2.0 이후의 <a href="whatsnew/index.html">모든 "새로운 기능" 문서</a></span></p>
+      <p class="biglink"><a class="biglink" href="tutorial/index.html">자습서</a><br/>
+         <span class="linkdescr">여기에서 시작하세요</span></p>
+      <p class="biglink"><a class="biglink" href="library/index.html">라이브러리 레퍼런스</a><br/>
+         <span class="linkdescr">베개 밑에 넣어 두세요</span></p>
+      <p class="biglink"><a class="biglink" href="reference/index.html">언어 레퍼런스</a><br/>
+         <span class="linkdescr">문법과 언어 요소들을 설명합니다</span></p>
+      <p class="biglink"><a class="biglink" href="using/index.html">파이썬 설정 및 사용법</a><br/>
+         <span class="linkdescr">여러 플랫폼에서 파이썬을 사용하는 법</span></p>
+      <p class="biglink"><a class="biglink" href="howto/index.html">파이썬 HOWTO</a><br/>
+         <span class="linkdescr">특정 주제에 대한 심층적인 문서</span></p>
+    </td><td width="50%">
+      <p class="biglink"><a class="biglink" href="installing/index.html">파이썬 모듈 설치하기</a><br/>
+         <span class="linkdescr">파이썬 패키지 색인 및 기타 소스에서 설치하기</span></p>
+      <p class="biglink"><a class="biglink" href="distributing/index.html">파이썬 모듈 배포하기</a><br/>
+         <span class="linkdescr">다른 사람들이 설치할 수 있도록 모듈을 게시하기</span></p>
+      <p class="biglink"><a class="biglink" href="extending/index.html">확장 및 내장</a><br/>
+         <span class="linkdescr">C/C++ 프로그래머를 위한 자습서</span></p>
+      <p class="biglink"><a class="biglink" href="c-api/index.html">파이썬/C API</a><br/>
+         <span class="linkdescr">C/C++ 프로그래머를 위한 레퍼런스</span></p>
+      <p class="biglink"><a class="biglink" href="faq/index.html">FAQs</a><br/>
+         <span class="linkdescr">자주 나오는 질문들 (답도 있습니다!)</span></p>
+    </td></tr>
+  </table>
+
+  <p><strong>색인 및 표 목록:</strong></p>
+  <table class="contentstable" align="center"><tr>
+    <td width="50%">
+      <p class="biglink"><a class="biglink" href="py-modindex.html">모듈 총 색인</a><br/>
+         <span class="linkdescr">모든 모듈 조견표</span></p>
+      <p class="biglink"><a class="biglink" href="genindex.html">전체 색인</a><br/>
+         <span class="linkdescr">함수, 클래스 및 용어 개관</span></p>
+      <p class="biglink"><a class="biglink" href="glossary.html">용어집</a><br/>
+         <span class="linkdescr">가장 중요한 용어들을 설명합니다</span></p>
+    </td><td width="50%">
+      <p class="biglink"><a class="biglink" href="search.html">검색 페이지</a><br/>
+         <span class="linkdescr">문서 검색</span></p>
+      <p class="biglink"><a class="biglink" href="contents.html">종합 목차</a><br/>
+         <span class="linkdescr">영역별 목차</span></p>
+    </td></tr>
+  </table>
+
+  <p><strong>메타 정보:</strong></p>
+  <table class="contentstable" align="center"><tr>
+    <td width="50%">
+      <p class="biglink"><a class="biglink" href="bugs.html">버그 보고하기</a></p>
+      <p class="biglink"><a class="biglink" href="https://devguide.python.org/docquality/#helping-with-documentation">설명서에 기여하기</a></p>
+      <p class="biglink"><a class="biglink" href="about.html">설명서 정보</a></p>
+    </td><td width="50%">
+      <p class="biglink"><a class="biglink" href="license.html">파이썬의 역사와 라이센스</a></p>
+      <p class="biglink"><a class="biglink" href="copyright.html">저작권</a></p>
+    </td></tr>
+  </table>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+
+
+<h3>내려받기</h3>
+<p><a href="download.html">이 문서 내려받기</a></p>
+
+
+<h3>버전별 설명서</h3>
+<ul>
+  
+  <li><a href="https://docs.python.org/3.12/">Python 3.12 (in development)</a></li>
+  
+  <li><a href="https://docs.python.org/3.11/">Python 3.11 (pre-release)</a></li>
+  
+  <li><a href="https://docs.python.org/3.10/">Python 3.10 (stable)</a></li>
+  
+  <li><a href="https://docs.python.org/3.9/">Python 3.9 (stable)</a></li>
+  
+  <li><a href="https://docs.python.org/3.8/">Python 3.8 (security-fixes)</a></li>
+  
+  <li><a href="https://docs.python.org/3.7/">Python 3.7 (security-fixes)</a></li>
+  
+  <li><a href="https://docs.python.org/3.6/">Python 3.6 (EOL)</a></li>
+  
+  <li><a href="https://docs.python.org/3.5/">Python 3.5 (EOL)</a></li>
+  
+  <li><a href="https://docs.python.org/2.7/">Python 2.7 (EOL)</a></li>
+  
+  <li><a href="https://www.python.org/doc/versions/">모든 버전</a></li>
+</ul>
+
+
+<h3>기타 자원</h3>
+<ul>
+  
+  <li><a href="https://www.python.org/dev/peps/">PEP 색인</a></li>
+  <li><a href="https://wiki.python.org/moin/BeginnersGuide">초보자 가이드</a></li>
+  <li><a href="https://wiki.python.org/moin/PythonBooks">도서 목록</a></li>
+  <li><a href="https://www.python.org/doc/av/">오디오/비디오 토크</a></li>
+  <li><a href="https://devguide.python.org/">파이썬 개발자 지침서</a></li>
+</ul>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>탐색</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="전체 색인"
+             >색인</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python 모듈 목록"
+             >모듈</a> |</li>
+
+          <li><img src="_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="#">3.9.14 Documentation</a> &#187;
+    </li>
+
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="search.html" method="get">
+          <input placeholder="빠른 검색" aria-label="빠른 검색" type="text" name="q" />
+          <input type="submit" value="이동" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </form>
+    </div>
+                     |
+                </li>
+            
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="copyright.html">저작권</a> 2001-2022, Python Software Foundation.
+    <br />
+    This page is licensed under the Python Software Foundation License Version 2.
+    <br />
+    Examples, recipes, and other code in the documentation are additionally licensed under the Zero Clause BSD License.
+    <br />
+    See <a href="/license.html">History and License</a> for more information.<br />
+    <br />
+
+    The Python Software Foundation is a non-profit corporation.
+<a href="https://www.python.org/psf/donations/">Please donate.</a>
+<br />
+    <br />
+
+    최종 업데이트: 9월 11, 2022
+    <a href="/bugs.html">Found a bug</a>?
+    <br />
+
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 2.4.4.
+    </div>
+
+  </body>
+</html>

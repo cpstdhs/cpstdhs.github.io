@@ -1,0 +1,1346 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ko">
+  <head>
+    <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>파이썬 초기화 구성 &#8212; Python 3.9.14 문서</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="../_static/pydoctheme.css?2022.1" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/translations.js"></script>
+    
+    <script src="../_static/sidebar.js"></script>
+    
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Python 3.9.14 문서에서 찾기"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="이 문서 정보" href="../about.html" />
+    <link rel="index" title="색인" href="../genindex.html" />
+    <link rel="search" title="검색" href="../search.html" />
+    <link rel="copyright" title="저작권" href="../copyright.html" />
+    <link rel="next" title="메모리 관리" href="memory.html" />
+    <link rel="prev" title="초기화, 파이널리제이션 및 스레드" href="init.html" />
+    <link rel="canonical" href="https://docs.python.org/3/c-api/init_config.html" />
+    
+      
+    
+
+    
+    <style>
+      @media only screen {
+        table.full-width-table {
+            width: 100%;
+        }
+      }
+    </style>
+<link rel="shortcut icon" type="image/png" href="../_static/py.svg" />
+            <script type="text/javascript" src="../_static/copybutton.js"></script>
+            <script type="text/javascript" src="../_static/menu.js"></script> 
+
+  </head>
+<body>
+<div class="mobile-nav">
+    <input type="checkbox" id="menuToggler" class="toggler__input" aria-controls="navigation"
+           aria-pressed="false" aria-expanded="false" role="button" aria-label="Menu" />
+    <label for="menuToggler" class="toggler__label">
+        <span></span>
+    </label>
+    <nav class="nav-content" role="navigation">
+         <a href="https://www.python.org/" class="nav-logo">
+             <img src="../_static/py.svg" alt="Logo"/>
+         </a>
+        <div class="version_switcher_placeholder"></div>
+        <form role="search" class="search" action="../search.html" method="get">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" class="search-icon">
+                <path fill-rule="nonzero"
+                        d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 001.48-5.34c-.47-2.78-2.79-5-5.59-5.34a6.505 6.505 0 00-7.27 7.27c.34 2.8 2.56 5.12 5.34 5.59a6.5 6.5 0 005.34-1.48l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49 0 .41-.41.41-1.08 0-1.49L15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" fill="#444"></path>
+            </svg>
+            <input type="text" name="q" aria-label="빠른 검색"/>
+            <input type="submit" value="이동"/>
+        </form>
+    </nav>
+    <div class="menu-wrapper">
+        <nav class="menu" role="navigation" aria-label="main navigation">
+            <div class="language_switcher_placeholder"></div>
+  <h3><a href="../contents.html">목차</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">파이썬 초기화 구성</a><ul>
+<li><a class="reference internal" href="#pywidestringlist">PyWideStringList</a></li>
+<li><a class="reference internal" href="#pystatus">PyStatus</a></li>
+<li><a class="reference internal" href="#pypreconfig">PyPreConfig</a></li>
+<li><a class="reference internal" href="#preinitialization-with-pypreconfig">PyPreConfig를 사용한 사전 초기화</a></li>
+<li><a class="reference internal" href="#pyconfig">PyConfig</a></li>
+<li><a class="reference internal" href="#initialization-with-pyconfig">PyConfig를 사용한 초기화</a></li>
+<li><a class="reference internal" href="#isolated-configuration">격리된 구성</a></li>
+<li><a class="reference internal" href="#python-configuration">파이썬 구성</a></li>
+<li><a class="reference internal" href="#path-configuration">경로 구성</a></li>
+<li><a class="reference internal" href="#py-runmain">Py_RunMain()</a></li>
+<li><a class="reference internal" href="#py-getargcargv">Py_GetArgcArgv()</a></li>
+<li><a class="reference internal" href="#multi-phase-initialization-private-provisional-api">다단계 초기화 비공개 잠정적 API</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>이전 항목</h4>
+  <p class="topless"><a href="init.html"
+                        title="이전 장">초기화, 파이널리제이션 및 스레드</a></p>
+  <h4>다음 항목</h4>
+  <p class="topless"><a href="memory.html"
+                        title="다음 장">메모리 관리</a></p>
+  <div role="note" aria-label="source link">
+    <h3>현재 문서</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">버그 보고하기</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/3.9/Doc/c-api/init_config.rst"
+            rel="nofollow">소스 보기
+        </a>
+      </li>
+    </ul>
+  </div>
+        </nav>
+    </div>
+</div>
+
+  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>탐색</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="전체 색인"
+             accesskey="I">색인</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 모듈 목록"
+             >모듈</a> |</li>
+        <li class="right" >
+          <a href="memory.html" title="메모리 관리"
+             accesskey="N">다음</a> |</li>
+        <li class="right" >
+          <a href="init.html" title="초기화, 파이널리제이션 및 스레드"
+             accesskey="P">이전</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.9.14 Documentation</a> &#187;
+    </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">파이썬/C API 레퍼런스 설명서</a> &#187;</li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="빠른 검색" aria-label="빠른 검색" type="text" name="q" />
+          <input type="submit" value="이동" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </form>
+    </div>
+                     |
+                </li>
+            
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="python-initialization-configuration">
+<span id="init-config"></span><h1>파이썬 초기화 구성<a class="headerlink" href="#python-initialization-configuration" title="제목 주소">¶</a></h1>
+<div class="versionadded">
+<p><span class="versionmodified added">버전 3.8에 추가.</span></p>
+</div>
+<p>구조체:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#c.PyConfig" title="PyConfig"><code class="xref c c-type docutils literal notranslate"><span class="pre">PyConfig</span></code></a></p></li>
+<li><p><a class="reference internal" href="#c.PyPreConfig" title="PyPreConfig"><code class="xref c c-type docutils literal notranslate"><span class="pre">PyPreConfig</span></code></a></p></li>
+<li><p><a class="reference internal" href="#c.PyStatus" title="PyStatus"><code class="xref c c-type docutils literal notranslate"><span class="pre">PyStatus</span></code></a></p></li>
+<li><p><a class="reference internal" href="#c.PyWideStringList" title="PyWideStringList"><code class="xref c c-type docutils literal notranslate"><span class="pre">PyWideStringList</span></code></a></p></li>
+</ul>
+<p>함수:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#c.PyConfig_Clear" title="PyConfig_Clear"><code class="xref c c-func docutils literal notranslate"><span class="pre">PyConfig_Clear()</span></code></a></p></li>
+<li><p><a class="reference internal" href="#c.PyConfig_InitIsolatedConfig" title="PyConfig_InitIsolatedConfig"><code class="xref c c-func docutils literal notranslate"><span class="pre">PyConfig_InitIsolatedConfig()</span></code></a></p></li>
+<li><p><a class="reference internal" href="#c.PyConfig_InitPythonConfig" title="PyConfig_InitPythonConfig"><code class="xref c c-func docutils literal notranslate"><span class="pre">PyConfig_InitPythonConfig()</span></code></a></p></li>
+<li><p><a class="reference internal" href="#c.PyConfig_Read" title="PyConfig_Read"><code class="xref c c-func docutils literal notranslate"><span class="pre">PyConfig_Read()</span></code></a></p></li>
+<li><p><a class="reference internal" href="#c.PyConfig_SetArgv" title="PyConfig_SetArgv"><code class="xref c c-func docutils literal notranslate"><span class="pre">PyConfig_SetArgv()</span></code></a></p></li>
+<li><p><a class="reference internal" href="#c.PyConfig_SetBytesArgv" title="PyConfig_SetBytesArgv"><code class="xref c c-func docutils literal notranslate"><span class="pre">PyConfig_SetBytesArgv()</span></code></a></p></li>
+<li><p><a class="reference internal" href="#c.PyConfig_SetBytesString" title="PyConfig_SetBytesString"><code class="xref c c-func docutils literal notranslate"><span class="pre">PyConfig_SetBytesString()</span></code></a></p></li>
+<li><p><a class="reference internal" href="#c.PyConfig_SetString" title="PyConfig_SetString"><code class="xref c c-func docutils literal notranslate"><span class="pre">PyConfig_SetString()</span></code></a></p></li>
+<li><p><a class="reference internal" href="#c.PyConfig_SetWideStringList" title="PyConfig_SetWideStringList"><code class="xref c c-func docutils literal notranslate"><span class="pre">PyConfig_SetWideStringList()</span></code></a></p></li>
+<li><p><a class="reference internal" href="#c.PyPreConfig_InitIsolatedConfig" title="PyPreConfig_InitIsolatedConfig"><code class="xref c c-func docutils literal notranslate"><span class="pre">PyPreConfig_InitIsolatedConfig()</span></code></a></p></li>
+<li><p><a class="reference internal" href="#c.PyPreConfig_InitPythonConfig" title="PyPreConfig_InitPythonConfig"><code class="xref c c-func docutils literal notranslate"><span class="pre">PyPreConfig_InitPythonConfig()</span></code></a></p></li>
+<li><p><a class="reference internal" href="#c.PyStatus_Error" title="PyStatus_Error"><code class="xref c c-func docutils literal notranslate"><span class="pre">PyStatus_Error()</span></code></a></p></li>
+<li><p><a class="reference internal" href="#c.PyStatus_Exception" title="PyStatus_Exception"><code class="xref c c-func docutils literal notranslate"><span class="pre">PyStatus_Exception()</span></code></a></p></li>
+<li><p><a class="reference internal" href="#c.PyStatus_Exit" title="PyStatus_Exit"><code class="xref c c-func docutils literal notranslate"><span class="pre">PyStatus_Exit()</span></code></a></p></li>
+<li><p><a class="reference internal" href="#c.PyStatus_IsError" title="PyStatus_IsError"><code class="xref c c-func docutils literal notranslate"><span class="pre">PyStatus_IsError()</span></code></a></p></li>
+<li><p><a class="reference internal" href="#c.PyStatus_IsExit" title="PyStatus_IsExit"><code class="xref c c-func docutils literal notranslate"><span class="pre">PyStatus_IsExit()</span></code></a></p></li>
+<li><p><a class="reference internal" href="#c.PyStatus_NoMemory" title="PyStatus_NoMemory"><code class="xref c c-func docutils literal notranslate"><span class="pre">PyStatus_NoMemory()</span></code></a></p></li>
+<li><p><a class="reference internal" href="#c.PyStatus_Ok" title="PyStatus_Ok"><code class="xref c c-func docutils literal notranslate"><span class="pre">PyStatus_Ok()</span></code></a></p></li>
+<li><p><a class="reference internal" href="#c.PyWideStringList_Append" title="PyWideStringList_Append"><code class="xref c c-func docutils literal notranslate"><span class="pre">PyWideStringList_Append()</span></code></a></p></li>
+<li><p><a class="reference internal" href="#c.PyWideStringList_Insert" title="PyWideStringList_Insert"><code class="xref c c-func docutils literal notranslate"><span class="pre">PyWideStringList_Insert()</span></code></a></p></li>
+<li><p><a class="reference internal" href="#c.Py_ExitStatusException" title="Py_ExitStatusException"><code class="xref c c-func docutils literal notranslate"><span class="pre">Py_ExitStatusException()</span></code></a></p></li>
+<li><p><a class="reference internal" href="#c.Py_InitializeFromConfig" title="Py_InitializeFromConfig"><code class="xref c c-func docutils literal notranslate"><span class="pre">Py_InitializeFromConfig()</span></code></a></p></li>
+<li><p><a class="reference internal" href="#c.Py_PreInitialize" title="Py_PreInitialize"><code class="xref c c-func docutils literal notranslate"><span class="pre">Py_PreInitialize()</span></code></a></p></li>
+<li><p><a class="reference internal" href="#c.Py_PreInitializeFromArgs" title="Py_PreInitializeFromArgs"><code class="xref c c-func docutils literal notranslate"><span class="pre">Py_PreInitializeFromArgs()</span></code></a></p></li>
+<li><p><a class="reference internal" href="#c.Py_PreInitializeFromBytesArgs" title="Py_PreInitializeFromBytesArgs"><code class="xref c c-func docutils literal notranslate"><span class="pre">Py_PreInitializeFromBytesArgs()</span></code></a></p></li>
+<li><p><a class="reference internal" href="#c.Py_RunMain" title="Py_RunMain"><code class="xref c c-func docutils literal notranslate"><span class="pre">Py_RunMain()</span></code></a></p></li>
+<li><p><a class="reference internal" href="#c.Py_GetArgcArgv" title="Py_GetArgcArgv"><code class="xref c c-func docutils literal notranslate"><span class="pre">Py_GetArgcArgv()</span></code></a></p></li>
+</ul>
+<p>사전 구성(<code class="docutils literal notranslate"><span class="pre">PyPreConfig</span></code> 형)은 <code class="docutils literal notranslate"><span class="pre">_PyRuntime.preconfig</span></code>에 저장되고 구성(<code class="docutils literal notranslate"><span class="pre">PyConfig</span></code> 형)은 <code class="docutils literal notranslate"><span class="pre">PyInterpreterState.config</span></code>에 저장됩니다.</p>
+<p><a class="reference internal" href="init.html#initialization"><span class="std std-ref">초기화, 파이널리제이션 및 스레드</span></a>도 참조하십시오.</p>
+<div class="admonition seealso">
+<p class="admonition-title">더 보기</p>
+<p><span class="target" id="index-23"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0587"><strong>PEP 587</strong></a> “파이썬 초기화 구성”.</p>
+</div>
+<section id="pywidestringlist">
+<h2>PyWideStringList<a class="headerlink" href="#pywidestringlist" title="제목 주소">¶</a></h2>
+<dl class="type">
+<dt id="c.PyWideStringList">
+<code class="sig-name descname">PyWideStringList</code><a class="headerlink" href="#c.PyWideStringList" title="정의 주소">¶</a></dt>
+<dd><p><code class="docutils literal notranslate"><span class="pre">wchar_t*</span></code> 문자열의 리스트.</p>
+<p><em>length</em>가 0이 아니면, <em>items</em>는 <code class="docutils literal notranslate"><span class="pre">NULL</span></code>이 아니어야 하고 모든 문자열은 <code class="docutils literal notranslate"><span class="pre">NULL</span></code>이 아니어야 합니다.</p>
+<p>메서드:</p>
+<dl class="function">
+<dt id="c.PyWideStringList_Append">
+<a class="reference internal" href="#c.PyStatus" title="PyStatus">PyStatus</a> <code class="sig-name descname">PyWideStringList_Append</code><span class="sig-paren">(</span><a class="reference internal" href="#c.PyWideStringList" title="PyWideStringList">PyWideStringList</a><em> *list</em>, const wchar_t<em> *item</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyWideStringList_Append" title="정의 주소">¶</a></dt>
+<dd><p><em>item</em>을 <em>list</em>에 추가합니다.</p>
+<p>이 함수를 호출하려면 파이썬을 사전 초기화해야 합니다.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyWideStringList_Insert">
+<a class="reference internal" href="#c.PyStatus" title="PyStatus">PyStatus</a> <code class="sig-name descname">PyWideStringList_Insert</code><span class="sig-paren">(</span><a class="reference internal" href="#c.PyWideStringList" title="PyWideStringList">PyWideStringList</a><em> *list</em>, <a class="reference internal" href="intro.html#c.Py_ssize_t" title="Py_ssize_t">Py_ssize_t</a><em> index</em>, const wchar_t<em> *item</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyWideStringList_Insert" title="정의 주소">¶</a></dt>
+<dd><p><em>item</em>을 <em>list</em>의 <em>index</em>에 삽입합니다.</p>
+<p><em>index</em>가 <em>list</em> 길이보다 크거나 같으면, <em>item</em>을 <em>list</em>에 추가(append)합니다.</p>
+<p><em>index</em>는 0보다 크거나 같아야 합니다.</p>
+<p>이 함수를 호출하려면 파이썬을 사전 초기화해야 합니다.</p>
+</dd></dl>
+
+<p>구조체 필드:</p>
+<dl class="member">
+<dt id="c.PyWideStringList.length">
+<a class="reference internal" href="intro.html#c.Py_ssize_t" title="Py_ssize_t">Py_ssize_t</a> <code class="sig-name descname">length</code><a class="headerlink" href="#c.PyWideStringList.length" title="정의 주소">¶</a></dt>
+<dd><p>리스트 길이.</p>
+</dd></dl>
+
+<dl class="member">
+<dt id="c.PyWideStringList.items">
+wchar_t** <code class="sig-name descname">items</code><a class="headerlink" href="#c.PyWideStringList.items" title="정의 주소">¶</a></dt>
+<dd><p>리스트 항목들.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="pystatus">
+<h2>PyStatus<a class="headerlink" href="#pystatus" title="제목 주소">¶</a></h2>
+<dl class="type">
+<dt id="c.PyStatus">
+<code class="sig-name descname">PyStatus</code><a class="headerlink" href="#c.PyStatus" title="정의 주소">¶</a></dt>
+<dd><p>초기화 함수 상태를 저장하는 구조체: 성공, 에러 또는 종료.</p>
+<p>에러의 경우, 에러를 만든 C 함수 이름을 저장할 수 있습니다.</p>
+<p>구조체 필드:</p>
+<dl class="member">
+<dt id="c.PyStatus.exitcode">
+int <code class="sig-name descname">exitcode</code><a class="headerlink" href="#c.PyStatus.exitcode" title="정의 주소">¶</a></dt>
+<dd><p>종료 코드. <code class="docutils literal notranslate"><span class="pre">exit()</span></code>에 전달된 인자.</p>
+</dd></dl>
+
+<dl class="member">
+<dt id="c.PyStatus.err_msg">
+const char *<code class="sig-name descname">err_msg</code><a class="headerlink" href="#c.PyStatus.err_msg" title="정의 주소">¶</a></dt>
+<dd><p>에러 메시지.</p>
+</dd></dl>
+
+<dl class="member">
+<dt id="c.PyStatus.func">
+const char *<code class="sig-name descname">func</code><a class="headerlink" href="#c.PyStatus.func" title="정의 주소">¶</a></dt>
+<dd><p>에러를 만든 함수의 이름, <code class="docutils literal notranslate"><span class="pre">NULL</span></code>일 수 있습니다.</p>
+</dd></dl>
+
+<p>상태를 만드는 함수:</p>
+<dl class="function">
+<dt id="c.PyStatus_Ok">
+<a class="reference internal" href="#c.PyStatus" title="PyStatus">PyStatus</a> <code class="sig-name descname">PyStatus_Ok</code><span class="sig-paren">(</span>void<span class="sig-paren">)</span><a class="headerlink" href="#c.PyStatus_Ok" title="정의 주소">¶</a></dt>
+<dd><p>성공.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyStatus_Error">
+<a class="reference internal" href="#c.PyStatus" title="PyStatus">PyStatus</a> <code class="sig-name descname">PyStatus_Error</code><span class="sig-paren">(</span>const char<em> *err_msg</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyStatus_Error" title="정의 주소">¶</a></dt>
+<dd><p>메시지가 포함된 초기화 에러.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyStatus_NoMemory">
+<a class="reference internal" href="#c.PyStatus" title="PyStatus">PyStatus</a> <code class="sig-name descname">PyStatus_NoMemory</code><span class="sig-paren">(</span>void<span class="sig-paren">)</span><a class="headerlink" href="#c.PyStatus_NoMemory" title="정의 주소">¶</a></dt>
+<dd><p>메모리 할당 실패 (메모리 부족).</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyStatus_Exit">
+<a class="reference internal" href="#c.PyStatus" title="PyStatus">PyStatus</a> <code class="sig-name descname">PyStatus_Exit</code><span class="sig-paren">(</span>int<em> exitcode</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyStatus_Exit" title="정의 주소">¶</a></dt>
+<dd><p>지정된 종료 코드로 파이썬을 종료합니다.</p>
+</dd></dl>
+
+<p>상태를 처리하는 함수:</p>
+<dl class="function">
+<dt id="c.PyStatus_Exception">
+int <code class="sig-name descname">PyStatus_Exception</code><span class="sig-paren">(</span><a class="reference internal" href="#c.PyStatus" title="PyStatus">PyStatus</a><em> status</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyStatus_Exception" title="정의 주소">¶</a></dt>
+<dd><p>상태가 에러입니까? 아니면 종료입니까? 참이면, 예외를 처리해야 합니다; 예를 들어 <a class="reference internal" href="#c.Py_ExitStatusException" title="Py_ExitStatusException"><code class="xref c c-func docutils literal notranslate"><span class="pre">Py_ExitStatusException()</span></code></a> 을 호출하여.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyStatus_IsError">
+int <code class="sig-name descname">PyStatus_IsError</code><span class="sig-paren">(</span><a class="reference internal" href="#c.PyStatus" title="PyStatus">PyStatus</a><em> status</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyStatus_IsError" title="정의 주소">¶</a></dt>
+<dd><p>결과가 에러입니까?</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyStatus_IsExit">
+int <code class="sig-name descname">PyStatus_IsExit</code><span class="sig-paren">(</span><a class="reference internal" href="#c.PyStatus" title="PyStatus">PyStatus</a><em> status</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyStatus_IsExit" title="정의 주소">¶</a></dt>
+<dd><p>결과가 종료입니까?</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.Py_ExitStatusException">
+void <code class="sig-name descname">Py_ExitStatusException</code><span class="sig-paren">(</span><a class="reference internal" href="#c.PyStatus" title="PyStatus">PyStatus</a><em> status</em><span class="sig-paren">)</span><a class="headerlink" href="#c.Py_ExitStatusException" title="정의 주소">¶</a></dt>
+<dd><p><em>status</em>가 종료이면 <code class="docutils literal notranslate"><span class="pre">exit(exitcode)</span></code>를 호출합니다. <em>status</em>가 에러이면 에러 메시지를 인쇄하고 0이 아닌 종료 코드로 종료합니다. <code class="docutils literal notranslate"><span class="pre">PyStatus_Exception(status)</span></code>가 0이 아닐 때만 호출해야 합니다.</p>
+</dd></dl>
+
+</dd></dl>
+
+<div class="admonition note">
+<p class="admonition-title">참고</p>
+<p>내부적으로, 파이썬은 <code class="docutils literal notranslate"><span class="pre">PyStatus.func</span></code>를 설정하는 데는 매크로를 사용하는 반면, <code class="docutils literal notranslate"><span class="pre">func</span></code>가 <code class="docutils literal notranslate"><span class="pre">NULL</span></code>로 설정된 상태를 만드는 데는 함수를 사용합니다.</p>
+</div>
+<p>예:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">PyStatus</span><span class="w"> </span><span class="nf">alloc</span><span class="p">(</span><span class="kt">void</span><span class="w"> </span><span class="o">**</span><span class="n">ptr</span><span class="p">,</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="n">size</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="o">*</span><span class="n">ptr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">PyMem_RawMalloc</span><span class="p">(</span><span class="n">size</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="n">ptr</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nb">NULL</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">PyStatus_NoMemory</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">PyStatus_Ok</span><span class="p">();</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">**</span><span class="n">argv</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">ptr</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">PyStatus</span><span class="w"> </span><span class="n">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">alloc</span><span class="p">(</span><span class="o">&amp;</span><span class="n">ptr</span><span class="p">,</span><span class="w"> </span><span class="mi">16</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">PyStatus_Exception</span><span class="p">(</span><span class="n">status</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="n">Py_ExitStatusException</span><span class="p">(</span><span class="n">status</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="n">PyMem_Free</span><span class="p">(</span><span class="n">ptr</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+<section id="pypreconfig">
+<h2>PyPreConfig<a class="headerlink" href="#pypreconfig" title="제목 주소">¶</a></h2>
+<dl class="type">
+<dt id="c.PyPreConfig">
+<code class="sig-name descname">PyPreConfig</code><a class="headerlink" href="#c.PyPreConfig" title="정의 주소">¶</a></dt>
+<dd><p>파이썬을 사전 초기화하는 데 사용되는 구조체:</p>
+<ul class="simple">
+<li><p>파이썬 메모리 할당자를 설정합니다</p></li>
+<li><p>LC_CTYPE 로케일을 구성합니다</p></li>
+<li><p>UTF-8 모드를 설정합니다</p></li>
+</ul>
+<p>사전 구성을 초기화하는 함수:</p>
+<dl class="function">
+<dt id="c.PyPreConfig_InitPythonConfig">
+void <code class="sig-name descname">PyPreConfig_InitPythonConfig</code><span class="sig-paren">(</span><a class="reference internal" href="#c.PyPreConfig" title="PyPreConfig">PyPreConfig</a><em> *preconfig</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyPreConfig_InitPythonConfig" title="정의 주소">¶</a></dt>
+<dd><p><a class="reference internal" href="#init-python-config"><span class="std std-ref">파이썬 구성</span></a>으로 사전 구성을 초기화합니다.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyPreConfig_InitIsolatedConfig">
+void <code class="sig-name descname">PyPreConfig_InitIsolatedConfig</code><span class="sig-paren">(</span><a class="reference internal" href="#c.PyPreConfig" title="PyPreConfig">PyPreConfig</a><em> *preconfig</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyPreConfig_InitIsolatedConfig" title="정의 주소">¶</a></dt>
+<dd><p><a class="reference internal" href="#init-isolated-conf"><span class="std std-ref">격리된 구성</span></a>으로 사전 구성을 초기화합니다.</p>
+</dd></dl>
+
+<p>구조체 필드:</p>
+<dl class="member">
+<dt id="c.PyPreConfig.allocator">
+int <code class="sig-name descname">allocator</code><a class="headerlink" href="#c.PyPreConfig.allocator" title="정의 주소">¶</a></dt>
+<dd><p>메모리 할당자의 이름:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">PYMEM_ALLOCATOR_NOT_SET</span></code> (<code class="docutils literal notranslate"><span class="pre">0</span></code>): 메모리 할당자를 변경하지 않습니다 (기본값을 사용합니다)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">PYMEM_ALLOCATOR_DEFAULT</span></code> (<code class="docutils literal notranslate"><span class="pre">1</span></code>): 기본 메모리 할당자</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">PYMEM_ALLOCATOR_DEBUG</span></code> (<code class="docutils literal notranslate"><span class="pre">2</span></code>): 디버그 훅이 있는 기본 메모리 할당자</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">PYMEM_ALLOCATOR_MALLOC</span></code> (<code class="docutils literal notranslate"><span class="pre">3</span></code>): <code class="docutils literal notranslate"><span class="pre">malloc()</span></code>의 사용을 강제합니다</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">PYMEM_ALLOCATOR_MALLOC_DEBUG</span></code> (<code class="docutils literal notranslate"><span class="pre">4</span></code>): 디버그 훅이 있는 <code class="docutils literal notranslate"><span class="pre">malloc()</span></code>의 사용을 강제합니다</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">PYMEM_ALLOCATOR_PYMALLOC</span></code> (<code class="docutils literal notranslate"><span class="pre">5</span></code>): <a class="reference internal" href="memory.html#pymalloc"><span class="std std-ref">파이썬 pymalloc 메모리 할당자</span></a></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">PYMEM_ALLOCATOR_PYMALLOC_DEBUG</span></code> (<code class="docutils literal notranslate"><span class="pre">6</span></code>): 디버그 훅이 있는 <a class="reference internal" href="memory.html#pymalloc"><span class="std std-ref">파이썬 pymalloc 메모리 할당자</span></a></p></li>
+</ul>
+<p>파이썬이 <code class="docutils literal notranslate"><span class="pre">--without-pymalloc</span></code>을 사용하여 구성되면 <code class="docutils literal notranslate"><span class="pre">PYMEM_ALLOCATOR_PYMALLOC</span></code>과 <code class="docutils literal notranslate"><span class="pre">PYMEM_ALLOCATOR_PYMALLOC_DEBUG</span></code>은 지원되지 않습니다</p>
+<p><a class="reference internal" href="memory.html#memory"><span class="std std-ref">메모리 관리</span></a>를 참조하십시오.</p>
+</dd></dl>
+
+<dl class="member">
+<dt id="c.PyPreConfig.configure_locale">
+int <code class="sig-name descname">configure_locale</code><a class="headerlink" href="#c.PyPreConfig.configure_locale" title="정의 주소">¶</a></dt>
+<dd><p>LC_CTYPE 로케일을 사용자 선호 로케일로 설정합니까?? 0과 같으면, <code class="xref c c-member docutils literal notranslate"><span class="pre">coerce_c_locale</span></code>과 <code class="xref c c-member docutils literal notranslate"><span class="pre">coerce_c_locale_warn</span></code>을 0으로 설정합니다.</p>
+</dd></dl>
+
+<dl class="member">
+<dt id="c.PyPreConfig.coerce_c_locale">
+int <code class="sig-name descname">coerce_c_locale</code><a class="headerlink" href="#c.PyPreConfig.coerce_c_locale" title="정의 주소">¶</a></dt>
+<dd><p>2와 같으면, C 로케일을 강제합니다; 1과 같으면, LC_CTYPE 로케일을 읽고 강제할지 결정합니다.</p>
+</dd></dl>
+
+<dl class="member">
+<dt id="c.PyPreConfig.coerce_c_locale_warn">
+int <code class="sig-name descname">coerce_c_locale_warn</code><a class="headerlink" href="#c.PyPreConfig.coerce_c_locale_warn" title="정의 주소">¶</a></dt>
+<dd><p>0이 아니면, C 로케일이 강제될 때 경고가 발생합니다.</p>
+</dd></dl>
+
+<dl class="member">
+<dt id="c.PyPreConfig.dev_mode">
+int <code class="sig-name descname">dev_mode</code><a class="headerlink" href="#c.PyPreConfig.dev_mode" title="정의 주소">¶</a></dt>
+<dd><p><a class="reference internal" href="#c.PyConfig.dev_mode" title="PyConfig.dev_mode"><code class="xref c c-member docutils literal notranslate"><span class="pre">PyConfig.dev_mode</span></code></a>를 참조하십시오.</p>
+</dd></dl>
+
+<dl class="member">
+<dt id="c.PyPreConfig.isolated">
+int <code class="sig-name descname">isolated</code><a class="headerlink" href="#c.PyPreConfig.isolated" title="정의 주소">¶</a></dt>
+<dd><p><a class="reference internal" href="#c.PyConfig.isolated" title="PyConfig.isolated"><code class="xref c c-member docutils literal notranslate"><span class="pre">PyConfig.isolated</span></code></a>를 참조하십시오.</p>
+</dd></dl>
+
+<dl class="member">
+<dt id="c.PyPreConfig.legacy_windows_fs_encoding">
+int <code class="sig-name descname">legacy_windows_fs_encoding</code><span class="sig-paren">(</span>Windows<em> only</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyPreConfig.legacy_windows_fs_encoding" title="정의 주소">¶</a></dt>
+<dd><p>0이 아니면, UTF-8 모드를 비활성화하고, 파이썬 파일 시스템 인코딩을 <code class="docutils literal notranslate"><span class="pre">mbcs</span></code>로 설정하고, 파일 시스템 에러 처리기를 <code class="docutils literal notranslate"><span class="pre">replace</span></code>로 설정합니다.</p>
+<p>윈도우에서만 사용 가능합니다. <code class="docutils literal notranslate"><span class="pre">#ifdef</span> <span class="pre">MS_WINDOWS</span></code> 매크로는 윈도우 특정 코드에 사용할 수 있습니다.</p>
+</dd></dl>
+
+<dl class="member">
+<dt id="c.PyPreConfig.parse_argv">
+int <code class="sig-name descname">parse_argv</code><a class="headerlink" href="#c.PyPreConfig.parse_argv" title="정의 주소">¶</a></dt>
+<dd><p>0이 아니면, <a class="reference internal" href="#c.Py_PreInitializeFromArgs" title="Py_PreInitializeFromArgs"><code class="xref c c-func docutils literal notranslate"><span class="pre">Py_PreInitializeFromArgs()</span></code></a>와 <a class="reference internal" href="#c.Py_PreInitializeFromBytesArgs" title="Py_PreInitializeFromBytesArgs"><code class="xref c c-func docutils literal notranslate"><span class="pre">Py_PreInitializeFromBytesArgs()</span></code></a>는 일반 파이썬이 명령 줄 인자를 구문 분석하는 것과 같은 방식으로 <code class="docutils literal notranslate"><span class="pre">argv</span></code> 인자를 구문 분석합니다. <a class="reference internal" href="../using/cmdline.html#using-on-cmdline"><span class="std std-ref">명령 줄 인자</span></a>를 참조하십시오.</p>
+</dd></dl>
+
+<dl class="member">
+<dt id="c.PyPreConfig.use_environment">
+int <code class="sig-name descname">use_environment</code><a class="headerlink" href="#c.PyPreConfig.use_environment" title="정의 주소">¶</a></dt>
+<dd><p><a class="reference internal" href="#c.PyConfig.use_environment" title="PyConfig.use_environment"><code class="xref c c-member docutils literal notranslate"><span class="pre">PyConfig.use_environment</span></code></a>를 참조하십시오.</p>
+</dd></dl>
+
+<dl class="member">
+<dt id="c.PyPreConfig.utf8_mode">
+int <code class="sig-name descname">utf8_mode</code><a class="headerlink" href="#c.PyPreConfig.utf8_mode" title="정의 주소">¶</a></dt>
+<dd><p>0이 아니면, UTF-8 모드를 활성화합니다.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="preinitialization-with-pypreconfig">
+<h2>PyPreConfig를 사용한 사전 초기화<a class="headerlink" href="#preinitialization-with-pypreconfig" title="제목 주소">¶</a></h2>
+<p>파이썬을 사전 초기화하는 함수:</p>
+<dl class="function">
+<dt id="c.Py_PreInitialize">
+<a class="reference internal" href="#c.PyStatus" title="PyStatus">PyStatus</a> <code class="sig-name descname">Py_PreInitialize</code><span class="sig-paren">(</span>const <a class="reference internal" href="#c.PyPreConfig" title="PyPreConfig">PyPreConfig</a><em> *preconfig</em><span class="sig-paren">)</span><a class="headerlink" href="#c.Py_PreInitialize" title="정의 주소">¶</a></dt>
+<dd><p><em>preconfig</em> 사전 구성에서 파이썬을 사전 초기화합니다.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.Py_PreInitializeFromBytesArgs">
+<a class="reference internal" href="#c.PyStatus" title="PyStatus">PyStatus</a> <code class="sig-name descname">Py_PreInitializeFromBytesArgs</code><span class="sig-paren">(</span>const <a class="reference internal" href="#c.PyPreConfig" title="PyPreConfig">PyPreConfig</a><em> *preconfig</em>, int<em> argc</em>, char * const<em> *argv</em><span class="sig-paren">)</span><a class="headerlink" href="#c.Py_PreInitializeFromBytesArgs" title="정의 주소">¶</a></dt>
+<dd><p><em>preconfig</em> 사전 구성과 명령 줄 인자(바이트 문자열)에서 파이썬을 사전 초기화합니다.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.Py_PreInitializeFromArgs">
+<a class="reference internal" href="#c.PyStatus" title="PyStatus">PyStatus</a> <code class="sig-name descname">Py_PreInitializeFromArgs</code><span class="sig-paren">(</span>const <a class="reference internal" href="#c.PyPreConfig" title="PyPreConfig">PyPreConfig</a><em> *preconfig</em>, int<em> argc</em>, wchar_t * const *<em> argv</em><span class="sig-paren">)</span><a class="headerlink" href="#c.Py_PreInitializeFromArgs" title="정의 주소">¶</a></dt>
+<dd><p><em>preconfig</em> 사전 구성과 명령 줄 인자(와이드 문자열)에서 파이썬을 사전 초기화합니다.</p>
+</dd></dl>
+
+<p>호출자는 <a class="reference internal" href="#c.PyStatus_Exception" title="PyStatus_Exception"><code class="xref c c-func docutils literal notranslate"><span class="pre">PyStatus_Exception()</span></code></a>과 <a class="reference internal" href="#c.Py_ExitStatusException" title="Py_ExitStatusException"><code class="xref c c-func docutils literal notranslate"><span class="pre">Py_ExitStatusException()</span></code></a> 을 사용하여 예외(에러나 종료)를 처리해야 합니다.</p>
+<p><a class="reference internal" href="#init-python-config"><span class="std std-ref">파이썬 구성</span></a>(<a class="reference internal" href="#c.PyPreConfig_InitPythonConfig" title="PyPreConfig_InitPythonConfig"><code class="xref c c-func docutils literal notranslate"><span class="pre">PyPreConfig_InitPythonConfig()</span></code></a>)의 경우, 명령 줄 인자로 파이썬을 초기화하면, 인코딩과 같은 사전 구성에 영향을 주기 때문에, 파이썬을 사전 구성하기 위해 명령 줄 인자도 전달되어야 합니다. 예를 들어, <a class="reference internal" href="../using/cmdline.html#id5"><code class="xref std std-option docutils literal notranslate"><span class="pre">-X</span> <span class="pre">utf8</span></code></a> 명령 줄 옵션은 UTF-8 모드를 활성화합니다.</p>
+<p><code class="docutils literal notranslate"><span class="pre">PyMem_SetAllocator()</span></code>는 <a class="reference internal" href="#c.Py_PreInitialize" title="Py_PreInitialize"><code class="xref c c-func docutils literal notranslate"><span class="pre">Py_PreInitialize()</span></code></a> 이후에 <a class="reference internal" href="#c.Py_InitializeFromConfig" title="Py_InitializeFromConfig"><code class="xref c c-func docutils literal notranslate"><span class="pre">Py_InitializeFromConfig()</span></code></a> 이전에 호출하여 사용자 정의 메모리 할당자를 설치할 수 있습니다. <a class="reference internal" href="#c.PyPreConfig.allocator" title="PyPreConfig.allocator"><code class="xref c c-member docutils literal notranslate"><span class="pre">PyPreConfig.allocator</span></code></a>가 <code class="docutils literal notranslate"><span class="pre">PYMEM_ALLOCATOR_NOT_SET</span></code>으로 설정되면 <a class="reference internal" href="#c.Py_PreInitialize" title="Py_PreInitialize"><code class="xref c c-func docutils literal notranslate"><span class="pre">Py_PreInitialize()</span></code></a> 전에 호출할 수 있습니다.</p>
+<p><a class="reference internal" href="memory.html#c.PyMem_RawMalloc" title="PyMem_RawMalloc"><code class="xref c c-func docutils literal notranslate"><span class="pre">PyMem_RawMalloc()</span></code></a>과 같은 파이썬 메모리 할당 함수는 파이썬 사전 초기화 전에 사용해서는 안 되지만, <code class="docutils literal notranslate"><span class="pre">malloc()</span></code>과 <code class="docutils literal notranslate"><span class="pre">free()</span></code>를 직접 호출하는 것은 항상 안전합니다. 사전 초기화 전에 <a class="reference internal" href="sys.html#c.Py_DecodeLocale" title="Py_DecodeLocale"><code class="xref c c-func docutils literal notranslate"><span class="pre">Py_DecodeLocale()</span></code></a>을 호출하면 안 됩니다.</p>
+<p>UTF-8 모드를 활성화하기 위해 사전 초기화를 사용하는 예:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">PyStatus</span><span class="w"> </span><span class="n">status</span><span class="p">;</span><span class="w"></span>
+<span class="n">PyPreConfig</span><span class="w"> </span><span class="n">preconfig</span><span class="p">;</span><span class="w"></span>
+<span class="n">PyPreConfig_InitPythonConfig</span><span class="p">(</span><span class="o">&amp;</span><span class="n">preconfig</span><span class="p">);</span><span class="w"></span>
+
+<span class="n">preconfig</span><span class="p">.</span><span class="n">utf8_mode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"></span>
+
+<span class="n">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Py_PreInitialize</span><span class="p">(</span><span class="o">&amp;</span><span class="n">preconfig</span><span class="p">);</span><span class="w"></span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">PyStatus_Exception</span><span class="p">(</span><span class="n">status</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">Py_ExitStatusException</span><span class="p">(</span><span class="n">status</span><span class="p">);</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="cm">/* at this point, Python will speak UTF-8 */</span><span class="w"></span>
+
+<span class="n">Py_Initialize</span><span class="p">();</span><span class="w"></span>
+<span class="cm">/* ... use Python API here ... */</span><span class="w"></span>
+<span class="n">Py_Finalize</span><span class="p">();</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+<section id="pyconfig">
+<h2>PyConfig<a class="headerlink" href="#pyconfig" title="제목 주소">¶</a></h2>
+<dl class="type">
+<dt id="c.PyConfig">
+<code class="sig-name descname">PyConfig</code><a class="headerlink" href="#c.PyConfig" title="정의 주소">¶</a></dt>
+<dd><p>파이썬을 구성하기 위한 대부분의 파라미터를 포함하는 구조체.</p>
+<p>구조체 메서드:</p>
+<dl class="function">
+<dt id="c.PyConfig_InitPythonConfig">
+void <code class="sig-name descname">PyConfig_InitPythonConfig</code><span class="sig-paren">(</span><a class="reference internal" href="#c.PyConfig" title="PyConfig">PyConfig</a><em> *config</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyConfig_InitPythonConfig" title="정의 주소">¶</a></dt>
+<dd><p><a class="reference internal" href="#init-python-config"><span class="std std-ref">파이썬 구성</span></a>으로 구성을 초기화합니다.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyConfig_InitIsolatedConfig">
+void <code class="sig-name descname">PyConfig_InitIsolatedConfig</code><span class="sig-paren">(</span><a class="reference internal" href="#c.PyConfig" title="PyConfig">PyConfig</a><em> *config</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyConfig_InitIsolatedConfig" title="정의 주소">¶</a></dt>
+<dd><p><a class="reference internal" href="#init-isolated-conf"><span class="std std-ref">격리된 구성</span></a>으로 구성을 초기화합니다.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyConfig_SetString">
+<a class="reference internal" href="#c.PyStatus" title="PyStatus">PyStatus</a> <code class="sig-name descname">PyConfig_SetString</code><span class="sig-paren">(</span><a class="reference internal" href="#c.PyConfig" title="PyConfig">PyConfig</a><em> *config</em>, wchar_t * const<em> *config_str</em>, const wchar_t<em> *str</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyConfig_SetString" title="정의 주소">¶</a></dt>
+<dd><p>와이드 문자열 <em>str</em>을 <code class="docutils literal notranslate"><span class="pre">*config_str</span></code>로 복사합니다.</p>
+<p>필요하면 파이썬을 사전 초기화합니다.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyConfig_SetBytesString">
+<a class="reference internal" href="#c.PyStatus" title="PyStatus">PyStatus</a> <code class="sig-name descname">PyConfig_SetBytesString</code><span class="sig-paren">(</span><a class="reference internal" href="#c.PyConfig" title="PyConfig">PyConfig</a><em> *config</em>, wchar_t * const<em> *config_str</em>, const char<em> *str</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyConfig_SetBytesString" title="정의 주소">¶</a></dt>
+<dd><p><code class="docutils literal notranslate"><span class="pre">Py_DecodeLocale()</span></code>을 사용하여 <em>str</em>을 디코딩하고 결과를 <code class="docutils literal notranslate"><span class="pre">*config_str</span></code>에 설정합니다.</p>
+<p>필요하면 파이썬을 사전 초기화합니다.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyConfig_SetArgv">
+<a class="reference internal" href="#c.PyStatus" title="PyStatus">PyStatus</a> <code class="sig-name descname">PyConfig_SetArgv</code><span class="sig-paren">(</span><a class="reference internal" href="#c.PyConfig" title="PyConfig">PyConfig</a><em> *config</em>, int<em> argc</em>, wchar_t * const<em> *argv</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyConfig_SetArgv" title="정의 주소">¶</a></dt>
+<dd><p>와이드 문자열로 명령 줄 인자를 설정합니다.</p>
+<p>필요하면 파이썬을 사전 초기화합니다.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyConfig_SetBytesArgv">
+<a class="reference internal" href="#c.PyStatus" title="PyStatus">PyStatus</a> <code class="sig-name descname">PyConfig_SetBytesArgv</code><span class="sig-paren">(</span><a class="reference internal" href="#c.PyConfig" title="PyConfig">PyConfig</a><em> *config</em>, int<em> argc</em>, char * const<em> *argv</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyConfig_SetBytesArgv" title="정의 주소">¶</a></dt>
+<dd><p>명령 줄 인자를 설정합니다: <a class="reference internal" href="sys.html#c.Py_DecodeLocale" title="Py_DecodeLocale"><code class="xref c c-func docutils literal notranslate"><span class="pre">Py_DecodeLocale()</span></code></a>를 사용하여 바이트열을 디코딩합니다.</p>
+<p>필요하면 파이썬을 사전 초기화합니다.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyConfig_SetWideStringList">
+<a class="reference internal" href="#c.PyStatus" title="PyStatus">PyStatus</a> <code class="sig-name descname">PyConfig_SetWideStringList</code><span class="sig-paren">(</span><a class="reference internal" href="#c.PyConfig" title="PyConfig">PyConfig</a><em> *config</em>, <a class="reference internal" href="#c.PyWideStringList" title="PyWideStringList">PyWideStringList</a><em> *list</em>, <a class="reference internal" href="intro.html#c.Py_ssize_t" title="Py_ssize_t">Py_ssize_t</a><em> length</em>, wchar_t<em> **items</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyConfig_SetWideStringList" title="정의 주소">¶</a></dt>
+<dd><p>와이드 문자열 리스트 <em>list</em>를 <em>length</em>와 <em>items</em>로 설정합니다.</p>
+<p>필요하면 파이썬을 사전 초기화합니다.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyConfig_Read">
+<a class="reference internal" href="#c.PyStatus" title="PyStatus">PyStatus</a> <code class="sig-name descname">PyConfig_Read</code><span class="sig-paren">(</span><a class="reference internal" href="#c.PyConfig" title="PyConfig">PyConfig</a><em> *config</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyConfig_Read" title="정의 주소">¶</a></dt>
+<dd><p>모든 파이썬 구성을 읽습니다.</p>
+<p>이미 초기화된 필드는 변경되지 않습니다.</p>
+<p>필요하면 파이썬을 사전 초기화합니다.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyConfig_Clear">
+void <code class="sig-name descname">PyConfig_Clear</code><span class="sig-paren">(</span><a class="reference internal" href="#c.PyConfig" title="PyConfig">PyConfig</a><em> *config</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyConfig_Clear" title="정의 주소">¶</a></dt>
+<dd><p>구성 메모리를 해제합니다.</p>
+</dd></dl>
+
+<p>대부분의 <code class="docutils literal notranslate"><span class="pre">PyConfig</span></code> 메서드는 필요하면 파이썬을 사전 초기화합니다. 이 경우, <a class="reference internal" href="#c.PyConfig" title="PyConfig"><code class="xref c c-type docutils literal notranslate"><span class="pre">PyConfig</span></code></a>를 기반으로 하는 파이썬 사전 초기화 구성입니다. <a class="reference internal" href="#c.PyPreConfig" title="PyPreConfig"><code class="xref c c-type docutils literal notranslate"><span class="pre">PyPreConfig</span></code></a>와 공통인 구성 필드가 조정되면, <a class="reference internal" href="#c.PyConfig" title="PyConfig"><code class="xref c c-type docutils literal notranslate"><span class="pre">PyConfig</span></code></a> 메서드를 호출하기 전에 설정해야 합니다:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#c.PyConfig.dev_mode" title="PyConfig.dev_mode"><code class="xref c c-member docutils literal notranslate"><span class="pre">dev_mode</span></code></a></p></li>
+<li><p><a class="reference internal" href="#c.PyConfig.isolated" title="PyConfig.isolated"><code class="xref c c-member docutils literal notranslate"><span class="pre">isolated</span></code></a></p></li>
+<li><p><a class="reference internal" href="#c.PyConfig.parse_argv" title="PyConfig.parse_argv"><code class="xref c c-member docutils literal notranslate"><span class="pre">parse_argv</span></code></a></p></li>
+<li><p><a class="reference internal" href="#c.PyConfig.use_environment" title="PyConfig.use_environment"><code class="xref c c-member docutils literal notranslate"><span class="pre">use_environment</span></code></a></p></li>
+</ul>
+<p>또한, <a class="reference internal" href="#c.PyConfig_SetArgv" title="PyConfig_SetArgv"><code class="xref c c-func docutils literal notranslate"><span class="pre">PyConfig_SetArgv()</span></code></a>나 <a class="reference internal" href="#c.PyConfig_SetBytesArgv" title="PyConfig_SetBytesArgv"><code class="xref c c-func docutils literal notranslate"><span class="pre">PyConfig_SetBytesArgv()</span></code></a>가 사용되면, 사전 초기화 구성이 명령 줄 인자 (<code class="xref c c-member docutils literal notranslate"><span class="pre">parse_argv</span></code>가 0이 아니면)에 의존하기 때문에 다른 메서드보다 먼저 이 메서드를 호출해야 합니다.</p>
+<p>이 메서드의 호출자는 <code class="docutils literal notranslate"><span class="pre">PyStatus_Exception()</span></code>과 <code class="docutils literal notranslate"><span class="pre">Py_ExitStatusException()</span></code> 을 사용하여 예외(에러나 종료)를 처리해야 합니다.</p>
+<p>구조체 필드:</p>
+<dl class="member">
+<dt id="c.PyConfig.argv">
+<a class="reference internal" href="#c.PyWideStringList" title="PyWideStringList">PyWideStringList</a> <code class="sig-name descname">argv</code><a class="headerlink" href="#c.PyConfig.argv" title="정의 주소">¶</a></dt>
+<dd><p>명령 줄 인자, <a class="reference internal" href="../library/sys.html#sys.argv" title="sys.argv"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.argv</span></code></a>. 일반 파이썬이 파이썬 명령 줄 인자를 구문 분석하는 것과 같은 방식으로 <a class="reference internal" href="#c.PyConfig.argv" title="PyConfig.argv"><code class="xref c c-member docutils literal notranslate"><span class="pre">argv</span></code></a>를 구문 분석하려면 <a class="reference internal" href="#c.PyConfig.parse_argv" title="PyConfig.parse_argv"><code class="xref c c-member docutils literal notranslate"><span class="pre">parse_argv</span></code></a>를 참조하십시오. <a class="reference internal" href="#c.PyConfig.argv" title="PyConfig.argv"><code class="xref c c-member docutils literal notranslate"><span class="pre">argv</span></code></a>가 비어 있으면, 빈 문자열이 추가되어 <a class="reference internal" href="../library/sys.html#sys.argv" title="sys.argv"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.argv</span></code></a>가 항상 존재하고 절대로 비어 있지 않도록 합니다.</p>
+</dd></dl>
+
+<dl class="member">
+<dt id="c.PyConfig.base_exec_prefix">
+wchar_t* <code class="sig-name descname">base_exec_prefix</code><a class="headerlink" href="#c.PyConfig.base_exec_prefix" title="정의 주소">¶</a></dt>
+<dd><p><a class="reference internal" href="../library/sys.html#sys.base_exec_prefix" title="sys.base_exec_prefix"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.base_exec_prefix</span></code></a>.</p>
+</dd></dl>
+
+<dl class="member">
+<dt id="c.PyConfig.base_executable">
+wchar_t* <code class="sig-name descname">base_executable</code><a class="headerlink" href="#c.PyConfig.base_executable" title="정의 주소">¶</a></dt>
+<dd><p><code class="xref py py-data docutils literal notranslate"><span class="pre">sys._base_executable</span></code>: <code class="docutils literal notranslate"><span class="pre">__PYVENV_LAUNCHER__</span></code> 환경 변숫값, 또는 <a class="reference internal" href="#c.PyConfig.executable" title="PyConfig.executable"><code class="xref c c-member docutils literal notranslate"><span class="pre">PyConfig.executable</span></code></a>의 사본.</p>
+</dd></dl>
+
+<dl class="member">
+<dt id="c.PyConfig.base_prefix">
+wchar_t* <code class="sig-name descname">base_prefix</code><a class="headerlink" href="#c.PyConfig.base_prefix" title="정의 주소">¶</a></dt>
+<dd><p><a class="reference internal" href="../library/sys.html#sys.base_prefix" title="sys.base_prefix"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.base_prefix</span></code></a>.</p>
+</dd></dl>
+
+<dl class="member">
+<dt id="c.PyConfig.platlibdir">
+wchar_t* <code class="sig-name descname">platlibdir</code><a class="headerlink" href="#c.PyConfig.platlibdir" title="정의 주소">¶</a></dt>
+<dd><p><a class="reference internal" href="../library/sys.html#sys.platlibdir" title="sys.platlibdir"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.platlibdir</span></code></a>: 플랫폼 라이브러리 디렉터리 이름, <code class="docutils literal notranslate"><span class="pre">--with-platlibdir</span></code>로 구성 시간에 설정됩니다, <code class="docutils literal notranslate"><span class="pre">PYTHONPLATLIBDIR</span></code> 환경 변수로 재정의할 수 있습니다.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">버전 3.9에 추가.</span></p>
+</div>
+</dd></dl>
+
+<dl class="member">
+<dt id="c.PyConfig.buffered_stdio">
+int <code class="sig-name descname">buffered_stdio</code><a class="headerlink" href="#c.PyConfig.buffered_stdio" title="정의 주소">¶</a></dt>
+<dd><p>0과 같으면, 버퍼링 되지 않는 모드를 활성화하여, stdout과 stderr 스트림을 버퍼링하지 않도록 합니다.</p>
+<p>stdin은 항상 버퍼링 모드로 열립니다.</p>
+</dd></dl>
+
+<dl class="member">
+<dt id="c.PyConfig.bytes_warning">
+int <code class="sig-name descname">bytes_warning</code><a class="headerlink" href="#c.PyConfig.bytes_warning" title="정의 주소">¶</a></dt>
+<dd><p>1과 같으면, <a class="reference internal" href="../library/stdtypes.html#bytes" title="bytes"><code class="xref py py-class docutils literal notranslate"><span class="pre">bytes</span></code></a>나 <a class="reference internal" href="../library/stdtypes.html#bytearray" title="bytearray"><code class="xref py py-class docutils literal notranslate"><span class="pre">bytearray</span></code></a>를 <a class="reference internal" href="../library/stdtypes.html#str" title="str"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>와 비교하거나, 또는 <a class="reference internal" href="../library/stdtypes.html#bytes" title="bytes"><code class="xref py py-class docutils literal notranslate"><span class="pre">bytes</span></code></a>를 <a class="reference internal" href="../library/functions.html#int" title="int"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>와 비교할 때 경고를 발행합니다. 2 이상이면, <a class="reference internal" href="../library/exceptions.html#BytesWarning" title="BytesWarning"><code class="xref py py-exc docutils literal notranslate"><span class="pre">BytesWarning</span></code></a> 예외를 발생시킵니다.</p>
+</dd></dl>
+
+<dl class="member">
+<dt id="c.PyConfig.check_hash_pycs_mode">
+wchar_t* <code class="sig-name descname">check_hash_pycs_mode</code><a class="headerlink" href="#c.PyConfig.check_hash_pycs_mode" title="정의 주소">¶</a></dt>
+<dd><p>해시 기반 <code class="docutils literal notranslate"><span class="pre">.pyc</span></code> 파일의 유효성 검증 동작을 제어합니다 (<span class="target" id="index-24"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0552"><strong>PEP 552</strong></a>를 참조하십시오): <a class="reference internal" href="../using/cmdline.html#cmdoption-check-hash-based-pycs"><code class="xref std std-option docutils literal notranslate"><span class="pre">--check-hash-based-pycs</span></code></a> 명령 줄 옵션 값.</p>
+<p>유효한 값: <code class="docutils literal notranslate"><span class="pre">always</span></code>, <code class="docutils literal notranslate"><span class="pre">never</span></code> 및 <code class="docutils literal notranslate"><span class="pre">default</span></code>.</p>
+<p>기본값은 <code class="docutils literal notranslate"><span class="pre">default</span></code>입니다.</p>
+</dd></dl>
+
+<dl class="member">
+<dt id="c.PyConfig.configure_c_stdio">
+int <code class="sig-name descname">configure_c_stdio</code><a class="headerlink" href="#c.PyConfig.configure_c_stdio" title="정의 주소">¶</a></dt>
+<dd><p>0이 아니면, C 표준 스트림(<code class="docutils literal notranslate"><span class="pre">stdio</span></code>, <code class="docutils literal notranslate"><span class="pre">stdout</span></code>, <code class="docutils literal notranslate"><span class="pre">stdout</span></code>)을 구성합니다. 예를 들어, 윈도우에서 해당 모드를 <code class="docutils literal notranslate"><span class="pre">O_BINARY</span></code>로 설정합니다.</p>
+</dd></dl>
+
+<dl class="member">
+<dt id="c.PyConfig.dev_mode">
+int <code class="sig-name descname">dev_mode</code><a class="headerlink" href="#c.PyConfig.dev_mode" title="정의 주소">¶</a></dt>
+<dd><p>0이 아니면, <a class="reference internal" href="../library/devmode.html#devmode"><span class="std std-ref">파이썬 개발 모드</span></a>를 활성화합니다.</p>
+</dd></dl>
+
+<dl class="member">
+<dt id="c.PyConfig.dump_refs">
+int <code class="sig-name descname">dump_refs</code><a class="headerlink" href="#c.PyConfig.dump_refs" title="정의 주소">¶</a></dt>
+<dd><p>0이 아니면, 종료 시 여전히 활성 상태인 모든 객체를 덤프합니다.</p>
+<p><code class="docutils literal notranslate"><span class="pre">Py_TRACE_REFS</span></code> 매크로가 빌드에서 정의되어야 합니다.</p>
+</dd></dl>
+
+<dl class="member">
+<dt id="c.PyConfig.exec_prefix">
+wchar_t* <code class="sig-name descname">exec_prefix</code><a class="headerlink" href="#c.PyConfig.exec_prefix" title="정의 주소">¶</a></dt>
+<dd><p><a class="reference internal" href="../library/sys.html#sys.exec_prefix" title="sys.exec_prefix"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.exec_prefix</span></code></a>.</p>
+</dd></dl>
+
+<dl class="member">
+<dt id="c.PyConfig.executable">
+wchar_t* <code class="sig-name descname">executable</code><a class="headerlink" href="#c.PyConfig.executable" title="정의 주소">¶</a></dt>
+<dd><p><a class="reference internal" href="../library/sys.html#sys.executable" title="sys.executable"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.executable</span></code></a>.</p>
+</dd></dl>
+
+<dl class="member">
+<dt id="c.PyConfig.faulthandler">
+int <code class="sig-name descname">faulthandler</code><a class="headerlink" href="#c.PyConfig.faulthandler" title="정의 주소">¶</a></dt>
+<dd><p>0이 아니면, 시작 시 <a class="reference internal" href="../library/faulthandler.html#faulthandler.enable" title="faulthandler.enable"><code class="xref py py-func docutils literal notranslate"><span class="pre">faulthandler.enable()</span></code></a>을 호출합니다.</p>
+</dd></dl>
+
+<dl class="member">
+<dt id="c.PyConfig.filesystem_encoding">
+wchar_t* <code class="sig-name descname">filesystem_encoding</code><a class="headerlink" href="#c.PyConfig.filesystem_encoding" title="정의 주소">¶</a></dt>
+<dd><p>파일 시스템 인코딩, <a class="reference internal" href="../library/sys.html#sys.getfilesystemencoding" title="sys.getfilesystemencoding"><code class="xref py py-func docutils literal notranslate"><span class="pre">sys.getfilesystemencoding()</span></code></a>.</p>
+</dd></dl>
+
+<dl class="member">
+<dt id="c.PyConfig.filesystem_errors">
+wchar_t* <code class="sig-name descname">filesystem_errors</code><a class="headerlink" href="#c.PyConfig.filesystem_errors" title="정의 주소">¶</a></dt>
+<dd><p>파일 시스템 인코딩 에러, <a class="reference internal" href="../library/sys.html#sys.getfilesystemencodeerrors" title="sys.getfilesystemencodeerrors"><code class="xref py py-func docutils literal notranslate"><span class="pre">sys.getfilesystemencodeerrors()</span></code></a>.</p>
+</dd></dl>
+
+<dl class="member">
+<dt id="c.PyConfig.hash_seed">
+unsigned long <code class="sig-name descname">hash_seed</code><a class="headerlink" href="#c.PyConfig.hash_seed" title="정의 주소">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="member">
+<dt id="c.PyConfig.use_hash_seed">
+int <code class="sig-name descname">use_hash_seed</code><a class="headerlink" href="#c.PyConfig.use_hash_seed" title="정의 주소">¶</a></dt>
+<dd><p>무작위 해시 함수 시드.</p>
+<p><a class="reference internal" href="#c.PyConfig.use_hash_seed" title="PyConfig.use_hash_seed"><code class="xref c c-member docutils literal notranslate"><span class="pre">use_hash_seed</span></code></a>가 0이면, 파이썬 시작 시 시드가 무작위로 선택되고, <a class="reference internal" href="#c.PyConfig.hash_seed" title="PyConfig.hash_seed"><code class="xref c c-member docutils literal notranslate"><span class="pre">hash_seed</span></code></a>는 무시됩니다.</p>
+</dd></dl>
+
+<dl class="member">
+<dt id="c.PyConfig.home">
+wchar_t* <code class="sig-name descname">home</code><a class="headerlink" href="#c.PyConfig.home" title="정의 주소">¶</a></dt>
+<dd><p>파이썬 홈 디렉터리.</p>
+<p>기본적으로 <span class="target" id="index-25"></span><a class="reference internal" href="../using/cmdline.html#envvar-PYTHONHOME"><code class="xref std std-envvar docutils literal notranslate"><span class="pre">PYTHONHOME</span></code></a> 환경 변숫값에서 초기화됩니다.</p>
+</dd></dl>
+
+<dl class="member">
+<dt id="c.PyConfig.import_time">
+int <code class="sig-name descname">import_time</code><a class="headerlink" href="#c.PyConfig.import_time" title="정의 주소">¶</a></dt>
+<dd><p>0이 아니면, 임포트 시간을 프로파일 합니다.</p>
+</dd></dl>
+
+<dl class="member">
+<dt id="c.PyConfig.inspect">
+int <code class="sig-name descname">inspect</code><a class="headerlink" href="#c.PyConfig.inspect" title="정의 주소">¶</a></dt>
+<dd><p>스크립트나 명령을 실행한 후 대화식 모드로 들어갑니다.</p>
+</dd></dl>
+
+<dl class="member">
+<dt id="c.PyConfig.install_signal_handlers">
+int <code class="sig-name descname">install_signal_handlers</code><a class="headerlink" href="#c.PyConfig.install_signal_handlers" title="정의 주소">¶</a></dt>
+<dd><p>시그널 처리기를 설치합니까?</p>
+</dd></dl>
+
+<dl class="member">
+<dt id="c.PyConfig.interactive">
+int <code class="sig-name descname">interactive</code><a class="headerlink" href="#c.PyConfig.interactive" title="정의 주소">¶</a></dt>
+<dd><p>대화식 모드.</p>
+</dd></dl>
+
+<dl class="member">
+<dt id="c.PyConfig.isolated">
+int <code class="sig-name descname">isolated</code><a class="headerlink" href="#c.PyConfig.isolated" title="정의 주소">¶</a></dt>
+<dd><p>0보다 크면, 격리 모드를 활성화합니다:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="../library/sys.html#sys.path" title="sys.path"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.path</span></code></a>에는 스크립트 디렉터리(<code class="docutils literal notranslate"><span class="pre">argv[0]</span></code>이나 현재 디렉터리에서 계산됩니다)도 사용자의 site-packages 디렉터리도 없습니다.</p></li>
+<li><p>파이썬 REPL은 대화식 프롬프트에서 <a class="reference internal" href="../library/readline.html#module-readline" title="readline: GNU readline support for Python. (Unix)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">readline</span></code></a>을 임포트 하지도 기본 readline 구성을 활성화하지도 않습니다.</p></li>
+<li><p><a class="reference internal" href="#c.PyConfig.use_environment" title="PyConfig.use_environment"><code class="xref c c-member docutils literal notranslate"><span class="pre">use_environment</span></code></a>와 <a class="reference internal" href="#c.PyConfig.user_site_directory" title="PyConfig.user_site_directory"><code class="xref c c-member docutils literal notranslate"><span class="pre">user_site_directory</span></code></a>를 0으로 설정합니다.</p></li>
+</ul>
+</dd></dl>
+
+<dl class="member">
+<dt id="c.PyConfig.legacy_windows_stdio">
+int <code class="sig-name descname">legacy_windows_stdio</code><a class="headerlink" href="#c.PyConfig.legacy_windows_stdio" title="정의 주소">¶</a></dt>
+<dd><p>0이 아니면, <a class="reference internal" href="../library/sys.html#sys.stdin" title="sys.stdin"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.stdin</span></code></a>, <a class="reference internal" href="../library/sys.html#sys.stdout" title="sys.stdout"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.stdout</span></code></a> 및 <a class="reference internal" href="../library/sys.html#sys.stderr" title="sys.stderr"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.stderr</span></code></a>에 <code class="xref py py-class docutils literal notranslate"><span class="pre">io.WindowsConsoleIO</span></code> 대신 <a class="reference internal" href="../library/io.html#io.FileIO" title="io.FileIO"><code class="xref py py-class docutils literal notranslate"><span class="pre">io.FileIO</span></code></a>를 사용합니다.</p>
+<p>윈도우에서만 사용 가능합니다. <code class="docutils literal notranslate"><span class="pre">#ifdef</span> <span class="pre">MS_WINDOWS</span></code> 매크로는 윈도우 특정 코드에 사용할 수 있습니다.</p>
+</dd></dl>
+
+<dl class="member">
+<dt id="c.PyConfig.malloc_stats">
+int <code class="sig-name descname">malloc_stats</code><a class="headerlink" href="#c.PyConfig.malloc_stats" title="정의 주소">¶</a></dt>
+<dd><p>0이 아니면, 종료 시 <a class="reference internal" href="memory.html#pymalloc"><span class="std std-ref">파이썬 pymalloc 메모리 할당자</span></a>에 대한 통계를 덤프합니다.</p>
+<p>파이썬이 <code class="docutils literal notranslate"><span class="pre">--without-pymalloc</span></code>을 사용하여 빌드되면 이 옵션은 무시됩니다.</p>
+</dd></dl>
+
+<dl class="member">
+<dt id="c.PyConfig.pythonpath_env">
+wchar_t* <code class="sig-name descname">pythonpath_env</code><a class="headerlink" href="#c.PyConfig.pythonpath_env" title="정의 주소">¶</a></dt>
+<dd><p><code class="docutils literal notranslate"><span class="pre">DELIM</span></code>(<code class="xref py py-data docutils literal notranslate"><span class="pre">os.path.pathsep</span></code>)으로 구분된 문자열로 표현된 모듈 검색 경로.</p>
+<p>기본적으로 <span class="target" id="index-26"></span><a class="reference internal" href="../using/cmdline.html#envvar-PYTHONPATH"><code class="xref std std-envvar docutils literal notranslate"><span class="pre">PYTHONPATH</span></code></a> 환경 변숫값에서 초기화됩니다.</p>
+</dd></dl>
+
+<dl class="member">
+<dt id="c.PyConfig.module_search_paths">
+<a class="reference internal" href="#c.PyWideStringList" title="PyWideStringList">PyWideStringList</a> <code class="sig-name descname">module_search_paths</code><a class="headerlink" href="#c.PyConfig.module_search_paths" title="정의 주소">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="member">
+<dt id="c.PyConfig.module_search_paths_set">
+int <code class="sig-name descname">module_search_paths_set</code><a class="headerlink" href="#c.PyConfig.module_search_paths_set" title="정의 주소">¶</a></dt>
+<dd><p><a class="reference internal" href="../library/sys.html#sys.path" title="sys.path"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.path</span></code></a>. <a class="reference internal" href="#c.PyConfig.module_search_paths_set" title="PyConfig.module_search_paths_set"><code class="xref c c-member docutils literal notranslate"><span class="pre">module_search_paths_set</span></code></a>이 0과 같으면, <a class="reference internal" href="#init-path-config"><span class="std std-ref">경로 구성</span></a>을 계산하는 함수가 <a class="reference internal" href="#c.PyConfig.module_search_paths" title="PyConfig.module_search_paths"><code class="xref c c-member docutils literal notranslate"><span class="pre">module_search_paths</span></code></a>를 재정의합니다.</p>
+</dd></dl>
+
+<dl class="member">
+<dt id="c.PyConfig.optimization_level">
+int <code class="sig-name descname">optimization_level</code><a class="headerlink" href="#c.PyConfig.optimization_level" title="정의 주소">¶</a></dt>
+<dd><p>컴파일 최적화 수준:</p>
+<ul class="simple">
+<li><p>0: 틈 구멍 최적화기(Peephole optimizer) (그리고 <code class="docutils literal notranslate"><span class="pre">__debug__</span></code>이 <code class="docutils literal notranslate"><span class="pre">True</span></code>로 설정됩니다)</p></li>
+<li><p>1: 어서션을 제거합니다, <code class="docutils literal notranslate"><span class="pre">__debug__</span></code>을 <code class="docutils literal notranslate"><span class="pre">False</span></code>로 설정합니다</p></li>
+<li><p>2: 독스트링을 제거합니다</p></li>
+</ul>
+</dd></dl>
+
+<dl class="member">
+<dt id="c.PyConfig.parse_argv">
+int <code class="sig-name descname">parse_argv</code><a class="headerlink" href="#c.PyConfig.parse_argv" title="정의 주소">¶</a></dt>
+<dd><p>0이 아니면, 일반 파이썬 명령 줄 인자와 같은 방식으로 <a class="reference internal" href="#c.PyConfig.argv" title="PyConfig.argv"><code class="xref c c-member docutils literal notranslate"><span class="pre">argv</span></code></a>를 구문 분석하고, <a class="reference internal" href="#c.PyConfig.argv" title="PyConfig.argv"><code class="xref c c-member docutils literal notranslate"><span class="pre">argv</span></code></a>에서 파이썬 인자를 제거합니다: <a class="reference internal" href="../using/cmdline.html#using-on-cmdline"><span class="std std-ref">명령 줄 인자</span></a>를 참조하십시오.</p>
+</dd></dl>
+
+<dl class="member">
+<dt id="c.PyConfig.parser_debug">
+int <code class="sig-name descname">parser_debug</code><a class="headerlink" href="#c.PyConfig.parser_debug" title="정의 주소">¶</a></dt>
+<dd><p>0이 아니면, 구문 분석기 디버깅 출력을 켭니다 (컴파일 옵션에 따라, 전문가용입니다).</p>
+</dd></dl>
+
+<dl class="member">
+<dt id="c.PyConfig.pathconfig_warnings">
+int <code class="sig-name descname">pathconfig_warnings</code><a class="headerlink" href="#c.PyConfig.pathconfig_warnings" title="정의 주소">¶</a></dt>
+<dd><p>0과 같으면, <a class="reference internal" href="#init-path-config"><span class="std std-ref">경로 구성</span></a>을 계산할 때 경고를 억제합니다 (유닉스 전용, 윈도우는 아무런 경고도 로그 하지 않습니다). 그렇지 않으면, 경고가 <code class="docutils literal notranslate"><span class="pre">stderr</span></code>에 기록됩니다.</p>
+</dd></dl>
+
+<dl class="member">
+<dt id="c.PyConfig.prefix">
+wchar_t* <code class="sig-name descname">prefix</code><a class="headerlink" href="#c.PyConfig.prefix" title="정의 주소">¶</a></dt>
+<dd><p><a class="reference internal" href="../library/sys.html#sys.prefix" title="sys.prefix"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.prefix</span></code></a>.</p>
+</dd></dl>
+
+<dl class="member">
+<dt id="c.PyConfig.program_name">
+wchar_t* <code class="sig-name descname">program_name</code><a class="headerlink" href="#c.PyConfig.program_name" title="정의 주소">¶</a></dt>
+<dd><p>프로그램 이름. <a class="reference internal" href="#c.PyConfig.executable" title="PyConfig.executable"><code class="xref c c-member docutils literal notranslate"><span class="pre">executable</span></code></a>을 초기화하는 데 사용되며, 초기 에러 메시지에서도 사용됩니다.</p>
+</dd></dl>
+
+<dl class="member">
+<dt id="c.PyConfig.pycache_prefix">
+wchar_t* <code class="sig-name descname">pycache_prefix</code><a class="headerlink" href="#c.PyConfig.pycache_prefix" title="정의 주소">¶</a></dt>
+<dd><p><a class="reference internal" href="../library/sys.html#sys.pycache_prefix" title="sys.pycache_prefix"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.pycache_prefix</span></code></a>: <code class="docutils literal notranslate"><span class="pre">.pyc</span></code> 캐시 접두사.</p>
+<p><code class="docutils literal notranslate"><span class="pre">NULL</span></code>이면, <a class="reference internal" href="../library/sys.html#sys.pycache_prefix" title="sys.pycache_prefix"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.pycache_prefix</span></code></a>는 <code class="docutils literal notranslate"><span class="pre">None</span></code>으로 설정됩니다.</p>
+</dd></dl>
+
+<dl class="member">
+<dt id="c.PyConfig.quiet">
+int <code class="sig-name descname">quiet</code><a class="headerlink" href="#c.PyConfig.quiet" title="정의 주소">¶</a></dt>
+<dd><p>침묵 모드. 예를 들어, 대화식 모드에서 저작권과 버전 메시지를 표시하지 않습니다.</p>
+</dd></dl>
+
+<dl class="member">
+<dt id="c.PyConfig.run_command">
+wchar_t* <code class="sig-name descname">run_command</code><a class="headerlink" href="#c.PyConfig.run_command" title="정의 주소">¶</a></dt>
+<dd><p><code class="docutils literal notranslate"><span class="pre">python3</span> <span class="pre">-c</span> <span class="pre">COMMAND</span></code> 인자. <a class="reference internal" href="#c.Py_RunMain" title="Py_RunMain"><code class="xref c c-func docutils literal notranslate"><span class="pre">Py_RunMain()</span></code></a>에서 사용합니다.</p>
+</dd></dl>
+
+<dl class="member">
+<dt id="c.PyConfig.run_filename">
+wchar_t* <code class="sig-name descname">run_filename</code><a class="headerlink" href="#c.PyConfig.run_filename" title="정의 주소">¶</a></dt>
+<dd><p><code class="docutils literal notranslate"><span class="pre">python3</span> <span class="pre">FILENAME</span></code> 인자. <a class="reference internal" href="#c.Py_RunMain" title="Py_RunMain"><code class="xref c c-func docutils literal notranslate"><span class="pre">Py_RunMain()</span></code></a>에서 사용합니다.</p>
+</dd></dl>
+
+<dl class="member">
+<dt id="c.PyConfig.run_module">
+wchar_t* <code class="sig-name descname">run_module</code><a class="headerlink" href="#c.PyConfig.run_module" title="정의 주소">¶</a></dt>
+<dd><p><code class="docutils literal notranslate"><span class="pre">python3</span> <span class="pre">-m</span> <span class="pre">MODULE</span></code> 인자. <a class="reference internal" href="#c.Py_RunMain" title="Py_RunMain"><code class="xref c c-func docutils literal notranslate"><span class="pre">Py_RunMain()</span></code></a>에서 사용합니다.</p>
+</dd></dl>
+
+<dl class="member">
+<dt id="c.PyConfig.show_ref_count">
+int <code class="sig-name descname">show_ref_count</code><a class="headerlink" href="#c.PyConfig.show_ref_count" title="정의 주소">¶</a></dt>
+<dd><p>종료 시 총 참조 횟수를 표시합니까?</p>
+<p><a class="reference internal" href="../using/cmdline.html#id5"><code class="xref std std-option docutils literal notranslate"><span class="pre">-X</span> <span class="pre">showrefcount</span></code></a> 명령 줄 옵션으로 1로 설정됩니다.</p>
+<p>파이썬의 디버그 빌드가 필요합니다 (<code class="docutils literal notranslate"><span class="pre">Py_REF_DEBUG</span></code> 매크로를 정의해야 합니다).</p>
+</dd></dl>
+
+<dl class="member">
+<dt id="c.PyConfig.site_import">
+int <code class="sig-name descname">site_import</code><a class="headerlink" href="#c.PyConfig.site_import" title="정의 주소">¶</a></dt>
+<dd><p>시작할 때 <a class="reference internal" href="../library/site.html#module-site" title="site: Module responsible for site-specific configuration."><code class="xref py py-mod docutils literal notranslate"><span class="pre">site</span></code></a> 모듈을 임포트 합니까?</p>
+</dd></dl>
+
+<dl class="member">
+<dt id="c.PyConfig.skip_source_first_line">
+int <code class="sig-name descname">skip_source_first_line</code><a class="headerlink" href="#c.PyConfig.skip_source_first_line" title="정의 주소">¶</a></dt>
+<dd><p>소스의 첫 줄을 건너뜁니까?</p>
+</dd></dl>
+
+<dl class="member">
+<dt id="c.PyConfig.stdio_encoding">
+wchar_t* <code class="sig-name descname">stdio_encoding</code><a class="headerlink" href="#c.PyConfig.stdio_encoding" title="정의 주소">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="member">
+<dt id="c.PyConfig.stdio_errors">
+wchar_t* <code class="sig-name descname">stdio_errors</code><a class="headerlink" href="#c.PyConfig.stdio_errors" title="정의 주소">¶</a></dt>
+<dd><p><a class="reference internal" href="../library/sys.html#sys.stdin" title="sys.stdin"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.stdin</span></code></a>, <a class="reference internal" href="../library/sys.html#sys.stdout" title="sys.stdout"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.stdout</span></code></a> 및 <a class="reference internal" href="../library/sys.html#sys.stderr" title="sys.stderr"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.stderr</span></code></a>의 인코딩과 인코딩 에러.</p>
+</dd></dl>
+
+<dl class="member">
+<dt id="c.PyConfig.tracemalloc">
+int <code class="sig-name descname">tracemalloc</code><a class="headerlink" href="#c.PyConfig.tracemalloc" title="정의 주소">¶</a></dt>
+<dd><p>0이 아니면, 시작 시 <a class="reference internal" href="../library/tracemalloc.html#tracemalloc.start" title="tracemalloc.start"><code class="xref py py-func docutils literal notranslate"><span class="pre">tracemalloc.start()</span></code></a>를 호출합니다.</p>
+</dd></dl>
+
+<dl class="member">
+<dt id="c.PyConfig.use_environment">
+int <code class="sig-name descname">use_environment</code><a class="headerlink" href="#c.PyConfig.use_environment" title="정의 주소">¶</a></dt>
+<dd><p>0보다 크면, <a class="reference internal" href="../using/cmdline.html#using-on-envvars"><span class="std std-ref">환경 변수</span></a>를 사용합니다.</p>
+</dd></dl>
+
+<dl class="member">
+<dt id="c.PyConfig.user_site_directory">
+int <code class="sig-name descname">user_site_directory</code><a class="headerlink" href="#c.PyConfig.user_site_directory" title="정의 주소">¶</a></dt>
+<dd><p>0이 아니면, 사용자 사이트 디렉터리를 <a class="reference internal" href="../library/sys.html#sys.path" title="sys.path"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.path</span></code></a>에 추가합니다.</p>
+</dd></dl>
+
+<dl class="member">
+<dt id="c.PyConfig.verbose">
+int <code class="sig-name descname">verbose</code><a class="headerlink" href="#c.PyConfig.verbose" title="정의 주소">¶</a></dt>
+<dd><p>0이 아니면, 상세 모드를 활성화합니다.</p>
+</dd></dl>
+
+<dl class="member">
+<dt id="c.PyConfig.warnoptions">
+<a class="reference internal" href="#c.PyWideStringList" title="PyWideStringList">PyWideStringList</a> <code class="sig-name descname">warnoptions</code><a class="headerlink" href="#c.PyConfig.warnoptions" title="정의 주소">¶</a></dt>
+<dd><p><a class="reference internal" href="../library/sys.html#sys.warnoptions" title="sys.warnoptions"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.warnoptions</span></code></a>: 경고 필터를 빌드하기 위한 <a class="reference internal" href="../library/warnings.html#module-warnings" title="warnings: Issue warning messages and control their disposition."><code class="xref py py-mod docutils literal notranslate"><span class="pre">warnings</span></code></a> 모듈의 옵션: 가장 낮은 것에서 가장 높은 우선순위로.</p>
+<p><a class="reference internal" href="../library/warnings.html#module-warnings" title="warnings: Issue warning messages and control their disposition."><code class="xref py py-mod docutils literal notranslate"><span class="pre">warnings</span></code></a> 모듈은 <a class="reference internal" href="../library/sys.html#sys.warnoptions" title="sys.warnoptions"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.warnoptions</span></code></a>를 역순으로 추가합니다: 마지막 <a class="reference internal" href="#c.PyConfig.warnoptions" title="PyConfig.warnoptions"><code class="xref c c-member docutils literal notranslate"><span class="pre">PyConfig.warnoptions</span></code></a> 항목은 가장 먼저 검사되는 <code class="xref py py-data docutils literal notranslate"><span class="pre">warnings.filters</span></code>의 첫 번째 항목이 됩니다 (가장 높은 우선순위).</p>
+</dd></dl>
+
+<dl class="member">
+<dt id="c.PyConfig.write_bytecode">
+int <code class="sig-name descname">write_bytecode</code><a class="headerlink" href="#c.PyConfig.write_bytecode" title="정의 주소">¶</a></dt>
+<dd><p>0이 아니면, <code class="docutils literal notranslate"><span class="pre">.pyc</span></code> 파일을 기록합니다.</p>
+<p><a class="reference internal" href="../library/sys.html#sys.dont_write_bytecode" title="sys.dont_write_bytecode"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.dont_write_bytecode</span></code></a>는 <a class="reference internal" href="#c.PyConfig.write_bytecode" title="PyConfig.write_bytecode"><code class="xref c c-member docutils literal notranslate"><span class="pre">write_bytecode</span></code></a>의 반전된 값으로 초기화됩니다.</p>
+</dd></dl>
+
+<dl class="member">
+<dt id="c.PyConfig.xoptions">
+<a class="reference internal" href="#c.PyWideStringList" title="PyWideStringList">PyWideStringList</a> <code class="sig-name descname">xoptions</code><a class="headerlink" href="#c.PyConfig.xoptions" title="정의 주소">¶</a></dt>
+<dd><p><a class="reference internal" href="../library/sys.html#sys._xoptions" title="sys._xoptions"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys._xoptions</span></code></a>.</p>
+</dd></dl>
+
+<dl class="member">
+<dt id="c.PyConfig._use_peg_parser">
+int <code class="sig-name descname">_use_peg_parser</code><a class="headerlink" href="#c.PyConfig._use_peg_parser" title="정의 주소">¶</a></dt>
+<dd><p>PEG 구문 분석기를 활성화합니까? 기본값: 1.</p>
+<p><a class="reference internal" href="../using/cmdline.html#id5"><code class="xref std std-option docutils literal notranslate"><span class="pre">-X</span> <span class="pre">oldparser</span></code></a>와 <span class="target" id="index-27"></span><a class="reference internal" href="../using/cmdline.html#envvar-PYTHONOLDPARSER"><code class="xref std std-envvar docutils literal notranslate"><span class="pre">PYTHONOLDPARSER</span></code></a>로 0으로 설정합니다.</p>
+<p><span class="target" id="index-28"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0617"><strong>PEP 617</strong></a>도 참조하십시오.</p>
+<div class="deprecated-removed">
+<p><span class="versionmodified">Deprecated since version 3.9, will be removed in version 3.10.</span></p>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<p><code class="docutils literal notranslate"><span class="pre">parse_argv</span></code>가 0이 아니면, 일반 파이썬이 명령 줄 인자를 구문 분석하는 것과 같은 방식으로 <code class="docutils literal notranslate"><span class="pre">argv</span></code> 인자가 구문 분석되고, <code class="docutils literal notranslate"><span class="pre">argv</span></code>에서 파이썬 인자가 제거됩니다: <a class="reference internal" href="../using/cmdline.html#using-on-cmdline"><span class="std std-ref">명령 줄 인자</span></a>를 참조하십시오.</p>
+<p><code class="docutils literal notranslate"><span class="pre">xoptions</span></code> 옵션은 다른 옵션을 설정하기 위해 구문 분석됩니다: <a class="reference internal" href="../using/cmdline.html#id5"><code class="xref std std-option docutils literal notranslate"><span class="pre">-X</span></code></a> 옵션을 참조하십시오.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">버전 3.9에서 변경: </span><code class="docutils literal notranslate"><span class="pre">show_alloc_count</span></code> 필드가 제거되었습니다.</p>
+</div>
+</section>
+<section id="initialization-with-pyconfig">
+<h2>PyConfig를 사용한 초기화<a class="headerlink" href="#initialization-with-pyconfig" title="제목 주소">¶</a></h2>
+<p>파이썬을 초기화하는 함수:</p>
+<dl class="function">
+<dt id="c.Py_InitializeFromConfig">
+<a class="reference internal" href="#c.PyStatus" title="PyStatus">PyStatus</a> <code class="sig-name descname">Py_InitializeFromConfig</code><span class="sig-paren">(</span>const <a class="reference internal" href="#c.PyConfig" title="PyConfig">PyConfig</a><em> *config</em><span class="sig-paren">)</span><a class="headerlink" href="#c.Py_InitializeFromConfig" title="정의 주소">¶</a></dt>
+<dd><p><em>config</em> 구성에서 파이썬을 초기화합니다.</p>
+</dd></dl>
+
+<p>호출자는 <a class="reference internal" href="#c.PyStatus_Exception" title="PyStatus_Exception"><code class="xref c c-func docutils literal notranslate"><span class="pre">PyStatus_Exception()</span></code></a>과 <a class="reference internal" href="#c.Py_ExitStatusException" title="Py_ExitStatusException"><code class="xref c c-func docutils literal notranslate"><span class="pre">Py_ExitStatusException()</span></code></a> 을 사용하여 예외(에러나 종료)를 처리해야 합니다.</p>
+<p>If <a class="reference internal" href="import.html#c.PyImport_FrozenModules" title="PyImport_FrozenModules"><code class="xref c c-func docutils literal notranslate"><span class="pre">PyImport_FrozenModules()</span></code></a>, <a class="reference internal" href="import.html#c.PyImport_AppendInittab" title="PyImport_AppendInittab"><code class="xref c c-func docutils literal notranslate"><span class="pre">PyImport_AppendInittab()</span></code></a> or
+<a class="reference internal" href="import.html#c.PyImport_ExtendInittab" title="PyImport_ExtendInittab"><code class="xref c c-func docutils literal notranslate"><span class="pre">PyImport_ExtendInittab()</span></code></a> are used, they must be set or called after
+Python preinitialization and before the Python initialization. If Python is
+initialized multiple times, <a class="reference internal" href="import.html#c.PyImport_AppendInittab" title="PyImport_AppendInittab"><code class="xref c c-func docutils literal notranslate"><span class="pre">PyImport_AppendInittab()</span></code></a> or
+<a class="reference internal" href="import.html#c.PyImport_ExtendInittab" title="PyImport_ExtendInittab"><code class="xref c c-func docutils literal notranslate"><span class="pre">PyImport_ExtendInittab()</span></code></a> must be called before each Python
+initialization.</p>
+<p>프로그램 이름을 설정하는 예:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">init_python</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">PyStatus</span><span class="w"> </span><span class="n">status</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">PyConfig</span><span class="w"> </span><span class="n">config</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">PyConfig_InitPythonConfig</span><span class="p">(</span><span class="o">&amp;</span><span class="n">config</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">    </span><span class="cm">/* Set the program name. Implicitly preinitialize Python. */</span><span class="w"></span>
+<span class="w">    </span><span class="n">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">PyConfig_SetString</span><span class="p">(</span><span class="o">&amp;</span><span class="n">config</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">config</span><span class="p">.</span><span class="n">program_name</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                </span><span class="sa">L</span><span class="s">&quot;/path/to/my_program&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">PyStatus_Exception</span><span class="p">(</span><span class="n">status</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="k">goto</span><span class="w"> </span><span class="n">fail</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Py_InitializeFromConfig</span><span class="p">(</span><span class="o">&amp;</span><span class="n">config</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">PyStatus_Exception</span><span class="p">(</span><span class="n">status</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="k">goto</span><span class="w"> </span><span class="n">fail</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="n">PyConfig_Clear</span><span class="p">(</span><span class="o">&amp;</span><span class="n">config</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">return</span><span class="p">;</span><span class="w"></span>
+
+<span class="nl">fail</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="n">PyConfig_Clear</span><span class="p">(</span><span class="o">&amp;</span><span class="n">config</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">Py_ExitStatusException</span><span class="p">(</span><span class="n">status</span><span class="p">);</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>기본 구성을 수정하는 더 완전한 예, 구성을 읽은 다음 일부 파라미터를 대체합니다:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">PyStatus</span><span class="w"> </span><span class="nf">init_python</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">program_name</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">PyStatus</span><span class="w"> </span><span class="n">status</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">PyConfig</span><span class="w"> </span><span class="n">config</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">PyConfig_InitPythonConfig</span><span class="p">(</span><span class="o">&amp;</span><span class="n">config</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">    </span><span class="cm">/* Set the program name before reading the configuration</span>
+<span class="cm">       (decode byte string from the locale encoding).</span>
+
+<span class="cm">       Implicitly preinitialize Python. */</span><span class="w"></span>
+<span class="w">    </span><span class="n">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">PyConfig_SetBytesString</span><span class="p">(</span><span class="o">&amp;</span><span class="n">config</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">config</span><span class="p">.</span><span class="n">program_name</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                  </span><span class="n">program_name</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">PyStatus_Exception</span><span class="p">(</span><span class="n">status</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="k">goto</span><span class="w"> </span><span class="n">done</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="cm">/* Read all configuration at once */</span><span class="w"></span>
+<span class="w">    </span><span class="n">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">PyConfig_Read</span><span class="p">(</span><span class="o">&amp;</span><span class="n">config</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">PyStatus_Exception</span><span class="p">(</span><span class="n">status</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="k">goto</span><span class="w"> </span><span class="n">done</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="cm">/* Append our custom search path to sys.path */</span><span class="w"></span>
+<span class="w">    </span><span class="n">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">PyWideStringList_Append</span><span class="p">(</span><span class="o">&amp;</span><span class="n">config</span><span class="p">.</span><span class="n">module_search_paths</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                     </span><span class="sa">L</span><span class="s">&quot;/path/to/more/modules&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">PyStatus_Exception</span><span class="p">(</span><span class="n">status</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="k">goto</span><span class="w"> </span><span class="n">done</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="cm">/* Override executable computed by PyConfig_Read() */</span><span class="w"></span>
+<span class="w">    </span><span class="n">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">PyConfig_SetString</span><span class="p">(</span><span class="o">&amp;</span><span class="n">config</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">config</span><span class="p">.</span><span class="n">executable</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                </span><span class="sa">L</span><span class="s">&quot;/path/to/my_executable&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">PyStatus_Exception</span><span class="p">(</span><span class="n">status</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="k">goto</span><span class="w"> </span><span class="n">done</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Py_InitializeFromConfig</span><span class="p">(</span><span class="o">&amp;</span><span class="n">config</span><span class="p">);</span><span class="w"></span>
+
+<span class="nl">done</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="n">PyConfig_Clear</span><span class="p">(</span><span class="o">&amp;</span><span class="n">config</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">status</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+<section id="isolated-configuration">
+<span id="init-isolated-conf"></span><h2>격리된 구성<a class="headerlink" href="#isolated-configuration" title="제목 주소">¶</a></h2>
+<p><a class="reference internal" href="#c.PyPreConfig_InitIsolatedConfig" title="PyPreConfig_InitIsolatedConfig"><code class="xref c c-func docutils literal notranslate"><span class="pre">PyPreConfig_InitIsolatedConfig()</span></code></a>와 <a class="reference internal" href="#c.PyConfig_InitIsolatedConfig" title="PyConfig_InitIsolatedConfig"><code class="xref c c-func docutils literal notranslate"><span class="pre">PyConfig_InitIsolatedConfig()</span></code></a> 함수는 시스템에서 파이썬을 격리하는 구성을 만듭니다. 예를 들어, 파이썬을 응용 프로그램에 내장하기 위해.</p>
+<p>This configuration ignores global configuration variables, environment
+variables, command line arguments (<a class="reference internal" href="#c.PyConfig.argv" title="PyConfig.argv"><code class="xref c c-member docutils literal notranslate"><span class="pre">PyConfig.argv</span></code></a> is not parsed)
+and user site directory. The C standard streams (ex: <code class="docutils literal notranslate"><span class="pre">stdout</span></code>) and the
+LC_CTYPE locale are left unchanged. Signal handlers are not installed.</p>
+<p>구성 파일은 여전히 이 구성에 사용됩니다. 이러한 구성 파일을 무시하고 기본 경로 구성을 계산하는 함수를 피하려면 <a class="reference internal" href="#init-path-config"><span class="std std-ref">경로 구성</span></a>( “출력 필드”) 을 설정하십시오.</p>
+</section>
+<section id="python-configuration">
+<span id="init-python-config"></span><h2>파이썬 구성<a class="headerlink" href="#python-configuration" title="제목 주소">¶</a></h2>
+<p><a class="reference internal" href="#c.PyPreConfig_InitPythonConfig" title="PyPreConfig_InitPythonConfig"><code class="xref c c-func docutils literal notranslate"><span class="pre">PyPreConfig_InitPythonConfig()</span></code></a>와 <a class="reference internal" href="#c.PyConfig_InitPythonConfig" title="PyConfig_InitPythonConfig"><code class="xref c c-func docutils literal notranslate"><span class="pre">PyConfig_InitPythonConfig()</span></code></a> 함수는 일반 파이썬처럼 동작하는 사용자 정의된 파이썬을 빌드하기 위한 구성을 만듭니다.</p>
+<p>환경 변수와 명령 줄 인자는 파이썬을 구성하는 데 사용되는 반면, 전역 구성 변수는 무시됩니다.</p>
+<p>이 함수는 LC_CTYPE 로케일, <span class="target" id="index-29"></span><a class="reference internal" href="../using/cmdline.html#envvar-PYTHONUTF8"><code class="xref std std-envvar docutils literal notranslate"><span class="pre">PYTHONUTF8</span></code></a> 및 <span class="target" id="index-30"></span><a class="reference internal" href="../using/cmdline.html#envvar-PYTHONCOERCECLOCALE"><code class="xref std std-envvar docutils literal notranslate"><span class="pre">PYTHONCOERCECLOCALE</span></code></a> 환경 변수에 따라 C 로케일 강제(<span class="target" id="index-31"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0538"><strong>PEP 538</strong></a>)와 UTF-8 모드(<span class="target" id="index-32"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0540"><strong>PEP 540</strong></a>)를 활성화합니다.</p>
+<p>항상 격리 모드에서 실행되는 사용자 정의 파이썬의 예:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">**</span><span class="n">argv</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">PyStatus</span><span class="w"> </span><span class="n">status</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">PyConfig</span><span class="w"> </span><span class="n">config</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">PyConfig_InitPythonConfig</span><span class="p">(</span><span class="o">&amp;</span><span class="n">config</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">config</span><span class="p">.</span><span class="n">isolated</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="cm">/* Decode command line arguments.</span>
+<span class="cm">       Implicitly preinitialize Python (in isolated mode). */</span><span class="w"></span>
+<span class="w">    </span><span class="n">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">PyConfig_SetBytesArgv</span><span class="p">(</span><span class="o">&amp;</span><span class="n">config</span><span class="p">,</span><span class="w"> </span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="n">argv</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">PyStatus_Exception</span><span class="p">(</span><span class="n">status</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="k">goto</span><span class="w"> </span><span class="n">fail</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Py_InitializeFromConfig</span><span class="p">(</span><span class="o">&amp;</span><span class="n">config</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">PyStatus_Exception</span><span class="p">(</span><span class="n">status</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="k">goto</span><span class="w"> </span><span class="n">fail</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="n">PyConfig_Clear</span><span class="p">(</span><span class="o">&amp;</span><span class="n">config</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">Py_RunMain</span><span class="p">();</span><span class="w"></span>
+
+<span class="nl">fail</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="n">PyConfig_Clear</span><span class="p">(</span><span class="o">&amp;</span><span class="n">config</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">PyStatus_IsExit</span><span class="p">(</span><span class="n">status</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">status</span><span class="p">.</span><span class="n">exitcode</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="cm">/* Display the error message and exit the process with</span>
+<span class="cm">       non-zero exit code */</span><span class="w"></span>
+<span class="w">    </span><span class="n">Py_ExitStatusException</span><span class="p">(</span><span class="n">status</span><span class="p">);</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+<section id="path-configuration">
+<span id="init-path-config"></span><h2>경로 구성<a class="headerlink" href="#path-configuration" title="제목 주소">¶</a></h2>
+<p><a class="reference internal" href="#c.PyConfig" title="PyConfig"><code class="xref c c-type docutils literal notranslate"><span class="pre">PyConfig</span></code></a>에는 경로 구성을 위한 여러 필드가 포함되어 있습니다:</p>
+<ul class="simple">
+<li><p>경로 구성 입력:</p>
+<ul>
+<li><p><a class="reference internal" href="#c.PyConfig.home" title="PyConfig.home"><code class="xref c c-member docutils literal notranslate"><span class="pre">PyConfig.home</span></code></a></p></li>
+<li><p><a class="reference internal" href="#c.PyConfig.platlibdir" title="PyConfig.platlibdir"><code class="xref c c-member docutils literal notranslate"><span class="pre">PyConfig.platlibdir</span></code></a></p></li>
+<li><p><a class="reference internal" href="#c.PyConfig.pathconfig_warnings" title="PyConfig.pathconfig_warnings"><code class="xref c c-member docutils literal notranslate"><span class="pre">PyConfig.pathconfig_warnings</span></code></a></p></li>
+<li><p><a class="reference internal" href="#c.PyConfig.program_name" title="PyConfig.program_name"><code class="xref c c-member docutils literal notranslate"><span class="pre">PyConfig.program_name</span></code></a></p></li>
+<li><p><a class="reference internal" href="#c.PyConfig.pythonpath_env" title="PyConfig.pythonpath_env"><code class="xref c c-member docutils literal notranslate"><span class="pre">PyConfig.pythonpath_env</span></code></a></p></li>
+<li><p>현재 작업 디렉터리: 절대 경로를 얻기 위해</p></li>
+<li><p>(<a class="reference internal" href="#c.PyConfig.program_name" title="PyConfig.program_name"><code class="xref c c-member docutils literal notranslate"><span class="pre">PyConfig.program_name</span></code></a>에서) 프로그램 전체 경로를 얻기 위한 <code class="docutils literal notranslate"><span class="pre">PATH</span></code> 환경 변수</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">__PYVENV_LAUNCHER__</span></code> 환경 변수</p></li>
+<li><p>(윈도우 전용) HKEY_CURRENT_USER와 HKEY_LOCAL_MACHINE의 “SoftwarePythonPythonCoreX.YPythonPath” 아래에 있는 레지스트리의 응용 프로그램 경로 (여기서 X.Y는 파이썬 버전입니다).</p></li>
+</ul>
+</li>
+<li><p>경로 구성 출력 필드:</p>
+<ul>
+<li><p><a class="reference internal" href="#c.PyConfig.base_exec_prefix" title="PyConfig.base_exec_prefix"><code class="xref c c-member docutils literal notranslate"><span class="pre">PyConfig.base_exec_prefix</span></code></a></p></li>
+<li><p><a class="reference internal" href="#c.PyConfig.base_executable" title="PyConfig.base_executable"><code class="xref c c-member docutils literal notranslate"><span class="pre">PyConfig.base_executable</span></code></a></p></li>
+<li><p><a class="reference internal" href="#c.PyConfig.base_prefix" title="PyConfig.base_prefix"><code class="xref c c-member docutils literal notranslate"><span class="pre">PyConfig.base_prefix</span></code></a></p></li>
+<li><p><a class="reference internal" href="#c.PyConfig.exec_prefix" title="PyConfig.exec_prefix"><code class="xref c c-member docutils literal notranslate"><span class="pre">PyConfig.exec_prefix</span></code></a></p></li>
+<li><p><a class="reference internal" href="#c.PyConfig.executable" title="PyConfig.executable"><code class="xref c c-member docutils literal notranslate"><span class="pre">PyConfig.executable</span></code></a></p></li>
+<li><p><a class="reference internal" href="#c.PyConfig.module_search_paths_set" title="PyConfig.module_search_paths_set"><code class="xref c c-member docutils literal notranslate"><span class="pre">PyConfig.module_search_paths_set</span></code></a>,
+<a class="reference internal" href="#c.PyConfig.module_search_paths" title="PyConfig.module_search_paths"><code class="xref c c-member docutils literal notranslate"><span class="pre">PyConfig.module_search_paths</span></code></a></p></li>
+<li><p><a class="reference internal" href="#c.PyConfig.prefix" title="PyConfig.prefix"><code class="xref c c-member docutils literal notranslate"><span class="pre">PyConfig.prefix</span></code></a></p></li>
+</ul>
+</li>
+</ul>
+<p>적어도 하나의 “출력 필드”가 설정되어 있지 않으면, 파이썬은 설정되지 않은 필드를 채우기 위해 경로 구성을 계산합니다. <a class="reference internal" href="#c.PyConfig.module_search_paths_set" title="PyConfig.module_search_paths_set"><code class="xref c c-member docutils literal notranslate"><span class="pre">module_search_paths_set</span></code></a>이 0이면, <a class="reference internal" href="#c.PyConfig.module_search_paths" title="PyConfig.module_search_paths"><code class="xref c c-member docutils literal notranslate"><span class="pre">module_search_paths</span></code></a>가 재정의되고 <a class="reference internal" href="#c.PyConfig.module_search_paths_set" title="PyConfig.module_search_paths_set"><code class="xref c c-member docutils literal notranslate"><span class="pre">module_search_paths_set</span></code></a>이 1로 설정됩니다.</p>
+<p>위에 나열된 모든 경로 구성 출력 필드를 명시적으로 설정하여 기본 경로 구성을 계산하는 함수를 완전히 무시할 수 있습니다. 비어 있지 않아도 문자열은 설정된 것으로 간주합니다. <code class="docutils literal notranslate"><span class="pre">module_search_paths_set</span></code>이 1로 설정되면 <code class="docutils literal notranslate"><span class="pre">module_search_paths</span></code>는 설정된 것으로 간주합니다. 이 경우, 경로 구성 입력 필드도 무시됩니다.</p>
+<p>경로 구성을 계산할 때 경고를 억제하려면 <a class="reference internal" href="#c.PyConfig.pathconfig_warnings" title="PyConfig.pathconfig_warnings"><code class="xref c c-member docutils literal notranslate"><span class="pre">pathconfig_warnings</span></code></a>를 0으로 설정하십시오 (유닉스 전용, 윈도우는 어떤 경고도 로그 하지 않습니다).</p>
+<p><a class="reference internal" href="#c.PyConfig.base_prefix" title="PyConfig.base_prefix"><code class="xref c c-member docutils literal notranslate"><span class="pre">base_prefix</span></code></a>나 <a class="reference internal" href="#c.PyConfig.base_exec_prefix" title="PyConfig.base_exec_prefix"><code class="xref c c-member docutils literal notranslate"><span class="pre">base_exec_prefix</span></code></a> 필드가 설정되지 않으면, 각각 <a class="reference internal" href="#c.PyConfig.prefix" title="PyConfig.prefix"><code class="xref c c-member docutils literal notranslate"><span class="pre">prefix</span></code></a>와 <a class="reference internal" href="#c.PyConfig.exec_prefix" title="PyConfig.exec_prefix"><code class="xref c c-member docutils literal notranslate"><span class="pre">exec_prefix</span></code></a>의 값을 상속합니다.</p>
+<p><a class="reference internal" href="#c.Py_RunMain" title="Py_RunMain"><code class="xref c c-func docutils literal notranslate"><span class="pre">Py_RunMain()</span></code></a>과 <a class="reference internal" href="veryhigh.html#c.Py_Main" title="Py_Main"><code class="xref c c-func docutils literal notranslate"><span class="pre">Py_Main()</span></code></a>은 <a class="reference internal" href="../library/sys.html#sys.path" title="sys.path"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.path</span></code></a>를 수정합니다:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#c.PyConfig.run_filename" title="PyConfig.run_filename"><code class="xref c c-member docutils literal notranslate"><span class="pre">run_filename</span></code></a>이 설정되고 <code class="docutils literal notranslate"><span class="pre">__main__.py</span></code> 스크립트를 포함하는 디렉터리이면, <a class="reference internal" href="#c.PyConfig.run_filename" title="PyConfig.run_filename"><code class="xref c c-member docutils literal notranslate"><span class="pre">run_filename</span></code></a>을 <a class="reference internal" href="../library/sys.html#sys.path" title="sys.path"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.path</span></code></a> 앞에 추가합니다.</p></li>
+<li><p><a class="reference internal" href="#c.PyConfig.isolated" title="PyConfig.isolated"><code class="xref c c-member docutils literal notranslate"><span class="pre">isolated</span></code></a>가 0이면:</p>
+<ul>
+<li><p><a class="reference internal" href="#c.PyConfig.run_module" title="PyConfig.run_module"><code class="xref c c-member docutils literal notranslate"><span class="pre">run_module</span></code></a>이 설정되면, 현재 디렉터리를 <a class="reference internal" href="../library/sys.html#sys.path" title="sys.path"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.path</span></code></a> 앞에 추가합니다. 현재 디렉터리를 읽을 수 없으면 아무것도 하지 않습니다.</p></li>
+<li><p><a class="reference internal" href="#c.PyConfig.run_filename" title="PyConfig.run_filename"><code class="xref c c-member docutils literal notranslate"><span class="pre">run_filename</span></code></a>이 설정되면, 파일명의 디렉터리를 <a class="reference internal" href="../library/sys.html#sys.path" title="sys.path"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.path</span></code></a> 앞에 추가합니다.</p></li>
+<li><p>그렇지 않으면, 빈 문자열을 <a class="reference internal" href="../library/sys.html#sys.path" title="sys.path"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.path</span></code></a> 앞에 추가합니다.</p></li>
+</ul>
+</li>
+</ul>
+<p><a class="reference internal" href="#c.PyConfig.site_import" title="PyConfig.site_import"><code class="xref c c-member docutils literal notranslate"><span class="pre">site_import</span></code></a>가 0이 아니면, <a class="reference internal" href="../library/site.html#module-site" title="site: Module responsible for site-specific configuration."><code class="xref py py-mod docutils literal notranslate"><span class="pre">site</span></code></a> 모듈이 <a class="reference internal" href="../library/sys.html#sys.path" title="sys.path"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.path</span></code></a>를 수정할 수 있습니다. <a class="reference internal" href="#c.PyConfig.user_site_directory" title="PyConfig.user_site_directory"><code class="xref c c-member docutils literal notranslate"><span class="pre">user_site_directory</span></code></a>가 0이 아니고 사용자의 site-package 디렉터리가 존재하면, <a class="reference internal" href="../library/site.html#module-site" title="site: Module responsible for site-specific configuration."><code class="xref py py-mod docutils literal notranslate"><span class="pre">site</span></code></a> 모듈은 사용자의 site-package 디렉터리를 <a class="reference internal" href="../library/sys.html#sys.path" title="sys.path"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.path</span></code></a>에 추가합니다.</p>
+<p>다음과 같은 구성 파일이 경로 구성에 사용됩니다:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">pyvenv.cfg</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">python._pth</span></code> (윈도우 전용)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pybuilddir.txt</span></code> (유닉스 전용)</p></li>
+</ul>
+<p><code class="docutils literal notranslate"><span class="pre">__PYVENV_LAUNCHER__</span></code> 환경 변수는 <a class="reference internal" href="#c.PyConfig.base_executable" title="PyConfig.base_executable"><code class="xref c c-member docutils literal notranslate"><span class="pre">PyConfig.base_executable</span></code></a>을 설정하는 데 사용됩니다</p>
+</section>
+<section id="py-runmain">
+<h2>Py_RunMain()<a class="headerlink" href="#py-runmain" title="제목 주소">¶</a></h2>
+<dl class="function">
+<dt id="c.Py_RunMain">
+int <code class="sig-name descname">Py_RunMain</code><span class="sig-paren">(</span>void<span class="sig-paren">)</span><a class="headerlink" href="#c.Py_RunMain" title="정의 주소">¶</a></dt>
+<dd><p>명령 줄이나 구성에서 지정된 명령 (<a class="reference internal" href="#c.PyConfig.run_command" title="PyConfig.run_command"><code class="xref c c-member docutils literal notranslate"><span class="pre">PyConfig.run_command</span></code></a>), 스크립트 (<a class="reference internal" href="#c.PyConfig.run_filename" title="PyConfig.run_filename"><code class="xref c c-member docutils literal notranslate"><span class="pre">PyConfig.run_filename</span></code></a>) 또는 모듈 (<a class="reference internal" href="#c.PyConfig.run_module" title="PyConfig.run_module"><code class="xref c c-member docutils literal notranslate"><span class="pre">PyConfig.run_module</span></code></a>)을 실행합니다.</p>
+<p>기본적으로, 그리고 <a class="reference internal" href="../using/cmdline.html#cmdoption-i"><code class="xref std std-option docutils literal notranslate"><span class="pre">-i</span></code></a> 옵션을 사용할 때, REPL을 실행합니다.</p>
+<p>마지막으로, 파이썬을 파이널라이즈 하고 <code class="docutils literal notranslate"><span class="pre">exit()</span></code> 함수에 전달할 수 있는 종료 상태를 반환합니다.</p>
+</dd></dl>
+
+<p><a class="reference internal" href="#c.Py_RunMain" title="Py_RunMain"><code class="xref c c-func docutils literal notranslate"><span class="pre">Py_RunMain()</span></code></a>을 사용하여 항상 격리 모드에서 실행되는 사용자 정의 파이썬의 예는 <a class="reference internal" href="#init-python-config"><span class="std std-ref">파이썬 구성</span></a>을 참조하십시오.</p>
+</section>
+<section id="py-getargcargv">
+<h2>Py_GetArgcArgv()<a class="headerlink" href="#py-getargcargv" title="제목 주소">¶</a></h2>
+<dl class="function">
+<dt id="c.Py_GetArgcArgv">
+void <code class="sig-name descname">Py_GetArgcArgv</code><span class="sig-paren">(</span>int<em> *argc</em>, wchar_t<em> ***argv</em><span class="sig-paren">)</span><a class="headerlink" href="#c.Py_GetArgcArgv" title="정의 주소">¶</a></dt>
+<dd><p>파이썬이 수정하기 전의, 원래 명령 줄 인자를 가져옵니다.</p>
+</dd></dl>
+
+</section>
+<section id="multi-phase-initialization-private-provisional-api">
+<h2>다단계 초기화 비공개 잠정적 API<a class="headerlink" href="#multi-phase-initialization-private-provisional-api" title="제목 주소">¶</a></h2>
+<p>This section is a private provisional API introducing multi-phase
+initialization, the core feature of <span class="target" id="index-10"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0432"><strong>PEP 432</strong></a>:</p>
+<ul class="simple">
+<li><p>“핵심(Core)” 초기화 단계, “최소한의 파이썬”:</p>
+<ul>
+<li><p>내장형;</p></li>
+<li><p>내장 예외;</p></li>
+<li><p>내장과 프로즌 모듈(frozen modules);</p></li>
+<li><p><a class="reference internal" href="../library/sys.html#module-sys" title="sys: Access system-specific parameters and functions."><code class="xref py py-mod docutils literal notranslate"><span class="pre">sys</span></code></a> 모듈은 부분적으로만 초기화됩니다 (예를 들어: <a class="reference internal" href="../library/sys.html#sys.path" title="sys.path"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.path</span></code></a>는 아직 존재하지 않습니다).</p></li>
+</ul>
+</li>
+<li><p>“주(Main)” 초기화 단계, 파이썬이 완전히 초기화됩니다:</p>
+<ul>
+<li><p><a class="reference internal" href="../library/importlib.html#module-importlib" title="importlib: The implementation of the import machinery."><code class="xref py py-mod docutils literal notranslate"><span class="pre">importlib</span></code></a>를 설치하고 구성합니다;</p></li>
+<li><p><a class="reference internal" href="#init-path-config"><span class="std std-ref">경로 구성</span></a>을 적용합니다;</p></li>
+<li><p>시그널 처리기를 설치합니다;</p></li>
+<li><p><a class="reference internal" href="../library/sys.html#module-sys" title="sys: Access system-specific parameters and functions."><code class="xref py py-mod docutils literal notranslate"><span class="pre">sys</span></code></a> 모듈 초기화를 완료합니다 (예를 들어: <a class="reference internal" href="../library/sys.html#sys.stdout" title="sys.stdout"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.stdout</span></code></a>과 <a class="reference internal" href="../library/sys.html#sys.path" title="sys.path"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.path</span></code></a>를 만듭니다);</p></li>
+<li><p><a class="reference internal" href="../library/faulthandler.html#module-faulthandler" title="faulthandler: Dump the Python traceback."><code class="xref py py-mod docutils literal notranslate"><span class="pre">faulthandler</span></code></a>와 <a class="reference internal" href="../library/tracemalloc.html#module-tracemalloc" title="tracemalloc: Trace memory allocations."><code class="xref py py-mod docutils literal notranslate"><span class="pre">tracemalloc</span></code></a>과 같은 선택적 기능을 활성화합니다;</p></li>
+<li><p><a class="reference internal" href="../library/site.html#module-site" title="site: Module responsible for site-specific configuration."><code class="xref py py-mod docutils literal notranslate"><span class="pre">site</span></code></a> 모듈을 임포트 합니다;</p></li>
+<li><p>등등</p></li>
+</ul>
+</li>
+</ul>
+<p>비공개 잠정적 API:</p>
+<ul class="simple">
+<li><p><code class="xref c c-member docutils literal notranslate"><span class="pre">PyConfig._init_main</span></code>: 0으로 설정되면, <a class="reference internal" href="#c.Py_InitializeFromConfig" title="Py_InitializeFromConfig"><code class="xref c c-func docutils literal notranslate"><span class="pre">Py_InitializeFromConfig()</span></code></a>는 “핵심” 초기화 단계에서 중단합니다.</p></li>
+<li><p><code class="xref c c-member docutils literal notranslate"><span class="pre">PyConfig._isolated_interpreter</span></code>: 0이 아니면, 스레드, 서브 프로세스 및 포크를 허용하지 않습니다.</p></li>
+</ul>
+<dl class="function">
+<dt id="c._Py_InitializeMain">
+<a class="reference internal" href="#c.PyStatus" title="PyStatus">PyStatus</a> <code class="sig-name descname">_Py_InitializeMain</code><span class="sig-paren">(</span>void<span class="sig-paren">)</span><a class="headerlink" href="#c._Py_InitializeMain" title="정의 주소">¶</a></dt>
+<dd><p>“주” 초기화 단계로 이동하여, 파이썬 초기화를 완료합니다.</p>
+</dd></dl>
+
+<p>“핵심” 단계에서는 아무런 모듈도 임포트 하지 않고 <code class="docutils literal notranslate"><span class="pre">importlib</span></code> 모듈이 구성되지 않습니다: <a class="reference internal" href="#init-path-config"><span class="std std-ref">경로 구성</span></a>은 “주” 단계에서만 적용됩니다. <a class="reference internal" href="#init-path-config"><span class="std std-ref">경로 구성</span></a>을 재정의하거나 조정하기 위해 파이썬에서 파이썬을 사용자 정의할 수 있으며, 사용자 정의 <a class="reference internal" href="../library/sys.html#sys.meta_path" title="sys.meta_path"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.meta_path</span></code></a> 임포터(importer)나 임포트 훅 등을 설치할 수 있습니다.</p>
+<p>핵심 단계 이후에 주 단계 이전에 파이썬에서 <a class="reference internal" href="#init-path-config"><span class="std std-ref">경로 구성</span></a>을 계산할 수 있게 될 수 있고, 이것이 <span class="target" id="index-33"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0432"><strong>PEP 432</strong></a>의 동기 중 하나입니다.</p>
+<p>“핵심” 단계가 제대로 정의되지 않았습니다: 이 단계에서 무엇을 사용할 수 있고, 무엇이 그렇지 않아야 하는지는 아직 지정되지 않았습니다. API는 비공개이자 잠정적인 것으로 표시됩니다: 적절한 공개 API가 설계될 때까지 언제든지 API를 수정하거나 제거할 수 있습니다.</p>
+<p>“핵심”과 “주” 초기화 단계 사이에서 파이썬 코드를 실행하는 예제:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">init_python</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">PyStatus</span><span class="w"> </span><span class="n">status</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">PyConfig</span><span class="w"> </span><span class="n">config</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">PyConfig_InitPythonConfig</span><span class="p">(</span><span class="o">&amp;</span><span class="n">config</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">config</span><span class="p">.</span><span class="n">_init_main</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="cm">/* ... customize &#39;config&#39; configuration ... */</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Py_InitializeFromConfig</span><span class="p">(</span><span class="o">&amp;</span><span class="n">config</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">PyConfig_Clear</span><span class="p">(</span><span class="o">&amp;</span><span class="n">config</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">PyStatus_Exception</span><span class="p">(</span><span class="n">status</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="n">Py_ExitStatusException</span><span class="p">(</span><span class="n">status</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="cm">/* Use sys.stderr because sys.stdout is only created</span>
+<span class="cm">       by _Py_InitializeMain() */</span><span class="w"></span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">res</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">PyRun_SimpleString</span><span class="p">(</span><span class="w"></span>
+<span class="w">        </span><span class="s">&quot;import sys; &quot;</span><span class="w"></span>
+<span class="w">        </span><span class="s">&quot;print(&#39;Run Python code before _Py_InitializeMain&#39;, &quot;</span><span class="w"></span>
+<span class="w">               </span><span class="s">&quot;file=sys.stderr)&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">res</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="cm">/* ... put more configuration code here ... */</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_Py_InitializeMain</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">PyStatus_Exception</span><span class="p">(</span><span class="n">status</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="n">Py_ExitStatusException</span><span class="p">(</span><span class="n">status</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../contents.html">목차</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">파이썬 초기화 구성</a><ul>
+<li><a class="reference internal" href="#pywidestringlist">PyWideStringList</a></li>
+<li><a class="reference internal" href="#pystatus">PyStatus</a></li>
+<li><a class="reference internal" href="#pypreconfig">PyPreConfig</a></li>
+<li><a class="reference internal" href="#preinitialization-with-pypreconfig">PyPreConfig를 사용한 사전 초기화</a></li>
+<li><a class="reference internal" href="#pyconfig">PyConfig</a></li>
+<li><a class="reference internal" href="#initialization-with-pyconfig">PyConfig를 사용한 초기화</a></li>
+<li><a class="reference internal" href="#isolated-configuration">격리된 구성</a></li>
+<li><a class="reference internal" href="#python-configuration">파이썬 구성</a></li>
+<li><a class="reference internal" href="#path-configuration">경로 구성</a></li>
+<li><a class="reference internal" href="#py-runmain">Py_RunMain()</a></li>
+<li><a class="reference internal" href="#py-getargcargv">Py_GetArgcArgv()</a></li>
+<li><a class="reference internal" href="#multi-phase-initialization-private-provisional-api">다단계 초기화 비공개 잠정적 API</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>이전 항목</h4>
+  <p class="topless"><a href="init.html"
+                        title="이전 장">초기화, 파이널리제이션 및 스레드</a></p>
+  <h4>다음 항목</h4>
+  <p class="topless"><a href="memory.html"
+                        title="다음 장">메모리 관리</a></p>
+  <div role="note" aria-label="source link">
+    <h3>현재 문서</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">버그 보고하기</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/3.9/Doc/c-api/init_config.rst"
+            rel="nofollow">소스 보기
+        </a>
+      </li>
+    </ul>
+  </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>탐색</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="전체 색인"
+             >색인</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 모듈 목록"
+             >모듈</a> |</li>
+        <li class="right" >
+          <a href="memory.html" title="메모리 관리"
+             >다음</a> |</li>
+        <li class="right" >
+          <a href="init.html" title="초기화, 파이널리제이션 및 스레드"
+             >이전</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.9.14 Documentation</a> &#187;
+    </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >파이썬/C API 레퍼런스 설명서</a> &#187;</li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="빠른 검색" aria-label="빠른 검색" type="text" name="q" />
+          <input type="submit" value="이동" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </form>
+    </div>
+                     |
+                </li>
+            
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">저작권</a> 2001-2022, Python Software Foundation.
+    <br />
+    This page is licensed under the Python Software Foundation License Version 2.
+    <br />
+    Examples, recipes, and other code in the documentation are additionally licensed under the Zero Clause BSD License.
+    <br />
+    See <a href="/license.html">History and License</a> for more information.<br />
+    <br />
+
+    The Python Software Foundation is a non-profit corporation.
+<a href="https://www.python.org/psf/donations/">Please donate.</a>
+<br />
+    <br />
+
+    최종 업데이트: 9월 11, 2022
+    <a href="/bugs.html">Found a bug</a>?
+    <br />
+
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 2.4.4.
+    </div>
+
+  </body>
+</html>

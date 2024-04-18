@@ -1,0 +1,306 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ko">
+  <head>
+    <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>데이터 마샬링 지원 &#8212; Python 3.9.14 문서</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="../_static/pydoctheme.css?2022.1" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/translations.js"></script>
+    
+    <script src="../_static/sidebar.js"></script>
+    
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Python 3.9.14 문서에서 찾기"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="이 문서 정보" href="../about.html" />
+    <link rel="index" title="색인" href="../genindex.html" />
+    <link rel="search" title="검색" href="../search.html" />
+    <link rel="copyright" title="저작권" href="../copyright.html" />
+    <link rel="next" title="인자 구문 분석과 값 구축" href="arg.html" />
+    <link rel="prev" title="모듈 임포트 하기" href="import.html" />
+    <link rel="canonical" href="https://docs.python.org/3/c-api/marshal.html" />
+    
+      
+    
+
+    
+    <style>
+      @media only screen {
+        table.full-width-table {
+            width: 100%;
+        }
+      }
+    </style>
+<link rel="shortcut icon" type="image/png" href="../_static/py.svg" />
+            <script type="text/javascript" src="../_static/copybutton.js"></script>
+            <script type="text/javascript" src="../_static/menu.js"></script> 
+
+  </head>
+<body>
+<div class="mobile-nav">
+    <input type="checkbox" id="menuToggler" class="toggler__input" aria-controls="navigation"
+           aria-pressed="false" aria-expanded="false" role="button" aria-label="Menu" />
+    <label for="menuToggler" class="toggler__label">
+        <span></span>
+    </label>
+    <nav class="nav-content" role="navigation">
+         <a href="https://www.python.org/" class="nav-logo">
+             <img src="../_static/py.svg" alt="Logo"/>
+         </a>
+        <div class="version_switcher_placeholder"></div>
+        <form role="search" class="search" action="../search.html" method="get">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" class="search-icon">
+                <path fill-rule="nonzero"
+                        d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 001.48-5.34c-.47-2.78-2.79-5-5.59-5.34a6.505 6.505 0 00-7.27 7.27c.34 2.8 2.56 5.12 5.34 5.59a6.5 6.5 0 005.34-1.48l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49 0 .41-.41.41-1.08 0-1.49L15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" fill="#444"></path>
+            </svg>
+            <input type="text" name="q" aria-label="빠른 검색"/>
+            <input type="submit" value="이동"/>
+        </form>
+    </nav>
+    <div class="menu-wrapper">
+        <nav class="menu" role="navigation" aria-label="main navigation">
+            <div class="language_switcher_placeholder"></div>
+  <h4>이전 항목</h4>
+  <p class="topless"><a href="import.html"
+                        title="이전 장">모듈 임포트 하기</a></p>
+  <h4>다음 항목</h4>
+  <p class="topless"><a href="arg.html"
+                        title="다음 장">인자 구문 분석과 값 구축</a></p>
+  <div role="note" aria-label="source link">
+    <h3>현재 문서</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">버그 보고하기</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/3.9/Doc/c-api/marshal.rst"
+            rel="nofollow">소스 보기
+        </a>
+      </li>
+    </ul>
+  </div>
+        </nav>
+    </div>
+</div>
+
+  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>탐색</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="전체 색인"
+             accesskey="I">색인</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 모듈 목록"
+             >모듈</a> |</li>
+        <li class="right" >
+          <a href="arg.html" title="인자 구문 분석과 값 구축"
+             accesskey="N">다음</a> |</li>
+        <li class="right" >
+          <a href="import.html" title="모듈 임포트 하기"
+             accesskey="P">이전</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.9.14 Documentation</a> &#187;
+    </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >파이썬/C API 레퍼런스 설명서</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="utilities.html" accesskey="U">유틸리티</a> &#187;</li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="빠른 검색" aria-label="빠른 검색" type="text" name="q" />
+          <input type="submit" value="이동" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </form>
+    </div>
+                     |
+                </li>
+            
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="data-marshalling-support">
+<span id="marshalling-utils"></span><h1>데이터 마샬링 지원<a class="headerlink" href="#data-marshalling-support" title="제목 주소">¶</a></h1>
+<p>이러한 루틴은 C 코드가 <a class="reference internal" href="../library/marshal.html#module-marshal" title="marshal: Convert Python objects to streams of bytes and back (with different constraints)."><code class="xref py py-mod docutils literal notranslate"><span class="pre">marshal</span></code></a> 모듈과 같은 데이터 형식을 사용하여 직렬화된 객체로 작업 할 수 있도록 합니다. 직렬화 형식으로 데이터를 쓰는 함수와 데이터를 다시 읽는 데 사용할 수 있는 추가 함수가 있습니다. 마샬링 된 데이터를 저장하는 데 사용되는 파일은 바이너리 모드로 열어야 합니다.</p>
+<p>숫자 값은 최하위 바이트가 먼저 저장됩니다.</p>
+<p>이 모듈은 두 가지 버전의 데이터 형식을 지원합니다: 버전 0은 역사적인 버전이고, 버전 1은 파일에서와 역 마샬링할 때 인턴(intern) 된 문자열을 공유합니다. 버전 2는 부동 소수점 숫자에 대해 바이너리 형식을 사용합니다. <code class="docutils literal notranslate"><span class="pre">Py_MARSHAL_VERSION</span></code>은 현재 파일 형식을 나타냅니다 (현재 2).</p>
+<dl class="function">
+<dt id="c.PyMarshal_WriteLongToFile">
+void <code class="sig-name descname">PyMarshal_WriteLongToFile</code><span class="sig-paren">(</span>long<em> value</em>, FILE<em> *file</em>, int<em> version</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyMarshal_WriteLongToFile" title="정의 주소">¶</a></dt>
+<dd><p><code class="xref c c-type docutils literal notranslate"><span class="pre">long</span></code> 정수 <em>value</em>를 <em>file</em>로 마샬합니다. <em>value</em>의 최하위 32비트 만 기록합니다; 기본 <code class="xref c c-type docutils literal notranslate"><span class="pre">long</span></code> 형의 크기와 관계없이. <em>version</em>은 파일 형식을 나타냅니다.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyMarshal_WriteObjectToFile">
+void <code class="sig-name descname">PyMarshal_WriteObjectToFile</code><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em> *value</em>, FILE<em> *file</em>, int<em> version</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyMarshal_WriteObjectToFile" title="정의 주소">¶</a></dt>
+<dd><p>파이썬 객체 <em>value</em>를 <em>file</em>로 마샬합니다. <em>version</em>은 파일 형식을 나타냅니다.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyMarshal_WriteObjectToString">
+<a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a>* <code class="sig-name descname">PyMarshal_WriteObjectToString</code><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em> *value</em>, int<em> version</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyMarshal_WriteObjectToString" title="정의 주소">¶</a></dt>
+<dd><em class="refcount">Return value: New reference.</em><p>마샬된 <em>value</em> 표현을 포함한 바이트열 객체를 반환합니다. <em>version</em>은 파일 형식을 나타냅니다.</p>
+</dd></dl>
+
+<p>다음 함수를 사용하면 마샬된 값을 다시 읽을 수 있습니다.</p>
+<dl class="function">
+<dt id="c.PyMarshal_ReadLongFromFile">
+long <code class="sig-name descname">PyMarshal_ReadLongFromFile</code><span class="sig-paren">(</span>FILE<em> *file</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyMarshal_ReadLongFromFile" title="정의 주소">¶</a></dt>
+<dd><p>읽기 위해 열린 <code class="xref c c-type docutils literal notranslate"><span class="pre">FILE*</span></code>의 데이터 스트림에서 C <code class="xref c c-type docutils literal notranslate"><span class="pre">long</span></code>을 반환합니다. 이 함수를 사용하면 <code class="xref c c-type docutils literal notranslate"><span class="pre">long</span></code>의 기본 크기와 관계없이 32비트 값만 읽을 수 있습니다.</p>
+<p>에러 시, 적절한 예외(<a class="reference internal" href="../library/exceptions.html#EOFError" title="EOFError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">EOFError</span></code></a>)를 설정하고 <code class="docutils literal notranslate"><span class="pre">-1</span></code>을 반환합니다.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyMarshal_ReadShortFromFile">
+int <code class="sig-name descname">PyMarshal_ReadShortFromFile</code><span class="sig-paren">(</span>FILE<em> *file</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyMarshal_ReadShortFromFile" title="정의 주소">¶</a></dt>
+<dd><p>읽기 위해 열린 <code class="xref c c-type docutils literal notranslate"><span class="pre">FILE*</span></code>의 데이터 스트림에서 C <code class="xref c c-type docutils literal notranslate"><span class="pre">short</span></code>를 반환합니다. 이 함수를 사용하면 <code class="xref c c-type docutils literal notranslate"><span class="pre">short</span></code>의 기본 크기와 관계없이 16비트 값만 읽을 수 있습니다.</p>
+<p>에러 시, 적절한 예외(<a class="reference internal" href="../library/exceptions.html#EOFError" title="EOFError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">EOFError</span></code></a>)를 설정하고 <code class="docutils literal notranslate"><span class="pre">-1</span></code>을 반환합니다.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyMarshal_ReadObjectFromFile">
+<a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a>* <code class="sig-name descname">PyMarshal_ReadObjectFromFile</code><span class="sig-paren">(</span>FILE<em> *file</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyMarshal_ReadObjectFromFile" title="정의 주소">¶</a></dt>
+<dd><em class="refcount">Return value: New reference.</em><p>읽기 위해 열린 <code class="xref c c-type docutils literal notranslate"><span class="pre">FILE*</span></code>의 데이터 스트림에서 파이썬 객체를 반환합니다.</p>
+<p>에러 시, 적절한 예외(<a class="reference internal" href="../library/exceptions.html#EOFError" title="EOFError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">EOFError</span></code></a>, <a class="reference internal" href="../library/exceptions.html#ValueError" title="ValueError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code></a> 또는 <a class="reference internal" href="../library/exceptions.html#TypeError" title="TypeError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">TypeError</span></code></a>)를 설정하고 <code class="docutils literal notranslate"><span class="pre">NULL</span></code>을 반환합니다.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyMarshal_ReadLastObjectFromFile">
+<a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a>* <code class="sig-name descname">PyMarshal_ReadLastObjectFromFile</code><span class="sig-paren">(</span>FILE<em> *file</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyMarshal_ReadLastObjectFromFile" title="정의 주소">¶</a></dt>
+<dd><em class="refcount">Return value: New reference.</em><p>읽기 위해 열린 <code class="xref c c-type docutils literal notranslate"><span class="pre">FILE*</span></code>의 데이터 스트림에서 파이썬 객체를 반환합니다. <a class="reference internal" href="#c.PyMarshal_ReadObjectFromFile" title="PyMarshal_ReadObjectFromFile"><code class="xref c c-func docutils literal notranslate"><span class="pre">PyMarshal_ReadObjectFromFile()</span></code></a>와 달리, 이 함수는 더는 파일에서 객체를 읽지 않을 것이라고 가정함으로써, 파일 데이터를 메모리에 적극적으로 로드 할 수 있고, 파일에서 한 바이트씩 읽는 대신 메모리에 있는 데이터에서 역 직렬화가 작동할 수 있습니다. 파일에서 어떤 것도 읽지 않을 것이라는 확신이 들 경우에만 이 변형을 사용하십시오.</p>
+<p>에러 시, 적절한 예외(<a class="reference internal" href="../library/exceptions.html#EOFError" title="EOFError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">EOFError</span></code></a>, <a class="reference internal" href="../library/exceptions.html#ValueError" title="ValueError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code></a> 또는 <a class="reference internal" href="../library/exceptions.html#TypeError" title="TypeError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">TypeError</span></code></a>)를 설정하고 <code class="docutils literal notranslate"><span class="pre">NULL</span></code>을 반환합니다.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyMarshal_ReadObjectFromString">
+<a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a>* <code class="sig-name descname">PyMarshal_ReadObjectFromString</code><span class="sig-paren">(</span>const char<em> *data</em>, <a class="reference internal" href="intro.html#c.Py_ssize_t" title="Py_ssize_t">Py_ssize_t</a><em> len</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyMarshal_ReadObjectFromString" title="정의 주소">¶</a></dt>
+<dd><em class="refcount">Return value: New reference.</em><p><em>data</em>가 가리키는 <em>len</em> 바이트를 포함하는 바이트 버퍼의 데이터 스트림에서 파이썬 객체를 반환합니다.</p>
+<p>에러 시, 적절한 예외(<a class="reference internal" href="../library/exceptions.html#EOFError" title="EOFError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">EOFError</span></code></a>, <a class="reference internal" href="../library/exceptions.html#ValueError" title="ValueError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code></a> 또는 <a class="reference internal" href="../library/exceptions.html#TypeError" title="TypeError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">TypeError</span></code></a>)를 설정하고 <code class="docutils literal notranslate"><span class="pre">NULL</span></code>을 반환합니다.</p>
+</dd></dl>
+
+</section>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>이전 항목</h4>
+  <p class="topless"><a href="import.html"
+                        title="이전 장">모듈 임포트 하기</a></p>
+  <h4>다음 항목</h4>
+  <p class="topless"><a href="arg.html"
+                        title="다음 장">인자 구문 분석과 값 구축</a></p>
+  <div role="note" aria-label="source link">
+    <h3>현재 문서</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">버그 보고하기</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/3.9/Doc/c-api/marshal.rst"
+            rel="nofollow">소스 보기
+        </a>
+      </li>
+    </ul>
+  </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>탐색</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="전체 색인"
+             >색인</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 모듈 목록"
+             >모듈</a> |</li>
+        <li class="right" >
+          <a href="arg.html" title="인자 구문 분석과 값 구축"
+             >다음</a> |</li>
+        <li class="right" >
+          <a href="import.html" title="모듈 임포트 하기"
+             >이전</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.9.14 Documentation</a> &#187;
+    </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >파이썬/C API 레퍼런스 설명서</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="utilities.html" >유틸리티</a> &#187;</li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="빠른 검색" aria-label="빠른 검색" type="text" name="q" />
+          <input type="submit" value="이동" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </form>
+    </div>
+                     |
+                </li>
+            
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">저작권</a> 2001-2022, Python Software Foundation.
+    <br />
+    This page is licensed under the Python Software Foundation License Version 2.
+    <br />
+    Examples, recipes, and other code in the documentation are additionally licensed under the Zero Clause BSD License.
+    <br />
+    See <a href="/license.html">History and License</a> for more information.<br />
+    <br />
+
+    The Python Software Foundation is a non-profit corporation.
+<a href="https://www.python.org/psf/donations/">Please donate.</a>
+<br />
+    <br />
+
+    최종 업데이트: 9월 11, 2022
+    <a href="/bugs.html">Found a bug</a>?
+    <br />
+
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 2.4.4.
+    </div>
+
+  </body>
+</html>

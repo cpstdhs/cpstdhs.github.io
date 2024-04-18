@@ -1,0 +1,384 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ko">
+  <head>
+    <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>복소수 객체 &#8212; Python 3.9.14 문서</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="../_static/pydoctheme.css?2022.1" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/translations.js"></script>
+    
+    <script src="../_static/sidebar.js"></script>
+    
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Python 3.9.14 문서에서 찾기"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="이 문서 정보" href="../about.html" />
+    <link rel="index" title="색인" href="../genindex.html" />
+    <link rel="search" title="검색" href="../search.html" />
+    <link rel="copyright" title="저작권" href="../copyright.html" />
+    <link rel="next" title="바이트열 객체" href="bytes.html" />
+    <link rel="prev" title="부동 소수점 객체" href="float.html" />
+    <link rel="canonical" href="https://docs.python.org/3/c-api/complex.html" />
+    
+      
+    
+
+    
+    <style>
+      @media only screen {
+        table.full-width-table {
+            width: 100%;
+        }
+      }
+    </style>
+<link rel="shortcut icon" type="image/png" href="../_static/py.svg" />
+            <script type="text/javascript" src="../_static/copybutton.js"></script>
+            <script type="text/javascript" src="../_static/menu.js"></script> 
+
+  </head>
+<body>
+<div class="mobile-nav">
+    <input type="checkbox" id="menuToggler" class="toggler__input" aria-controls="navigation"
+           aria-pressed="false" aria-expanded="false" role="button" aria-label="Menu" />
+    <label for="menuToggler" class="toggler__label">
+        <span></span>
+    </label>
+    <nav class="nav-content" role="navigation">
+         <a href="https://www.python.org/" class="nav-logo">
+             <img src="../_static/py.svg" alt="Logo"/>
+         </a>
+        <div class="version_switcher_placeholder"></div>
+        <form role="search" class="search" action="../search.html" method="get">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" class="search-icon">
+                <path fill-rule="nonzero"
+                        d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 001.48-5.34c-.47-2.78-2.79-5-5.59-5.34a6.505 6.505 0 00-7.27 7.27c.34 2.8 2.56 5.12 5.34 5.59a6.5 6.5 0 005.34-1.48l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49 0 .41-.41.41-1.08 0-1.49L15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" fill="#444"></path>
+            </svg>
+            <input type="text" name="q" aria-label="빠른 검색"/>
+            <input type="submit" value="이동"/>
+        </form>
+    </nav>
+    <div class="menu-wrapper">
+        <nav class="menu" role="navigation" aria-label="main navigation">
+            <div class="language_switcher_placeholder"></div>
+  <h3><a href="../contents.html">목차</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">복소수 객체</a><ul>
+<li><a class="reference internal" href="#complex-numbers-as-c-structures">C 구조체로서의 복소수</a></li>
+<li><a class="reference internal" href="#complex-numbers-as-python-objects">파이썬 객체로서의 복소수</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>이전 항목</h4>
+  <p class="topless"><a href="float.html"
+                        title="이전 장">부동 소수점 객체</a></p>
+  <h4>다음 항목</h4>
+  <p class="topless"><a href="bytes.html"
+                        title="다음 장">바이트열 객체</a></p>
+  <div role="note" aria-label="source link">
+    <h3>현재 문서</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">버그 보고하기</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/3.9/Doc/c-api/complex.rst"
+            rel="nofollow">소스 보기
+        </a>
+      </li>
+    </ul>
+  </div>
+        </nav>
+    </div>
+</div>
+
+  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>탐색</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="전체 색인"
+             accesskey="I">색인</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 모듈 목록"
+             >모듈</a> |</li>
+        <li class="right" >
+          <a href="bytes.html" title="바이트열 객체"
+             accesskey="N">다음</a> |</li>
+        <li class="right" >
+          <a href="float.html" title="부동 소수점 객체"
+             accesskey="P">이전</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.9.14 Documentation</a> &#187;
+    </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >파이썬/C API 레퍼런스 설명서</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="concrete.html" accesskey="U">구상 객체 계층</a> &#187;</li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="빠른 검색" aria-label="빠른 검색" type="text" name="q" />
+          <input type="submit" value="이동" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </form>
+    </div>
+                     |
+                </li>
+            
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="complex-number-objects">
+<span id="complexobjects"></span><h1>복소수 객체<a class="headerlink" href="#complex-number-objects" title="제목 주소">¶</a></h1>
+<p id="index-0">파이썬의 복소수 객체는 C API에서 볼 때 두 개의 다른 형으로 구현됩니다: 하나는 파이썬 프로그램에 노출된 파이썬 객체이고, 다른 하나는 실제 복소수 값을 나타내는 C 구조체입니다. API는 두 가지 모두도 작업할 수 있는 함수를 제공합니다.</p>
+<section id="complex-numbers-as-c-structures">
+<h2>C 구조체로서의 복소수<a class="headerlink" href="#complex-numbers-as-c-structures" title="제목 주소">¶</a></h2>
+<p>매개 변수로 이러한 구조체를 받아들이고 결과로 반환하는 함수는 포인터를 통해 역참조하기보다는 <em>값으로</em> 다룹니다. 이는 API 전체에서 일관됩니다.</p>
+<dl class="type">
+<dt id="c.Py_complex">
+<code class="sig-name descname">Py_complex</code><a class="headerlink" href="#c.Py_complex" title="정의 주소">¶</a></dt>
+<dd><p>파이썬 복소수 객체의 값 부분에 해당하는 C 구조체. 복소수 객체를 다루는 대부분 함수는 이 형의 구조체를 입력 또는 출력값으로 적절하게 사용합니다. 다음과 같이 정의됩니다:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">   </span><span class="kt">double</span><span class="w"> </span><span class="n">real</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="kt">double</span><span class="w"> </span><span class="n">imag</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"> </span><span class="n">Py_complex</span><span class="p">;</span><span class="w"></span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="c._Py_c_sum">
+<a class="reference internal" href="#c.Py_complex" title="Py_complex">Py_complex</a> <code class="sig-name descname">_Py_c_sum</code><span class="sig-paren">(</span><a class="reference internal" href="#c.Py_complex" title="Py_complex">Py_complex</a><em> left</em>, <a class="reference internal" href="#c.Py_complex" title="Py_complex">Py_complex</a><em> right</em><span class="sig-paren">)</span><a class="headerlink" href="#c._Py_c_sum" title="정의 주소">¶</a></dt>
+<dd><p>C <a class="reference internal" href="#c.Py_complex" title="Py_complex"><code class="xref c c-type docutils literal notranslate"><span class="pre">Py_complex</span></code></a> 표현을 사용하여 두 복소수의 합을 반환합니다.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c._Py_c_diff">
+<a class="reference internal" href="#c.Py_complex" title="Py_complex">Py_complex</a> <code class="sig-name descname">_Py_c_diff</code><span class="sig-paren">(</span><a class="reference internal" href="#c.Py_complex" title="Py_complex">Py_complex</a><em> left</em>, <a class="reference internal" href="#c.Py_complex" title="Py_complex">Py_complex</a><em> right</em><span class="sig-paren">)</span><a class="headerlink" href="#c._Py_c_diff" title="정의 주소">¶</a></dt>
+<dd><p>C <a class="reference internal" href="#c.Py_complex" title="Py_complex"><code class="xref c c-type docutils literal notranslate"><span class="pre">Py_complex</span></code></a> 표현을 사용하여 두 복소수의 차이를 반환합니다.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c._Py_c_neg">
+<a class="reference internal" href="#c.Py_complex" title="Py_complex">Py_complex</a> <code class="sig-name descname">_Py_c_neg</code><span class="sig-paren">(</span><a class="reference internal" href="#c.Py_complex" title="Py_complex">Py_complex</a><em> num</em><span class="sig-paren">)</span><a class="headerlink" href="#c._Py_c_neg" title="정의 주소">¶</a></dt>
+<dd><p>Return the negation of the complex number <em>num</em>, using the C
+<a class="reference internal" href="#c.Py_complex" title="Py_complex"><code class="xref c c-type docutils literal notranslate"><span class="pre">Py_complex</span></code></a> representation.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c._Py_c_prod">
+<a class="reference internal" href="#c.Py_complex" title="Py_complex">Py_complex</a> <code class="sig-name descname">_Py_c_prod</code><span class="sig-paren">(</span><a class="reference internal" href="#c.Py_complex" title="Py_complex">Py_complex</a><em> left</em>, <a class="reference internal" href="#c.Py_complex" title="Py_complex">Py_complex</a><em> right</em><span class="sig-paren">)</span><a class="headerlink" href="#c._Py_c_prod" title="정의 주소">¶</a></dt>
+<dd><p>C <a class="reference internal" href="#c.Py_complex" title="Py_complex"><code class="xref c c-type docutils literal notranslate"><span class="pre">Py_complex</span></code></a> 표현을 사용하여 두 복소수의 곱을 반환합니다.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c._Py_c_quot">
+<a class="reference internal" href="#c.Py_complex" title="Py_complex">Py_complex</a> <code class="sig-name descname">_Py_c_quot</code><span class="sig-paren">(</span><a class="reference internal" href="#c.Py_complex" title="Py_complex">Py_complex</a><em> dividend</em>, <a class="reference internal" href="#c.Py_complex" title="Py_complex">Py_complex</a><em> divisor</em><span class="sig-paren">)</span><a class="headerlink" href="#c._Py_c_quot" title="정의 주소">¶</a></dt>
+<dd><p>C <a class="reference internal" href="#c.Py_complex" title="Py_complex"><code class="xref c c-type docutils literal notranslate"><span class="pre">Py_complex</span></code></a> 표현을 사용하여 두 복소수의 몫을 반환합니다.</p>
+<p><em>divisor</em>가 null이면, 이 메서드는 0을 반환하고, <code class="xref c c-data docutils literal notranslate"><span class="pre">errno</span></code>를 <code class="xref c c-data docutils literal notranslate"><span class="pre">EDOM</span></code>으로 설정합니다.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c._Py_c_pow">
+<a class="reference internal" href="#c.Py_complex" title="Py_complex">Py_complex</a> <code class="sig-name descname">_Py_c_pow</code><span class="sig-paren">(</span><a class="reference internal" href="#c.Py_complex" title="Py_complex">Py_complex</a><em> num</em>, <a class="reference internal" href="#c.Py_complex" title="Py_complex">Py_complex</a><em> exp</em><span class="sig-paren">)</span><a class="headerlink" href="#c._Py_c_pow" title="정의 주소">¶</a></dt>
+<dd><p>C <a class="reference internal" href="#c.Py_complex" title="Py_complex"><code class="xref c c-type docutils literal notranslate"><span class="pre">Py_complex</span></code></a> 표현을 사용하여 <em>num</em>의 <em>exp</em> 거듭제곱을 반환합니다.</p>
+<p><em>num</em>이 null이고 <em>exp</em>가 양의 실수가 아니면, 이 메서드는 0을 반환하고 <code class="xref c c-data docutils literal notranslate"><span class="pre">errno</span></code>를 <code class="xref c c-data docutils literal notranslate"><span class="pre">EDOM</span></code>으로 설정합니다.</p>
+</dd></dl>
+
+</section>
+<section id="complex-numbers-as-python-objects">
+<h2>파이썬 객체로서의 복소수<a class="headerlink" href="#complex-numbers-as-python-objects" title="제목 주소">¶</a></h2>
+<dl class="type">
+<dt id="c.PyComplexObject">
+<code class="sig-name descname">PyComplexObject</code><a class="headerlink" href="#c.PyComplexObject" title="정의 주소">¶</a></dt>
+<dd><p>파이썬 복소수 객체를 나타내는 <a class="reference internal" href="structures.html#c.PyObject" title="PyObject"><code class="xref c c-type docutils literal notranslate"><span class="pre">PyObject</span></code></a>의 서브 형.</p>
+</dd></dl>
+
+<dl class="var">
+<dt id="c.PyComplex_Type">
+<a class="reference internal" href="type.html#c.PyTypeObject" title="PyTypeObject">PyTypeObject</a> <code class="sig-name descname">PyComplex_Type</code><a class="headerlink" href="#c.PyComplex_Type" title="정의 주소">¶</a></dt>
+<dd><p>이 <a class="reference internal" href="type.html#c.PyTypeObject" title="PyTypeObject"><code class="xref c c-type docutils literal notranslate"><span class="pre">PyTypeObject</span></code></a> 인스턴스는 파이썬 복소수 형을 나타냅니다. 파이썬 계층의 <a class="reference internal" href="../library/functions.html#complex" title="complex"><code class="xref py py-class docutils literal notranslate"><span class="pre">complex</span></code></a>와 같은 객체입니다.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyComplex_Check">
+int <code class="sig-name descname">PyComplex_Check</code><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em> *p</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyComplex_Check" title="정의 주소">¶</a></dt>
+<dd><p>인자가 <a class="reference internal" href="#c.PyComplexObject" title="PyComplexObject"><code class="xref c c-type docutils literal notranslate"><span class="pre">PyComplexObject</span></code></a> 나 <a class="reference internal" href="#c.PyComplexObject" title="PyComplexObject"><code class="xref c c-type docutils literal notranslate"><span class="pre">PyComplexObject</span></code></a>의 서브 형이면 참을 반환합니다. 이 함수는 항상 성공합니다.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyComplex_CheckExact">
+int <code class="sig-name descname">PyComplex_CheckExact</code><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em> *p</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyComplex_CheckExact" title="정의 주소">¶</a></dt>
+<dd><p>인자가 <a class="reference internal" href="#c.PyComplexObject" title="PyComplexObject"><code class="xref c c-type docutils literal notranslate"><span class="pre">PyComplexObject</span></code></a>이지만, <a class="reference internal" href="#c.PyComplexObject" title="PyComplexObject"><code class="xref c c-type docutils literal notranslate"><span class="pre">PyComplexObject</span></code></a>의 서브 유형이 아니면 참을 반환합니다. 이 함수는 항상 성공합니다.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyComplex_FromCComplex">
+<a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a>* <code class="sig-name descname">PyComplex_FromCComplex</code><span class="sig-paren">(</span><a class="reference internal" href="#c.Py_complex" title="Py_complex">Py_complex</a><em> v</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyComplex_FromCComplex" title="정의 주소">¶</a></dt>
+<dd><em class="refcount">Return value: New reference.</em><p>C <a class="reference internal" href="#c.Py_complex" title="Py_complex"><code class="xref c c-type docutils literal notranslate"><span class="pre">Py_complex</span></code></a> 값으로 새로운 파이썬 복소수 객체를 만듭니다.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyComplex_FromDoubles">
+<a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a>* <code class="sig-name descname">PyComplex_FromDoubles</code><span class="sig-paren">(</span>double<em> real</em>, double<em> imag</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyComplex_FromDoubles" title="정의 주소">¶</a></dt>
+<dd><em class="refcount">Return value: New reference.</em><p><em>real</em> 및 <em>imag</em>로 새로운 <a class="reference internal" href="#c.PyComplexObject" title="PyComplexObject"><code class="xref c c-type docutils literal notranslate"><span class="pre">PyComplexObject</span></code></a> 객체를 반환합니다.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyComplex_RealAsDouble">
+double <code class="sig-name descname">PyComplex_RealAsDouble</code><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em> *op</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyComplex_RealAsDouble" title="정의 주소">¶</a></dt>
+<dd><p><em>op</em>의 실수부를 C <code class="xref c c-type docutils literal notranslate"><span class="pre">double</span></code>로 반환합니다.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyComplex_ImagAsDouble">
+double <code class="sig-name descname">PyComplex_ImagAsDouble</code><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em> *op</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyComplex_ImagAsDouble" title="정의 주소">¶</a></dt>
+<dd><p><em>op</em>의 허수부를 C <code class="xref c c-type docutils literal notranslate"><span class="pre">double</span></code>로 반환합니다.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyComplex_AsCComplex">
+<a class="reference internal" href="#c.Py_complex" title="Py_complex">Py_complex</a> <code class="sig-name descname">PyComplex_AsCComplex</code><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em> *op</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyComplex_AsCComplex" title="정의 주소">¶</a></dt>
+<dd><p>복소수 <em>op</em>의 <a class="reference internal" href="#c.Py_complex" title="Py_complex"><code class="xref c c-type docutils literal notranslate"><span class="pre">Py_complex</span></code></a> 값을 반환합니다.</p>
+<p><em>op</em>가 파이썬 복소수 객체가 아니지만 <a class="reference internal" href="../reference/datamodel.html#object.__complex__" title="object.__complex__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">__complex__()</span></code></a> 메서드가 있으면, 이 메서드는 먼저 <em>op</em>를 파이썬 복소수 객체로 변환하도록 그 메서드를 호출합니다. <code class="docutils literal notranslate"><span class="pre">__complex</span> <span class="pre">__()</span></code>가 정의되지 않았으면 <a class="reference internal" href="../reference/datamodel.html#object.__float__" title="object.__float__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">__float__()</span></code></a>로 대체합니다. <code class="docutils literal notranslate"><span class="pre">__float__()</span></code>가 정의되지 않았으면 <a class="reference internal" href="../reference/datamodel.html#object.__index__" title="object.__index__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">__index__()</span></code></a>로 대체합니다. 실패하면, 이 메서드는 <code class="docutils literal notranslate"><span class="pre">-1.0</span></code>를 실숫값으로 반환합니다.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">버전 3.8에서 변경: </span>사용할 수 있다면 <a class="reference internal" href="../reference/datamodel.html#object.__index__" title="object.__index__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">__index__()</span></code></a>를 사용합니다.</p>
+</div>
+</dd></dl>
+
+</section>
+</section>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../contents.html">목차</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">복소수 객체</a><ul>
+<li><a class="reference internal" href="#complex-numbers-as-c-structures">C 구조체로서의 복소수</a></li>
+<li><a class="reference internal" href="#complex-numbers-as-python-objects">파이썬 객체로서의 복소수</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>이전 항목</h4>
+  <p class="topless"><a href="float.html"
+                        title="이전 장">부동 소수점 객체</a></p>
+  <h4>다음 항목</h4>
+  <p class="topless"><a href="bytes.html"
+                        title="다음 장">바이트열 객체</a></p>
+  <div role="note" aria-label="source link">
+    <h3>현재 문서</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">버그 보고하기</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/3.9/Doc/c-api/complex.rst"
+            rel="nofollow">소스 보기
+        </a>
+      </li>
+    </ul>
+  </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>탐색</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="전체 색인"
+             >색인</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 모듈 목록"
+             >모듈</a> |</li>
+        <li class="right" >
+          <a href="bytes.html" title="바이트열 객체"
+             >다음</a> |</li>
+        <li class="right" >
+          <a href="float.html" title="부동 소수점 객체"
+             >이전</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.9.14 Documentation</a> &#187;
+    </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >파이썬/C API 레퍼런스 설명서</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="concrete.html" >구상 객체 계층</a> &#187;</li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="빠른 검색" aria-label="빠른 검색" type="text" name="q" />
+          <input type="submit" value="이동" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </form>
+    </div>
+                     |
+                </li>
+            
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">저작권</a> 2001-2022, Python Software Foundation.
+    <br />
+    This page is licensed under the Python Software Foundation License Version 2.
+    <br />
+    Examples, recipes, and other code in the documentation are additionally licensed under the Zero Clause BSD License.
+    <br />
+    See <a href="/license.html">History and License</a> for more information.<br />
+    <br />
+
+    The Python Software Foundation is a non-profit corporation.
+<a href="https://www.python.org/psf/donations/">Please donate.</a>
+<br />
+    <br />
+
+    최종 업데이트: 9월 11, 2022
+    <a href="/bugs.html">Found a bug</a>?
+    <br />
+
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 2.4.4.
+    </div>
+
+  </body>
+</html>

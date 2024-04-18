@@ -1,0 +1,383 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ko">
+  <head>
+    <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>동시 실행 &#8212; Python 3.9.14 문서</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="../_static/pydoctheme.css?2022.1" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/translations.js"></script>
+    
+    <script src="../_static/sidebar.js"></script>
+    
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Python 3.9.14 문서에서 찾기"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="이 문서 정보" href="../about.html" />
+    <link rel="index" title="색인" href="../genindex.html" />
+    <link rel="search" title="검색" href="../search.html" />
+    <link rel="copyright" title="저작권" href="../copyright.html" />
+    <link rel="next" title="threading — 스레드 기반 병렬 처리" href="threading.html" />
+    <link rel="prev" title="ctypes — 파이썬용 외부 함수 라이브러리" href="ctypes.html" />
+    <link rel="canonical" href="https://docs.python.org/3/library/concurrency.html" />
+    
+      
+    
+
+    
+    <style>
+      @media only screen {
+        table.full-width-table {
+            width: 100%;
+        }
+      }
+    </style>
+<link rel="shortcut icon" type="image/png" href="../_static/py.svg" />
+            <script type="text/javascript" src="../_static/copybutton.js"></script>
+            <script type="text/javascript" src="../_static/menu.js"></script> 
+
+  </head>
+<body>
+<div class="mobile-nav">
+    <input type="checkbox" id="menuToggler" class="toggler__input" aria-controls="navigation"
+           aria-pressed="false" aria-expanded="false" role="button" aria-label="Menu" />
+    <label for="menuToggler" class="toggler__label">
+        <span></span>
+    </label>
+    <nav class="nav-content" role="navigation">
+         <a href="https://www.python.org/" class="nav-logo">
+             <img src="../_static/py.svg" alt="Logo"/>
+         </a>
+        <div class="version_switcher_placeholder"></div>
+        <form role="search" class="search" action="../search.html" method="get">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" class="search-icon">
+                <path fill-rule="nonzero"
+                        d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 001.48-5.34c-.47-2.78-2.79-5-5.59-5.34a6.505 6.505 0 00-7.27 7.27c.34 2.8 2.56 5.12 5.34 5.59a6.5 6.5 0 005.34-1.48l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49 0 .41-.41.41-1.08 0-1.49L15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" fill="#444"></path>
+            </svg>
+            <input type="text" name="q" aria-label="빠른 검색"/>
+            <input type="submit" value="이동"/>
+        </form>
+    </nav>
+    <div class="menu-wrapper">
+        <nav class="menu" role="navigation" aria-label="main navigation">
+            <div class="language_switcher_placeholder"></div>
+  <h4>이전 항목</h4>
+  <p class="topless"><a href="ctypes.html"
+                        title="이전 장"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ctypes</span></code> — 파이썬용 외부 함수 라이브러리</a></p>
+  <h4>다음 항목</h4>
+  <p class="topless"><a href="threading.html"
+                        title="다음 장"><code class="xref py py-mod docutils literal notranslate"><span class="pre">threading</span></code> — 스레드 기반 병렬 처리</a></p>
+  <div role="note" aria-label="source link">
+    <h3>현재 문서</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">버그 보고하기</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/3.9/Doc/library/concurrency.rst"
+            rel="nofollow">소스 보기
+        </a>
+      </li>
+    </ul>
+  </div>
+        </nav>
+    </div>
+</div>
+
+  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>탐색</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="전체 색인"
+             accesskey="I">색인</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 모듈 목록"
+             >모듈</a> |</li>
+        <li class="right" >
+          <a href="threading.html" title="threading — 스레드 기반 병렬 처리"
+             accesskey="N">다음</a> |</li>
+        <li class="right" >
+          <a href="ctypes.html" title="ctypes — 파이썬용 외부 함수 라이브러리"
+             accesskey="P">이전</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.9.14 Documentation</a> &#187;
+    </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">파이썬 표준 라이브러리</a> &#187;</li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="빠른 검색" aria-label="빠른 검색" type="text" name="q" />
+          <input type="submit" value="이동" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </form>
+    </div>
+                     |
+                </li>
+            
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="concurrent-execution">
+<span id="concurrency"></span><h1>동시 실행<a class="headerlink" href="#concurrent-execution" title="제목 주소">¶</a></h1>
+<p>이 장에서 설명하는 모듈은 코드의 동시 실행을 지원합니다. 적절한 도구 선택은 실행할 작업(CPU 병목 대 IO 병목)과 선호하는 개발 스타일(이벤트 구동 협력적 다중작업 대 선점적 다중작업)에 따라 달라집니다. 다음은 개요입니다:</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="threading.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">threading</span></code> — 스레드 기반 병렬 처리</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="threading.html#thread-local-data">스레드 로컬 데이터</a></li>
+<li class="toctree-l2"><a class="reference internal" href="threading.html#thread-objects">Thread 객체</a></li>
+<li class="toctree-l2"><a class="reference internal" href="threading.html#lock-objects">Lock 객체</a></li>
+<li class="toctree-l2"><a class="reference internal" href="threading.html#rlock-objects">RLock 객체</a></li>
+<li class="toctree-l2"><a class="reference internal" href="threading.html#condition-objects">Condition 객체</a></li>
+<li class="toctree-l2"><a class="reference internal" href="threading.html#semaphore-objects">Semaphore 객체</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="threading.html#semaphore-example"><code class="xref py py-class docutils literal notranslate"><span class="pre">Semaphore</span></code> 예</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="threading.html#event-objects">Event 객체</a></li>
+<li class="toctree-l2"><a class="reference internal" href="threading.html#timer-objects">Timer 객체</a></li>
+<li class="toctree-l2"><a class="reference internal" href="threading.html#barrier-objects">Barrier 객체</a></li>
+<li class="toctree-l2"><a class="reference internal" href="threading.html#using-locks-conditions-and-semaphores-in-the-with-statement"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">with</span></code> 문으로 록, 조건 및 세마포어 사용하기</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="multiprocessing.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">multiprocessing</span></code> — 프로세스 기반 병렬 처리</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="multiprocessing.html#introduction">소개</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="multiprocessing.html#the-process-class"><code class="xref py py-class docutils literal notranslate"><span class="pre">Process</span></code> 클래스</a></li>
+<li class="toctree-l3"><a class="reference internal" href="multiprocessing.html#contexts-and-start-methods">컨텍스트 및 시작 방법</a></li>
+<li class="toctree-l3"><a class="reference internal" href="multiprocessing.html#exchanging-objects-between-processes">프로세스 간 객체 교환</a></li>
+<li class="toctree-l3"><a class="reference internal" href="multiprocessing.html#synchronization-between-processes">프로세스 간 동기화</a></li>
+<li class="toctree-l3"><a class="reference internal" href="multiprocessing.html#sharing-state-between-processes">프로세스 간 상태 공유</a></li>
+<li class="toctree-l3"><a class="reference internal" href="multiprocessing.html#using-a-pool-of-workers">작업자 풀 사용</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="multiprocessing.html#reference">레퍼런스</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="multiprocessing.html#process-and-exceptions"><code class="xref py py-class docutils literal notranslate"><span class="pre">Process</span></code>와 예외</a></li>
+<li class="toctree-l3"><a class="reference internal" href="multiprocessing.html#pipes-and-queues">파이프와 큐</a></li>
+<li class="toctree-l3"><a class="reference internal" href="multiprocessing.html#miscellaneous">잡동사니</a></li>
+<li class="toctree-l3"><a class="reference internal" href="multiprocessing.html#connection-objects">Connection 객체</a></li>
+<li class="toctree-l3"><a class="reference internal" href="multiprocessing.html#synchronization-primitives">동기화 프리미티브</a></li>
+<li class="toctree-l3"><a class="reference internal" href="multiprocessing.html#shared-ctypes-objects">공유 <code class="xref py py-mod docutils literal notranslate"><span class="pre">ctypes</span></code> 객체</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="multiprocessing.html#module-multiprocessing.sharedctypes"><code class="xref py py-mod docutils literal notranslate"><span class="pre">multiprocessing.sharedctypes</span></code> 모듈</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="multiprocessing.html#managers">관리자</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="multiprocessing.html#customized-managers">사용자 정의 관리자</a></li>
+<li class="toctree-l4"><a class="reference internal" href="multiprocessing.html#using-a-remote-manager">원격 관리자 사용하기</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="multiprocessing.html#proxy-objects">프락시 객체</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="multiprocessing.html#cleanup">정리</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="multiprocessing.html#module-multiprocessing.pool">프로세스 풀</a></li>
+<li class="toctree-l3"><a class="reference internal" href="multiprocessing.html#module-multiprocessing.connection">리스너와 클라이언트</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="multiprocessing.html#address-formats">주소 형식</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="multiprocessing.html#authentication-keys">인증 키</a></li>
+<li class="toctree-l3"><a class="reference internal" href="multiprocessing.html#logging">로깅</a></li>
+<li class="toctree-l3"><a class="reference internal" href="multiprocessing.html#module-multiprocessing.dummy"><code class="xref py py-mod docutils literal notranslate"><span class="pre">multiprocessing.dummy</span></code> 모듈</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="multiprocessing.html#programming-guidelines">프로그래밍 지침</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="multiprocessing.html#all-start-methods">모든 시작 방법</a></li>
+<li class="toctree-l3"><a class="reference internal" href="multiprocessing.html#the-spawn-and-forkserver-start-methods"><em>spawn</em> 과 <em>forkserver</em> 시작 방법</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="multiprocessing.html#examples">예제</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="multiprocessing.shared_memory.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">multiprocessing.shared_memory</span></code> — 프로세스 간 직접 액세스를 위한 공유 메모리를 제공합니다</a></li>
+<li class="toctree-l1"><a class="reference internal" href="concurrent.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">concurrent</span></code> 패키지</a></li>
+<li class="toctree-l1"><a class="reference internal" href="concurrent.futures.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">concurrent.futures</span></code> — 병렬 작업 실행하기</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="concurrent.futures.html#executor-objects">Executor 객체</a></li>
+<li class="toctree-l2"><a class="reference internal" href="concurrent.futures.html#threadpoolexecutor">ThreadPoolExecutor</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="concurrent.futures.html#threadpoolexecutor-example">ThreadPoolExecutor 예제</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="concurrent.futures.html#processpoolexecutor">ProcessPoolExecutor</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="concurrent.futures.html#processpoolexecutor-example">ProcessPoolExecutor 예제</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="concurrent.futures.html#future-objects">Future 객체</a></li>
+<li class="toctree-l2"><a class="reference internal" href="concurrent.futures.html#module-functions">모듈 함수</a></li>
+<li class="toctree-l2"><a class="reference internal" href="concurrent.futures.html#exception-classes">예외 클래스</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="subprocess.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">subprocess</span></code> — 서브 프로세스 관리</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="subprocess.html#using-the-subprocess-module"><code class="xref py py-mod docutils literal notranslate"><span class="pre">subprocess</span></code> 모듈 사용하기</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="subprocess.html#frequently-used-arguments">자주 사용되는 인자</a></li>
+<li class="toctree-l3"><a class="reference internal" href="subprocess.html#popen-constructor">Popen 생성자</a></li>
+<li class="toctree-l3"><a class="reference internal" href="subprocess.html#exceptions">예외</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="subprocess.html#security-considerations">보안 고려 사항</a></li>
+<li class="toctree-l2"><a class="reference internal" href="subprocess.html#popen-objects">Popen 객체</a></li>
+<li class="toctree-l2"><a class="reference internal" href="subprocess.html#windows-popen-helpers">윈도우 Popen 도우미</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="subprocess.html#windows-constants">윈도우 상수</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="subprocess.html#older-high-level-api">오래된 고수준 API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="subprocess.html#replacing-older-functions-with-the-subprocess-module">이전 함수를 <code class="xref py py-mod docutils literal notranslate"><span class="pre">subprocess</span></code> 모듈로 교체하기</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="subprocess.html#replacing-bin-sh-shell-command-substitution"><strong class="program">/bin/sh</strong> 셸 명령 치환 교체하기</a></li>
+<li class="toctree-l3"><a class="reference internal" href="subprocess.html#replacing-shell-pipeline">셸 파이프라인 교체하기</a></li>
+<li class="toctree-l3"><a class="reference internal" href="subprocess.html#replacing-os-system"><code class="xref py py-func docutils literal notranslate"><span class="pre">os.system()</span></code> 교체하기</a></li>
+<li class="toctree-l3"><a class="reference internal" href="subprocess.html#replacing-the-os-spawn-family"><code class="xref py py-func docutils literal notranslate"><span class="pre">os.spawn</span></code> 패밀리 교체하기</a></li>
+<li class="toctree-l3"><a class="reference internal" href="subprocess.html#replacing-os-popen-os-popen2-os-popen3"><code class="xref py py-func docutils literal notranslate"><span class="pre">os.popen()</span></code>, <code class="xref py py-func docutils literal notranslate"><span class="pre">os.popen2()</span></code>, <code class="xref py py-func docutils literal notranslate"><span class="pre">os.popen3()</span></code> 교체하기</a></li>
+<li class="toctree-l3"><a class="reference internal" href="subprocess.html#replacing-functions-from-the-popen2-module"><code class="xref py py-mod docutils literal notranslate"><span class="pre">popen2</span></code> 모듈의 함수 교체하기</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="subprocess.html#legacy-shell-invocation-functions">레거시 셸 호출 함수</a></li>
+<li class="toctree-l2"><a class="reference internal" href="subprocess.html#notes">노트</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="subprocess.html#converting-an-argument-sequence-to-a-string-on-windows">윈도우에서 인자 시퀀스를 문자열로 변환하기</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="sched.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sched</span></code> — 이벤트 스케줄러</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sched.html#scheduler-objects">스케줄러 객체</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="queue.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">queue</span></code> — 동기화된 큐 클래스</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="queue.html#queue-objects">큐 객체</a></li>
+<li class="toctree-l2"><a class="reference internal" href="queue.html#simplequeue-objects">SimpleQueue 객체</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="contextvars.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">contextvars</span></code> — 컨텍스트 변수</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="contextvars.html#context-variables">컨텍스트 변수</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contextvars.html#manual-context-management">수동 컨텍스트 관리</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contextvars.html#asyncio-support">asyncio 지원</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<p>다음은 위 서비스 중 일부에 대한 지원 모듈입니다:</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="_thread.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">_thread</span></code> — 저수준 스레드 API</a></li>
+</ul>
+</div>
+</section>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>이전 항목</h4>
+  <p class="topless"><a href="ctypes.html"
+                        title="이전 장"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ctypes</span></code> — 파이썬용 외부 함수 라이브러리</a></p>
+  <h4>다음 항목</h4>
+  <p class="topless"><a href="threading.html"
+                        title="다음 장"><code class="xref py py-mod docutils literal notranslate"><span class="pre">threading</span></code> — 스레드 기반 병렬 처리</a></p>
+  <div role="note" aria-label="source link">
+    <h3>현재 문서</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">버그 보고하기</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/3.9/Doc/library/concurrency.rst"
+            rel="nofollow">소스 보기
+        </a>
+      </li>
+    </ul>
+  </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>탐색</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="전체 색인"
+             >색인</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 모듈 목록"
+             >모듈</a> |</li>
+        <li class="right" >
+          <a href="threading.html" title="threading — 스레드 기반 병렬 처리"
+             >다음</a> |</li>
+        <li class="right" >
+          <a href="ctypes.html" title="ctypes — 파이썬용 외부 함수 라이브러리"
+             >이전</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.9.14 Documentation</a> &#187;
+    </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >파이썬 표준 라이브러리</a> &#187;</li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="빠른 검색" aria-label="빠른 검색" type="text" name="q" />
+          <input type="submit" value="이동" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </form>
+    </div>
+                     |
+                </li>
+            
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">저작권</a> 2001-2022, Python Software Foundation.
+    <br />
+    This page is licensed under the Python Software Foundation License Version 2.
+    <br />
+    Examples, recipes, and other code in the documentation are additionally licensed under the Zero Clause BSD License.
+    <br />
+    See <a href="/license.html">History and License</a> for more information.<br />
+    <br />
+
+    The Python Software Foundation is a non-profit corporation.
+<a href="https://www.python.org/psf/donations/">Please donate.</a>
+<br />
+    <br />
+
+    최종 업데이트: 9월 11, 2022
+    <a href="/bugs.html">Found a bug</a>?
+    <br />
+
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 2.4.4.
+    </div>
+
+  </body>
+</html>

@@ -1,0 +1,369 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ko">
+  <head>
+    <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>리스트 객체 &#8212; Python 3.9.14 문서</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="../_static/pydoctheme.css?2022.1" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/translations.js"></script>
+    
+    <script src="../_static/sidebar.js"></script>
+    
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Python 3.9.14 문서에서 찾기"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="이 문서 정보" href="../about.html" />
+    <link rel="index" title="색인" href="../genindex.html" />
+    <link rel="search" title="검색" href="../search.html" />
+    <link rel="copyright" title="저작권" href="../copyright.html" />
+    <link rel="next" title="딕셔너리 객체" href="dict.html" />
+    <link rel="prev" title="튜플 객체" href="tuple.html" />
+    <link rel="canonical" href="https://docs.python.org/3/c-api/list.html" />
+    
+      
+    
+
+    
+    <style>
+      @media only screen {
+        table.full-width-table {
+            width: 100%;
+        }
+      }
+    </style>
+<link rel="shortcut icon" type="image/png" href="../_static/py.svg" />
+            <script type="text/javascript" src="../_static/copybutton.js"></script>
+            <script type="text/javascript" src="../_static/menu.js"></script> 
+
+  </head>
+<body>
+<div class="mobile-nav">
+    <input type="checkbox" id="menuToggler" class="toggler__input" aria-controls="navigation"
+           aria-pressed="false" aria-expanded="false" role="button" aria-label="Menu" />
+    <label for="menuToggler" class="toggler__label">
+        <span></span>
+    </label>
+    <nav class="nav-content" role="navigation">
+         <a href="https://www.python.org/" class="nav-logo">
+             <img src="../_static/py.svg" alt="Logo"/>
+         </a>
+        <div class="version_switcher_placeholder"></div>
+        <form role="search" class="search" action="../search.html" method="get">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" class="search-icon">
+                <path fill-rule="nonzero"
+                        d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 001.48-5.34c-.47-2.78-2.79-5-5.59-5.34a6.505 6.505 0 00-7.27 7.27c.34 2.8 2.56 5.12 5.34 5.59a6.5 6.5 0 005.34-1.48l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49 0 .41-.41.41-1.08 0-1.49L15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" fill="#444"></path>
+            </svg>
+            <input type="text" name="q" aria-label="빠른 검색"/>
+            <input type="submit" value="이동"/>
+        </form>
+    </nav>
+    <div class="menu-wrapper">
+        <nav class="menu" role="navigation" aria-label="main navigation">
+            <div class="language_switcher_placeholder"></div>
+  <h4>이전 항목</h4>
+  <p class="topless"><a href="tuple.html"
+                        title="이전 장">튜플 객체</a></p>
+  <h4>다음 항목</h4>
+  <p class="topless"><a href="dict.html"
+                        title="다음 장">딕셔너리 객체</a></p>
+  <div role="note" aria-label="source link">
+    <h3>현재 문서</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">버그 보고하기</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/3.9/Doc/c-api/list.rst"
+            rel="nofollow">소스 보기
+        </a>
+      </li>
+    </ul>
+  </div>
+        </nav>
+    </div>
+</div>
+
+  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>탐색</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="전체 색인"
+             accesskey="I">색인</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 모듈 목록"
+             >모듈</a> |</li>
+        <li class="right" >
+          <a href="dict.html" title="딕셔너리 객체"
+             accesskey="N">다음</a> |</li>
+        <li class="right" >
+          <a href="tuple.html" title="튜플 객체"
+             accesskey="P">이전</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.9.14 Documentation</a> &#187;
+    </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >파이썬/C API 레퍼런스 설명서</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="concrete.html" accesskey="U">구상 객체 계층</a> &#187;</li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="빠른 검색" aria-label="빠른 검색" type="text" name="q" />
+          <input type="submit" value="이동" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </form>
+    </div>
+                     |
+                </li>
+            
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="list-objects">
+<span id="listobjects"></span><h1>리스트 객체<a class="headerlink" href="#list-objects" title="제목 주소">¶</a></h1>
+<span class="target" id="index-0"></span><dl class="type">
+<dt id="c.PyListObject">
+<code class="sig-name descname">PyListObject</code><a class="headerlink" href="#c.PyListObject" title="정의 주소">¶</a></dt>
+<dd><p>이 <a class="reference internal" href="structures.html#c.PyObject" title="PyObject"><code class="xref c c-type docutils literal notranslate"><span class="pre">PyObject</span></code></a>의 서브 형은 파이썬 리스트 객체를 나타냅니다.</p>
+</dd></dl>
+
+<dl class="var">
+<dt id="c.PyList_Type">
+<a class="reference internal" href="type.html#c.PyTypeObject" title="PyTypeObject">PyTypeObject</a> <code class="sig-name descname">PyList_Type</code><a class="headerlink" href="#c.PyList_Type" title="정의 주소">¶</a></dt>
+<dd><p>이 <a class="reference internal" href="type.html#c.PyTypeObject" title="PyTypeObject"><code class="xref c c-type docutils literal notranslate"><span class="pre">PyTypeObject</span></code></a> 인스턴스는 파이썬 리스트 형을 나타냅니다. 이것은 파이썬 계층의 <a class="reference internal" href="../library/stdtypes.html#list" title="list"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>와 같은 객체입니다.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyList_Check">
+int <code class="sig-name descname">PyList_Check</code><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em> *p</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyList_Check" title="정의 주소">¶</a></dt>
+<dd><p><em>p</em>가 리스트 객체나 리스트 형의 서브 형 인스턴스면 참을 반환합니다. 이 함수는 항상 성공합니다.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyList_CheckExact">
+int <code class="sig-name descname">PyList_CheckExact</code><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em> *p</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyList_CheckExact" title="정의 주소">¶</a></dt>
+<dd><p><em>p</em>가 리스트 객체이지만 리스트 형의 서브 형의 인스턴스가 아니면 참을 반환합니다. 이 함수는 항상 성공합니다.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyList_New">
+<a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a>* <code class="sig-name descname">PyList_New</code><span class="sig-paren">(</span><a class="reference internal" href="intro.html#c.Py_ssize_t" title="Py_ssize_t">Py_ssize_t</a><em> len</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyList_New" title="정의 주소">¶</a></dt>
+<dd><em class="refcount">Return value: New reference.</em><p>성공하면 길이 <em>len</em> 인 새 리스트를, 실패하면 <code class="docutils literal notranslate"><span class="pre">NULL</span></code>을 반환합니다.</p>
+<div class="admonition note">
+<p class="admonition-title">참고</p>
+<p><em>len</em>이 0보다 크면, 반환된 리스트 객체의 항목은 <code class="docutils literal notranslate"><span class="pre">NULL</span></code>로 설정됩니다. 따라서 모든 항목을 <a class="reference internal" href="#c.PyList_SetItem" title="PyList_SetItem"><code class="xref c c-func docutils literal notranslate"><span class="pre">PyList_SetItem()</span></code></a>로 실제 객체로 설정하기 전에 <a class="reference internal" href="sequence.html#c.PySequence_SetItem" title="PySequence_SetItem"><code class="xref c c-func docutils literal notranslate"><span class="pre">PySequence_SetItem()</span></code></a>와 같은 추상 API 함수를 사용하거나 파이썬 코드에 객체를 노출할 수 없습니다.</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyList_Size">
+<a class="reference internal" href="intro.html#c.Py_ssize_t" title="Py_ssize_t">Py_ssize_t</a> <code class="sig-name descname">PyList_Size</code><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em> *list</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyList_Size" title="정의 주소">¶</a></dt>
+<dd><p id="index-1"><em>list</em>에서 리스트 객체의 길이를 반환합니다; 이는 리스트 객체에 대한 <code class="docutils literal notranslate"><span class="pre">len(list)</span></code>와 동등합니다.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyList_GET_SIZE">
+<a class="reference internal" href="intro.html#c.Py_ssize_t" title="Py_ssize_t">Py_ssize_t</a> <code class="sig-name descname">PyList_GET_SIZE</code><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em> *list</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyList_GET_SIZE" title="정의 주소">¶</a></dt>
+<dd><p>에러 검사 없는 <a class="reference internal" href="#c.PyList_Size" title="PyList_Size"><code class="xref c c-func docutils literal notranslate"><span class="pre">PyList_Size()</span></code></a>의 매크로 형식.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyList_GetItem">
+<a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a>* <code class="sig-name descname">PyList_GetItem</code><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em> *list</em>, <a class="reference internal" href="intro.html#c.Py_ssize_t" title="Py_ssize_t">Py_ssize_t</a><em> index</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyList_GetItem" title="정의 주소">¶</a></dt>
+<dd><em class="refcount">Return value: Borrowed reference.</em><p><em>list</em>가 가리키는 리스트에서 <em>index</em> 위치의 객체를 반환합니다. 위치는 음수가 아니어야 합니다; 리스트의 끝에서부터의 인덱싱은 지원되지 않습니다. <em>index</em>가 범위를 벗어나면 (&lt;0 또는 &gt;=len(list)), <code class="docutils literal notranslate"><span class="pre">NULL</span></code>을 반환하고 <a class="reference internal" href="../library/exceptions.html#IndexError" title="IndexError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">IndexError</span></code></a> 예외를 설정합니다.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyList_GET_ITEM">
+<a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a>* <code class="sig-name descname">PyList_GET_ITEM</code><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em> *list</em>, <a class="reference internal" href="intro.html#c.Py_ssize_t" title="Py_ssize_t">Py_ssize_t</a><em> i</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyList_GET_ITEM" title="정의 주소">¶</a></dt>
+<dd><em class="refcount">Return value: Borrowed reference.</em><p>에러 검사 없는 <a class="reference internal" href="#c.PyList_GetItem" title="PyList_GetItem"><code class="xref c c-func docutils literal notranslate"><span class="pre">PyList_GetItem()</span></code></a>의 매크로 형식.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyList_SetItem">
+int <code class="sig-name descname">PyList_SetItem</code><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em> *list</em>, <a class="reference internal" href="intro.html#c.Py_ssize_t" title="Py_ssize_t">Py_ssize_t</a><em> index</em>, <a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em> *item</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyList_SetItem" title="정의 주소">¶</a></dt>
+<dd><p>리스트의 인덱스 <em>index</em>에 있는 항목을 <em>item</em>으로 설정합니다. 성공하면 <code class="docutils literal notranslate"><span class="pre">0</span></code>을 반환합니다. <em>index</em>가 범위를 벗어나면, <code class="docutils literal notranslate"><span class="pre">-1</span></code>을 반환하고 <a class="reference internal" href="../library/exceptions.html#IndexError" title="IndexError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">IndexError</span></code></a> 예외를 설정합니다.</p>
+<div class="admonition note">
+<p class="admonition-title">참고</p>
+<p>이 함수는 <em>item</em>에 대한 참조를 “훔치고” 영향을 받는 위치의 리스트에 이미 있는 항목에 대한 참조를 버립니다.</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyList_SET_ITEM">
+void <code class="sig-name descname">PyList_SET_ITEM</code><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em> *list</em>, <a class="reference internal" href="intro.html#c.Py_ssize_t" title="Py_ssize_t">Py_ssize_t</a><em> i</em>, <a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em> *o</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyList_SET_ITEM" title="정의 주소">¶</a></dt>
+<dd><p>에러 검사 없는 <a class="reference internal" href="#c.PyList_SetItem" title="PyList_SetItem"><code class="xref c c-func docutils literal notranslate"><span class="pre">PyList_SetItem()</span></code></a>의 매크로 형식. 일반적으로 이전 내용이 없는 새 리스트를 채우는 데 사용됩니다.</p>
+<div class="admonition note">
+<p class="admonition-title">참고</p>
+<p>이 매크로는 <em>item</em>에 대한 참조를 “훔치고”, <a class="reference internal" href="#c.PyList_SetItem" title="PyList_SetItem"><code class="xref c c-func docutils literal notranslate"><span class="pre">PyList_SetItem()</span></code></a>과는 달리 대체되는 항목에 대한 참조를 버리지 <em>않습니다</em>; <em>list</em> 의 <em>i</em> 위치에 있는 참조는 누수를 일으킵니다.</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyList_Insert">
+int <code class="sig-name descname">PyList_Insert</code><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em> *list</em>, <a class="reference internal" href="intro.html#c.Py_ssize_t" title="Py_ssize_t">Py_ssize_t</a><em> index</em>, <a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em> *item</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyList_Insert" title="정의 주소">¶</a></dt>
+<dd><p>항목 <em>item</em>을 리스트 <em>list</em>의 인덱스 <em>index</em> 앞에 삽입합니다. 성공하면 <code class="docutils literal notranslate"><span class="pre">0</span></code>을 반환합니다; 실패하면 <code class="docutils literal notranslate"><span class="pre">-1</span></code>을 반환하고 예외를 설정합니다. <code class="docutils literal notranslate"><span class="pre">list.insert(index,</span> <span class="pre">item)</span></code>에 해당합니다.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyList_Append">
+int <code class="sig-name descname">PyList_Append</code><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em> *list</em>, <a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em> *item</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyList_Append" title="정의 주소">¶</a></dt>
+<dd><p>리스트 <em>list</em>의 끝에 객체 <em>item</em>을 추가합니다. 성공하면 <code class="docutils literal notranslate"><span class="pre">0</span></code>을 반환합니다; 실패하면 <code class="docutils literal notranslate"><span class="pre">-1</span></code>을 반환하고 예외를 설정합니다. <code class="docutils literal notranslate"><span class="pre">list.append(item)</span></code>에 해당합니다.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyList_GetSlice">
+<a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a>* <code class="sig-name descname">PyList_GetSlice</code><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em> *list</em>, <a class="reference internal" href="intro.html#c.Py_ssize_t" title="Py_ssize_t">Py_ssize_t</a><em> low</em>, <a class="reference internal" href="intro.html#c.Py_ssize_t" title="Py_ssize_t">Py_ssize_t</a><em> high</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyList_GetSlice" title="정의 주소">¶</a></dt>
+<dd><em class="refcount">Return value: New reference.</em><p><em>list</em>에서 <em>low</em> 와 <em>high</em> <em>사이에</em>있는 객체들을 포함하는 리스트를 반환합니다. 실패하면 <code class="docutils literal notranslate"><span class="pre">NULL</span></code>을 반환하고 예외를 설정합니다. <code class="docutils literal notranslate"><span class="pre">list[low:high]</span></code>에 해당합니다. 리스트 끝에서부터의 인덱싱은 지원되지 않습니다.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyList_SetSlice">
+int <code class="sig-name descname">PyList_SetSlice</code><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em> *list</em>, <a class="reference internal" href="intro.html#c.Py_ssize_t" title="Py_ssize_t">Py_ssize_t</a><em> low</em>, <a class="reference internal" href="intro.html#c.Py_ssize_t" title="Py_ssize_t">Py_ssize_t</a><em> high</em>, <a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em> *itemlist</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyList_SetSlice" title="정의 주소">¶</a></dt>
+<dd><p><em>low</em>와 <em>high</em> 사이의 <em>list</em>슬라이스를 <em>itemlist</em>의 내용으로 설정합니다. <code class="docutils literal notranslate"><span class="pre">list[low:high]</span> <span class="pre">=</span> <span class="pre">itemlist</span></code>에 해당합니다. <em>itemlist</em>는 <code class="docutils literal notranslate"><span class="pre">NULL</span></code> 일 수 있는데, 빈 리스트의 대입을 나타냅니다 (슬라이스 삭제). 성공하면 <code class="docutils literal notranslate"><span class="pre">0</span></code>을, 실패하면 <code class="docutils literal notranslate"><span class="pre">-1</span></code>을 반환합니다. 리스트 끝에서부터의 인덱싱은 지원되지 않습니다.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyList_Sort">
+int <code class="sig-name descname">PyList_Sort</code><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em> *list</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyList_Sort" title="정의 주소">¶</a></dt>
+<dd><p><em>list</em> 항목을 제자리에서 정렬합니다. 성공하면 <code class="docutils literal notranslate"><span class="pre">0</span></code>을, 실패하면 <code class="docutils literal notranslate"><span class="pre">-1</span></code>을 반환합니다. 이것은 <code class="docutils literal notranslate"><span class="pre">list.sort()</span></code>와 동등합니다.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyList_Reverse">
+int <code class="sig-name descname">PyList_Reverse</code><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em> *list</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyList_Reverse" title="정의 주소">¶</a></dt>
+<dd><p><em>list</em>의 항목을 제자리에서 뒤집습니다. 성공하면 <code class="docutils literal notranslate"><span class="pre">0</span></code>을, 실패하면 <code class="docutils literal notranslate"><span class="pre">-1</span></code>을 반환합니다. 이것은 <code class="docutils literal notranslate"><span class="pre">list.reverse()</span></code>와 동등합니다.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyList_AsTuple">
+<a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a>* <code class="sig-name descname">PyList_AsTuple</code><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em> *list</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyList_AsTuple" title="정의 주소">¶</a></dt>
+<dd><em class="refcount">Return value: New reference.</em><p id="index-2"><em>list</em>의 내용을 포함하는 새 튜플 객체를 반환합니다; <code class="docutils literal notranslate"><span class="pre">tuple(list)</span></code>와 동등합니다.</p>
+</dd></dl>
+
+</section>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>이전 항목</h4>
+  <p class="topless"><a href="tuple.html"
+                        title="이전 장">튜플 객체</a></p>
+  <h4>다음 항목</h4>
+  <p class="topless"><a href="dict.html"
+                        title="다음 장">딕셔너리 객체</a></p>
+  <div role="note" aria-label="source link">
+    <h3>현재 문서</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">버그 보고하기</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/3.9/Doc/c-api/list.rst"
+            rel="nofollow">소스 보기
+        </a>
+      </li>
+    </ul>
+  </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>탐색</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="전체 색인"
+             >색인</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 모듈 목록"
+             >모듈</a> |</li>
+        <li class="right" >
+          <a href="dict.html" title="딕셔너리 객체"
+             >다음</a> |</li>
+        <li class="right" >
+          <a href="tuple.html" title="튜플 객체"
+             >이전</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.9.14 Documentation</a> &#187;
+    </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >파이썬/C API 레퍼런스 설명서</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="concrete.html" >구상 객체 계층</a> &#187;</li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="빠른 검색" aria-label="빠른 검색" type="text" name="q" />
+          <input type="submit" value="이동" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </form>
+    </div>
+                     |
+                </li>
+            
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">저작권</a> 2001-2022, Python Software Foundation.
+    <br />
+    This page is licensed under the Python Software Foundation License Version 2.
+    <br />
+    Examples, recipes, and other code in the documentation are additionally licensed under the Zero Clause BSD License.
+    <br />
+    See <a href="/license.html">History and License</a> for more information.<br />
+    <br />
+
+    The Python Software Foundation is a non-profit corporation.
+<a href="https://www.python.org/psf/donations/">Please donate.</a>
+<br />
+    <br />
+
+    최종 업데이트: 9월 11, 2022
+    <a href="/bugs.html">Found a bug</a>?
+    <br />
+
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 2.4.4.
+    </div>
+
+  </body>
+</html>

@@ -1,0 +1,646 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ko">
+  <head>
+    <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>os.path — 일반적인 경로명 조작 &#8212; Python 3.9.14 문서</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="../_static/pydoctheme.css?2022.1" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/translations.js"></script>
+    
+    <script src="../_static/sidebar.js"></script>
+    
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Python 3.9.14 문서에서 찾기"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="이 문서 정보" href="../about.html" />
+    <link rel="index" title="색인" href="../genindex.html" />
+    <link rel="search" title="검색" href="../search.html" />
+    <link rel="copyright" title="저작권" href="../copyright.html" />
+    <link rel="next" title="fileinput — 여러 입력 스트림에서 줄을 이터레이트 하기" href="fileinput.html" />
+    <link rel="prev" title="pathlib — 객체 지향 파일 시스템 경로" href="pathlib.html" />
+    <link rel="canonical" href="https://docs.python.org/3/library/os.path.html" />
+    
+      
+    
+
+    
+    <style>
+      @media only screen {
+        table.full-width-table {
+            width: 100%;
+        }
+      }
+    </style>
+<link rel="shortcut icon" type="image/png" href="../_static/py.svg" />
+            <script type="text/javascript" src="../_static/copybutton.js"></script>
+            <script type="text/javascript" src="../_static/menu.js"></script> 
+
+  </head>
+<body>
+<div class="mobile-nav">
+    <input type="checkbox" id="menuToggler" class="toggler__input" aria-controls="navigation"
+           aria-pressed="false" aria-expanded="false" role="button" aria-label="Menu" />
+    <label for="menuToggler" class="toggler__label">
+        <span></span>
+    </label>
+    <nav class="nav-content" role="navigation">
+         <a href="https://www.python.org/" class="nav-logo">
+             <img src="../_static/py.svg" alt="Logo"/>
+         </a>
+        <div class="version_switcher_placeholder"></div>
+        <form role="search" class="search" action="../search.html" method="get">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" class="search-icon">
+                <path fill-rule="nonzero"
+                        d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 001.48-5.34c-.47-2.78-2.79-5-5.59-5.34a6.505 6.505 0 00-7.27 7.27c.34 2.8 2.56 5.12 5.34 5.59a6.5 6.5 0 005.34-1.48l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49 0 .41-.41.41-1.08 0-1.49L15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" fill="#444"></path>
+            </svg>
+            <input type="text" name="q" aria-label="빠른 검색"/>
+            <input type="submit" value="이동"/>
+        </form>
+    </nav>
+    <div class="menu-wrapper">
+        <nav class="menu" role="navigation" aria-label="main navigation">
+            <div class="language_switcher_placeholder"></div>
+  <h4>이전 항목</h4>
+  <p class="topless"><a href="pathlib.html"
+                        title="이전 장"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pathlib</span></code> — 객체 지향 파일 시스템 경로</a></p>
+  <h4>다음 항목</h4>
+  <p class="topless"><a href="fileinput.html"
+                        title="다음 장"><code class="xref py py-mod docutils literal notranslate"><span class="pre">fileinput</span></code> — 여러 입력 스트림에서 줄을 이터레이트 하기</a></p>
+  <div role="note" aria-label="source link">
+    <h3>현재 문서</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">버그 보고하기</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/3.9/Doc/library/os.path.rst"
+            rel="nofollow">소스 보기
+        </a>
+      </li>
+    </ul>
+  </div>
+        </nav>
+    </div>
+</div>
+
+  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>탐색</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="전체 색인"
+             accesskey="I">색인</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 모듈 목록"
+             >모듈</a> |</li>
+        <li class="right" >
+          <a href="fileinput.html" title="fileinput — 여러 입력 스트림에서 줄을 이터레이트 하기"
+             accesskey="N">다음</a> |</li>
+        <li class="right" >
+          <a href="pathlib.html" title="pathlib — 객체 지향 파일 시스템 경로"
+             accesskey="P">이전</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.9.14 Documentation</a> &#187;
+    </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >파이썬 표준 라이브러리</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="filesys.html" accesskey="U">파일과 디렉터리 액세스</a> &#187;</li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="빠른 검색" aria-label="빠른 검색" type="text" name="q" />
+          <input type="submit" value="이동" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </form>
+    </div>
+                     |
+                </li>
+            
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="module-os.path">
+<span id="os-path-common-pathname-manipulations"></span><h1><a class="reference internal" href="#module-os.path" title="os.path: Operations on pathnames."><code class="xref py py-mod docutils literal notranslate"><span class="pre">os.path</span></code></a> — 일반적인 경로명 조작<a class="headerlink" href="#module-os.path" title="제목 주소">¶</a></h1>
+<p><strong>Source code:</strong> <a class="reference external" href="https://github.com/python/cpython/tree/3.9/Lib/posixpath.py">Lib/posixpath.py</a> (for POSIX) and
+<a class="reference external" href="https://github.com/python/cpython/tree/3.9/Lib/ntpath.py">Lib/ntpath.py</a> (for Windows).</p>
+<hr class="docutils" id="index-0" />
+<p>This module implements some useful functions on pathnames. To read or write
+files see <a class="reference internal" href="functions.html#open" title="open"><code class="xref py py-func docutils literal notranslate"><span class="pre">open()</span></code></a>, and for accessing the filesystem see the <a class="reference internal" href="os.html#module-os" title="os: Miscellaneous operating system interfaces."><code class="xref py py-mod docutils literal notranslate"><span class="pre">os</span></code></a>
+module. The path parameters can be passed as strings, or bytes, or any object
+implementing the <a class="reference internal" href="os.html#os.PathLike" title="os.PathLike"><code class="xref py py-class docutils literal notranslate"><span class="pre">os.PathLike</span></code></a> protocol.</p>
+<p>유닉스 셸과 달리, 파이썬은 어떤 <em>자동</em> 경로 확장도 수행하지 않습니다. <a class="reference internal" href="#os.path.expanduser" title="os.path.expanduser"><code class="xref py py-func docutils literal notranslate"><span class="pre">expanduser()</span></code></a>와 <a class="reference internal" href="#os.path.expandvars" title="os.path.expandvars"><code class="xref py py-func docutils literal notranslate"><span class="pre">expandvars()</span></code></a>와 같은 함수는 응용 프로그램이 셸과 같은 경로 확장을 원할 때 명시적으로 호출할 수 있습니다. (<a class="reference internal" href="glob.html#module-glob" title="glob: Unix shell style pathname pattern expansion."><code class="xref py py-mod docutils literal notranslate"><span class="pre">glob</span></code></a> 모듈도 참조하십시오.)</p>
+<div class="admonition seealso">
+<p class="admonition-title">더 보기</p>
+<p><a class="reference internal" href="pathlib.html#module-pathlib" title="pathlib: Object-oriented filesystem paths"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pathlib</span></code></a> 모듈은 고수준의 경로 객체를 제공합니다.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">참고</p>
+<p>이 모든 함수는 매개 변수가 모두 바이트열 객체이거나 모두 문자열 객체인 것만 허락합니다. 경로나 파일 이름이 반환되면, 결과는 같은 형의 객체입니다.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">참고</p>
+<p>운영 체제마다 경로 이름 규칙이 다르기 때문에, 표준 라이브러리에 이 모듈의 여러 버전이 있습니다. <a class="reference internal" href="#module-os.path" title="os.path: Operations on pathnames."><code class="xref py py-mod docutils literal notranslate"><span class="pre">os.path</span></code></a> 모듈은 항상 파이썬이 실행 중인 운영 체제에 적합한 경로 모듈이고, 따라서 지역 경로에 사용할 수 있습니다. 그러나, <em>항상</em> 다른 형식 중 하나인 경로를 조작하려면 개별 모듈을 임포트 해서 사용할 수도 있습니다. 그들은 모두 같은 인터페이스를 가지고 있습니다:</p>
+<ul class="simple">
+<li><p>유닉스 스타일 경로는 <code class="xref py py-mod docutils literal notranslate"><span class="pre">posixpath</span></code></p></li>
+<li><p>윈도우 경로는 <code class="xref py py-mod docutils literal notranslate"><span class="pre">ntpath</span></code></p></li>
+</ul>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">버전 3.8에서 변경: </span><a class="reference internal" href="#os.path.exists" title="os.path.exists"><code class="xref py py-func docutils literal notranslate"><span class="pre">exists()</span></code></a>, <a class="reference internal" href="#os.path.lexists" title="os.path.lexists"><code class="xref py py-func docutils literal notranslate"><span class="pre">lexists()</span></code></a>, <a class="reference internal" href="#os.path.isdir" title="os.path.isdir"><code class="xref py py-func docutils literal notranslate"><span class="pre">isdir()</span></code></a>, <a class="reference internal" href="#os.path.isfile" title="os.path.isfile"><code class="xref py py-func docutils literal notranslate"><span class="pre">isfile()</span></code></a>, <a class="reference internal" href="#os.path.islink" title="os.path.islink"><code class="xref py py-func docutils literal notranslate"><span class="pre">islink()</span></code></a> 및 <a class="reference internal" href="#os.path.ismount" title="os.path.ismount"><code class="xref py py-func docutils literal notranslate"><span class="pre">ismount()</span></code></a>는 이제 OS 수준에서 표현할 수 없는 문자나 바이트를 포함하는 경로에 대해 예외를 발생시키는 대신 <code class="docutils literal notranslate"><span class="pre">False</span></code>를 반환합니다.</p>
+</div>
+<dl class="function">
+<dt id="os.path.abspath">
+<code class="sig-prename descclassname">os.path.</code><code class="sig-name descname">abspath</code><span class="sig-paren">(</span><em class="sig-param">path</em><span class="sig-paren">)</span><a class="headerlink" href="#os.path.abspath" title="정의 주소">¶</a></dt>
+<dd><p>경로명 <em>path</em>의 정규화된 절대 버전을 반환합니다. 대부분의 플랫폼에서, 이는 다음과 같이 <a class="reference internal" href="#os.path.normpath" title="os.path.normpath"><code class="xref py py-func docutils literal notranslate"><span class="pre">normpath()</span></code></a> 함수를 호출하는 것과 동등합니다: <code class="docutils literal notranslate"><span class="pre">normpath(join(os.getcwd(),</span> <span class="pre">path))</span></code>.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">버전 3.6에서 변경: </span><a class="reference internal" href="../glossary.html#term-path-like-object"><span class="xref std std-term">경로류 객체</span></a>를 받아들입니다.</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="os.path.basename">
+<code class="sig-prename descclassname">os.path.</code><code class="sig-name descname">basename</code><span class="sig-paren">(</span><em class="sig-param">path</em><span class="sig-paren">)</span><a class="headerlink" href="#os.path.basename" title="정의 주소">¶</a></dt>
+<dd><p>경로명 <em>path</em>의 기본 이름을 반환합니다. 이것은 <em>path</em>를 함수 <a class="reference internal" href="#os.path.split" title="os.path.split"><code class="xref py py-func docutils literal notranslate"><span class="pre">split()</span></code></a>에 전달하여 반환된 쌍의 두 번째 요소입니다. 이 함수의 결과는 유닉스 <strong class="program">basename</strong> 프로그램과 다름에 유의하십시오; <code class="docutils literal notranslate"><span class="pre">'/foo/bar/'</span></code>에 대해 <strong class="program">basename</strong>은 <code class="docutils literal notranslate"><span class="pre">'bar'</span></code>를 반환하고, <a class="reference internal" href="#os.path.basename" title="os.path.basename"><code class="xref py py-func docutils literal notranslate"><span class="pre">basename()</span></code></a> 함수는 빈 문자열(<code class="docutils literal notranslate"><span class="pre">''</span></code>)을 반환합니다.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">버전 3.6에서 변경: </span><a class="reference internal" href="../glossary.html#term-path-like-object"><span class="xref std std-term">경로류 객체</span></a>를 받아들입니다.</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="os.path.commonpath">
+<code class="sig-prename descclassname">os.path.</code><code class="sig-name descname">commonpath</code><span class="sig-paren">(</span><em class="sig-param">paths</em><span class="sig-paren">)</span><a class="headerlink" href="#os.path.commonpath" title="정의 주소">¶</a></dt>
+<dd><p>시퀀스 <em>paths</em>에 있는 각 경로명의 가장 긴 공통 하위 경로(sub-path)를 반환합니다. <em>paths</em>에 절대 경로명과 상대 경로명이 모두 있거나 <em>paths</em>가 다른 드라이브에 있거나 <em>paths</em>가 비어 있으면 <a class="reference internal" href="exceptions.html#ValueError" title="ValueError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code></a>를 발생시킵니다. <a class="reference internal" href="#os.path.commonprefix" title="os.path.commonprefix"><code class="xref py py-func docutils literal notranslate"><span class="pre">commonprefix()</span></code></a>와 달리, 유효한 경로를 반환합니다.</p>
+<p class="availability"><a class="reference internal" href="intro.html#availability"><span class="std std-ref">가용성</span></a>: 유닉스, 윈도우</p>
+<div class="versionadded">
+<p><span class="versionmodified added">버전 3.5에 추가.</span></p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">버전 3.6에서 변경: </span><a class="reference internal" href="../glossary.html#term-path-like-object"><span class="xref std std-term">경로류 객체</span></a>의 시퀀스를 받아들입니다.</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="os.path.commonprefix">
+<code class="sig-prename descclassname">os.path.</code><code class="sig-name descname">commonprefix</code><span class="sig-paren">(</span><em class="sig-param">list</em><span class="sig-paren">)</span><a class="headerlink" href="#os.path.commonprefix" title="정의 주소">¶</a></dt>
+<dd><p><em>list</em>에 있는 모든 경로의 접두사인 가장 긴 경로 접두사(문자 단위로 취합니다)를 반환합니다. <em>list</em>가 비어 있으면, 빈 문자열(<code class="docutils literal notranslate"><span class="pre">''</span></code>)을 반환합니다.</p>
+<div class="admonition note">
+<p class="admonition-title">참고</p>
+<p>이 함수는 한 번에 한 문자씩 다루기 때문에 유효하지 않은 경로를 반환할 수 있습니다. 유효한 경로를 얻으려면, <a class="reference internal" href="#os.path.commonpath" title="os.path.commonpath"><code class="xref py py-func docutils literal notranslate"><span class="pre">commonpath()</span></code></a>를 참조하십시오.</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">commonprefix</span><span class="p">([</span><span class="s1">&#39;/usr/lib&#39;</span><span class="p">,</span> <span class="s1">&#39;/usr/local/lib&#39;</span><span class="p">])</span>
+<span class="go">&#39;/usr/l&#39;</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">commonpath</span><span class="p">([</span><span class="s1">&#39;/usr/lib&#39;</span><span class="p">,</span> <span class="s1">&#39;/usr/local/lib&#39;</span><span class="p">])</span>
+<span class="go">&#39;/usr&#39;</span>
+</pre></div>
+</div>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">버전 3.6에서 변경: </span><a class="reference internal" href="../glossary.html#term-path-like-object"><span class="xref std std-term">경로류 객체</span></a>를 받아들입니다.</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="os.path.dirname">
+<code class="sig-prename descclassname">os.path.</code><code class="sig-name descname">dirname</code><span class="sig-paren">(</span><em class="sig-param">path</em><span class="sig-paren">)</span><a class="headerlink" href="#os.path.dirname" title="정의 주소">¶</a></dt>
+<dd><p>경로명 <em>path</em>의 디렉터리 이름을 반환합니다. 이것은 <em>path</em>를 함수 <a class="reference internal" href="#os.path.split" title="os.path.split"><code class="xref py py-func docutils literal notranslate"><span class="pre">split()</span></code></a>에 전달하여 반환된 쌍의 첫 번째 요소입니다.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">버전 3.6에서 변경: </span><a class="reference internal" href="../glossary.html#term-path-like-object"><span class="xref std std-term">경로류 객체</span></a>를 받아들입니다.</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="os.path.exists">
+<code class="sig-prename descclassname">os.path.</code><code class="sig-name descname">exists</code><span class="sig-paren">(</span><em class="sig-param">path</em><span class="sig-paren">)</span><a class="headerlink" href="#os.path.exists" title="정의 주소">¶</a></dt>
+<dd><p><em>path</em>가 기존 경로나 열린 파일 기술자를 참조하면 <code class="docutils literal notranslate"><span class="pre">True</span></code>를 반환합니다. 깨진 심볼릭 링크에 대해서는 <code class="docutils literal notranslate"><span class="pre">False</span></code>를 반환합니다. 일부 플랫폼에서, <em>path</em>가 물리적으로 존재하더라도, 요청된 파일에 대해 <a class="reference internal" href="os.html#os.stat" title="os.stat"><code class="xref py py-func docutils literal notranslate"><span class="pre">os.stat()</span></code></a>을 실행할 권한이 없으면 이 함수는 <code class="docutils literal notranslate"><span class="pre">False</span></code>를 반환할 수 있습니다.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">버전 3.3에서 변경: </span><em>path</em>는 이제 정수가 될 수 있습니다: 열린 파일 기술자이면 <code class="docutils literal notranslate"><span class="pre">True</span></code>가 반환되고, 그렇지 않으면 <code class="docutils literal notranslate"><span class="pre">False</span></code>가 반환됩니다.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">버전 3.6에서 변경: </span><a class="reference internal" href="../glossary.html#term-path-like-object"><span class="xref std std-term">경로류 객체</span></a>를 받아들입니다.</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="os.path.lexists">
+<code class="sig-prename descclassname">os.path.</code><code class="sig-name descname">lexists</code><span class="sig-paren">(</span><em class="sig-param">path</em><span class="sig-paren">)</span><a class="headerlink" href="#os.path.lexists" title="정의 주소">¶</a></dt>
+<dd><p><em>path</em>가 기존 경로를 참조하면 <code class="docutils literal notranslate"><span class="pre">True</span></code>를 반환합니다. 깨진 심볼릭 링크에 대해 <code class="docutils literal notranslate"><span class="pre">True</span></code>를 반환합니다. <a class="reference internal" href="os.html#os.lstat" title="os.lstat"><code class="xref py py-func docutils literal notranslate"><span class="pre">os.lstat()</span></code></a>이 없는 플랫폼에서 <a class="reference internal" href="#os.path.exists" title="os.path.exists"><code class="xref py py-func docutils literal notranslate"><span class="pre">exists()</span></code></a>와 동등합니다.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">버전 3.6에서 변경: </span><a class="reference internal" href="../glossary.html#term-path-like-object"><span class="xref std std-term">경로류 객체</span></a>를 받아들입니다.</p>
+</div>
+</dd></dl>
+
+<span class="target" id="index-1"></span><dl class="function">
+<dt id="os.path.expanduser">
+<code class="sig-prename descclassname">os.path.</code><code class="sig-name descname">expanduser</code><span class="sig-paren">(</span><em class="sig-param">path</em><span class="sig-paren">)</span><a class="headerlink" href="#os.path.expanduser" title="정의 주소">¶</a></dt>
+<dd><p>유닉스와 윈도우에서, <code class="docutils literal notranslate"><span class="pre">~</span></code>나 <code class="docutils literal notranslate"><span class="pre">~user</span></code>의 초기 구성 요소가 해당 <em>사용자</em>의 홈 디렉터리로 치환된 인자를 반환합니다.</p>
+<p id="index-2">유닉스에서, 초기 <code class="docutils literal notranslate"><span class="pre">~</span></code>는 환경 변수 <span class="target" id="index-14"></span><code class="xref std std-envvar docutils literal notranslate"><span class="pre">HOME</span></code>이 설정되어 있다면 그것으로 치환됩니다; 그렇지 않으면 현재 사용자의 홈 디렉터리가 내장 모듈 <a class="reference internal" href="pwd.html#module-pwd" title="pwd: The password database (getpwnam() and friends). (Unix)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pwd</span></code></a>를 통해 비밀번호 디렉터리에서 조회됩니다. 초기 <code class="docutils literal notranslate"><span class="pre">~user</span></code>는 비밀번호 디렉터리에서 직접 조회됩니다.</p>
+<p>윈도우에서, <span class="target" id="index-15"></span><code class="xref std std-envvar docutils literal notranslate"><span class="pre">USERPROFILE</span></code>이 설정되었으면 이것이 사용됩니다, 그렇지 않으면 <span class="target" id="index-16"></span><code class="xref std std-envvar docutils literal notranslate"><span class="pre">HOMEPATH</span></code>와 <span class="target" id="index-17"></span><code class="xref std std-envvar docutils literal notranslate"><span class="pre">HOMEDRIVE</span></code>의 조합이 사용됩니다. 초기 <code class="docutils literal notranslate"><span class="pre">~user</span></code>는 위에서 파생되어 만들어진 사용자 경로에서 마지막 디렉터리 구성 요소를 제거하여 처리됩니다.</p>
+<p>확장이 실패하거나 경로가 물결표로 시작하지 않으면, 경로는 변경되지 않은 상태로 반환됩니다.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">버전 3.6에서 변경: </span><a class="reference internal" href="../glossary.html#term-path-like-object"><span class="xref std std-term">경로류 객체</span></a>를 받아들입니다.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">버전 3.8에서 변경: </span>더는 윈도우에서 <span class="target" id="index-18"></span><code class="xref std std-envvar docutils literal notranslate"><span class="pre">HOME</span></code>을 사용하지 않습니다.</p>
+</div>
+</dd></dl>
+
+<span class="target" id="index-8"></span><dl class="function">
+<dt id="os.path.expandvars">
+<code class="sig-prename descclassname">os.path.</code><code class="sig-name descname">expandvars</code><span class="sig-paren">(</span><em class="sig-param">path</em><span class="sig-paren">)</span><a class="headerlink" href="#os.path.expandvars" title="정의 주소">¶</a></dt>
+<dd><p>환경 변수로 확장된 인자를 반환합니다. <code class="docutils literal notranslate"><span class="pre">$name</span></code>이나 <code class="docutils literal notranslate"><span class="pre">${name}</span></code> 형식의 부분 문자열이 환경 변수 <em>name</em>의 값으로 치환됩니다. 잘못된 변수 이름과 존재하지 않는 변수에 대한 참조는 변경되지 않고 남습니다.</p>
+<p>윈도우에서, <code class="docutils literal notranslate"><span class="pre">$name</span></code>과 <code class="docutils literal notranslate"><span class="pre">${name}</span></code> 외에 <code class="docutils literal notranslate"><span class="pre">%name%</span></code> 확장이 지원됩니다.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">버전 3.6에서 변경: </span><a class="reference internal" href="../glossary.html#term-path-like-object"><span class="xref std std-term">경로류 객체</span></a>를 받아들입니다.</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="os.path.getatime">
+<code class="sig-prename descclassname">os.path.</code><code class="sig-name descname">getatime</code><span class="sig-paren">(</span><em class="sig-param">path</em><span class="sig-paren">)</span><a class="headerlink" href="#os.path.getatime" title="정의 주소">¶</a></dt>
+<dd><p><em>path</em>의 마지막 액세스 시간을 반환합니다. 반환 값은 에포크(epoch) 이후 초 수를 나타내는 부동 소수점 숫자입니다 (<a class="reference internal" href="time.html#module-time" title="time: Time access and conversions."><code class="xref py py-mod docutils literal notranslate"><span class="pre">time</span></code></a> 모듈을 참조하십시오). 파일이 없거나 액세스할 수 없으면 <a class="reference internal" href="exceptions.html#OSError" title="OSError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">OSError</span></code></a>를 발생시킵니다.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="os.path.getmtime">
+<code class="sig-prename descclassname">os.path.</code><code class="sig-name descname">getmtime</code><span class="sig-paren">(</span><em class="sig-param">path</em><span class="sig-paren">)</span><a class="headerlink" href="#os.path.getmtime" title="정의 주소">¶</a></dt>
+<dd><p><em>path</em>를 마지막으로 수정한 시간을 반환합니다. 반환 값은 에포크(epoch) 이후 초 수를 나타내는 부동 소수점 숫자입니다 (<a class="reference internal" href="time.html#module-time" title="time: Time access and conversions."><code class="xref py py-mod docutils literal notranslate"><span class="pre">time</span></code></a> 모듈을 참조하십시오). 파일이 없거나 액세스할 수 없으면 <a class="reference internal" href="exceptions.html#OSError" title="OSError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">OSError</span></code></a>를 발생시킵니다.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">버전 3.6에서 변경: </span><a class="reference internal" href="../glossary.html#term-path-like-object"><span class="xref std std-term">경로류 객체</span></a>를 받아들입니다.</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="os.path.getctime">
+<code class="sig-prename descclassname">os.path.</code><code class="sig-name descname">getctime</code><span class="sig-paren">(</span><em class="sig-param">path</em><span class="sig-paren">)</span><a class="headerlink" href="#os.path.getctime" title="정의 주소">¶</a></dt>
+<dd><p>시스템의 ctime을 반환하는데, 일부 시스템(가령 유닉스)에서는 마지막 메타 데이터 변경 시간이고, 다른 시스템(가령 윈도우)에서는 <em>path</em> 생성 시간입니다. 반환 값은 에포크(epoch) 이후 초 수를 나타내는 부동 소수점 숫자입니다 (<a class="reference internal" href="time.html#module-time" title="time: Time access and conversions."><code class="xref py py-mod docutils literal notranslate"><span class="pre">time</span></code></a> 모듈을 참조하십시오). 파일이 없거나 액세스할 수 없으면 <a class="reference internal" href="exceptions.html#OSError" title="OSError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">OSError</span></code></a>를 발생시킵니다.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">버전 3.6에서 변경: </span><a class="reference internal" href="../glossary.html#term-path-like-object"><span class="xref std std-term">경로류 객체</span></a>를 받아들입니다.</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="os.path.getsize">
+<code class="sig-prename descclassname">os.path.</code><code class="sig-name descname">getsize</code><span class="sig-paren">(</span><em class="sig-param">path</em><span class="sig-paren">)</span><a class="headerlink" href="#os.path.getsize" title="정의 주소">¶</a></dt>
+<dd><p><em>path</em>의 크기를 바이트 단위로 반환합니다. 파일이 없거나 액세스할 수 없으면 <a class="reference internal" href="exceptions.html#OSError" title="OSError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">OSError</span></code></a>를 발생시킵니다.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">버전 3.6에서 변경: </span><a class="reference internal" href="../glossary.html#term-path-like-object"><span class="xref std std-term">경로류 객체</span></a>를 받아들입니다.</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="os.path.isabs">
+<code class="sig-prename descclassname">os.path.</code><code class="sig-name descname">isabs</code><span class="sig-paren">(</span><em class="sig-param">path</em><span class="sig-paren">)</span><a class="headerlink" href="#os.path.isabs" title="정의 주소">¶</a></dt>
+<dd><p><em>path</em>가 절대 경로명이면 <code class="docutils literal notranslate"><span class="pre">True</span></code>를 반환합니다. 유닉스에서는 슬래시로 시작하고, 윈도우에서는 잠재적 드라이브 문자를 잘라낸 후 (역) 슬래시로 시작함을 의미합니다.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">버전 3.6에서 변경: </span><a class="reference internal" href="../glossary.html#term-path-like-object"><span class="xref std std-term">경로류 객체</span></a>를 받아들입니다.</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="os.path.isfile">
+<code class="sig-prename descclassname">os.path.</code><code class="sig-name descname">isfile</code><span class="sig-paren">(</span><em class="sig-param">path</em><span class="sig-paren">)</span><a class="headerlink" href="#os.path.isfile" title="정의 주소">¶</a></dt>
+<dd><p><em>path</em>가 <a class="reference internal" href="#os.path.exists" title="os.path.exists"><code class="xref py py-func docutils literal notranslate"><span class="pre">존재하는</span></code></a> 일반 파일이면 <code class="docutils literal notranslate"><span class="pre">True</span></code>를 반환합니다. 이것은 심볼릭 링크를 따르므로, 같은 경로에 대해 <a class="reference internal" href="#os.path.islink" title="os.path.islink"><code class="xref py py-func docutils literal notranslate"><span class="pre">islink()</span></code></a>와 <a class="reference internal" href="#os.path.isfile" title="os.path.isfile"><code class="xref py py-func docutils literal notranslate"><span class="pre">isfile()</span></code></a>이 모두 참일 수 있습니다.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">버전 3.6에서 변경: </span><a class="reference internal" href="../glossary.html#term-path-like-object"><span class="xref std std-term">경로류 객체</span></a>를 받아들입니다.</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="os.path.isdir">
+<code class="sig-prename descclassname">os.path.</code><code class="sig-name descname">isdir</code><span class="sig-paren">(</span><em class="sig-param">path</em><span class="sig-paren">)</span><a class="headerlink" href="#os.path.isdir" title="정의 주소">¶</a></dt>
+<dd><p><em>path</em>가 <a class="reference internal" href="#os.path.exists" title="os.path.exists"><code class="xref py py-func docutils literal notranslate"><span class="pre">존재하는</span></code></a> 디렉터리이면 <code class="docutils literal notranslate"><span class="pre">True</span></code>를 반환합니다. 이것은 심볼릭 링크를 따르므로, 같은 경로에 대해 <a class="reference internal" href="#os.path.islink" title="os.path.islink"><code class="xref py py-func docutils literal notranslate"><span class="pre">islink()</span></code></a>와 <a class="reference internal" href="#os.path.isdir" title="os.path.isdir"><code class="xref py py-func docutils literal notranslate"><span class="pre">isdir()</span></code></a>이 모두 참일 수 있습니다.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">버전 3.6에서 변경: </span><a class="reference internal" href="../glossary.html#term-path-like-object"><span class="xref std std-term">경로류 객체</span></a>를 받아들입니다.</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="os.path.islink">
+<code class="sig-prename descclassname">os.path.</code><code class="sig-name descname">islink</code><span class="sig-paren">(</span><em class="sig-param">path</em><span class="sig-paren">)</span><a class="headerlink" href="#os.path.islink" title="정의 주소">¶</a></dt>
+<dd><p><em>path</em>가 심볼릭 링크인 <a class="reference internal" href="#os.path.exists" title="os.path.exists"><code class="xref py py-func docutils literal notranslate"><span class="pre">존재하는</span></code></a> 디렉터리 항목을 가리키면 <code class="docutils literal notranslate"><span class="pre">True</span></code>를 반환합니다. 파이썬 런타임에서 심볼릭 링크를 지원하지 않으면 항상 <code class="docutils literal notranslate"><span class="pre">False</span></code>입니다.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">버전 3.6에서 변경: </span><a class="reference internal" href="../glossary.html#term-path-like-object"><span class="xref std std-term">경로류 객체</span></a>를 받아들입니다.</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="os.path.ismount">
+<code class="sig-prename descclassname">os.path.</code><code class="sig-name descname">ismount</code><span class="sig-paren">(</span><em class="sig-param">path</em><span class="sig-paren">)</span><a class="headerlink" href="#os.path.ismount" title="정의 주소">¶</a></dt>
+<dd><p>경로명 <em>path</em>가 <em class="dfn">마운트 지점(mount point)</em>이면 <code class="docutils literal notranslate"><span class="pre">True</span></code>를 반환합니다: 다른 파일 시스템이 마운트된 파일 시스템의 지점. POSIX에서, 이 함수는 <em>path</em>의 부모 <code class="file docutils literal notranslate"><em><span class="pre">path</span></em><span class="pre">/..</span></code>가 <em>path</em>와 다른 장치에 있는지, 또는 <code class="file docutils literal notranslate"><em><span class="pre">path</span></em><span class="pre">/..</span></code>와 <em>path</em>가 같은 장치에서 같은 i-노드를 가리키는지를 확인합니다 — 이 방법은 모든 유닉스와 POSIX 변형에서 마운트 지점을 감지해야 합니다. 같은 파일 시스템에서의 바인드 마운트(bind mounts)를 신뢰성 있게 감지할 수 없습니다. 윈도우에서, 드라이브 문자 루트와 공유 UNC는 항상 마운트 지점이며, 다른 경로의 경우 <code class="docutils literal notranslate"><span class="pre">GetVolumePathName</span></code>을 호출해서 입력 경로와 다른지 봅니다.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">버전 3.4에 추가: </span>윈도우에서 비 루트 마운트 지점 감지 지원.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">버전 3.6에서 변경: </span><a class="reference internal" href="../glossary.html#term-path-like-object"><span class="xref std std-term">경로류 객체</span></a>를 받아들입니다.</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="os.path.join">
+<code class="sig-prename descclassname">os.path.</code><code class="sig-name descname">join</code><span class="sig-paren">(</span><em class="sig-param">path</em>, <em class="sig-param">*paths</em><span class="sig-paren">)</span><a class="headerlink" href="#os.path.join" title="정의 주소">¶</a></dt>
+<dd><p>하나 이상의 경로 구성 요소를 지능적으로 결합합니다. 반환 값은 마지막을 제외한 <em>path</em>와 <em>*paths</em>의 모든 멤버에 대해 비어 있지 않은 각 부분 다음에 정확히 하나의 디렉터리 구분자가 오도록 이어붙인 것입니다. 이는 마지막 부분이 비어 있을 때만 결과가 구분자로 끝남을 의미합니다. 구성 요소가 절대 경로이면, 그 앞의 모든 구성 요소를 버리고 절대 경로 구성 요소에서부터 결합이 계속됩니다.</p>
+<p>윈도우에서 절대 경로 구성 요소(예를 들어 <code class="docutils literal notranslate"><span class="pre">r'\foo'</span></code>)를 만날 때 드라이브 문자가 재설정되지 않습니다. 구성 요소에 드라이브 문자가 포함되어 있으면, 이전의 모든 구성 요소를 버리고 드라이브 문자를 재설정합니다. 각 드라이브에 현재 디렉터리가 있기 때문에, <code class="docutils literal notranslate"><span class="pre">os.path.join(&quot;c:&quot;,</span> <span class="pre">&quot;foo&quot;)</span></code>는 <code class="file docutils literal notranslate"><span class="pre">c:\foo</span></code>가 아니라 드라이브 <code class="file docutils literal notranslate"><span class="pre">C:</span></code>의 현재 디렉터리에 상대적인 경로를 나타냅니다 (<code class="file docutils literal notranslate"><span class="pre">c:foo</span></code>).</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">버전 3.6에서 변경: </span><em>path</em>와 <em>paths</em>에 대해 <a class="reference internal" href="../glossary.html#term-path-like-object"><span class="xref std std-term">경로류 객체</span></a>를 받아들입니다.</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="os.path.normcase">
+<code class="sig-prename descclassname">os.path.</code><code class="sig-name descname">normcase</code><span class="sig-paren">(</span><em class="sig-param">path</em><span class="sig-paren">)</span><a class="headerlink" href="#os.path.normcase" title="정의 주소">¶</a></dt>
+<dd><p>경로명의 대소 문자를 정규화합니다. 윈도우에서는, 경로명의 모든 문자를 소문자로 변환하고, 슬래시도 역 슬래시로 변환합니다. 다른 운영 체제에서는, 경로를 변경하지 않고 반환합니다.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">버전 3.6에서 변경: </span><a class="reference internal" href="../glossary.html#term-path-like-object"><span class="xref std std-term">경로류 객체</span></a>를 받아들입니다.</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="os.path.normpath">
+<code class="sig-prename descclassname">os.path.</code><code class="sig-name descname">normpath</code><span class="sig-paren">(</span><em class="sig-param">path</em><span class="sig-paren">)</span><a class="headerlink" href="#os.path.normpath" title="정의 주소">¶</a></dt>
+<dd><blockquote>
+<div><p>중복된 구분자와 상위 수준 참조를 접어 경로명을 정규화합니다. 그래서 <code class="docutils literal notranslate"><span class="pre">A//B</span></code>, <code class="docutils literal notranslate"><span class="pre">A/B/</span></code>, <code class="docutils literal notranslate"><span class="pre">A/./B</span></code> 및 <code class="docutils literal notranslate"><span class="pre">A/foo/../B</span></code>가 모두 <code class="docutils literal notranslate"><span class="pre">A/B</span></code>가 됩니다. 이 문자열 조작은 심볼릭 링크가 포함된 경로의 의미를 변경할 수 있습니다. 윈도우에서는, 슬래시를 역 슬래시로 변환합니다. 대소 문자를 정규화하려면, <a class="reference internal" href="#os.path.normcase" title="os.path.normcase"><code class="xref py py-func docutils literal notranslate"><span class="pre">normcase()</span></code></a>를 사용하십시오.</p>
+</div></blockquote>
+<div class="admonition note">
+<p class="admonition-title">참고</p>
+<blockquote>
+<div><p>On POSIX systems, in accordance with <a class="reference external" href="http://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap04.html#tag_04_13">IEEE Std 1003.1 2013 Edition; 4.13
+Pathname Resolution</a>,
+if a pathname begins with exactly two slashes, the first component
+following the leading characters may be interpreted in an implementation-defined
+manner, although more than two leading characters shall be treated as a
+single character.</p>
+</div></blockquote>
+<div class="versionchanged">
+<p><span class="versionmodified changed">버전 3.6에서 변경: </span><a class="reference internal" href="../glossary.html#term-path-like-object"><span class="xref std std-term">경로류 객체</span></a>를 받아들입니다.</p>
+</div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="os.path.realpath">
+<code class="sig-prename descclassname">os.path.</code><code class="sig-name descname">realpath</code><span class="sig-paren">(</span><em class="sig-param">path</em><span class="sig-paren">)</span><a class="headerlink" href="#os.path.realpath" title="정의 주소">¶</a></dt>
+<dd><p>(운영 체제에서 지원한다면) 경로에서 발견된 심볼릭 링크를 제거해서 지정된 파일명의 규범적(canonical) 경로를 반환합니다.</p>
+<div class="admonition note">
+<p class="admonition-title">참고</p>
+<p>심볼릭 링크 순환이 발생하면, 반환된 경로는 순환의 한 멤버가 되지만, 어떤 멤버가 될지는 보장하지 않습니다.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">버전 3.6에서 변경: </span><a class="reference internal" href="../glossary.html#term-path-like-object"><span class="xref std std-term">경로류 객체</span></a>를 받아들입니다.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">버전 3.8에서 변경: </span>윈도우에서 심볼릭 링크와 정션(junctions)이 이제 해석됩니다.</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="os.path.relpath">
+<code class="sig-prename descclassname">os.path.</code><code class="sig-name descname">relpath</code><span class="sig-paren">(</span><em class="sig-param">path</em>, <em class="sig-param">start=os.curdir</em><span class="sig-paren">)</span><a class="headerlink" href="#os.path.relpath" title="정의 주소">¶</a></dt>
+<dd><p>Return a relative filepath to <em>path</em> either from the current directory or
+from an optional <em>start</em> directory.  This is a path computation:  the
+filesystem is not accessed to confirm the existence or nature of <em>path</em> or
+<em>start</em>.  On Windows, <a class="reference internal" href="exceptions.html#ValueError" title="ValueError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code></a> is raised when <em>path</em> and <em>start</em>
+are on different drives.</p>
+<p><em>start</em>의 기본값은 <a class="reference internal" href="os.html#os.curdir" title="os.curdir"><code class="xref py py-attr docutils literal notranslate"><span class="pre">os.curdir</span></code></a>입니다.</p>
+<p class="availability"><a class="reference internal" href="intro.html#availability"><span class="std std-ref">가용성</span></a>: 유닉스, 윈도우</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">버전 3.6에서 변경: </span><a class="reference internal" href="../glossary.html#term-path-like-object"><span class="xref std std-term">경로류 객체</span></a>를 받아들입니다.</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="os.path.samefile">
+<code class="sig-prename descclassname">os.path.</code><code class="sig-name descname">samefile</code><span class="sig-paren">(</span><em class="sig-param">path1</em>, <em class="sig-param">path2</em><span class="sig-paren">)</span><a class="headerlink" href="#os.path.samefile" title="정의 주소">¶</a></dt>
+<dd><p>두 경로명 인자가 같은 파일이나 디렉터리를 가리키면 <code class="docutils literal notranslate"><span class="pre">True</span></code>를 반환합니다. 장치 번호와 i-노드 번호로 결정하며 경로명 중 어느 하나에 대해 <a class="reference internal" href="os.html#os.stat" title="os.stat"><code class="xref py py-func docutils literal notranslate"><span class="pre">os.stat()</span></code></a> 호출이 실패하면 예외를 발생시킵니다.</p>
+<p class="availability"><a class="reference internal" href="intro.html#availability"><span class="std std-ref">가용성</span></a>: 유닉스, 윈도우</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">버전 3.2에서 변경: </span>윈도우 지원이 추가되었습니다.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">버전 3.4에서 변경: </span>윈도우는 이제 다른 모든 플랫폼과 같은 구현을 사용합니다.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">버전 3.6에서 변경: </span><a class="reference internal" href="../glossary.html#term-path-like-object"><span class="xref std std-term">경로류 객체</span></a>를 받아들입니다.</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="os.path.sameopenfile">
+<code class="sig-prename descclassname">os.path.</code><code class="sig-name descname">sameopenfile</code><span class="sig-paren">(</span><em class="sig-param">fp1</em>, <em class="sig-param">fp2</em><span class="sig-paren">)</span><a class="headerlink" href="#os.path.sameopenfile" title="정의 주소">¶</a></dt>
+<dd><p>파일 기술자 <em>fp1</em>과 <em>fp2</em>가 같은 파일을 가리키면 <code class="docutils literal notranslate"><span class="pre">True</span></code>를 반환합니다.</p>
+<p class="availability"><a class="reference internal" href="intro.html#availability"><span class="std std-ref">가용성</span></a>: 유닉스, 윈도우</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">버전 3.2에서 변경: </span>윈도우 지원이 추가되었습니다.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">버전 3.6에서 변경: </span><a class="reference internal" href="../glossary.html#term-path-like-object"><span class="xref std std-term">경로류 객체</span></a>를 받아들입니다.</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="os.path.samestat">
+<code class="sig-prename descclassname">os.path.</code><code class="sig-name descname">samestat</code><span class="sig-paren">(</span><em class="sig-param">stat1</em>, <em class="sig-param">stat2</em><span class="sig-paren">)</span><a class="headerlink" href="#os.path.samestat" title="정의 주소">¶</a></dt>
+<dd><p>stat 튜플 <em>stat1</em>과 <em>stat2</em>가 같은 파일을 가리키면 <code class="docutils literal notranslate"><span class="pre">True</span></code>를 반환합니다. 이러한 구조는 <a class="reference internal" href="os.html#os.fstat" title="os.fstat"><code class="xref py py-func docutils literal notranslate"><span class="pre">os.fstat()</span></code></a>, <a class="reference internal" href="os.html#os.lstat" title="os.lstat"><code class="xref py py-func docutils literal notranslate"><span class="pre">os.lstat()</span></code></a> 또는 <a class="reference internal" href="os.html#os.stat" title="os.stat"><code class="xref py py-func docutils literal notranslate"><span class="pre">os.stat()</span></code></a>에 의해 반환되었을 수 있습니다. 이 함수는 <a class="reference internal" href="#os.path.samefile" title="os.path.samefile"><code class="xref py py-func docutils literal notranslate"><span class="pre">samefile()</span></code></a>과 <a class="reference internal" href="#os.path.sameopenfile" title="os.path.sameopenfile"><code class="xref py py-func docutils literal notranslate"><span class="pre">sameopenfile()</span></code></a>에서 사용하는 하부 비교를 구현합니다.</p>
+<p class="availability"><a class="reference internal" href="intro.html#availability"><span class="std std-ref">가용성</span></a>: 유닉스, 윈도우</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">버전 3.4에서 변경: </span>윈도우 지원이 추가되었습니다.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">버전 3.6에서 변경: </span><a class="reference internal" href="../glossary.html#term-path-like-object"><span class="xref std std-term">경로류 객체</span></a>를 받아들입니다.</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="os.path.split">
+<code class="sig-prename descclassname">os.path.</code><code class="sig-name descname">split</code><span class="sig-paren">(</span><em class="sig-param">path</em><span class="sig-paren">)</span><a class="headerlink" href="#os.path.split" title="정의 주소">¶</a></dt>
+<dd><p><em>path</em> 경로명을 <code class="docutils literal notranslate"><span class="pre">(head,</span> <span class="pre">tail)</span></code> 쌍으로 분할합니다. 여기서 <em>tail</em>은 마지막 경로명 구성 요소이고 <em>head</em>는 그 앞에 오는 모든 것입니다. <em>tail</em> 부분에는 슬래시가 포함되지 않습니다; <em>path</em>가 슬래시로 끝나면, <em>tail</em>은 비어 있습니다. <em>path</em>에 슬래시가 없으면, <em>head</em>는 비어 있습니다. <em>path</em>가 비어 있으면, <em>head</em>와 <em>tail</em>이 모두 비어 있습니다. 후행 슬래시는 루트(하나나 그 이상의 슬래시로만 구성됩니다)가 아니라면 <em>head</em>에서 제거됩니다. 모든 경우에, <code class="docutils literal notranslate"><span class="pre">join(head,</span> <span class="pre">tail)</span></code>은 <em>path</em>와 같은 위치에 대한 경로를 반환합니다 (하지만 문자열은 다를 수 있습니다). <a class="reference internal" href="#os.path.dirname" title="os.path.dirname"><code class="xref py py-func docutils literal notranslate"><span class="pre">dirname()</span></code></a>과 <a class="reference internal" href="#os.path.basename" title="os.path.basename"><code class="xref py py-func docutils literal notranslate"><span class="pre">basename()</span></code></a> 함수도 참조하십시오.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">버전 3.6에서 변경: </span><a class="reference internal" href="../glossary.html#term-path-like-object"><span class="xref std std-term">경로류 객체</span></a>를 받아들입니다.</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="os.path.splitdrive">
+<code class="sig-prename descclassname">os.path.</code><code class="sig-name descname">splitdrive</code><span class="sig-paren">(</span><em class="sig-param">path</em><span class="sig-paren">)</span><a class="headerlink" href="#os.path.splitdrive" title="정의 주소">¶</a></dt>
+<dd><p>경로명 <em>path</em>를 쌍 <code class="docutils literal notranslate"><span class="pre">(drive,</span> <span class="pre">tail)</span></code>로 분할합니다. 여기서 <em>drive</em>는 마운트 지점이나 빈 문자열입니다. 드라이브 지정을 사용하지 않는 시스템에서 <em>drive</em>는 항상 빈 문자열입니다. 모든 경우에, <code class="docutils literal notranslate"><span class="pre">drive</span> <span class="pre">+</span> <span class="pre">tail</span></code>은 <em>path</em>와 같습니다.</p>
+<p>윈도우에서는, 경로명을 드라이브/UNC 공유 지점과 상대 경로로 분할합니다.</p>
+<p>If the path contains a drive letter, drive will contain everything
+up to and including the colon:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">splitdrive</span><span class="p">(</span><span class="s2">&quot;c:/dir&quot;</span><span class="p">)</span>
+<span class="go">(&quot;c:&quot;, &quot;/dir&quot;)</span>
+</pre></div>
+</div>
+<p>If the path contains a UNC path, drive will contain the host name
+and share, up to but not including the fourth separator:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">splitdrive</span><span class="p">(</span><span class="s2">&quot;//host/computer/dir&quot;</span><span class="p">)</span>
+<span class="go">(&quot;//host/computer&quot;, &quot;/dir&quot;)</span>
+</pre></div>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">버전 3.6에서 변경: </span><a class="reference internal" href="../glossary.html#term-path-like-object"><span class="xref std std-term">경로류 객체</span></a>를 받아들입니다.</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="os.path.splitext">
+<code class="sig-prename descclassname">os.path.</code><code class="sig-name descname">splitext</code><span class="sig-paren">(</span><em class="sig-param">path</em><span class="sig-paren">)</span><a class="headerlink" href="#os.path.splitext" title="정의 주소">¶</a></dt>
+<dd><p>Split the pathname <em>path</em> into a pair <code class="docutils literal notranslate"><span class="pre">(root,</span> <span class="pre">ext)</span></code>  such that <code class="docutils literal notranslate"><span class="pre">root</span> <span class="pre">+</span> <span class="pre">ext</span> <span class="pre">==</span>
+<span class="pre">path</span></code>, and the extension, <em>ext</em>, is empty or begins with a period and contains at
+most one period.</p>
+<p>If the path contains no extension, <em>ext</em> will be <code class="docutils literal notranslate"><span class="pre">''</span></code>:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">splitext</span><span class="p">(</span><span class="s1">&#39;bar&#39;</span><span class="p">)</span>
+<span class="go">(&#39;bar&#39;, &#39;&#39;)</span>
+</pre></div>
+</div>
+<p>If the path contains an extension, then <em>ext</em> will be set to this extension,
+including the leading period. Note that previous periods will be ignored:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">splitext</span><span class="p">(</span><span class="s1">&#39;foo.bar.exe&#39;</span><span class="p">)</span>
+<span class="go">(&#39;foo.bar&#39;, &#39;.exe&#39;)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">splitext</span><span class="p">(</span><span class="s1">&#39;/foo/bar.exe&#39;</span><span class="p">)</span>
+<span class="go">(&#39;/foo/bar&#39;, &#39;.exe&#39;)</span>
+</pre></div>
+</div>
+<p>Leading periods of the last component of the path are considered to
+be part of the root:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">splitext</span><span class="p">(</span><span class="s1">&#39;.cshrc&#39;</span><span class="p">)</span>
+<span class="go">(&#39;.cshrc&#39;, &#39;&#39;)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">splitext</span><span class="p">(</span><span class="s1">&#39;/foo/....jpg&#39;</span><span class="p">)</span>
+<span class="go">(&#39;/foo/....jpg&#39;, &#39;&#39;)</span>
+</pre></div>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">버전 3.6에서 변경: </span><a class="reference internal" href="../glossary.html#term-path-like-object"><span class="xref std std-term">경로류 객체</span></a>를 받아들입니다.</p>
+</div>
+</dd></dl>
+
+<dl class="data">
+<dt id="os.path.supports_unicode_filenames">
+<code class="sig-prename descclassname">os.path.</code><code class="sig-name descname">supports_unicode_filenames</code><a class="headerlink" href="#os.path.supports_unicode_filenames" title="정의 주소">¶</a></dt>
+<dd><p>(파일 시스템에 의해 부과된 제한 내에서) 임의의 유니코드 문자열을 파일 이름으로 사용할 수 있으면 <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p>
+</dd></dl>
+
+</section>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>이전 항목</h4>
+  <p class="topless"><a href="pathlib.html"
+                        title="이전 장"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pathlib</span></code> — 객체 지향 파일 시스템 경로</a></p>
+  <h4>다음 항목</h4>
+  <p class="topless"><a href="fileinput.html"
+                        title="다음 장"><code class="xref py py-mod docutils literal notranslate"><span class="pre">fileinput</span></code> — 여러 입력 스트림에서 줄을 이터레이트 하기</a></p>
+  <div role="note" aria-label="source link">
+    <h3>현재 문서</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">버그 보고하기</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/3.9/Doc/library/os.path.rst"
+            rel="nofollow">소스 보기
+        </a>
+      </li>
+    </ul>
+  </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>탐색</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="전체 색인"
+             >색인</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 모듈 목록"
+             >모듈</a> |</li>
+        <li class="right" >
+          <a href="fileinput.html" title="fileinput — 여러 입력 스트림에서 줄을 이터레이트 하기"
+             >다음</a> |</li>
+        <li class="right" >
+          <a href="pathlib.html" title="pathlib — 객체 지향 파일 시스템 경로"
+             >이전</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.9.14 Documentation</a> &#187;
+    </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >파이썬 표준 라이브러리</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="filesys.html" >파일과 디렉터리 액세스</a> &#187;</li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="빠른 검색" aria-label="빠른 검색" type="text" name="q" />
+          <input type="submit" value="이동" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </form>
+    </div>
+                     |
+                </li>
+            
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">저작권</a> 2001-2022, Python Software Foundation.
+    <br />
+    This page is licensed under the Python Software Foundation License Version 2.
+    <br />
+    Examples, recipes, and other code in the documentation are additionally licensed under the Zero Clause BSD License.
+    <br />
+    See <a href="/license.html">History and License</a> for more information.<br />
+    <br />
+
+    The Python Software Foundation is a non-profit corporation.
+<a href="https://www.python.org/psf/donations/">Please donate.</a>
+<br />
+    <br />
+
+    최종 업데이트: 9월 11, 2022
+    <a href="/bugs.html">Found a bug</a>?
+    <br />
+
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 2.4.4.
+    </div>
+
+  </body>
+</html>

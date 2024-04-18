@@ -1,0 +1,320 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ko">
+  <head>
+    <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>디버깅과 프로파일링 &#8212; Python 3.9.14 문서</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="../_static/pydoctheme.css?2022.1" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/translations.js"></script>
+    
+    <script src="../_static/sidebar.js"></script>
+    
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Python 3.9.14 문서에서 찾기"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="이 문서 정보" href="../about.html" />
+    <link rel="index" title="색인" href="../genindex.html" />
+    <link rel="search" title="검색" href="../search.html" />
+    <link rel="copyright" title="저작권" href="../copyright.html" />
+    <link rel="next" title="감사 이벤트 표" href="audit_events.html" />
+    <link rel="prev" title="test — 파이썬 용 회귀 테스트 패키지" href="test.html" />
+    <link rel="canonical" href="https://docs.python.org/3/library/debug.html" />
+    
+      
+    
+
+    
+    <style>
+      @media only screen {
+        table.full-width-table {
+            width: 100%;
+        }
+      }
+    </style>
+<link rel="shortcut icon" type="image/png" href="../_static/py.svg" />
+            <script type="text/javascript" src="../_static/copybutton.js"></script>
+            <script type="text/javascript" src="../_static/menu.js"></script> 
+
+  </head>
+<body>
+<div class="mobile-nav">
+    <input type="checkbox" id="menuToggler" class="toggler__input" aria-controls="navigation"
+           aria-pressed="false" aria-expanded="false" role="button" aria-label="Menu" />
+    <label for="menuToggler" class="toggler__label">
+        <span></span>
+    </label>
+    <nav class="nav-content" role="navigation">
+         <a href="https://www.python.org/" class="nav-logo">
+             <img src="../_static/py.svg" alt="Logo"/>
+         </a>
+        <div class="version_switcher_placeholder"></div>
+        <form role="search" class="search" action="../search.html" method="get">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" class="search-icon">
+                <path fill-rule="nonzero"
+                        d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 001.48-5.34c-.47-2.78-2.79-5-5.59-5.34a6.505 6.505 0 00-7.27 7.27c.34 2.8 2.56 5.12 5.34 5.59a6.5 6.5 0 005.34-1.48l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49 0 .41-.41.41-1.08 0-1.49L15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" fill="#444"></path>
+            </svg>
+            <input type="text" name="q" aria-label="빠른 검색"/>
+            <input type="submit" value="이동"/>
+        </form>
+    </nav>
+    <div class="menu-wrapper">
+        <nav class="menu" role="navigation" aria-label="main navigation">
+            <div class="language_switcher_placeholder"></div>
+  <h4>이전 항목</h4>
+  <p class="topless"><a href="test.html"
+                        title="이전 장"><code class="xref py py-mod docutils literal notranslate"><span class="pre">test</span></code> — 파이썬 용 회귀 테스트 패키지</a></p>
+  <h4>다음 항목</h4>
+  <p class="topless"><a href="audit_events.html"
+                        title="다음 장">감사 이벤트 표</a></p>
+  <div role="note" aria-label="source link">
+    <h3>현재 문서</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">버그 보고하기</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/3.9/Doc/library/debug.rst"
+            rel="nofollow">소스 보기
+        </a>
+      </li>
+    </ul>
+  </div>
+        </nav>
+    </div>
+</div>
+
+  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>탐색</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="전체 색인"
+             accesskey="I">색인</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 모듈 목록"
+             >모듈</a> |</li>
+        <li class="right" >
+          <a href="audit_events.html" title="감사 이벤트 표"
+             accesskey="N">다음</a> |</li>
+        <li class="right" >
+          <a href="test.html" title="test — 파이썬 용 회귀 테스트 패키지"
+             accesskey="P">이전</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.9.14 Documentation</a> &#187;
+    </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">파이썬 표준 라이브러리</a> &#187;</li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="빠른 검색" aria-label="빠른 검색" type="text" name="q" />
+          <input type="submit" value="이동" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </form>
+    </div>
+                     |
+                </li>
+            
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="debugging-and-profiling">
+<h1>디버깅과 프로파일링<a class="headerlink" href="#debugging-and-profiling" title="제목 주소">¶</a></h1>
+<p>이 라이브러리들은 파이썬 개발을 돕습니다: 디버거를 사용하면 코드를 단계별로 실행하고, 스택 프레임을 분석하고, 중단 점을 설정할 수 있으며, 프로파일러는 코드를 실행하고, 프로그램의 병목 지점을 식별할 수 있도록 실행 시간을 자세하게 분석합니다. 감사 이벤트는 이것이 없다면 침입적인 디버깅이나 패치가 필요한 실행 시간 동작에 대한 가시성을 제공합니다.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="audit_events.html">감사 이벤트 표</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bdb.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bdb</span></code> — 디버거 프레임워크</a></li>
+<li class="toctree-l1"><a class="reference internal" href="faulthandler.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">faulthandler</span></code> — 파이썬 트레이스백 덤프</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="faulthandler.html#dumping-the-traceback">트레이스백 덤프하기</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faulthandler.html#fault-handler-state">결함 처리기 상태</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faulthandler.html#dumping-the-tracebacks-after-a-timeout">시간 초과 후에 트레이스백 덤프하기</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faulthandler.html#dumping-the-traceback-on-a-user-signal">사용자 시그널에 트레이스백 덤프하기</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faulthandler.html#issue-with-file-descriptors">파일 기술자 관련 문제</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faulthandler.html#example">예제</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pdb.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pdb</span></code> — 파이썬 디버거</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pdb.html#debugger-commands">디버거 명령들</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="profile.html">파이썬 프로파일러</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="profile.html#introduction-to-the-profilers">프로파일러 소개</a></li>
+<li class="toctree-l2"><a class="reference internal" href="profile.html#instant-user-s-manual">즉석 사용자 설명서</a></li>
+<li class="toctree-l2"><a class="reference internal" href="profile.html#module-cProfile"><code class="xref py py-mod docutils literal notranslate"><span class="pre">profile</span></code>과 <code class="xref py py-mod docutils literal notranslate"><span class="pre">cProfile</span></code> 모듈 레퍼런스</a></li>
+<li class="toctree-l2"><a class="reference internal" href="profile.html#the-stats-class"><code class="xref py py-class docutils literal notranslate"><span class="pre">Stats</span></code> 클래스</a></li>
+<li class="toctree-l2"><a class="reference internal" href="profile.html#what-is-deterministic-profiling">결정론적 프로파일링이란 무엇입니까?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="profile.html#limitations">한계</a></li>
+<li class="toctree-l2"><a class="reference internal" href="profile.html#calibration">보정</a></li>
+<li class="toctree-l2"><a class="reference internal" href="profile.html#using-a-custom-timer">사용자 정의 타이머 사용하기</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="timeit.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">timeit</span></code> — 작은 코드 조각의 실행 시간 측정</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="timeit.html#basic-examples">기본 예제</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timeit.html#python-interface">파이썬 인터페이스</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timeit.html#command-line-interface">명령 줄 인터페이스</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timeit.html#examples">예제</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="trace.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">trace</span></code> — 파이썬 문장 실행 추적</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="trace.html#command-line-usage">명령 줄 사용법</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="trace.html#main-options">주요 옵션</a></li>
+<li class="toctree-l3"><a class="reference internal" href="trace.html#modifiers">수정자</a></li>
+<li class="toctree-l3"><a class="reference internal" href="trace.html#filters">필터</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="trace.html#programmatic-interface">프로그래밍 인터페이스</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tracemalloc.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tracemalloc</span></code> — 메모리 할당 추적</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tracemalloc.html#examples">예</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tracemalloc.html#display-the-top-10">상위 10개 표시</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tracemalloc.html#compute-differences">차이 계산</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tracemalloc.html#get-the-traceback-of-a-memory-block">메모리 블록의 트레이스백 얻기</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tracemalloc.html#pretty-top">예쁜 탑(top)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="tracemalloc.html#record-the-current-and-peak-size-of-all-traced-memory-blocks">모든 추적한 메모리 블록의 현재 및 최대 크기를 기록</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tracemalloc.html#api">API</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tracemalloc.html#functions">함수</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tracemalloc.html#domainfilter">DomainFilter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tracemalloc.html#filter">Filter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tracemalloc.html#frame">Frame</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tracemalloc.html#snapshot">Snapshot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tracemalloc.html#statistic">Statistic</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tracemalloc.html#statisticdiff">StatisticDiff</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tracemalloc.html#trace">Trace</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tracemalloc.html#traceback">Traceback</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>이전 항목</h4>
+  <p class="topless"><a href="test.html"
+                        title="이전 장"><code class="xref py py-mod docutils literal notranslate"><span class="pre">test</span></code> — 파이썬 용 회귀 테스트 패키지</a></p>
+  <h4>다음 항목</h4>
+  <p class="topless"><a href="audit_events.html"
+                        title="다음 장">감사 이벤트 표</a></p>
+  <div role="note" aria-label="source link">
+    <h3>현재 문서</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">버그 보고하기</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/3.9/Doc/library/debug.rst"
+            rel="nofollow">소스 보기
+        </a>
+      </li>
+    </ul>
+  </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>탐색</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="전체 색인"
+             >색인</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 모듈 목록"
+             >모듈</a> |</li>
+        <li class="right" >
+          <a href="audit_events.html" title="감사 이벤트 표"
+             >다음</a> |</li>
+        <li class="right" >
+          <a href="test.html" title="test — 파이썬 용 회귀 테스트 패키지"
+             >이전</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.9.14 Documentation</a> &#187;
+    </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >파이썬 표준 라이브러리</a> &#187;</li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="빠른 검색" aria-label="빠른 검색" type="text" name="q" />
+          <input type="submit" value="이동" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </form>
+    </div>
+                     |
+                </li>
+            
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">저작권</a> 2001-2022, Python Software Foundation.
+    <br />
+    This page is licensed under the Python Software Foundation License Version 2.
+    <br />
+    Examples, recipes, and other code in the documentation are additionally licensed under the Zero Clause BSD License.
+    <br />
+    See <a href="/license.html">History and License</a> for more information.<br />
+    <br />
+
+    The Python Software Foundation is a non-profit corporation.
+<a href="https://www.python.org/psf/donations/">Please donate.</a>
+<br />
+    <br />
+
+    최종 업데이트: 9월 11, 2022
+    <a href="/bugs.html">Found a bug</a>?
+    <br />
+
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 2.4.4.
+    </div>
+
+  </body>
+</html>

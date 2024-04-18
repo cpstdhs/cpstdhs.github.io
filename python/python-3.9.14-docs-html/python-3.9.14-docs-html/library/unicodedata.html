@@ -1,0 +1,381 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ko">
+  <head>
+    <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>unicodedata — 유니코드 데이터베이스 &#8212; Python 3.9.14 문서</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="../_static/pydoctheme.css?2022.1" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/translations.js"></script>
+    
+    <script src="../_static/sidebar.js"></script>
+    
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Python 3.9.14 문서에서 찾기"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="이 문서 정보" href="../about.html" />
+    <link rel="index" title="색인" href="../genindex.html" />
+    <link rel="search" title="검색" href="../search.html" />
+    <link rel="copyright" title="저작권" href="../copyright.html" />
+    <link rel="next" title="stringprep — 인터넷 문자열 준비" href="stringprep.html" />
+    <link rel="prev" title="textwrap — 텍스트 래핑과 채우기" href="textwrap.html" />
+    <link rel="canonical" href="https://docs.python.org/3/library/unicodedata.html" />
+    
+      
+    
+
+    
+    <style>
+      @media only screen {
+        table.full-width-table {
+            width: 100%;
+        }
+      }
+    </style>
+<link rel="shortcut icon" type="image/png" href="../_static/py.svg" />
+            <script type="text/javascript" src="../_static/copybutton.js"></script>
+            <script type="text/javascript" src="../_static/menu.js"></script> 
+
+  </head>
+<body>
+<div class="mobile-nav">
+    <input type="checkbox" id="menuToggler" class="toggler__input" aria-controls="navigation"
+           aria-pressed="false" aria-expanded="false" role="button" aria-label="Menu" />
+    <label for="menuToggler" class="toggler__label">
+        <span></span>
+    </label>
+    <nav class="nav-content" role="navigation">
+         <a href="https://www.python.org/" class="nav-logo">
+             <img src="../_static/py.svg" alt="Logo"/>
+         </a>
+        <div class="version_switcher_placeholder"></div>
+        <form role="search" class="search" action="../search.html" method="get">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" class="search-icon">
+                <path fill-rule="nonzero"
+                        d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 001.48-5.34c-.47-2.78-2.79-5-5.59-5.34a6.505 6.505 0 00-7.27 7.27c.34 2.8 2.56 5.12 5.34 5.59a6.5 6.5 0 005.34-1.48l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49 0 .41-.41.41-1.08 0-1.49L15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" fill="#444"></path>
+            </svg>
+            <input type="text" name="q" aria-label="빠른 검색"/>
+            <input type="submit" value="이동"/>
+        </form>
+    </nav>
+    <div class="menu-wrapper">
+        <nav class="menu" role="navigation" aria-label="main navigation">
+            <div class="language_switcher_placeholder"></div>
+  <h4>이전 항목</h4>
+  <p class="topless"><a href="textwrap.html"
+                        title="이전 장"><code class="xref py py-mod docutils literal notranslate"><span class="pre">textwrap</span></code> — 텍스트 래핑과 채우기</a></p>
+  <h4>다음 항목</h4>
+  <p class="topless"><a href="stringprep.html"
+                        title="다음 장"><code class="xref py py-mod docutils literal notranslate"><span class="pre">stringprep</span></code> — 인터넷 문자열 준비</a></p>
+  <div role="note" aria-label="source link">
+    <h3>현재 문서</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">버그 보고하기</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/3.9/Doc/library/unicodedata.rst"
+            rel="nofollow">소스 보기
+        </a>
+      </li>
+    </ul>
+  </div>
+        </nav>
+    </div>
+</div>
+
+  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>탐색</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="전체 색인"
+             accesskey="I">색인</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 모듈 목록"
+             >모듈</a> |</li>
+        <li class="right" >
+          <a href="stringprep.html" title="stringprep — 인터넷 문자열 준비"
+             accesskey="N">다음</a> |</li>
+        <li class="right" >
+          <a href="textwrap.html" title="textwrap — 텍스트 래핑과 채우기"
+             accesskey="P">이전</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.9.14 Documentation</a> &#187;
+    </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >파이썬 표준 라이브러리</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="text.html" accesskey="U">텍스트 처리 서비스</a> &#187;</li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="빠른 검색" aria-label="빠른 검색" type="text" name="q" />
+          <input type="submit" value="이동" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </form>
+    </div>
+                     |
+                </li>
+            
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="module-unicodedata">
+<span id="unicodedata-unicode-database"></span><h1><a class="reference internal" href="#module-unicodedata" title="unicodedata: Access the Unicode Database."><code class="xref py py-mod docutils literal notranslate"><span class="pre">unicodedata</span></code></a> — 유니코드 데이터베이스<a class="headerlink" href="#module-unicodedata" title="제목 주소">¶</a></h1>
+<hr class="docutils" id="index-0" />
+<p>이 모듈은 모든 유니코드 문자에 대한 문자 속성을 정의하는 유니코드 문자 데이터베이스(UCD – Unicode Character Database)에 대한 액세스를 제공합니다. 이 데이터베이스에 포함된 데이터는 <a class="reference external" href="https://www.unicode.org/Public/13.0.0/ucd">UCD 버전 13.0.0</a>으로 컴파일됩니다.</p>
+<p>모듈은 유니코드 표준 부속서 #44, <a class="reference external" href="https://www.unicode.org/reports/tr44/">“유니코드 문자 데이터베이스”</a>에 정의된 것과 같은 이름과 기호를 사용합니다. 다음과 같은 함수를 정의합니다:</p>
+<dl class="function">
+<dt id="unicodedata.lookup">
+<code class="sig-prename descclassname">unicodedata.</code><code class="sig-name descname">lookup</code><span class="sig-paren">(</span><em class="sig-param">name</em><span class="sig-paren">)</span><a class="headerlink" href="#unicodedata.lookup" title="정의 주소">¶</a></dt>
+<dd><p>이름으로 문자를 조회합니다. 지정된 이름의 문자가 발견되면, 대응하는 문자를 돌려줍니다. 발견되지 않으면, <a class="reference internal" href="exceptions.html#KeyError" title="KeyError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">KeyError</span></code></a>가 발생합니다.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">버전 3.3에서 변경: </span>이름 별칭 <a class="footnote-reference brackets" href="#id3" id="id1">1</a> 과 명명된 시퀀스 <a class="footnote-reference brackets" href="#id4" id="id2">2</a> 가 추가되었습니다.</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="unicodedata.name">
+<code class="sig-prename descclassname">unicodedata.</code><code class="sig-name descname">name</code><span class="sig-paren">(</span><em class="sig-param">chr</em><span class="optional">[</span>, <em class="sig-param">default</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#unicodedata.name" title="정의 주소">¶</a></dt>
+<dd><p><em>chr</em> 문자에 할당된 이름을 문자열로 반환합니다. 이름이 정의되지 않으면, <em>default</em>가 반환되거나, 지정되지 않으면 <a class="reference internal" href="exceptions.html#ValueError" title="ValueError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code></a>가 발생합니다.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="unicodedata.decimal">
+<code class="sig-prename descclassname">unicodedata.</code><code class="sig-name descname">decimal</code><span class="sig-paren">(</span><em class="sig-param">chr</em><span class="optional">[</span>, <em class="sig-param">default</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#unicodedata.decimal" title="정의 주소">¶</a></dt>
+<dd><p><em>chr</em> 문자에 할당된 10진수 값을 정수로 반환합니다. 그러한 값이 정의되어 있지 않으면 <em>default</em>가 반환되거나, 지정되지 않으면 <a class="reference internal" href="exceptions.html#ValueError" title="ValueError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code></a>가 발생합니다.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="unicodedata.digit">
+<code class="sig-prename descclassname">unicodedata.</code><code class="sig-name descname">digit</code><span class="sig-paren">(</span><em class="sig-param">chr</em><span class="optional">[</span>, <em class="sig-param">default</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#unicodedata.digit" title="정의 주소">¶</a></dt>
+<dd><p><em>chr</em> 문자에 할당된 숫자(digit) 값을 정수로 반환합니다. 그러한 값이 정의되어 있지 않으면 <em>default</em>가 반환되거나, 지정되지 않으면 <a class="reference internal" href="exceptions.html#ValueError" title="ValueError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code></a>가 발생합니다.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="unicodedata.numeric">
+<code class="sig-prename descclassname">unicodedata.</code><code class="sig-name descname">numeric</code><span class="sig-paren">(</span><em class="sig-param">chr</em><span class="optional">[</span>, <em class="sig-param">default</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#unicodedata.numeric" title="정의 주소">¶</a></dt>
+<dd><p><em>chr</em> 문자에 할당된 수치(numeric value)를 float로 반환합니다. 그러한 값이 정의되어 있지 않으면 <em>default</em>가 반환되거나, 지정되지 않으면 <a class="reference internal" href="exceptions.html#ValueError" title="ValueError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code></a>가 발생합니다.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="unicodedata.category">
+<code class="sig-prename descclassname">unicodedata.</code><code class="sig-name descname">category</code><span class="sig-paren">(</span><em class="sig-param">chr</em><span class="sig-paren">)</span><a class="headerlink" href="#unicodedata.category" title="정의 주소">¶</a></dt>
+<dd><p><em>chr</em> 문자에 할당된 일반 범주(general category)를 문자열로 반환합니다.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="unicodedata.bidirectional">
+<code class="sig-prename descclassname">unicodedata.</code><code class="sig-name descname">bidirectional</code><span class="sig-paren">(</span><em class="sig-param">chr</em><span class="sig-paren">)</span><a class="headerlink" href="#unicodedata.bidirectional" title="정의 주소">¶</a></dt>
+<dd><p><em>chr</em> 문자에 할당된 양방향 클래스(bidirectional class)를 문자열로 반환합니다. 그러한 값이 정의되어 있지 않으면, 빈 문자열이 반환됩니다.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="unicodedata.combining">
+<code class="sig-prename descclassname">unicodedata.</code><code class="sig-name descname">combining</code><span class="sig-paren">(</span><em class="sig-param">chr</em><span class="sig-paren">)</span><a class="headerlink" href="#unicodedata.combining" title="정의 주소">¶</a></dt>
+<dd><p><em>chr</em> 문자에 할당된 정준 결합 클래스(canonical combining class)를 정수로 반환합니다. 결합 클래스가 정의되지 않으면 <code class="docutils literal notranslate"><span class="pre">0</span></code>을 반환합니다.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="unicodedata.east_asian_width">
+<code class="sig-prename descclassname">unicodedata.</code><code class="sig-name descname">east_asian_width</code><span class="sig-paren">(</span><em class="sig-param">chr</em><span class="sig-paren">)</span><a class="headerlink" href="#unicodedata.east_asian_width" title="정의 주소">¶</a></dt>
+<dd><p>문자 <em>chr</em>에 할당된 동아시아 폭(east asian width)을 문자열로 반환합니다.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="unicodedata.mirrored">
+<code class="sig-prename descclassname">unicodedata.</code><code class="sig-name descname">mirrored</code><span class="sig-paren">(</span><em class="sig-param">chr</em><span class="sig-paren">)</span><a class="headerlink" href="#unicodedata.mirrored" title="정의 주소">¶</a></dt>
+<dd><p>문자 <em>chr</em>에 할당된 거울상 속성(mirrored property)을 정수로 반환합니다. 문자가 양방향 텍스트에서 “거울상” 문자로 식별되면 <code class="docutils literal notranslate"><span class="pre">1</span></code>을 반환하고, 그렇지 않으면 <code class="docutils literal notranslate"><span class="pre">0</span></code>을 반환합니다.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="unicodedata.decomposition">
+<code class="sig-prename descclassname">unicodedata.</code><code class="sig-name descname">decomposition</code><span class="sig-paren">(</span><em class="sig-param">chr</em><span class="sig-paren">)</span><a class="headerlink" href="#unicodedata.decomposition" title="정의 주소">¶</a></dt>
+<dd><p>문자 <em>chr</em>에 할당된 문자 분해 매핑(character decomposition mapping)을 문자열로 반환합니다. 그러한 매핑이 정의되어 있지 않으면 빈 문자열이 반환됩니다.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="unicodedata.normalize">
+<code class="sig-prename descclassname">unicodedata.</code><code class="sig-name descname">normalize</code><span class="sig-paren">(</span><em class="sig-param">form</em>, <em class="sig-param">unistr</em><span class="sig-paren">)</span><a class="headerlink" href="#unicodedata.normalize" title="정의 주소">¶</a></dt>
+<dd><p>유니코드 문자열 <em>unistr</em>에 대한 정규화 형식(normal form) <em>form</em>을 반환합니다. <em>form</em>의 유효한 값은 ‘NFC’, ‘NFKC’, ‘NFD’ 및 ‘NFKD’ 입니다.</p>
+<p>유니코드 표준은 정준 동등성(canonical equivalence) 및 호환 동등성(compatibility equivalence)의 정의를 기반으로, 유니코드 문자열의 다양한 정규화 형식을 정의합니다. 유니코드에서, 여러 문자를 다양한 방법으로 표현할 수 있습니다. 예를 들어, U+00C7 (LATIN CAPITAL LETTER C WITH CEDILLA) 은 시퀀스 U+0043 (LATIN CAPITAL LETTER C) U+0327 (COMBINING CEDILLA) 로도 표현할 수 있습니다.</p>
+<p>각 문자에는, 두 개의 정규화 형식이 있습니다: 정규화 형식 C와 정규화 형식 D. 정규화 형식 D(NFD)는 정준 분해라고도 하며, 각 문자를 분해된 형식으로 변환합니다. 정규화 형식 C(NFC)는 먼저 정준 분해를 적용한 다음, 미리 결합한 문자로 다시 조합합니다.</p>
+<p>이 두 형식 외에도, 호환 등가성을 기반으로 하는 두 가지 추가 정규화 형식이 있습니다. 유니코드에서는, 일반적으로 다른 문자와 통합되는 특정 문자가 지원됩니다. 예를 들어, U+2160 (ROMAN NUMERAL ONE) 은 U+0049 (LATIN CAPITAL LETTER I) 과 실제로 같습니다. 하지만, 기존 문자 집합(예를 들어, gb2312)과의 호환성을 위해 유니코드에서 지원됩니다.</p>
+<p>정규화 형식 KD(NFKD)는 호환 분해를 적용합니다. 즉, 모든 호환 문자를 동등한 것으로 치환합니다. 정규화 형식 KC(NFKC)는 먼저 호환 분해를 적용한 다음, 정준 결합을 적용합니다.</p>
+<p>두 개의 유니코드 문자열이 정규화되고, 사람이 보기에 같아 보여도, 하나가 결합한 문자를 갖고 다른 것은 그렇지 않으면, 같다고 비교되지 않을 수 있습니다.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="unicodedata.is_normalized">
+<code class="sig-prename descclassname">unicodedata.</code><code class="sig-name descname">is_normalized</code><span class="sig-paren">(</span><em class="sig-param">form</em>, <em class="sig-param">unistr</em><span class="sig-paren">)</span><a class="headerlink" href="#unicodedata.is_normalized" title="정의 주소">¶</a></dt>
+<dd><p>유니코드 문자열 <em>unistr</em>이 정규화 형식 <em>form</em>인지를 반환합니다. <em>form</em>의 유효한 값은 ‘NFC’, ‘NFKC’, ‘NFD’ 및 ‘NFKD’ 입니다.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">버전 3.8에 추가.</span></p>
+</div>
+</dd></dl>
+
+<p>또한, 이 모듈은 다음 상수를 노출합니다:</p>
+<dl class="data">
+<dt id="unicodedata.unidata_version">
+<code class="sig-prename descclassname">unicodedata.</code><code class="sig-name descname">unidata_version</code><a class="headerlink" href="#unicodedata.unidata_version" title="정의 주소">¶</a></dt>
+<dd><p>이 모듈에 사용된 유니코드 데이터베이스의 버전.</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="unicodedata.ucd_3_2_0">
+<code class="sig-prename descclassname">unicodedata.</code><code class="sig-name descname">ucd_3_2_0</code><a class="headerlink" href="#unicodedata.ucd_3_2_0" title="정의 주소">¶</a></dt>
+<dd><p>이것은 전체 모듈과 같은 메서드를 가지고 있는 객체이지만, 유니코드 데이터베이스 버전 3.2를 대신 사용합니다. 이 특정 버전의 유니코드 데이터베이스가 필요한 응용 프로그램(가령 IDNA)을 위한 것입니다.</p>
+</dd></dl>
+
+<p>예제:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">unicodedata</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">unicodedata</span><span class="o">.</span><span class="n">lookup</span><span class="p">(</span><span class="s1">&#39;LEFT CURLY BRACKET&#39;</span><span class="p">)</span>
+<span class="go">&#39;{&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">unicodedata</span><span class="o">.</span><span class="n">name</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span>
+<span class="go">&#39;SOLIDUS&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">unicodedata</span><span class="o">.</span><span class="n">decimal</span><span class="p">(</span><span class="s1">&#39;9&#39;</span><span class="p">)</span>
+<span class="go">9</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">unicodedata</span><span class="o">.</span><span class="n">decimal</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+<span class="gt">Traceback (most recent call last):</span>
+  File <span class="nb">&quot;&lt;stdin&gt;&quot;</span>, line <span class="m">1</span>, in <span class="n">&lt;module&gt;</span>
+<span class="gr">ValueError</span>: <span class="n">not a decimal</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">unicodedata</span><span class="o">.</span><span class="n">category</span><span class="p">(</span><span class="s1">&#39;A&#39;</span><span class="p">)</span>  <span class="c1"># &#39;L&#39;etter, &#39;u&#39;ppercase</span>
+<span class="go">&#39;Lu&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">unicodedata</span><span class="o">.</span><span class="n">bidirectional</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\u0660</span><span class="s1">&#39;</span><span class="p">)</span> <span class="c1"># &#39;A&#39;rabic, &#39;N&#39;umber</span>
+<span class="go">&#39;AN&#39;</span>
+</pre></div>
+</div>
+<p class="rubric">각주</p>
+<dl class="footnote brackets">
+<dt class="label" id="id3"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
+<dd><p><a class="reference external" href="https://www.unicode.org/Public/13.0.0/ucd/NameAliases.txt">https://www.unicode.org/Public/13.0.0/ucd/NameAliases.txt</a></p>
+</dd>
+<dt class="label" id="id4"><span class="brackets"><a class="fn-backref" href="#id2">2</a></span></dt>
+<dd><p><a class="reference external" href="https://www.unicode.org/Public/13.0.0/ucd/NamedSequences.txt">https://www.unicode.org/Public/13.0.0/ucd/NamedSequences.txt</a></p>
+</dd>
+</dl>
+</section>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>이전 항목</h4>
+  <p class="topless"><a href="textwrap.html"
+                        title="이전 장"><code class="xref py py-mod docutils literal notranslate"><span class="pre">textwrap</span></code> — 텍스트 래핑과 채우기</a></p>
+  <h4>다음 항목</h4>
+  <p class="topless"><a href="stringprep.html"
+                        title="다음 장"><code class="xref py py-mod docutils literal notranslate"><span class="pre">stringprep</span></code> — 인터넷 문자열 준비</a></p>
+  <div role="note" aria-label="source link">
+    <h3>현재 문서</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">버그 보고하기</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/3.9/Doc/library/unicodedata.rst"
+            rel="nofollow">소스 보기
+        </a>
+      </li>
+    </ul>
+  </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>탐색</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="전체 색인"
+             >색인</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 모듈 목록"
+             >모듈</a> |</li>
+        <li class="right" >
+          <a href="stringprep.html" title="stringprep — 인터넷 문자열 준비"
+             >다음</a> |</li>
+        <li class="right" >
+          <a href="textwrap.html" title="textwrap — 텍스트 래핑과 채우기"
+             >이전</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.9.14 Documentation</a> &#187;
+    </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >파이썬 표준 라이브러리</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="text.html" >텍스트 처리 서비스</a> &#187;</li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="빠른 검색" aria-label="빠른 검색" type="text" name="q" />
+          <input type="submit" value="이동" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </form>
+    </div>
+                     |
+                </li>
+            
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">저작권</a> 2001-2022, Python Software Foundation.
+    <br />
+    This page is licensed under the Python Software Foundation License Version 2.
+    <br />
+    Examples, recipes, and other code in the documentation are additionally licensed under the Zero Clause BSD License.
+    <br />
+    See <a href="/license.html">History and License</a> for more information.<br />
+    <br />
+
+    The Python Software Foundation is a non-profit corporation.
+<a href="https://www.python.org/psf/donations/">Please donate.</a>
+<br />
+    <br />
+
+    최종 업데이트: 9월 11, 2022
+    <a href="/bugs.html">Found a bug</a>?
+    <br />
+
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 2.4.4.
+    </div>
+
+  </body>
+</html>

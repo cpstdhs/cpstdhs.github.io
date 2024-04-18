@@ -1,0 +1,302 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ko">
+  <head>
+    <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>힙에 객체 할당하기 &#8212; Python 3.9.14 문서</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="../_static/pydoctheme.css?2022.1" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/translations.js"></script>
+    
+    <script src="../_static/sidebar.js"></script>
+    
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Python 3.9.14 문서에서 찾기"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="이 문서 정보" href="../about.html" />
+    <link rel="index" title="색인" href="../genindex.html" />
+    <link rel="search" title="검색" href="../search.html" />
+    <link rel="copyright" title="저작권" href="../copyright.html" />
+    <link rel="next" title="공통 객체 구조체" href="structures.html" />
+    <link rel="prev" title="객체 구현 지원" href="objimpl.html" />
+    <link rel="canonical" href="https://docs.python.org/3/c-api/allocation.html" />
+    
+      
+    
+
+    
+    <style>
+      @media only screen {
+        table.full-width-table {
+            width: 100%;
+        }
+      }
+    </style>
+<link rel="shortcut icon" type="image/png" href="../_static/py.svg" />
+            <script type="text/javascript" src="../_static/copybutton.js"></script>
+            <script type="text/javascript" src="../_static/menu.js"></script> 
+
+  </head>
+<body>
+<div class="mobile-nav">
+    <input type="checkbox" id="menuToggler" class="toggler__input" aria-controls="navigation"
+           aria-pressed="false" aria-expanded="false" role="button" aria-label="Menu" />
+    <label for="menuToggler" class="toggler__label">
+        <span></span>
+    </label>
+    <nav class="nav-content" role="navigation">
+         <a href="https://www.python.org/" class="nav-logo">
+             <img src="../_static/py.svg" alt="Logo"/>
+         </a>
+        <div class="version_switcher_placeholder"></div>
+        <form role="search" class="search" action="../search.html" method="get">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" class="search-icon">
+                <path fill-rule="nonzero"
+                        d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 001.48-5.34c-.47-2.78-2.79-5-5.59-5.34a6.505 6.505 0 00-7.27 7.27c.34 2.8 2.56 5.12 5.34 5.59a6.5 6.5 0 005.34-1.48l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49 0 .41-.41.41-1.08 0-1.49L15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" fill="#444"></path>
+            </svg>
+            <input type="text" name="q" aria-label="빠른 검색"/>
+            <input type="submit" value="이동"/>
+        </form>
+    </nav>
+    <div class="menu-wrapper">
+        <nav class="menu" role="navigation" aria-label="main navigation">
+            <div class="language_switcher_placeholder"></div>
+  <h4>이전 항목</h4>
+  <p class="topless"><a href="objimpl.html"
+                        title="이전 장">객체 구현 지원</a></p>
+  <h4>다음 항목</h4>
+  <p class="topless"><a href="structures.html"
+                        title="다음 장">공통 객체 구조체</a></p>
+  <div role="note" aria-label="source link">
+    <h3>현재 문서</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">버그 보고하기</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/3.9/Doc/c-api/allocation.rst"
+            rel="nofollow">소스 보기
+        </a>
+      </li>
+    </ul>
+  </div>
+        </nav>
+    </div>
+</div>
+
+  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>탐색</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="전체 색인"
+             accesskey="I">색인</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 모듈 목록"
+             >모듈</a> |</li>
+        <li class="right" >
+          <a href="structures.html" title="공통 객체 구조체"
+             accesskey="N">다음</a> |</li>
+        <li class="right" >
+          <a href="objimpl.html" title="객체 구현 지원"
+             accesskey="P">이전</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.9.14 Documentation</a> &#187;
+    </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >파이썬/C API 레퍼런스 설명서</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="objimpl.html" accesskey="U">객체 구현 지원</a> &#187;</li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="빠른 검색" aria-label="빠른 검색" type="text" name="q" />
+          <input type="submit" value="이동" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </form>
+    </div>
+                     |
+                </li>
+            
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="allocating-objects-on-the-heap">
+<span id="allocating-objects"></span><h1>힙에 객체 할당하기<a class="headerlink" href="#allocating-objects-on-the-heap" title="제목 주소">¶</a></h1>
+<dl class="function">
+<dt id="c._PyObject_New">
+<a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a>* <code class="sig-name descname">_PyObject_New</code><span class="sig-paren">(</span><a class="reference internal" href="type.html#c.PyTypeObject" title="PyTypeObject">PyTypeObject</a><em> *type</em><span class="sig-paren">)</span><a class="headerlink" href="#c._PyObject_New" title="정의 주소">¶</a></dt>
+<dd><em class="refcount">Return value: New reference.</em></dd></dl>
+
+<dl class="function">
+<dt id="c._PyObject_NewVar">
+<a class="reference internal" href="structures.html#c.PyVarObject" title="PyVarObject">PyVarObject</a>* <code class="sig-name descname">_PyObject_NewVar</code><span class="sig-paren">(</span><a class="reference internal" href="type.html#c.PyTypeObject" title="PyTypeObject">PyTypeObject</a><em> *type</em>, <a class="reference internal" href="intro.html#c.Py_ssize_t" title="Py_ssize_t">Py_ssize_t</a><em> size</em><span class="sig-paren">)</span><a class="headerlink" href="#c._PyObject_NewVar" title="정의 주소">¶</a></dt>
+<dd><em class="refcount">Return value: New reference.</em></dd></dl>
+
+<dl class="function">
+<dt id="c.PyObject_Init">
+<a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a>* <code class="sig-name descname">PyObject_Init</code><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a><em> *op</em>, <a class="reference internal" href="type.html#c.PyTypeObject" title="PyTypeObject">PyTypeObject</a><em> *type</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyObject_Init" title="정의 주소">¶</a></dt>
+<dd><em class="refcount">Return value: Borrowed reference.</em><p>새로 할당된 객체 <em>op</em>를 형과 초기 참조로 초기화합니다. 초기화된 객체를 반환합니다. <em>type</em>이 객체가 순환 가비지 감지기에 참여함을 나타내면, 감지기의 감시되는 객체 집합에 추가됩니다. 객체의 다른 필드는 영향을 받지 않습니다.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyObject_InitVar">
+<a class="reference internal" href="structures.html#c.PyVarObject" title="PyVarObject">PyVarObject</a>* <code class="sig-name descname">PyObject_InitVar</code><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyVarObject" title="PyVarObject">PyVarObject</a><em> *op</em>, <a class="reference internal" href="type.html#c.PyTypeObject" title="PyTypeObject">PyTypeObject</a><em> *type</em>, <a class="reference internal" href="intro.html#c.Py_ssize_t" title="Py_ssize_t">Py_ssize_t</a><em> size</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyObject_InitVar" title="정의 주소">¶</a></dt>
+<dd><em class="refcount">Return value: Borrowed reference.</em><p>이것은 <a class="reference internal" href="#c.PyObject_Init" title="PyObject_Init"><code class="xref c c-func docutils literal notranslate"><span class="pre">PyObject_Init()</span></code></a>가 수행하는 모든 작업을 수행하고, 가변 크기 객체의 길이 정보도 초기화합니다.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyObject_New">
+TYPE* <code class="sig-name descname">PyObject_New</code><span class="sig-paren">(</span>TYPE, <a class="reference internal" href="type.html#c.PyTypeObject" title="PyTypeObject">PyTypeObject</a><em> *type</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyObject_New" title="정의 주소">¶</a></dt>
+<dd><em class="refcount">Return value: New reference.</em><p>C 구조체 형 <em>TYPE</em>과 파이썬 형 객체 <em>type</em>을 사용하여 새로운 파이썬 객체를 할당합니다. 파이썬 객체 헤더로 정의되지 않은 필드는 초기화되지 않습니다; 객체의 참조 횟수는 1이 됩니다. 메모리 할당의 크기는 형 객체의 <a class="reference internal" href="typeobj.html#c.PyTypeObject.tp_basicsize" title="PyTypeObject.tp_basicsize"><code class="xref c c-member docutils literal notranslate"><span class="pre">tp_basicsize</span></code></a> 필드에서 결정됩니다.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyObject_NewVar">
+TYPE* <code class="sig-name descname">PyObject_NewVar</code><span class="sig-paren">(</span>TYPE, <a class="reference internal" href="type.html#c.PyTypeObject" title="PyTypeObject">PyTypeObject</a><em> *type</em>, <a class="reference internal" href="intro.html#c.Py_ssize_t" title="Py_ssize_t">Py_ssize_t</a><em> size</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyObject_NewVar" title="정의 주소">¶</a></dt>
+<dd><em class="refcount">Return value: New reference.</em><p>C 구조체 형 <em>TYPE</em>과 파이썬 타입 형 <em>type</em>을 사용하여 새로운 파이썬 객체를 할당합니다. 파이썬 객체 헤더로 정의되지 않은 필드는 초기화되지 않습니다. 할당된 메모리는 <em>TYPE</em> 구조체에 더해 <em>type</em>의 <a class="reference internal" href="typeobj.html#c.PyTypeObject.tp_itemsize" title="PyTypeObject.tp_itemsize"><code class="xref c c-member docutils literal notranslate"><span class="pre">tp_itemsize</span></code></a> 필드에 의해 주어진 크기의 <em>size</em> 필드를 허용합니다. 이는 튜플과 같은 객체를 구현할 때 유용합니다. 튜플은 만들 때 크기를 결정할 수 있습니다. 같은 할당에 필드 배열을 포함 시키면, 할당 횟수가 줄어들어, 메모리 관리 효율성이 향상됩니다.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyObject_Del">
+void <code class="sig-name descname">PyObject_Del</code><span class="sig-paren">(</span>void<em> *op</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PyObject_Del" title="정의 주소">¶</a></dt>
+<dd><p><a class="reference internal" href="#c.PyObject_New" title="PyObject_New"><code class="xref c c-func docutils literal notranslate"><span class="pre">PyObject_New()</span></code></a> 나 <a class="reference internal" href="#c.PyObject_NewVar" title="PyObject_NewVar"><code class="xref c c-func docutils literal notranslate"><span class="pre">PyObject_NewVar()</span></code></a>를 사용한 객체에 할당된 메모리를 해제합니다. 이것은 일반적으로 객체의 형에 지정된 <a class="reference internal" href="typeobj.html#c.PyTypeObject.tp_dealloc" title="PyTypeObject.tp_dealloc"><code class="xref c c-member docutils literal notranslate"><span class="pre">tp_dealloc</span></code></a> 처리기에서 호출됩니다. 메모리가 더는 유효한 파이썬 객체가 아니므로, 이 호출 후에는 객체의 필드에 액세스해서는 안 됩니다.</p>
+</dd></dl>
+
+<dl class="var">
+<dt id="c._Py_NoneStruct">
+<a class="reference internal" href="structures.html#c.PyObject" title="PyObject">PyObject</a> <code class="sig-name descname">_Py_NoneStruct</code><a class="headerlink" href="#c._Py_NoneStruct" title="정의 주소">¶</a></dt>
+<dd><p>파이썬에서 <code class="docutils literal notranslate"><span class="pre">None</span></code>으로 노출되는 객체. 이 객체에 대한 포인터로 평가되는 <a class="reference internal" href="none.html#c.Py_None" title="Py_None"><code class="xref c c-macro docutils literal notranslate"><span class="pre">Py_None</span></code></a> 매크로를 사용해서 액세스해야 합니다.</p>
+</dd></dl>
+
+<div class="admonition seealso">
+<p class="admonition-title">더 보기</p>
+<dl class="simple">
+<dt><a class="reference internal" href="module.html#c.PyModule_Create" title="PyModule_Create"><code class="xref c c-func docutils literal notranslate"><span class="pre">PyModule_Create()</span></code></a></dt><dd><p>확장 모듈을 할당하고 만듭니다.</p>
+</dd>
+</dl>
+</div>
+</section>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>이전 항목</h4>
+  <p class="topless"><a href="objimpl.html"
+                        title="이전 장">객체 구현 지원</a></p>
+  <h4>다음 항목</h4>
+  <p class="topless"><a href="structures.html"
+                        title="다음 장">공통 객체 구조체</a></p>
+  <div role="note" aria-label="source link">
+    <h3>현재 문서</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">버그 보고하기</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/3.9/Doc/c-api/allocation.rst"
+            rel="nofollow">소스 보기
+        </a>
+      </li>
+    </ul>
+  </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>탐색</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="전체 색인"
+             >색인</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 모듈 목록"
+             >모듈</a> |</li>
+        <li class="right" >
+          <a href="structures.html" title="공통 객체 구조체"
+             >다음</a> |</li>
+        <li class="right" >
+          <a href="objimpl.html" title="객체 구현 지원"
+             >이전</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.9.14 Documentation</a> &#187;
+    </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >파이썬/C API 레퍼런스 설명서</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="objimpl.html" >객체 구현 지원</a> &#187;</li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="빠른 검색" aria-label="빠른 검색" type="text" name="q" />
+          <input type="submit" value="이동" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </form>
+    </div>
+                     |
+                </li>
+            
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">저작권</a> 2001-2022, Python Software Foundation.
+    <br />
+    This page is licensed under the Python Software Foundation License Version 2.
+    <br />
+    Examples, recipes, and other code in the documentation are additionally licensed under the Zero Clause BSD License.
+    <br />
+    See <a href="/license.html">History and License</a> for more information.<br />
+    <br />
+
+    The Python Software Foundation is a non-profit corporation.
+<a href="https://www.python.org/psf/donations/">Please donate.</a>
+<br />
+    <br />
+
+    최종 업데이트: 9월 11, 2022
+    <a href="/bugs.html">Found a bug</a>?
+    <br />
+
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 2.4.4.
+    </div>
+
+  </body>
+</html>

@@ -1,0 +1,576 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ko">
+  <head>
+    <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>xml.sax.handler — SAX 처리기의 베이스 클래스 &#8212; Python 3.9.14 문서</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="../_static/pydoctheme.css?2022.1" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/translations.js"></script>
+    
+    <script src="../_static/sidebar.js"></script>
+    
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Python 3.9.14 문서에서 찾기"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="이 문서 정보" href="../about.html" />
+    <link rel="index" title="색인" href="../genindex.html" />
+    <link rel="search" title="검색" href="../search.html" />
+    <link rel="copyright" title="저작권" href="../copyright.html" />
+    <link rel="next" title="xml.sax.saxutils — SAX 유틸리티" href="xml.sax.utils.html" />
+    <link rel="prev" title="xml.sax — SAX2 구문 분석기 지원" href="xml.sax.html" />
+    <link rel="canonical" href="https://docs.python.org/3/library/xml.sax.handler.html" />
+    
+      
+    
+
+    
+    <style>
+      @media only screen {
+        table.full-width-table {
+            width: 100%;
+        }
+      }
+    </style>
+<link rel="shortcut icon" type="image/png" href="../_static/py.svg" />
+            <script type="text/javascript" src="../_static/copybutton.js"></script>
+            <script type="text/javascript" src="../_static/menu.js"></script> 
+
+  </head>
+<body>
+<div class="mobile-nav">
+    <input type="checkbox" id="menuToggler" class="toggler__input" aria-controls="navigation"
+           aria-pressed="false" aria-expanded="false" role="button" aria-label="Menu" />
+    <label for="menuToggler" class="toggler__label">
+        <span></span>
+    </label>
+    <nav class="nav-content" role="navigation">
+         <a href="https://www.python.org/" class="nav-logo">
+             <img src="../_static/py.svg" alt="Logo"/>
+         </a>
+        <div class="version_switcher_placeholder"></div>
+        <form role="search" class="search" action="../search.html" method="get">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" class="search-icon">
+                <path fill-rule="nonzero"
+                        d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 001.48-5.34c-.47-2.78-2.79-5-5.59-5.34a6.505 6.505 0 00-7.27 7.27c.34 2.8 2.56 5.12 5.34 5.59a6.5 6.5 0 005.34-1.48l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49 0 .41-.41.41-1.08 0-1.49L15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" fill="#444"></path>
+            </svg>
+            <input type="text" name="q" aria-label="빠른 검색"/>
+            <input type="submit" value="이동"/>
+        </form>
+    </nav>
+    <div class="menu-wrapper">
+        <nav class="menu" role="navigation" aria-label="main navigation">
+            <div class="language_switcher_placeholder"></div>
+  <h3><a href="../contents.html">목차</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xml.sax.handler</span></code> — SAX 처리기의 베이스 클래스</a><ul>
+<li><a class="reference internal" href="#contenthandler-objects">ContentHandler 객체</a></li>
+<li><a class="reference internal" href="#dtdhandler-objects">DTDHandler 객체</a></li>
+<li><a class="reference internal" href="#entityresolver-objects">EntityResolver 객체</a></li>
+<li><a class="reference internal" href="#errorhandler-objects">ErrorHandler 객체</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>이전 항목</h4>
+  <p class="topless"><a href="xml.sax.html"
+                        title="이전 장"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xml.sax</span></code> — SAX2 구문 분석기 지원</a></p>
+  <h4>다음 항목</h4>
+  <p class="topless"><a href="xml.sax.utils.html"
+                        title="다음 장"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xml.sax.saxutils</span></code> — SAX 유틸리티</a></p>
+  <div role="note" aria-label="source link">
+    <h3>현재 문서</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">버그 보고하기</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/3.9/Doc/library/xml.sax.handler.rst"
+            rel="nofollow">소스 보기
+        </a>
+      </li>
+    </ul>
+  </div>
+        </nav>
+    </div>
+</div>
+
+  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>탐색</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="전체 색인"
+             accesskey="I">색인</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 모듈 목록"
+             >모듈</a> |</li>
+        <li class="right" >
+          <a href="xml.sax.utils.html" title="xml.sax.saxutils — SAX 유틸리티"
+             accesskey="N">다음</a> |</li>
+        <li class="right" >
+          <a href="xml.sax.html" title="xml.sax — SAX2 구문 분석기 지원"
+             accesskey="P">이전</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.9.14 Documentation</a> &#187;
+    </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >파이썬 표준 라이브러리</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="markup.html" accesskey="U">구조화된 마크업 처리 도구</a> &#187;</li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="빠른 검색" aria-label="빠른 검색" type="text" name="q" />
+          <input type="submit" value="이동" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </form>
+    </div>
+                     |
+                </li>
+            
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="module-xml.sax.handler">
+<span id="xml-sax-handler-base-classes-for-sax-handlers"></span><h1><a class="reference internal" href="#module-xml.sax.handler" title="xml.sax.handler: Base classes for SAX event handlers."><code class="xref py py-mod docutils literal notranslate"><span class="pre">xml.sax.handler</span></code></a> — SAX 처리기의 베이스 클래스<a class="headerlink" href="#module-xml.sax.handler" title="제목 주소">¶</a></h1>
+<p><strong>소스 코드:</strong> <a class="reference external" href="https://github.com/python/cpython/tree/3.9/Lib/xml/sax/handler.py">Lib/xml/sax/handler.py</a></p>
+<hr class="docutils" />
+<p>SAX API는 네 가지 처리기를 정의합니다: 콘텐츠 처리기, DTD 처리기, 에러 처리기 및 엔티티 해석기. 응용 프로그램은 일반적으로 이벤트에 관심이 있는 인터페이스 만 구현하면 됩니다; 단일 객체나 여러 객체에서 인터페이스를 구현할 수 있습니다. 처리기 구현은 모든 메서드가 기본 구현을 갖도록 <a class="reference internal" href="#module-xml.sax.handler" title="xml.sax.handler: Base classes for SAX event handlers."><code class="xref py py-mod docutils literal notranslate"><span class="pre">xml.sax.handler</span></code></a> 모듈에서 제공된 베이스 클래스에서 상속해야 합니다.</p>
+<dl class="class">
+<dt id="xml.sax.handler.ContentHandler">
+<em class="property">class </em><code class="sig-prename descclassname">xml.sax.handler.</code><code class="sig-name descname">ContentHandler</code><a class="headerlink" href="#xml.sax.handler.ContentHandler" title="정의 주소">¶</a></dt>
+<dd><p>이것은 SAX의 주 콜백 인터페이스이며, 응용 프로그램에 가장 중요한 인터페이스입니다. 이 인터페이스의 이벤트 순서는 문서에서의 정보 순서를 반영합니다.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="xml.sax.handler.DTDHandler">
+<em class="property">class </em><code class="sig-prename descclassname">xml.sax.handler.</code><code class="sig-name descname">DTDHandler</code><a class="headerlink" href="#xml.sax.handler.DTDHandler" title="정의 주소">¶</a></dt>
+<dd><p>DTD 이벤트를 처리합니다.</p>
+<p>이 인터페이스는 기본 구문 분석에 필요한 DTD 이벤트만 지정합니다 (구문 분석되지 않은 엔티티와 어트리뷰트).</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="xml.sax.handler.EntityResolver">
+<em class="property">class </em><code class="sig-prename descclassname">xml.sax.handler.</code><code class="sig-name descname">EntityResolver</code><a class="headerlink" href="#xml.sax.handler.EntityResolver" title="정의 주소">¶</a></dt>
+<dd><p>엔티티 해석을 위한 기본 인터페이스. 이 인터페이스를 구현하는 객체를 만든 후 구문 분석기에 객체를 등록하면, 구문 분석기는 객체의 메서드를 호출하여 모든 외부 엔티티를 해석합니다.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="xml.sax.handler.ErrorHandler">
+<em class="property">class </em><code class="sig-prename descclassname">xml.sax.handler.</code><code class="sig-name descname">ErrorHandler</code><a class="headerlink" href="#xml.sax.handler.ErrorHandler" title="정의 주소">¶</a></dt>
+<dd><p>응용 프로그램에 에러와 경고 메시지를 표시하기 위해 구문 분석기에서 사용하는 인터페이스. 이 객체의 메서드는 에러가 즉시 예외로 변환되는지 또는 다른 방식으로 처리되는지를 제어합니다.</p>
+</dd></dl>
+
+<p>이러한 클래스 외에도, <a class="reference internal" href="#module-xml.sax.handler" title="xml.sax.handler: Base classes for SAX event handlers."><code class="xref py py-mod docutils literal notranslate"><span class="pre">xml.sax.handler</span></code></a>는 기능과 속성 이름에 대한 기호 상수를 제공합니다.</p>
+<dl class="data">
+<dt id="xml.sax.handler.feature_namespaces">
+<code class="sig-prename descclassname">xml.sax.handler.</code><code class="sig-name descname">feature_namespaces</code><a class="headerlink" href="#xml.sax.handler.feature_namespaces" title="정의 주소">¶</a></dt>
+<dd><div class="line-block">
+<div class="line">값: <code class="docutils literal notranslate"><span class="pre">&quot;http://xml.org/sax/features/namespaces&quot;</span></code></div>
+<div class="line">참: 이름 공간 처리를 수행합니다.</div>
+<div class="line">거짓: 선택적으로 이름 공간 처리를 수행하지 않습니다 (namespace-prefixes를 암시합니다; 기본값).</div>
+<div class="line">액세스: (구문 분석) 읽기 전용; (구문 분석하지 않음) 읽기/쓰기</div>
+</div>
+</dd></dl>
+
+<dl class="data">
+<dt id="xml.sax.handler.feature_namespace_prefixes">
+<code class="sig-prename descclassname">xml.sax.handler.</code><code class="sig-name descname">feature_namespace_prefixes</code><a class="headerlink" href="#xml.sax.handler.feature_namespace_prefixes" title="정의 주소">¶</a></dt>
+<dd><div class="line-block">
+<div class="line">값: <code class="docutils literal notranslate"><span class="pre">&quot;http://xml.org/sax/features/namespace-prefixes&quot;</span></code></div>
+<div class="line">참: 이름 공간 선언에 사용된 원래 접두사 이름과 어트리뷰트를 보고합니다.</div>
+<div class="line">거짓: 이름 공간 선언에 사용된 어트리뷰트를 보고하지 않고, 선택적으로 원래 접두사 이름을 보고하지 않습니다 (기본값).</div>
+<div class="line">액세스: (구문 분석) 읽기 전용; (구문 분석하지 않음) 읽기/쓰기</div>
+</div>
+</dd></dl>
+
+<dl class="data">
+<dt id="xml.sax.handler.feature_string_interning">
+<code class="sig-prename descclassname">xml.sax.handler.</code><code class="sig-name descname">feature_string_interning</code><a class="headerlink" href="#xml.sax.handler.feature_string_interning" title="정의 주소">¶</a></dt>
+<dd><div class="line-block">
+<div class="line">값: <code class="docutils literal notranslate"><span class="pre">&quot;http://xml.org/sax/features/string-interning&quot;</span></code></div>
+<div class="line">참: 모든 엘리먼트 이름, 접두사, 어트리뷰트 이름, 이름 공간 URI 및 지역 이름은 내장 intern 함수를 사용하여 인턴 됩니다.</div>
+<div class="line">거짓: 그럴 수 있지만, 이름이 반드시 인턴 될 필요는 없습니다 (기본값).</div>
+<div class="line">액세스: (구문 분석) 읽기 전용; (구문 분석하지 않음) 읽기/쓰기</div>
+</div>
+</dd></dl>
+
+<dl class="data">
+<dt id="xml.sax.handler.feature_validation">
+<code class="sig-prename descclassname">xml.sax.handler.</code><code class="sig-name descname">feature_validation</code><a class="headerlink" href="#xml.sax.handler.feature_validation" title="정의 주소">¶</a></dt>
+<dd><div class="line-block">
+<div class="line">값: <code class="docutils literal notranslate"><span class="pre">&quot;http://xml.org/sax/features/validation&quot;</span></code></div>
+<div class="line">참: 모든 유효성 검사 에러를 보고합니다 (external-general-entities와 external-parameter-entities를 암시합니다).</div>
+<div class="line">거짓: 유효성 검사 에러를 보고하지 않습니다.</div>
+<div class="line">액세스: (구문 분석) 읽기 전용; (구문 분석하지 않음) 읽기/쓰기</div>
+</div>
+</dd></dl>
+
+<dl class="data">
+<dt id="xml.sax.handler.feature_external_ges">
+<code class="sig-prename descclassname">xml.sax.handler.</code><code class="sig-name descname">feature_external_ges</code><a class="headerlink" href="#xml.sax.handler.feature_external_ges" title="정의 주소">¶</a></dt>
+<dd><div class="line-block">
+<div class="line">값: <code class="docutils literal notranslate"><span class="pre">&quot;http://xml.org/sax/features/external-general-entities&quot;</span></code></div>
+<div class="line">참: 모든 외부 일반 (텍스트) 엔티티를 포함합니다.</div>
+<div class="line">거짓: 외부 일반 엔티티를 포함하지 않습니다.</div>
+<div class="line">액세스: (구문 분석) 읽기 전용; (구문 분석하지 않음) 읽기/쓰기</div>
+</div>
+</dd></dl>
+
+<dl class="data">
+<dt id="xml.sax.handler.feature_external_pes">
+<code class="sig-prename descclassname">xml.sax.handler.</code><code class="sig-name descname">feature_external_pes</code><a class="headerlink" href="#xml.sax.handler.feature_external_pes" title="정의 주소">¶</a></dt>
+<dd><div class="line-block">
+<div class="line">값: <code class="docutils literal notranslate"><span class="pre">&quot;http://xml.org/sax/features/external-parameter-entities&quot;</span></code></div>
+<div class="line">참: 외부 DTD 서브 세트를 포함하여, 모든 외부 파라미터 엔티티를 포함합니다.</div>
+<div class="line">거짓: 외부 DTD 서브 세트를 포함하여, 어떤 외부 파라미터 엔티티도 포함하지 않습니다.</div>
+<div class="line">액세스: (구문 분석) 읽기 전용; (구문 분석하지 않음) 읽기/쓰기</div>
+</div>
+</dd></dl>
+
+<dl class="data">
+<dt id="xml.sax.handler.all_features">
+<code class="sig-prename descclassname">xml.sax.handler.</code><code class="sig-name descname">all_features</code><a class="headerlink" href="#xml.sax.handler.all_features" title="정의 주소">¶</a></dt>
+<dd><p>모든 기능 리스트.</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="xml.sax.handler.property_lexical_handler">
+<code class="sig-prename descclassname">xml.sax.handler.</code><code class="sig-name descname">property_lexical_handler</code><a class="headerlink" href="#xml.sax.handler.property_lexical_handler" title="정의 주소">¶</a></dt>
+<dd><div class="line-block">
+<div class="line">값: <code class="docutils literal notranslate"><span class="pre">&quot;http://xml.org/sax/properties/lexical-handler&quot;</span></code></div>
+<div class="line">데이터형: xml.sax.sax2lib.LexicalHandler (파이썬 2에서는 지원되지 않습니다)</div>
+<div class="line">설명: 주석과 같은 어휘 이벤트에 대한 선택적 확장 처리기.</div>
+<div class="line">액세스: 읽기/쓰기</div>
+</div>
+</dd></dl>
+
+<dl class="data">
+<dt id="xml.sax.handler.property_declaration_handler">
+<code class="sig-prename descclassname">xml.sax.handler.</code><code class="sig-name descname">property_declaration_handler</code><a class="headerlink" href="#xml.sax.handler.property_declaration_handler" title="정의 주소">¶</a></dt>
+<dd><div class="line-block">
+<div class="line">값: <code class="docutils literal notranslate"><span class="pre">&quot;http://xml.org/sax/properties/declaration-handler&quot;</span></code></div>
+<div class="line">데이터형: xml.sax.sax2lib.DeclHandler (파이썬 2에서는 지원되지 않습니다)</div>
+<div class="line">설명: 표기법과 구문 분석되지 않은 엔티티 이외의 DTD 관련 이벤트에 대한 선택적 확장 처리기.</div>
+<div class="line">액세스: 읽기/쓰기</div>
+</div>
+</dd></dl>
+
+<dl class="data">
+<dt id="xml.sax.handler.property_dom_node">
+<code class="sig-prename descclassname">xml.sax.handler.</code><code class="sig-name descname">property_dom_node</code><a class="headerlink" href="#xml.sax.handler.property_dom_node" title="정의 주소">¶</a></dt>
+<dd><div class="line-block">
+<div class="line">값: <code class="docutils literal notranslate"><span class="pre">&quot;http://xml.org/sax/properties/dom-node&quot;</span></code></div>
+<div class="line">데이터형: org.w3c.dom.Node (파이썬 2에서는 지원되지 않습니다)</div>
+<div class="line">설명: 구문 분석할 때, 이것이 DOM 이터레이터이면 방문 중인 현재 DOM 노드; 구문 분석하지 않을 때, 이터레이션을 위한 루트 DOM 노드.</div>
+<div class="line">액세스: (구문 분석) 읽기 전용; (구문 분석하지 않음) 읽기/쓰기</div>
+</div>
+</dd></dl>
+
+<dl class="data">
+<dt id="xml.sax.handler.property_xml_string">
+<code class="sig-prename descclassname">xml.sax.handler.</code><code class="sig-name descname">property_xml_string</code><a class="headerlink" href="#xml.sax.handler.property_xml_string" title="정의 주소">¶</a></dt>
+<dd><div class="line-block">
+<div class="line">값: <code class="docutils literal notranslate"><span class="pre">&quot;http://xml.org/sax/properties/xml-string&quot;</span></code></div>
+<div class="line">data type: Bytes</div>
+<div class="line">설명: 현재 이벤트의 소스인 리터럴 문자열.</div>
+<div class="line">액세스: 읽기 전용</div>
+</div>
+</dd></dl>
+
+<dl class="data">
+<dt id="xml.sax.handler.all_properties">
+<code class="sig-prename descclassname">xml.sax.handler.</code><code class="sig-name descname">all_properties</code><a class="headerlink" href="#xml.sax.handler.all_properties" title="정의 주소">¶</a></dt>
+<dd><p>알려진 모든 속성 이름 리스트</p>
+</dd></dl>
+
+<section id="contenthandler-objects">
+<span id="content-handler-objects"></span><h2>ContentHandler 객체<a class="headerlink" href="#contenthandler-objects" title="제목 주소">¶</a></h2>
+<p>사용자는 자신의 응용 프로그램을 지원하기 위해 <a class="reference internal" href="#xml.sax.handler.ContentHandler" title="xml.sax.handler.ContentHandler"><code class="xref py py-class docutils literal notranslate"><span class="pre">ContentHandler</span></code></a>를 서브 클래싱 할 것으로 기대됩니다. 입력 문서에서 적절한 이벤트에 대해 구문 분석기가 다음 메서드를 호출합니다:</p>
+<dl class="method">
+<dt id="xml.sax.handler.ContentHandler.setDocumentLocator">
+<code class="sig-prename descclassname">ContentHandler.</code><code class="sig-name descname">setDocumentLocator</code><span class="sig-paren">(</span><em class="sig-param">locator</em><span class="sig-paren">)</span><a class="headerlink" href="#xml.sax.handler.ContentHandler.setDocumentLocator" title="정의 주소">¶</a></dt>
+<dd><p>응용 프로그램에 문서 이벤트의 출처를 찾기 위한 로케이터(locator)를 제공하기 위해 구문 분석기가 호출합니다.</p>
+<p>SAX 구문 분석기가 (절대적으로 필요한 것은 아니지만) 로케이터를 제공할 것을 강력히 권장합니다: 그렇게 한다면, DocumentHandler 인터페이스의 다른 메서드를 호출하기 전에 이 메서드를 호출하여 로케이터를 응용 프로그램에 제공해야 합니다.</p>
+<p>로케이터를 사용하면 구문 분석기가 에러를 보고하지 않더라도 응용 프로그램이 문서 관련 이벤트의 종료 위치를 판별할 수 있습니다. 일반적으로, 응용 프로그램은 이 정보를 사용하여 자체 에러(가령 응용 프로그램의 비즈니스 규칙과 일치하지 않는 문자 내용)를 보고합니다. 로케이터가 반환한 정보는 아마도 검색 엔진에 사용하기에는 충분하지 않을 것입니다.</p>
+<p>로케이터는 이 인터페이스에서 이벤트를 호출하는 동안에만 올바른 정보를 반환함에 유의하십시오. 응용 프로그램은 다른 시간에 사용하려고 시도해서는 안 됩니다.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="xml.sax.handler.ContentHandler.startDocument">
+<code class="sig-prename descclassname">ContentHandler.</code><code class="sig-name descname">startDocument</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#xml.sax.handler.ContentHandler.startDocument" title="정의 주소">¶</a></dt>
+<dd><p>문서 시작 알림을 받습니다.</p>
+<p>SAX 구문 분석기는 이 인터페이스나 DTDHandler의 다른 모든 메서드(<a class="reference internal" href="#xml.sax.handler.ContentHandler.setDocumentLocator" title="xml.sax.handler.ContentHandler.setDocumentLocator"><code class="xref py py-meth docutils literal notranslate"><span class="pre">setDocumentLocator()</span></code></a> 제외) 전에 이 메서드를 한 번만 호출합니다.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="xml.sax.handler.ContentHandler.endDocument">
+<code class="sig-prename descclassname">ContentHandler.</code><code class="sig-name descname">endDocument</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#xml.sax.handler.ContentHandler.endDocument" title="정의 주소">¶</a></dt>
+<dd><p>문서 끝 알림을 받습니다.</p>
+<p>SAX 구문 분석기는 이 메서드를 한 번만 호출하며, 그것이 구문 분석 중에 마지막으로 호출된 메서드가 됩니다. 구문 분석기는 (복구할 수 없는 에러로 인해) 구문 분석을 포기했거나 입력 끝에 도달할 때까지 이 메서드를 호출하지 않아야 합니다.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="xml.sax.handler.ContentHandler.startPrefixMapping">
+<code class="sig-prename descclassname">ContentHandler.</code><code class="sig-name descname">startPrefixMapping</code><span class="sig-paren">(</span><em class="sig-param">prefix</em>, <em class="sig-param">uri</em><span class="sig-paren">)</span><a class="headerlink" href="#xml.sax.handler.ContentHandler.startPrefixMapping" title="정의 주소">¶</a></dt>
+<dd><p>접두사 URI 이름 공간 매핑의 스코프를 시작합니다.</p>
+<p>이 이벤트의 정보는 일반적인 이름 공간 처리에 필요하지 않습니다: SAX XML 판독기는 <code class="docutils literal notranslate"><span class="pre">feature_namespaces</span></code> 기능이 활성화되면 (기본값) 엘리먼트와 어트리뷰트 이름의 접두사를 자동으로 대체합니다.</p>
+<p>그러나, 응용 프로그램이 문자 데이터나 어트리뷰트 값에 접두사를 사용해야 할 때 자동으로 안전하게 확장할 수 없는 경우가 있습니다; <a class="reference internal" href="#xml.sax.handler.ContentHandler.startPrefixMapping" title="xml.sax.handler.ContentHandler.startPrefixMapping"><code class="xref py py-meth docutils literal notranslate"><span class="pre">startPrefixMapping()</span></code></a> 과 <a class="reference internal" href="#xml.sax.handler.ContentHandler.endPrefixMapping" title="xml.sax.handler.ContentHandler.endPrefixMapping"><code class="xref py py-meth docutils literal notranslate"><span class="pre">endPrefixMapping()</span></code></a> 이벤트는 필요한 경우 해당 컨텍스트에서 스스로 접두사를 확장하도록 정보를 응용 프로그램에 제공합니다.</p>
+<p><a class="reference internal" href="#xml.sax.handler.ContentHandler.startPrefixMapping" title="xml.sax.handler.ContentHandler.startPrefixMapping"><code class="xref py py-meth docutils literal notranslate"><span class="pre">startPrefixMapping()</span></code></a> 과 <a class="reference internal" href="#xml.sax.handler.ContentHandler.endPrefixMapping" title="xml.sax.handler.ContentHandler.endPrefixMapping"><code class="xref py py-meth docutils literal notranslate"><span class="pre">endPrefixMapping()</span></code></a> 이벤트는 서로에 대해 올바르게 중첩된다고 보장되지 않음에 유의하십시오: 모든 <a class="reference internal" href="#xml.sax.handler.ContentHandler.startPrefixMapping" title="xml.sax.handler.ContentHandler.startPrefixMapping"><code class="xref py py-meth docutils literal notranslate"><span class="pre">startPrefixMapping()</span></code></a> 이벤트는 해당 <a class="reference internal" href="#xml.sax.handler.ContentHandler.startElement" title="xml.sax.handler.ContentHandler.startElement"><code class="xref py py-meth docutils literal notranslate"><span class="pre">startElement()</span></code></a> 이벤트 전에 발생하고, 모든 <a class="reference internal" href="#xml.sax.handler.ContentHandler.endPrefixMapping" title="xml.sax.handler.ContentHandler.endPrefixMapping"><code class="xref py py-meth docutils literal notranslate"><span class="pre">endPrefixMapping()</span></code></a> 이벤트는 해당 <a class="reference internal" href="#xml.sax.handler.ContentHandler.endElement" title="xml.sax.handler.ContentHandler.endElement"><code class="xref py py-meth docutils literal notranslate"><span class="pre">endElement()</span></code></a> 이벤트 후에 발생하지만, 그들 간의 순서는 보장되지 않습니다.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="xml.sax.handler.ContentHandler.endPrefixMapping">
+<code class="sig-prename descclassname">ContentHandler.</code><code class="sig-name descname">endPrefixMapping</code><span class="sig-paren">(</span><em class="sig-param">prefix</em><span class="sig-paren">)</span><a class="headerlink" href="#xml.sax.handler.ContentHandler.endPrefixMapping" title="정의 주소">¶</a></dt>
+<dd><p>접두사 URI 매핑 스코프를 끝냅니다.</p>
+<p>자세한 내용은 <a class="reference internal" href="#xml.sax.handler.ContentHandler.startPrefixMapping" title="xml.sax.handler.ContentHandler.startPrefixMapping"><code class="xref py py-meth docutils literal notranslate"><span class="pre">startPrefixMapping()</span></code></a> 을 참조하십시오. 이 이벤트는 항상 해당 <a class="reference internal" href="#xml.sax.handler.ContentHandler.endElement" title="xml.sax.handler.ContentHandler.endElement"><code class="xref py py-meth docutils literal notranslate"><span class="pre">endElement()</span></code></a> 이벤트 이후에 발생하지만, <a class="reference internal" href="#xml.sax.handler.ContentHandler.endPrefixMapping" title="xml.sax.handler.ContentHandler.endPrefixMapping"><code class="xref py py-meth docutils literal notranslate"><span class="pre">endPrefixMapping()</span></code></a> 이벤트의 순서는 이 이상으로는 보장되지 않습니다.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="xml.sax.handler.ContentHandler.startElement">
+<code class="sig-prename descclassname">ContentHandler.</code><code class="sig-name descname">startElement</code><span class="sig-paren">(</span><em class="sig-param">name</em>, <em class="sig-param">attrs</em><span class="sig-paren">)</span><a class="headerlink" href="#xml.sax.handler.ContentHandler.startElement" title="정의 주소">¶</a></dt>
+<dd><p>이름 공간이 아닌 모드에서 엘리먼트의 시작을 알립니다.</p>
+<p><em>name</em> 매개 변수는 엘리먼트 유형의 원시 XML 1.0 이름을 문자열로 포함하고 <em>attrs</em> 매개 변수는 엘리먼트의 어트리뷰트를 포함하는 <code class="xref py py-class docutils literal notranslate"><span class="pre">Attributes</span></code> 인터페이스 (<a class="reference internal" href="xml.sax.reader.html#attributes-objects"><span class="std std-ref">Attributes 인터페이스</span></a>를 참조하십시오)의 객체를 담습니다. <em>attrs</em>로 전달된 객체는 구문 분석기에 의해 재사용 될 수 있습니다; 그것에 대한 참조를 유지하는 것은 어트리뷰트의 사본을 유지하는 신뢰할 수 있는 방법이 아닙니다. 어트리뷰트의 사본을 유지하려면, <em>attrs</em> 객체의 <a class="reference internal" href="copy.html#module-copy" title="copy: Shallow and deep copy operations."><code class="xref py py-meth docutils literal notranslate"><span class="pre">copy()</span></code></a> 메서드를 사용하십시오.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="xml.sax.handler.ContentHandler.endElement">
+<code class="sig-prename descclassname">ContentHandler.</code><code class="sig-name descname">endElement</code><span class="sig-paren">(</span><em class="sig-param">name</em><span class="sig-paren">)</span><a class="headerlink" href="#xml.sax.handler.ContentHandler.endElement" title="정의 주소">¶</a></dt>
+<dd><p>이름 공간이 아닌 모드에서 엘리먼트의 끝을 알립니다.</p>
+<p><em>name</em> 매개 변수는 <a class="reference internal" href="#xml.sax.handler.ContentHandler.startElement" title="xml.sax.handler.ContentHandler.startElement"><code class="xref py py-meth docutils literal notranslate"><span class="pre">startElement()</span></code></a> 이벤트와 마찬가지로 엘리먼트 유형의 이름을 포함합니다.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="xml.sax.handler.ContentHandler.startElementNS">
+<code class="sig-prename descclassname">ContentHandler.</code><code class="sig-name descname">startElementNS</code><span class="sig-paren">(</span><em class="sig-param">name</em>, <em class="sig-param">qname</em>, <em class="sig-param">attrs</em><span class="sig-paren">)</span><a class="headerlink" href="#xml.sax.handler.ContentHandler.startElementNS" title="정의 주소">¶</a></dt>
+<dd><p>이름 공간 모드에서 엘리먼트의 시작을 알립니다.</p>
+<p><em>name</em> 매개 변수는 엘리먼트 유형의 이름을 <code class="docutils literal notranslate"><span class="pre">(uri,</span> <span class="pre">localname)</span></code> 튜플로 포함하고, <em>qname</em> 매개 변수는 소스 문서에서 사용된 원시 XML 1.0 이름을 포함하며, <em>attrs</em> 매개 변수는 엘리먼트의 어트리뷰트를 포함하는 <code class="xref py py-class docutils literal notranslate"><span class="pre">AttributesNS</span></code> 인터페이스(<a class="reference internal" href="xml.sax.reader.html#attributes-ns-objects"><span class="std std-ref">AttributesNS 인터페이스</span></a>를 참조하십시오)의 인스턴스를 담습니다. 아무런 이름 공간도 엘리먼트와 연관되지 않았으면 <em>name</em>의 <em>uri</em> 구성 요소는 <code class="docutils literal notranslate"><span class="pre">None</span></code>입니다. <em>attrs</em>로 전달된 객체는 구문 분석기에 의해 재사용 될 수 있습니다; 그것에 대한 참조를 유지하는 것은 어트리뷰트의 사본을 유지하는 신뢰할 수 있는 방법이 아닙니다. 어트리뷰트의 사본을 유지하려면 <em>attrs</em> 객체의 <a class="reference internal" href="copy.html#module-copy" title="copy: Shallow and deep copy operations."><code class="xref py py-meth docutils literal notranslate"><span class="pre">copy()</span></code></a> 메서드를 사용하십시오.</p>
+<p><code class="docutils literal notranslate"><span class="pre">feature_namespace_prefixes</span></code> 기능이 활성화되지 않는 한, 구문 분석기는 <em>qname</em> 매개 변수를 <code class="docutils literal notranslate"><span class="pre">None</span></code>으로 설정할 수 있습니다.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="xml.sax.handler.ContentHandler.endElementNS">
+<code class="sig-prename descclassname">ContentHandler.</code><code class="sig-name descname">endElementNS</code><span class="sig-paren">(</span><em class="sig-param">name</em>, <em class="sig-param">qname</em><span class="sig-paren">)</span><a class="headerlink" href="#xml.sax.handler.ContentHandler.endElementNS" title="정의 주소">¶</a></dt>
+<dd><p>이름 공간 모드에서 엘리먼트의 끝을 알립니다.</p>
+<p><em>name</em> 매개 변수는 <a class="reference internal" href="#xml.sax.handler.ContentHandler.startElementNS" title="xml.sax.handler.ContentHandler.startElementNS"><code class="xref py py-meth docutils literal notranslate"><span class="pre">startElementNS()</span></code></a> 메서드와 마찬가지로 <em>qname</em> 매개 변수처럼 엘리먼트 유형의 이름을 포함합니다.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="xml.sax.handler.ContentHandler.characters">
+<code class="sig-prename descclassname">ContentHandler.</code><code class="sig-name descname">characters</code><span class="sig-paren">(</span><em class="sig-param">content</em><span class="sig-paren">)</span><a class="headerlink" href="#xml.sax.handler.ContentHandler.characters" title="정의 주소">¶</a></dt>
+<dd><p>문자 데이터의 알림을 받습니다.</p>
+<p>구문 분석기는 이 메서드를 호출하여 각 문자 데이터 청크를 보고합니다. SAX 구문 분석기는 연속된 모든 문자 데이터를 단일 청크로 반환하거나 여러 청크로 분할할 수 있습니다; 그러나, 로케이터가 유용한 정보를 제공할 수 있도록, 단일 이벤트의 모든 문자는 같은 외부 엔티티에서 온 것이어야 합니다.</p>
+<p><em>content</em>는 문자열이나 바이트열 인스턴스일 수 있습니다; <code class="docutils literal notranslate"><span class="pre">expat</span></code> 판독기 모듈은 항상 문자열을 생성합니다.</p>
+<div class="admonition note">
+<p class="admonition-title">참고</p>
+<p>Python XML Special Interest Group에서 제공된 이전 SAX 1 인터페이스는 이 메서드에 더 Java와 유사한 인터페이스를 사용했습니다. 파이썬에서 사용되는 대부분의 구문 분석기가 구식 인터페이스의 장점을 취하지 않았기 때문에, 더 간단한 서명으로 변경했습니다. 이전 코드를 새 인터페이스로 변환하려면, 이전 <em>offset</em>과 <em>length</em> 매개 변수로 콘텐츠를 슬라이싱하는 대신 <em>content</em>를 사용하십시오.</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="xml.sax.handler.ContentHandler.ignorableWhitespace">
+<code class="sig-prename descclassname">ContentHandler.</code><code class="sig-name descname">ignorableWhitespace</code><span class="sig-paren">(</span><em class="sig-param">whitespace</em><span class="sig-paren">)</span><a class="headerlink" href="#xml.sax.handler.ContentHandler.ignorableWhitespace" title="정의 주소">¶</a></dt>
+<dd><p>엘리먼트 내용에서 무시할 수 있는 공백에 대한 알림을 받습니다.</p>
+<p>유효성 검사 구문 분석기는 무시할 수 있는 공백의 각 청크를 보고하기 위해 이 메서드를 사용해야 합니다 (W3C XML 1.0 권장 사항, 섹션 2.10을 참조하십시오).</p>
+<p>SAX 구문 분석기는 모든 연속적인 공백을 단일 청크로 반환하거나 여러 청크로 나눌 수 있습니다; 그러나 로케이터가 유용한 정보를 제공할 수 있도록, 단일 이벤트의 모든 문자는 같은 외부 엔티티에서 온 것이어야 합니다.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="xml.sax.handler.ContentHandler.processingInstruction">
+<code class="sig-prename descclassname">ContentHandler.</code><code class="sig-name descname">processingInstruction</code><span class="sig-paren">(</span><em class="sig-param">target</em>, <em class="sig-param">data</em><span class="sig-paren">)</span><a class="headerlink" href="#xml.sax.handler.ContentHandler.processingInstruction" title="정의 주소">¶</a></dt>
+<dd><p>처리 명령의 알림을 받습니다.</p>
+<p>구문 분석기는 발견된 각 처리 명령에 대해 이 메서드를 한 번 호출합니다: 처리 명령은 메인 문서 엘리먼트 전후에 발생할 수 있음에 유의하십시오.</p>
+<p>SAX 구문 분석기는 이 메서드를 사용하여 XML 선언(XML 1.0, 섹션 2.8)이나 텍스트 선언(XML 1.0, 섹션 4.3.1)을 보고해서는 안 됩니다.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="xml.sax.handler.ContentHandler.skippedEntity">
+<code class="sig-prename descclassname">ContentHandler.</code><code class="sig-name descname">skippedEntity</code><span class="sig-paren">(</span><em class="sig-param">name</em><span class="sig-paren">)</span><a class="headerlink" href="#xml.sax.handler.ContentHandler.skippedEntity" title="정의 주소">¶</a></dt>
+<dd><p>건너뛴 엔티티의 알림을 받습니다.</p>
+<p>구문 분석기는 각 엔티티를 건너뛸 때마다 이 메서드를 한 번 호출합니다. 유효성을 검사하지 않는 프로세서는 선언을 보지 않으면 엔티티를 건너뛸 수 있습니다 (예를 들어 엔티티가 외부 DTD 서브 세트에서 선언되었기 때문에). <code class="docutils literal notranslate"><span class="pre">feature_external_ges</span></code>와 <code class="docutils literal notranslate"><span class="pre">feature_external_pes</span></code> 속성의 값에 따라, 모든 프로세서가 외부 엔티티를 건너뛸 수 있습니다.</p>
+</dd></dl>
+
+</section>
+<section id="dtdhandler-objects">
+<span id="dtd-handler-objects"></span><h2>DTDHandler 객체<a class="headerlink" href="#dtdhandler-objects" title="제목 주소">¶</a></h2>
+<p><a class="reference internal" href="#xml.sax.handler.DTDHandler" title="xml.sax.handler.DTDHandler"><code class="xref py py-class docutils literal notranslate"><span class="pre">DTDHandler</span></code></a> 인스턴스는 다음 메서드를 제공합니다:</p>
+<dl class="method">
+<dt id="xml.sax.handler.DTDHandler.notationDecl">
+<code class="sig-prename descclassname">DTDHandler.</code><code class="sig-name descname">notationDecl</code><span class="sig-paren">(</span><em class="sig-param">name</em>, <em class="sig-param">publicId</em>, <em class="sig-param">systemId</em><span class="sig-paren">)</span><a class="headerlink" href="#xml.sax.handler.DTDHandler.notationDecl" title="정의 주소">¶</a></dt>
+<dd><p>표기법 선언 이벤트를 처리합니다.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="xml.sax.handler.DTDHandler.unparsedEntityDecl">
+<code class="sig-prename descclassname">DTDHandler.</code><code class="sig-name descname">unparsedEntityDecl</code><span class="sig-paren">(</span><em class="sig-param">name</em>, <em class="sig-param">publicId</em>, <em class="sig-param">systemId</em>, <em class="sig-param">ndata</em><span class="sig-paren">)</span><a class="headerlink" href="#xml.sax.handler.DTDHandler.unparsedEntityDecl" title="정의 주소">¶</a></dt>
+<dd><p>구문 분석되지 않은 엔티티 선언 이벤트를 처리합니다.</p>
+</dd></dl>
+
+</section>
+<section id="entityresolver-objects">
+<span id="entity-resolver-objects"></span><h2>EntityResolver 객체<a class="headerlink" href="#entityresolver-objects" title="제목 주소">¶</a></h2>
+<dl class="method">
+<dt id="xml.sax.handler.EntityResolver.resolveEntity">
+<code class="sig-prename descclassname">EntityResolver.</code><code class="sig-name descname">resolveEntity</code><span class="sig-paren">(</span><em class="sig-param">publicId</em>, <em class="sig-param">systemId</em><span class="sig-paren">)</span><a class="headerlink" href="#xml.sax.handler.EntityResolver.resolveEntity" title="정의 주소">¶</a></dt>
+<dd><p>엔티티의 시스템 식별자를 해석하고 읽을 시스템 식별자를 문자열로 반환하거나, 읽을 InputSource를 반환합니다. 기본 구현은 <em>systemId</em>를 반환합니다.</p>
+</dd></dl>
+
+</section>
+<section id="errorhandler-objects">
+<span id="sax-error-handler"></span><h2>ErrorHandler 객체<a class="headerlink" href="#errorhandler-objects" title="제목 주소">¶</a></h2>
+<p>이 인터페이스를 갖는 객체는 <a class="reference internal" href="xml.sax.reader.html#xml.sax.xmlreader.XMLReader" title="xml.sax.xmlreader.XMLReader"><code class="xref py py-class docutils literal notranslate"><span class="pre">XMLReader</span></code></a>에서 에러와 경고 정보를 받는 데 사용됩니다. 이 인터페이스를 구현하는 객체를 만든 다음 <a class="reference internal" href="xml.sax.reader.html#xml.sax.xmlreader.XMLReader" title="xml.sax.xmlreader.XMLReader"><code class="xref py py-class docutils literal notranslate"><span class="pre">XMLReader</span></code></a>에 객체를 등록하면, 구문 분석기는 객체의 메서드를 호출하여 모든 경고와 에러를 보고합니다. 세 가지 수준의 에러가 있습니다: 경고, (어쩌면) 복구 가능한 에러 및 복구 불가능한 에러. 모든 메서드는 <code class="xref py py-exc docutils literal notranslate"><span class="pre">SAXParseException</span></code>를 유일한 매개 변수로 취합니다. 전달된 예외 객체를 발생 시켜 에러와 경고를 예외로 변환할 수 있습니다.</p>
+<dl class="method">
+<dt id="xml.sax.handler.ErrorHandler.error">
+<code class="sig-prename descclassname">ErrorHandler.</code><code class="sig-name descname">error</code><span class="sig-paren">(</span><em class="sig-param">exception</em><span class="sig-paren">)</span><a class="headerlink" href="#xml.sax.handler.ErrorHandler.error" title="정의 주소">¶</a></dt>
+<dd><p>구문 분석기가 복구 가능한 에러를 만나면 호출됩니다. 이 메서드가 예외를 발생시키지 않으면, 구문 분석이 계속될 수 있지만, 응용 프로그램에서 추가 문서 정보를 기대하지 않아야 합니다. 구문 분석기가 계속되도록 허용하면 입력 문서에서 추가 에러가 발견될 수 있습니다.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="xml.sax.handler.ErrorHandler.fatalError">
+<code class="sig-prename descclassname">ErrorHandler.</code><code class="sig-name descname">fatalError</code><span class="sig-paren">(</span><em class="sig-param">exception</em><span class="sig-paren">)</span><a class="headerlink" href="#xml.sax.handler.ErrorHandler.fatalError" title="정의 주소">¶</a></dt>
+<dd><p>구문 분석기가 복구 불가능한 에러를 만나면 호출됩니다; 이 메서드가 반환될 때 구문 분석이 종료될 것으로 기대합니다.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="xml.sax.handler.ErrorHandler.warning">
+<code class="sig-prename descclassname">ErrorHandler.</code><code class="sig-name descname">warning</code><span class="sig-paren">(</span><em class="sig-param">exception</em><span class="sig-paren">)</span><a class="headerlink" href="#xml.sax.handler.ErrorHandler.warning" title="정의 주소">¶</a></dt>
+<dd><p>구문 분석기가 응용 프로그램에 경미한 경고 정보를 제공할 때 호출됩니다. 이 메서드가 반환될 때 구문 분석이 계속될 것으로 기대되며, 문서 정보는 계속 응용 프로그램에 전달됩니다. 이 메서드에서 예외를 발생시키면 구문 분석이 종료됩니다.</p>
+</dd></dl>
+
+</section>
+</section>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../contents.html">목차</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xml.sax.handler</span></code> — SAX 처리기의 베이스 클래스</a><ul>
+<li><a class="reference internal" href="#contenthandler-objects">ContentHandler 객체</a></li>
+<li><a class="reference internal" href="#dtdhandler-objects">DTDHandler 객체</a></li>
+<li><a class="reference internal" href="#entityresolver-objects">EntityResolver 객체</a></li>
+<li><a class="reference internal" href="#errorhandler-objects">ErrorHandler 객체</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>이전 항목</h4>
+  <p class="topless"><a href="xml.sax.html"
+                        title="이전 장"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xml.sax</span></code> — SAX2 구문 분석기 지원</a></p>
+  <h4>다음 항목</h4>
+  <p class="topless"><a href="xml.sax.utils.html"
+                        title="다음 장"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xml.sax.saxutils</span></code> — SAX 유틸리티</a></p>
+  <div role="note" aria-label="source link">
+    <h3>현재 문서</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">버그 보고하기</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/3.9/Doc/library/xml.sax.handler.rst"
+            rel="nofollow">소스 보기
+        </a>
+      </li>
+    </ul>
+  </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>탐색</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="전체 색인"
+             >색인</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 모듈 목록"
+             >모듈</a> |</li>
+        <li class="right" >
+          <a href="xml.sax.utils.html" title="xml.sax.saxutils — SAX 유틸리티"
+             >다음</a> |</li>
+        <li class="right" >
+          <a href="xml.sax.html" title="xml.sax — SAX2 구문 분석기 지원"
+             >이전</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.9.14 Documentation</a> &#187;
+    </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >파이썬 표준 라이브러리</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="markup.html" >구조화된 마크업 처리 도구</a> &#187;</li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="빠른 검색" aria-label="빠른 검색" type="text" name="q" />
+          <input type="submit" value="이동" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </form>
+    </div>
+                     |
+                </li>
+            
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">저작권</a> 2001-2022, Python Software Foundation.
+    <br />
+    This page is licensed under the Python Software Foundation License Version 2.
+    <br />
+    Examples, recipes, and other code in the documentation are additionally licensed under the Zero Clause BSD License.
+    <br />
+    See <a href="/license.html">History and License</a> for more information.<br />
+    <br />
+
+    The Python Software Foundation is a non-profit corporation.
+<a href="https://www.python.org/psf/donations/">Please donate.</a>
+<br />
+    <br />
+
+    최종 업데이트: 9월 11, 2022
+    <a href="/bugs.html">Found a bug</a>?
+    <br />
+
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 2.4.4.
+    </div>
+
+  </body>
+</html>

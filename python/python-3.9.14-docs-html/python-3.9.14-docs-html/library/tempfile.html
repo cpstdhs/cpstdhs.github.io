@@ -1,0 +1,487 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ko">
+  <head>
+    <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>tempfile — 임시 파일과 디렉터리 생성 &#8212; Python 3.9.14 문서</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="../_static/pydoctheme.css?2022.1" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/translations.js"></script>
+    
+    <script src="../_static/sidebar.js"></script>
+    
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Python 3.9.14 문서에서 찾기"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="이 문서 정보" href="../about.html" />
+    <link rel="index" title="색인" href="../genindex.html" />
+    <link rel="search" title="검색" href="../search.html" />
+    <link rel="copyright" title="저작권" href="../copyright.html" />
+    <link rel="next" title="glob — 유닉스 스타일 경로명 패턴 확장" href="glob.html" />
+    <link rel="prev" title="filecmp — 파일과 디렉터리 비교" href="filecmp.html" />
+    <link rel="canonical" href="https://docs.python.org/3/library/tempfile.html" />
+    
+      
+    
+
+    
+    <style>
+      @media only screen {
+        table.full-width-table {
+            width: 100%;
+        }
+      }
+    </style>
+<link rel="shortcut icon" type="image/png" href="../_static/py.svg" />
+            <script type="text/javascript" src="../_static/copybutton.js"></script>
+            <script type="text/javascript" src="../_static/menu.js"></script> 
+
+  </head>
+<body>
+<div class="mobile-nav">
+    <input type="checkbox" id="menuToggler" class="toggler__input" aria-controls="navigation"
+           aria-pressed="false" aria-expanded="false" role="button" aria-label="Menu" />
+    <label for="menuToggler" class="toggler__label">
+        <span></span>
+    </label>
+    <nav class="nav-content" role="navigation">
+         <a href="https://www.python.org/" class="nav-logo">
+             <img src="../_static/py.svg" alt="Logo"/>
+         </a>
+        <div class="version_switcher_placeholder"></div>
+        <form role="search" class="search" action="../search.html" method="get">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" class="search-icon">
+                <path fill-rule="nonzero"
+                        d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 001.48-5.34c-.47-2.78-2.79-5-5.59-5.34a6.505 6.505 0 00-7.27 7.27c.34 2.8 2.56 5.12 5.34 5.59a6.5 6.5 0 005.34-1.48l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49 0 .41-.41.41-1.08 0-1.49L15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" fill="#444"></path>
+            </svg>
+            <input type="text" name="q" aria-label="빠른 검색"/>
+            <input type="submit" value="이동"/>
+        </form>
+    </nav>
+    <div class="menu-wrapper">
+        <nav class="menu" role="navigation" aria-label="main navigation">
+            <div class="language_switcher_placeholder"></div>
+  <h3><a href="../contents.html">목차</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tempfile</span></code> — 임시 파일과 디렉터리 생성</a><ul>
+<li><a class="reference internal" href="#examples">예</a></li>
+<li><a class="reference internal" href="#deprecated-functions-and-variables">폐지된 함수와 변수</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>이전 항목</h4>
+  <p class="topless"><a href="filecmp.html"
+                        title="이전 장"><code class="xref py py-mod docutils literal notranslate"><span class="pre">filecmp</span></code> — 파일과 디렉터리 비교</a></p>
+  <h4>다음 항목</h4>
+  <p class="topless"><a href="glob.html"
+                        title="다음 장"><code class="xref py py-mod docutils literal notranslate"><span class="pre">glob</span></code> — 유닉스 스타일 경로명 패턴 확장</a></p>
+  <div role="note" aria-label="source link">
+    <h3>현재 문서</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">버그 보고하기</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/3.9/Doc/library/tempfile.rst"
+            rel="nofollow">소스 보기
+        </a>
+      </li>
+    </ul>
+  </div>
+        </nav>
+    </div>
+</div>
+
+  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>탐색</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="전체 색인"
+             accesskey="I">색인</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 모듈 목록"
+             >모듈</a> |</li>
+        <li class="right" >
+          <a href="glob.html" title="glob — 유닉스 스타일 경로명 패턴 확장"
+             accesskey="N">다음</a> |</li>
+        <li class="right" >
+          <a href="filecmp.html" title="filecmp — 파일과 디렉터리 비교"
+             accesskey="P">이전</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.9.14 Documentation</a> &#187;
+    </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >파이썬 표준 라이브러리</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="filesys.html" accesskey="U">파일과 디렉터리 액세스</a> &#187;</li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="빠른 검색" aria-label="빠른 검색" type="text" name="q" />
+          <input type="submit" value="이동" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </form>
+    </div>
+                     |
+                </li>
+            
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="module-tempfile">
+<span id="tempfile-generate-temporary-files-and-directories"></span><h1><a class="reference internal" href="#module-tempfile" title="tempfile: Generate temporary files and directories."><code class="xref py py-mod docutils literal notranslate"><span class="pre">tempfile</span></code></a> — 임시 파일과 디렉터리 생성<a class="headerlink" href="#module-tempfile" title="제목 주소">¶</a></h1>
+<p><strong>소스 코드:</strong> <a class="reference external" href="https://github.com/python/cpython/tree/3.9/Lib/tempfile.py">Lib/tempfile.py</a></p>
+<hr class="docutils" id="index-0" />
+<p>이 모듈은 임시 파일과 디렉터리를 만듭니다. 지원되는 모든 플랫폼에서 작동합니다. <a class="reference internal" href="#tempfile.TemporaryFile" title="tempfile.TemporaryFile"><code class="xref py py-class docutils literal notranslate"><span class="pre">TemporaryFile</span></code></a>, <a class="reference internal" href="#tempfile.NamedTemporaryFile" title="tempfile.NamedTemporaryFile"><code class="xref py py-class docutils literal notranslate"><span class="pre">NamedTemporaryFile</span></code></a>, <a class="reference internal" href="#tempfile.TemporaryDirectory" title="tempfile.TemporaryDirectory"><code class="xref py py-class docutils literal notranslate"><span class="pre">TemporaryDirectory</span></code></a> 및 <a class="reference internal" href="#tempfile.SpooledTemporaryFile" title="tempfile.SpooledTemporaryFile"><code class="xref py py-class docutils literal notranslate"><span class="pre">SpooledTemporaryFile</span></code></a>은 자동 정리를 제공하고 컨텍스트 관리자로 사용할 수 있는 고수준 인터페이스입니다. <a class="reference internal" href="#tempfile.mkstemp" title="tempfile.mkstemp"><code class="xref py py-func docutils literal notranslate"><span class="pre">mkstemp()</span></code></a>와 <a class="reference internal" href="#tempfile.mkdtemp" title="tempfile.mkdtemp"><code class="xref py py-func docutils literal notranslate"><span class="pre">mkdtemp()</span></code></a>는 수동 정리가 필요한 저수준 함수입니다.</p>
+<p>사용자가 호출할 수 있는 모든 함수와 생성자는 임시 파일과 디렉터리의 위치와 이름을 직접 제어할 수 있도록 하는 추가 인자를 취합니다. 이 모듈에서 사용하는 파일 이름에는 무작위 문자의 문자열이 포함되어있어 공유 임시 디렉터리에서 해당 파일을 안전하게 만들 수 있도록 합니다. 이전 버전과의 호환성을 유지하기 위해, 인자 순서는 다소 이상합니다; 명확성을 위해 키워드 인자를 사용하는 것이 좋습니다.</p>
+<p>이 모듈은 다음과 같은 사용자 호출 가능 항목을 정의합니다:</p>
+<dl class="function">
+<dt id="tempfile.TemporaryFile">
+<code class="sig-prename descclassname">tempfile.</code><code class="sig-name descname">TemporaryFile</code><span class="sig-paren">(</span><em class="sig-param">mode='w+b'</em>, <em class="sig-param">buffering=-1</em>, <em class="sig-param">encoding=None</em>, <em class="sig-param">newline=None</em>, <em class="sig-param">suffix=None</em>, <em class="sig-param">prefix=None</em>, <em class="sig-param">dir=None</em>, <em class="sig-param">*</em>, <em class="sig-param">errors=None</em><span class="sig-paren">)</span><a class="headerlink" href="#tempfile.TemporaryFile" title="정의 주소">¶</a></dt>
+<dd><p>임시 저장 영역으로 사용할 수 있는 <a class="reference internal" href="../glossary.html#term-file-like-object"><span class="xref std std-term">파일류 객체</span></a>를 반환합니다. <a class="reference internal" href="#tempfile.mkstemp" title="tempfile.mkstemp"><code class="xref py py-func docutils literal notranslate"><span class="pre">mkstemp()</span></code></a>와 같은 규칙을 사용하여 파일이 안전하게 만들어집니다. 닫히는 즉시 삭제됩니다 (객체가 가비지 수집될 때 묵시적인 닫기를 포함합니다). 유닉스에서, 파일의 디렉터리 항목은 전혀 만들어지지 않거나 파일이 만들어진 직후에 제거됩니다. 다른 플랫폼은 이를 지원하지 않습니다; 코드는 이 함수를 사용하여 만들어진 임시 파일이 파일 시스템에서 보이는 이름이 있거나 없는지에 의존해서는 안 됩니다.</p>
+<p>결과 객체는 컨텍스트 관리자로 사용할 수 있습니다 (<a class="reference internal" href="#tempfile-examples"><span class="std std-ref">예</span></a>를 참조하십시오). 컨텍스트가 완료되거나 파일 객체가 파괴되면 임시 파일이 파일 시스템에서 제거됩니다.</p>
+<p><em>mode</em> 매개 변수는 기본적으로 <code class="docutils literal notranslate"><span class="pre">'w+b'</span></code>로 설정되므로 만들어진 파일을 닫지 않고 읽고 쓸 수 있습니다. 저장된 데이터와 관계없이 모든 플랫폼에서 일관되게 작동하도록 바이너리 모드가 사용됩니다. <em>buffering</em>, <em>encoding</em>, <em>errors</em> 및 <em>newline</em>은 <a class="reference internal" href="functions.html#open" title="open"><code class="xref py py-func docutils literal notranslate"><span class="pre">open()</span></code></a>처럼 해석됩니다.</p>
+<p><em>dir</em>, <em>prefix</em> 및 <em>suffix</em> 매개 변수는 <a class="reference internal" href="#tempfile.mkstemp" title="tempfile.mkstemp"><code class="xref py py-func docutils literal notranslate"><span class="pre">mkstemp()</span></code></a>와 같은 의미와 기본값을 갖습니다.</p>
+<p>반환된 객체는 POSIX 플랫폼에서 실제 파일 객체입니다. 다른 플랫폼에서는, <code class="xref py py-attr docutils literal notranslate"><span class="pre">file</span></code> 어트리뷰트가 하부 실제 파일 객체인 파일류 객체입니다.</p>
+<p><a class="reference internal" href="os.html#os.O_TMPFILE" title="os.O_TMPFILE"><code class="xref py py-data docutils literal notranslate"><span class="pre">os.O_TMPFILE</span></code></a> 플래그는 사용할 수 있고 작동하면 사용됩니다 (리눅스 특정, 리눅스 커널 3.11 이상이 필요합니다).</p>
+<p>On platforms that are neither Posix nor Cygwin, TemporaryFile is an alias
+for NamedTemporaryFile.</p>
+<p class="audit-hook">인자 <code class="docutils literal notranslate"><span class="pre">fullpath</span></code>로 <a class="reference internal" href="sys.html#auditing"><span class="std std-ref">감사 이벤트</span></a> <code class="docutils literal notranslate"><span class="pre">tempfile.mkstemp</span></code>를 발생시킵니다.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">버전 3.5에서 변경: </span>사용할 수 있으면 <a class="reference internal" href="os.html#os.O_TMPFILE" title="os.O_TMPFILE"><code class="xref py py-data docutils literal notranslate"><span class="pre">os.O_TMPFILE</span></code></a> 플래그가 사용됩니다.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">버전 3.8에서 변경: </span><em>errors</em> 매개 변수를 추가했습니다.</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="tempfile.NamedTemporaryFile">
+<code class="sig-prename descclassname">tempfile.</code><code class="sig-name descname">NamedTemporaryFile</code><span class="sig-paren">(</span><em class="sig-param">mode='w+b'</em>, <em class="sig-param">buffering=-1</em>, <em class="sig-param">encoding=None</em>, <em class="sig-param">newline=None</em>, <em class="sig-param">suffix=None</em>, <em class="sig-param">prefix=None</em>, <em class="sig-param">dir=None</em>, <em class="sig-param">delete=True</em>, <em class="sig-param">*</em>, <em class="sig-param">errors=None</em><span class="sig-paren">)</span><a class="headerlink" href="#tempfile.NamedTemporaryFile" title="정의 주소">¶</a></dt>
+<dd><p>This function operates exactly as <a class="reference internal" href="#tempfile.TemporaryFile" title="tempfile.TemporaryFile"><code class="xref py py-func docutils literal notranslate"><span class="pre">TemporaryFile()</span></code></a> does, except that
+the file is guaranteed to have a visible name in the file system (on
+Unix, the directory entry is not unlinked).  That name can be retrieved
+from the <code class="xref py py-attr docutils literal notranslate"><span class="pre">name</span></code> attribute of the returned
+file-like object.  Whether the name can be
+used to open the file a second time, while the named temporary file is
+still open, varies across platforms (it can be so used on Unix; it cannot
+on Windows).  If <em>delete</em> is true (the default), the file is
+deleted as soon as it is closed.
+The returned object is always a file-like object whose <code class="xref py py-attr docutils literal notranslate"><span class="pre">file</span></code>
+attribute is the underlying true file object. This file-like object can
+be used in a <a class="reference internal" href="../reference/compound_stmts.html#with"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">with</span></code></a> statement, just like a normal file.</p>
+<p class="audit-hook">인자 <code class="docutils literal notranslate"><span class="pre">fullpath</span></code>로 <a class="reference internal" href="sys.html#auditing"><span class="std std-ref">감사 이벤트</span></a> <code class="docutils literal notranslate"><span class="pre">tempfile.mkstemp</span></code>를 발생시킵니다.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">버전 3.8에서 변경: </span><em>errors</em> 매개 변수를 추가했습니다.</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="tempfile.SpooledTemporaryFile">
+<code class="sig-prename descclassname">tempfile.</code><code class="sig-name descname">SpooledTemporaryFile</code><span class="sig-paren">(</span><em class="sig-param">max_size=0</em>, <em class="sig-param">mode='w+b'</em>, <em class="sig-param">buffering=-1</em>, <em class="sig-param">encoding=None</em>, <em class="sig-param">newline=None</em>, <em class="sig-param">suffix=None</em>, <em class="sig-param">prefix=None</em>, <em class="sig-param">dir=None</em>, <em class="sig-param">*</em>, <em class="sig-param">errors=None</em><span class="sig-paren">)</span><a class="headerlink" href="#tempfile.SpooledTemporaryFile" title="정의 주소">¶</a></dt>
+<dd><p>이 함수는 파일 크기가 <em>max_size</em>를 초과할 때까지, 또는 파일의 <code class="xref py py-func docutils literal notranslate"><span class="pre">fileno()</span></code> 메서드가 호출될 때까지 데이터가 메모리에 스풀링 되는 것을 제외하고는 <a class="reference internal" href="#tempfile.TemporaryFile" title="tempfile.TemporaryFile"><code class="xref py py-func docutils literal notranslate"><span class="pre">TemporaryFile()</span></code></a>과 똑같이 작동합니다. 이 시점에서 내용은 디스크에 기록되고 <a class="reference internal" href="#tempfile.TemporaryFile" title="tempfile.TemporaryFile"><code class="xref py py-func docutils literal notranslate"><span class="pre">TemporaryFile()</span></code></a>처럼 작업이 진행됩니다.</p>
+<p>결과 파일에는 추가 메서드인 <code class="xref py py-func docutils literal notranslate"><span class="pre">rollover()</span></code>가 있으며, 파일 크기와 관계없이 파일을 디스크 상의 파일로 롤오버(roll over) 합니다.</p>
+<p>반환된 객체는 파일류 객체인데, <code class="xref py py-func docutils literal notranslate"><span class="pre">rollover()</span></code>가 호출되었는지에 따라 <code class="xref py py-attr docutils literal notranslate"><span class="pre">_file</span></code> 어트리뷰트는 <a class="reference internal" href="io.html#io.BytesIO" title="io.BytesIO"><code class="xref py py-class docutils literal notranslate"><span class="pre">io.BytesIO</span></code></a>나 <a class="reference internal" href="io.html#io.TextIOWrapper" title="io.TextIOWrapper"><code class="xref py py-class docutils literal notranslate"><span class="pre">io.TextIOWrapper</span></code></a> 객체(바이너리나 텍스트 <em>mode</em>가 지정되었는지에 따라)이거나 실제 파일 객체입니다. 이 파일류 객체는 일반 파일과 마찬가지로 <a class="reference internal" href="../reference/compound_stmts.html#with"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">with</span></code></a> 문에서 사용할 수 있습니다.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">버전 3.3에서 변경: </span>truncate 메서드는 이제 <code class="docutils literal notranslate"><span class="pre">size</span></code> 인자를 허용합니다.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">버전 3.8에서 변경: </span><em>errors</em> 매개 변수를 추가했습니다.</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="tempfile.TemporaryDirectory">
+<code class="sig-prename descclassname">tempfile.</code><code class="sig-name descname">TemporaryDirectory</code><span class="sig-paren">(</span><em class="sig-param">suffix=None</em>, <em class="sig-param">prefix=None</em>, <em class="sig-param">dir=None</em><span class="sig-paren">)</span><a class="headerlink" href="#tempfile.TemporaryDirectory" title="정의 주소">¶</a></dt>
+<dd><p>이 함수는 <a class="reference internal" href="#tempfile.mkdtemp" title="tempfile.mkdtemp"><code class="xref py py-func docutils literal notranslate"><span class="pre">mkdtemp()</span></code></a>와 같은 규칙을 사용하여 임시 디렉터리를 안전하게 만듭니다. 결과 객체는 컨텍스트 관리자로 사용할 수 있습니다 (<a class="reference internal" href="#tempfile-examples"><span class="std std-ref">예</span></a>를 참조하십시오). 컨텍스트가 완료되거나 임시 디렉터리 객체가 파괴되면 새로 만들어진 임시 디렉터리와 모든 내용이 파일 시스템에서 제거됩니다.</p>
+<p>반환된 객체의 <code class="xref py py-attr docutils literal notranslate"><span class="pre">name</span></code> 어트리뷰트에서 디렉터리 이름을 꺼낼 수 있습니다. 반환된 객체가 컨텍스트 관리자로 사용될 때, <code class="xref py py-attr docutils literal notranslate"><span class="pre">name</span></code>은 <a class="reference internal" href="../reference/compound_stmts.html#with"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">with</span></code></a> 문의 <code class="xref std std-keyword docutils literal notranslate"><span class="pre">as</span></code> 절의 대상에 (있다면) 대입됩니다.</p>
+<p><code class="xref py py-func docutils literal notranslate"><span class="pre">cleanup()</span></code> 메서드를 호출하여 디렉터리를 명시적으로 정리할 수 있습니다.</p>
+<p class="audit-hook">인자 <code class="docutils literal notranslate"><span class="pre">fullpath</span></code>로 <a class="reference internal" href="sys.html#auditing"><span class="std std-ref">감사 이벤트</span></a> <code class="docutils literal notranslate"><span class="pre">tempfile.mkdtemp</span></code>를 발생시킵니다.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">버전 3.2에 추가.</span></p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="tempfile.mkstemp">
+<code class="sig-prename descclassname">tempfile.</code><code class="sig-name descname">mkstemp</code><span class="sig-paren">(</span><em class="sig-param">suffix=None</em>, <em class="sig-param">prefix=None</em>, <em class="sig-param">dir=None</em>, <em class="sig-param">text=False</em><span class="sig-paren">)</span><a class="headerlink" href="#tempfile.mkstemp" title="정의 주소">¶</a></dt>
+<dd><p>가장 안전한 방식으로 임시 파일을 만듭니다. 플랫폼이 <a class="reference internal" href="os.html#os.open" title="os.open"><code class="xref py py-func docutils literal notranslate"><span class="pre">os.open()</span></code></a>에서 <a class="reference internal" href="os.html#os.O_EXCL" title="os.O_EXCL"><code class="xref py py-const docutils literal notranslate"><span class="pre">os.O_EXCL</span></code></a> 플래그를 올바르게 구현한다고 가정할 때, 파일 생성에 경쟁 조건이 없습니다. 파일은 만드는 사용자 ID만 읽고 쓸 수 있습니다. 플랫폼이 권한 비트를 사용하여 파일이 실행 가능한지를 나타내면, 파일은 아무도 실행할 수 없습니다. 파일 기술자는 자식 프로세스에 의해 상속되지 않습니다.</p>
+<p><a class="reference internal" href="#tempfile.TemporaryFile" title="tempfile.TemporaryFile"><code class="xref py py-func docutils literal notranslate"><span class="pre">TemporaryFile()</span></code></a>과 달리, <a class="reference internal" href="#tempfile.mkstemp" title="tempfile.mkstemp"><code class="xref py py-func docutils literal notranslate"><span class="pre">mkstemp()</span></code></a>의 사용자는 임시 파일로의 작업을 끝내면 파일을 삭제해야 합니다.</p>
+<p><em>suffix</em>가 <code class="docutils literal notranslate"><span class="pre">None</span></code>이 아니면, 파일 이름은 해당 접미사로 끝납니다, 그렇지 않으면 접미사가 없습니다. <a class="reference internal" href="#tempfile.mkstemp" title="tempfile.mkstemp"><code class="xref py py-func docutils literal notranslate"><span class="pre">mkstemp()</span></code></a>는 파일 이름과 접미사 사이에 점을 넣지 않습니다; 필요하면 <em>suffix</em>의 시작 부분에 넣으십시오.</p>
+<p><em>prefix</em>가 <code class="docutils literal notranslate"><span class="pre">None</span></code>이 아니면, 파일 이름은 해당 접두사로 시작합니다; 그렇지 않으면 기본 접두사가 사용됩니다. 기본값은 <a class="reference internal" href="#tempfile.gettempprefix" title="tempfile.gettempprefix"><code class="xref py py-func docutils literal notranslate"><span class="pre">gettempprefix()</span></code></a>나 <a class="reference internal" href="#tempfile.gettempprefixb" title="tempfile.gettempprefixb"><code class="xref py py-func docutils literal notranslate"><span class="pre">gettempprefixb()</span></code></a> 중 적절한 것의 반환 값입니다.</p>
+<p><em>dir</em>이 <code class="docutils literal notranslate"><span class="pre">None</span></code>이 아니면, 파일은 해당 디렉터리에 만들어집니다; 그렇지 않으면 기본 디렉터리가 사용됩니다. 기본 디렉터리는 플랫폼별 목록에서 선택되지만, 응용 프로그램 사용자는 <em>TMPDIR</em>, <em>TEMP</em> 또는 <em>TMP</em> 환경 변수를 설정하여 디렉터리 위치를 제어할 수 있습니다. 따라서 생성된 파일명이 <code class="docutils literal notranslate"><span class="pre">os.popen()</span></code>을 통해 외부 명령에 전달될 때 따옴표 처리할 필요가 없는 것과 같은 멋진 속성을 가질 것이라는 보장은 없습니다.</p>
+<p><em>suffix</em>, <em>prefix</em> 및 <em>dir</em> 중 어느 것이라도 <code class="docutils literal notranslate"><span class="pre">None</span></code>이 아니면, 그들은 같은 형이어야 합니다. 이들이 바이트열이면, 반환되는 이름은 str 대신 바이트열입니다. 기본 동작으로 바이트열 반환 값을 강제하려면 <code class="docutils literal notranslate"><span class="pre">suffix=b''</span></code>를 전달하십시오.</p>
+<p><em>text</em>가 지정되고 참이면, 파일은 텍스트 모드로 열립니다. 그렇지 않으면 (기본값) 파일은 바이너리 모드로 열립니다.</p>
+<p><a class="reference internal" href="#tempfile.mkstemp" title="tempfile.mkstemp"><code class="xref py py-func docutils literal notranslate"><span class="pre">mkstemp()</span></code></a>는 열린 파일에 대한 OS 수준 핸들(<a class="reference internal" href="os.html#os.open" title="os.open"><code class="xref py py-func docutils literal notranslate"><span class="pre">os.open()</span></code></a>에서 반환하는 것)과 해당 파일의 절대 경로를 이 순서대로 포함하는 튜플을 반환합니다.</p>
+<p class="audit-hook">인자 <code class="docutils literal notranslate"><span class="pre">fullpath</span></code>로 <a class="reference internal" href="sys.html#auditing"><span class="std std-ref">감사 이벤트</span></a> <code class="docutils literal notranslate"><span class="pre">tempfile.mkstemp</span></code>를 발생시킵니다.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">버전 3.5에서 변경: </span>바이트열 반환 값을 얻기 위해 <em>suffix</em>, <em>prefix</em> 및 <em>dir</em>를 이제 바이트열로 제공할 수 있습니다. 이전에는, str만 허용되었습니다. <em>suffix</em>와 <em>prefix</em>는 이제 기본값이 <code class="docutils literal notranslate"><span class="pre">None</span></code>이고 적절한 기본값이 사용되도록 합니다.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">버전 3.6에서 변경: </span><em>dir</em> 매개 변수는 이제 <a class="reference internal" href="../glossary.html#term-path-like-object"><span class="xref std std-term">경로류 객체</span></a>를 받아들입니다.</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="tempfile.mkdtemp">
+<code class="sig-prename descclassname">tempfile.</code><code class="sig-name descname">mkdtemp</code><span class="sig-paren">(</span><em class="sig-param">suffix=None</em>, <em class="sig-param">prefix=None</em>, <em class="sig-param">dir=None</em><span class="sig-paren">)</span><a class="headerlink" href="#tempfile.mkdtemp" title="정의 주소">¶</a></dt>
+<dd><p>가장 안전한 방식으로 임시 디렉터리를 만듭니다. 디렉터리 생성에 경쟁 조건이 없습니다. 디렉터리는 만드는 사용자 ID만 읽고 쓰고 검색할 수 있습니다.</p>
+<p><a class="reference internal" href="#tempfile.mkdtemp" title="tempfile.mkdtemp"><code class="xref py py-func docutils literal notranslate"><span class="pre">mkdtemp()</span></code></a>의 사용자는 임시 디렉터리로의 작업을 끝내면 임시 디렉터리와 디렉터리의 내용을 삭제해야 합니다.</p>
+<p><em>prefix</em>, <em>suffix</em> 및 <em>dir</em> 인자는 <a class="reference internal" href="#tempfile.mkstemp" title="tempfile.mkstemp"><code class="xref py py-func docutils literal notranslate"><span class="pre">mkstemp()</span></code></a>와 같습니다.</p>
+<p><a class="reference internal" href="#tempfile.mkdtemp" title="tempfile.mkdtemp"><code class="xref py py-func docutils literal notranslate"><span class="pre">mkdtemp()</span></code></a>는 새 디렉터리의 절대 경로명을 반환합니다.</p>
+<p class="audit-hook">인자 <code class="docutils literal notranslate"><span class="pre">fullpath</span></code>로 <a class="reference internal" href="sys.html#auditing"><span class="std std-ref">감사 이벤트</span></a> <code class="docutils literal notranslate"><span class="pre">tempfile.mkdtemp</span></code>를 발생시킵니다.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">버전 3.5에서 변경: </span>바이트열 반환 값을 얻기 위해 <em>suffix</em>, <em>prefix</em> 및 <em>dir</em>를 이제 바이트열로 제공할 수 있습니다. 이전에는, str만 허용되었습니다. <em>suffix</em>와 <em>prefix</em>는 이제 기본값이 <code class="docutils literal notranslate"><span class="pre">None</span></code>이고 적절한 기본값이 사용되도록 합니다.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">버전 3.6에서 변경: </span><em>dir</em> 매개 변수는 이제 <a class="reference internal" href="../glossary.html#term-path-like-object"><span class="xref std std-term">경로류 객체</span></a>를 받아들입니다.</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="tempfile.gettempdir">
+<code class="sig-prename descclassname">tempfile.</code><code class="sig-name descname">gettempdir</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tempfile.gettempdir" title="정의 주소">¶</a></dt>
+<dd><p>임시 파일에 사용된 디렉터리 이름을 반환합니다. 이것은 이 모듈의 모든 함수에 대한 <em>dir</em> 인자의 기본값을 정의합니다.</p>
+<p>파이썬은 표준 디렉터리 목록을 검색하여 호출하는 사용자가 파일을 만들 수 있는 디렉터리를 찾습니다. 목록은 다음과 같습니다:</p>
+<ol class="arabic simple">
+<li><p><span class="target" id="index-7"></span><code class="xref std std-envvar docutils literal notranslate"><span class="pre">TMPDIR</span></code> 환경 변수로 명명된 디렉터리.</p></li>
+<li><p><span class="target" id="index-8"></span><code class="xref std std-envvar docutils literal notranslate"><span class="pre">TEMP</span></code> 환경 변수로 명명된 디렉터리.</p></li>
+<li><p><span class="target" id="index-9"></span><code class="xref std std-envvar docutils literal notranslate"><span class="pre">TMP</span></code> 환경 변수로 명명된 디렉터리.</p></li>
+<li><p>플랫폼별 위치:</p>
+<ul class="simple">
+<li><p>윈도우에서, 디렉터리 <code class="file docutils literal notranslate"><span class="pre">C:\TEMP</span></code>, <code class="file docutils literal notranslate"><span class="pre">C:\TMP</span></code>, <code class="file docutils literal notranslate"><span class="pre">\TEMP</span></code> 및 <code class="file docutils literal notranslate"><span class="pre">\TMP</span></code>, 이 순서대로.</p></li>
+<li><p>다른 모든 플랫폼에서, 디렉터리 <code class="file docutils literal notranslate"><span class="pre">/tmp</span></code>, <code class="file docutils literal notranslate"><span class="pre">/var/tmp</span></code> 및 <code class="file docutils literal notranslate"><span class="pre">/usr/tmp</span></code>, 이 순서대로.</p></li>
+</ul>
+</li>
+<li><p>최후의 수단으로, 현재 작업 디렉터리.</p></li>
+</ol>
+<p>이 검색 결과는 캐시 됩니다, 아래 <a class="reference internal" href="#tempfile.tempdir" title="tempfile.tempdir"><code class="xref py py-data docutils literal notranslate"><span class="pre">tempdir</span></code></a> 설명을 참조하십시오.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="tempfile.gettempdirb">
+<code class="sig-prename descclassname">tempfile.</code><code class="sig-name descname">gettempdirb</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tempfile.gettempdirb" title="정의 주소">¶</a></dt>
+<dd><p><a class="reference internal" href="#tempfile.gettempdir" title="tempfile.gettempdir"><code class="xref py py-func docutils literal notranslate"><span class="pre">gettempdir()</span></code></a>과 같지만, 반환 값이 바이트열입니다.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">버전 3.5에 추가.</span></p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="tempfile.gettempprefix">
+<code class="sig-prename descclassname">tempfile.</code><code class="sig-name descname">gettempprefix</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tempfile.gettempprefix" title="정의 주소">¶</a></dt>
+<dd><p>임시 파일을 만드는 데 사용된 파일명 접두사를 반환합니다. 디렉터리 구성 요소가 포함되어 있지 않습니다.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="tempfile.gettempprefixb">
+<code class="sig-prename descclassname">tempfile.</code><code class="sig-name descname">gettempprefixb</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tempfile.gettempprefixb" title="정의 주소">¶</a></dt>
+<dd><p><a class="reference internal" href="#tempfile.gettempprefix" title="tempfile.gettempprefix"><code class="xref py py-func docutils literal notranslate"><span class="pre">gettempprefix()</span></code></a>와 같지만, 반환 값이 바이트열입니다.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">버전 3.5에 추가.</span></p>
+</div>
+</dd></dl>
+
+<p>모듈은 전역 변수를 사용하여 <a class="reference internal" href="#tempfile.gettempdir" title="tempfile.gettempdir"><code class="xref py py-func docutils literal notranslate"><span class="pre">gettempdir()</span></code></a>이 반환한 임시 파일에 사용되는 디렉터리의 이름을 저장합니다. 선택 절차를 무시하도록 직접 설정할 수 있지만, 권장하지 않습니다. 이 모듈의 모든 함수는 디렉터리를 지정하는 데 사용할 수 있는 <em>dir</em> 인자를 사용하며 이는 권장되는 방법입니다.</p>
+<dl class="data">
+<dt id="tempfile.tempdir">
+<code class="sig-prename descclassname">tempfile.</code><code class="sig-name descname">tempdir</code><a class="headerlink" href="#tempfile.tempdir" title="정의 주소">¶</a></dt>
+<dd><p><code class="docutils literal notranslate"><span class="pre">None</span></code> 이외의 값으로 설정되면, 이 변수는 이 모듈에 정의된 함수의 <em>dir</em> 인자의 기본값을 정의합니다.</p>
+<p><a class="reference internal" href="#tempfile.gettempprefix" title="tempfile.gettempprefix"><code class="xref py py-func docutils literal notranslate"><span class="pre">gettempprefix()</span></code></a>를 제외한 위의 함수를 호출할 때 <code class="docutils literal notranslate"><span class="pre">tempdir</span></code>이 <code class="docutils literal notranslate"><span class="pre">None</span></code>(기본값)이면 <a class="reference internal" href="#tempfile.gettempdir" title="tempfile.gettempdir"><code class="xref py py-func docutils literal notranslate"><span class="pre">gettempdir()</span></code></a>에 설명된 알고리즘에 따라 초기화됩니다.</p>
+</dd></dl>
+
+<section id="examples">
+<span id="tempfile-examples"></span><h2>예<a class="headerlink" href="#examples" title="제목 주소">¶</a></h2>
+<p>다음은 <a class="reference internal" href="#module-tempfile" title="tempfile: Generate temporary files and directories."><code class="xref py py-mod docutils literal notranslate"><span class="pre">tempfile</span></code></a> 모듈의 일반적인 사용법에 대한 몇 가지 예입니다:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">tempfile</span>
+
+<span class="go"># create a temporary file and write some data to it</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fp</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">TemporaryFile</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fp</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;Hello world!&#39;</span><span class="p">)</span>
+<span class="go"># read data from file</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fp</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fp</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<span class="go">b&#39;Hello world!&#39;</span>
+<span class="go"># close the file, it will be removed</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fp</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<span class="go"># create a temporary file using a context manager</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">TemporaryFile</span><span class="p">()</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">fp</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;Hello world!&#39;</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="n">fp</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="n">fp</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<span class="go">b&#39;Hello world!&#39;</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="go"># file is now closed and removed</span>
+
+<span class="go"># create a temporary directory using the context manager</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">TemporaryDirectory</span><span class="p">()</span> <span class="k">as</span> <span class="n">tmpdirname</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;created temporary directory&#39;</span><span class="p">,</span> <span class="n">tmpdirname</span><span class="p">)</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="go"># directory and contents have been removed</span>
+</pre></div>
+</div>
+</section>
+<section id="deprecated-functions-and-variables">
+<span id="tempfile-mktemp-deprecated"></span><h2>폐지된 함수와 변수<a class="headerlink" href="#deprecated-functions-and-variables" title="제목 주소">¶</a></h2>
+<p>임시 파일을 만드는 역사적인 방법은 먼저 <a class="reference internal" href="#tempfile.mktemp" title="tempfile.mktemp"><code class="xref py py-func docutils literal notranslate"><span class="pre">mktemp()</span></code></a> 함수를 사용하여 파일 이름을 생성한 다음 이 이름을 사용하여 파일을 만드는 것입니다. 불행히도 <a class="reference internal" href="#tempfile.mktemp" title="tempfile.mktemp"><code class="xref py py-func docutils literal notranslate"><span class="pre">mktemp()</span></code></a> 호출과 파일을 만들려는 후속 시도 사이에 다른 프로세스가 이 이름으로 파일을 만들 수 있어서 이 방법은 안전하지 않습니다. 해결책은 두 단계를 결합하고 파일을 즉시 만드는 것입니다. 이 접근법이 <a class="reference internal" href="#tempfile.mkstemp" title="tempfile.mkstemp"><code class="xref py py-func docutils literal notranslate"><span class="pre">mkstemp()</span></code></a>와 위에서 설명한 다른 함수에서 사용됩니다.</p>
+<dl class="function">
+<dt id="tempfile.mktemp">
+<code class="sig-prename descclassname">tempfile.</code><code class="sig-name descname">mktemp</code><span class="sig-paren">(</span><em class="sig-param">suffix=''</em>, <em class="sig-param">prefix='tmp'</em>, <em class="sig-param">dir=None</em><span class="sig-paren">)</span><a class="headerlink" href="#tempfile.mktemp" title="정의 주소">¶</a></dt>
+<dd><div class="deprecated">
+<p><span class="versionmodified deprecated">버전 2.3부터 폐지: </span>대신 <a class="reference internal" href="#tempfile.mkstemp" title="tempfile.mkstemp"><code class="xref py py-func docutils literal notranslate"><span class="pre">mkstemp()</span></code></a>를 사용하십시오.</p>
+</div>
+<p>호출하는 시점에 존재하지 않는 파일의 절대 경로명을 반환합니다. <em>prefix</em>, <em>suffix</em> 및 <em>dir</em> 인자는 바이트열 파일 이름, <code class="docutils literal notranslate"><span class="pre">suffix=None</span></code> 및 <code class="docutils literal notranslate"><span class="pre">prefix=None</span></code>이 지원되지 않는다는 점을 제외하고 <a class="reference internal" href="#tempfile.mkstemp" title="tempfile.mkstemp"><code class="xref py py-func docutils literal notranslate"><span class="pre">mkstemp()</span></code></a>의 같은 인자와 유사합니다.</p>
+<div class="admonition warning">
+<p class="admonition-title">경고</p>
+<p>이 함수를 사용하면 프로그램에 보안 허점이 생길 수 있습니다. 반환된 파일 이름으로 무언가를 하면서 시간을 보내는 동안, 다른 누군가가 당신에게 펀치를 날릴 수 있습니다. <a class="reference internal" href="#tempfile.mktemp" title="tempfile.mktemp"><code class="xref py py-func docutils literal notranslate"><span class="pre">mktemp()</span></code></a> 사용은 <code class="docutils literal notranslate"><span class="pre">delete=False</span></code> 매개 변수를 전달하여 <a class="reference internal" href="#tempfile.NamedTemporaryFile" title="tempfile.NamedTemporaryFile"><code class="xref py py-func docutils literal notranslate"><span class="pre">NamedTemporaryFile()</span></code></a>로 쉽게 대체할 수 있습니다:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">f</span> <span class="o">=</span> <span class="n">NamedTemporaryFile</span><span class="p">(</span><span class="n">delete</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="o">.</span><span class="n">name</span>
+<span class="go">&#39;/tmp/tmptjujjt&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;Hello World!</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="go">13</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">unlink</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+</div>
+</dd></dl>
+
+</section>
+</section>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../contents.html">목차</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tempfile</span></code> — 임시 파일과 디렉터리 생성</a><ul>
+<li><a class="reference internal" href="#examples">예</a></li>
+<li><a class="reference internal" href="#deprecated-functions-and-variables">폐지된 함수와 변수</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>이전 항목</h4>
+  <p class="topless"><a href="filecmp.html"
+                        title="이전 장"><code class="xref py py-mod docutils literal notranslate"><span class="pre">filecmp</span></code> — 파일과 디렉터리 비교</a></p>
+  <h4>다음 항목</h4>
+  <p class="topless"><a href="glob.html"
+                        title="다음 장"><code class="xref py py-mod docutils literal notranslate"><span class="pre">glob</span></code> — 유닉스 스타일 경로명 패턴 확장</a></p>
+  <div role="note" aria-label="source link">
+    <h3>현재 문서</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">버그 보고하기</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/3.9/Doc/library/tempfile.rst"
+            rel="nofollow">소스 보기
+        </a>
+      </li>
+    </ul>
+  </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>탐색</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="전체 색인"
+             >색인</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 모듈 목록"
+             >모듈</a> |</li>
+        <li class="right" >
+          <a href="glob.html" title="glob — 유닉스 스타일 경로명 패턴 확장"
+             >다음</a> |</li>
+        <li class="right" >
+          <a href="filecmp.html" title="filecmp — 파일과 디렉터리 비교"
+             >이전</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.9.14 Documentation</a> &#187;
+    </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >파이썬 표준 라이브러리</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="filesys.html" >파일과 디렉터리 액세스</a> &#187;</li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="빠른 검색" aria-label="빠른 검색" type="text" name="q" />
+          <input type="submit" value="이동" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </form>
+    </div>
+                     |
+                </li>
+            
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">저작권</a> 2001-2022, Python Software Foundation.
+    <br />
+    This page is licensed under the Python Software Foundation License Version 2.
+    <br />
+    Examples, recipes, and other code in the documentation are additionally licensed under the Zero Clause BSD License.
+    <br />
+    See <a href="/license.html">History and License</a> for more information.<br />
+    <br />
+
+    The Python Software Foundation is a non-profit corporation.
+<a href="https://www.python.org/psf/donations/">Please donate.</a>
+<br />
+    <br />
+
+    최종 업데이트: 9월 11, 2022
+    <a href="/bugs.html">Found a bug</a>?
+    <br />
+
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 2.4.4.
+    </div>
+
+  </body>
+</html>

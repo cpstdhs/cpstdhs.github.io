@@ -1,0 +1,454 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ko">
+  <head>
+    <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>큐 &#8212; Python 3.9.14 문서</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="../_static/pydoctheme.css?2022.1" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/translations.js"></script>
+    
+    <script src="../_static/sidebar.js"></script>
+    
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Python 3.9.14 문서에서 찾기"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="이 문서 정보" href="../about.html" />
+    <link rel="index" title="색인" href="../genindex.html" />
+    <link rel="search" title="검색" href="../search.html" />
+    <link rel="copyright" title="저작권" href="../copyright.html" />
+    <link rel="next" title="예외" href="asyncio-exceptions.html" />
+    <link rel="prev" title="서브 프로세스" href="asyncio-subprocess.html" />
+    <link rel="canonical" href="https://docs.python.org/3/library/asyncio-queue.html" />
+    
+      
+    
+
+    
+    <style>
+      @media only screen {
+        table.full-width-table {
+            width: 100%;
+        }
+      }
+    </style>
+<link rel="shortcut icon" type="image/png" href="../_static/py.svg" />
+            <script type="text/javascript" src="../_static/copybutton.js"></script>
+            <script type="text/javascript" src="../_static/menu.js"></script> 
+
+  </head>
+<body>
+<div class="mobile-nav">
+    <input type="checkbox" id="menuToggler" class="toggler__input" aria-controls="navigation"
+           aria-pressed="false" aria-expanded="false" role="button" aria-label="Menu" />
+    <label for="menuToggler" class="toggler__label">
+        <span></span>
+    </label>
+    <nav class="nav-content" role="navigation">
+         <a href="https://www.python.org/" class="nav-logo">
+             <img src="../_static/py.svg" alt="Logo"/>
+         </a>
+        <div class="version_switcher_placeholder"></div>
+        <form role="search" class="search" action="../search.html" method="get">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" class="search-icon">
+                <path fill-rule="nonzero"
+                        d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 001.48-5.34c-.47-2.78-2.79-5-5.59-5.34a6.505 6.505 0 00-7.27 7.27c.34 2.8 2.56 5.12 5.34 5.59a6.5 6.5 0 005.34-1.48l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49 0 .41-.41.41-1.08 0-1.49L15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" fill="#444"></path>
+            </svg>
+            <input type="text" name="q" aria-label="빠른 검색"/>
+            <input type="submit" value="이동"/>
+        </form>
+    </nav>
+    <div class="menu-wrapper">
+        <nav class="menu" role="navigation" aria-label="main navigation">
+            <div class="language_switcher_placeholder"></div>
+  <h3><a href="../contents.html">목차</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">큐</a><ul>
+<li><a class="reference internal" href="#queue">Queue</a></li>
+<li><a class="reference internal" href="#priority-queue">우선순위 큐</a></li>
+<li><a class="reference internal" href="#lifo-queue">LIFO 큐</a></li>
+<li><a class="reference internal" href="#exceptions">예외</a></li>
+<li><a class="reference internal" href="#examples">예제</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>이전 항목</h4>
+  <p class="topless"><a href="asyncio-subprocess.html"
+                        title="이전 장">서브 프로세스</a></p>
+  <h4>다음 항목</h4>
+  <p class="topless"><a href="asyncio-exceptions.html"
+                        title="다음 장">예외</a></p>
+  <div role="note" aria-label="source link">
+    <h3>현재 문서</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">버그 보고하기</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/3.9/Doc/library/asyncio-queue.rst"
+            rel="nofollow">소스 보기
+        </a>
+      </li>
+    </ul>
+  </div>
+        </nav>
+    </div>
+</div>
+
+  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>탐색</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="전체 색인"
+             accesskey="I">색인</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 모듈 목록"
+             >모듈</a> |</li>
+        <li class="right" >
+          <a href="asyncio-exceptions.html" title="예외"
+             accesskey="N">다음</a> |</li>
+        <li class="right" >
+          <a href="asyncio-subprocess.html" title="서브 프로세스"
+             accesskey="P">이전</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.9.14 Documentation</a> &#187;
+    </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >파이썬 표준 라이브러리</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="ipc.html" >네트워킹과 프로세스 간 통신</a> &#187;</li>
+          <li class="nav-item nav-item-3"><a href="asyncio.html" accesskey="U"><code class="xref py py-mod docutils literal notranslate"><span class="pre">asyncio</span></code> — 비동기 I/O</a> &#187;</li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="빠른 검색" aria-label="빠른 검색" type="text" name="q" />
+          <input type="submit" value="이동" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </form>
+    </div>
+                     |
+                </li>
+            
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="queues">
+<span id="asyncio-queues"></span><h1>큐<a class="headerlink" href="#queues" title="제목 주소">¶</a></h1>
+<p><strong>소스 코드:</strong> <a class="reference external" href="https://github.com/python/cpython/tree/3.9/Lib/asyncio/queues.py">Lib/asyncio/queues.py</a></p>
+<hr class="docutils" />
+<p>asyncio 큐는 <a class="reference internal" href="queue.html#module-queue" title="queue: A synchronized queue class."><code class="xref py py-mod docutils literal notranslate"><span class="pre">queue</span></code></a> 모듈의 클래스와 유사하도록 설계되었습니다. asyncio 큐는 스레드 안전하지 않지만, async/await 코드에서 사용되도록 설계되었습니다.</p>
+<p>asyncio 큐의 메서드에는 <em>timeout</em> 매개 변수가 없습니다; 시간제한이 있는 큐 연산을 하려면 <a class="reference internal" href="asyncio-task.html#asyncio.wait_for" title="asyncio.wait_for"><code class="xref py py-func docutils literal notranslate"><span class="pre">asyncio.wait_for()</span></code></a> 함수를 사용하십시오.</p>
+<p>아래의 <a class="reference internal" href="#examples">예제</a> 절도 참조하십시오.</p>
+<section id="queue">
+<h2>Queue<a class="headerlink" href="#queue" title="제목 주소">¶</a></h2>
+<dl class="class">
+<dt id="asyncio.Queue">
+<em class="property">class </em><code class="sig-prename descclassname">asyncio.</code><code class="sig-name descname">Queue</code><span class="sig-paren">(</span><em class="sig-param">maxsize=0</em>, <em class="sig-param">*</em>, <em class="sig-param">loop=None</em><span class="sig-paren">)</span><a class="headerlink" href="#asyncio.Queue" title="정의 주소">¶</a></dt>
+<dd><p>선입 선출 (FIFO) 큐.</p>
+<p><em>maxsize</em>가 0보다 작거나 같으면 큐 크기는 무한합니다. <code class="docutils literal notranslate"><span class="pre">0</span></code>보다 큰 정수면, 큐가 <em>maxsize</em>에 도달했을 때 <a class="reference internal" href="#asyncio.Queue.get" title="asyncio.Queue.get"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get()</span></code></a>이 항목을 제거할 때까지 <code class="docutils literal notranslate"><span class="pre">await</span> <span class="pre">put()</span></code>이 블록합니다.</p>
+<p>표준 라이브러리의 스레드를 쓰는 <a class="reference internal" href="queue.html#module-queue" title="queue: A synchronized queue class."><code class="xref py py-mod docutils literal notranslate"><span class="pre">queue</span></code></a>와는 달리, 큐의 크기는 항상 알려져 있으며 <a class="reference internal" href="#asyncio.Queue.qsize" title="asyncio.Queue.qsize"><code class="xref py py-meth docutils literal notranslate"><span class="pre">qsize()</span></code></a> 메서드를 호출하여 얻을 수 있습니다.</p>
+<div class="deprecated-removed">
+<p><span class="versionmodified">Deprecated since version 3.8, will be removed in version 3.10: </span><em>loop</em> 매개 변수</p>
+</div>
+<p>이 클래스는 <a class="reference internal" href="asyncio-dev.html#asyncio-multithreading"><span class="std std-ref">스레드 안전하지 않습니다</span></a>.</p>
+<dl class="attribute">
+<dt id="asyncio.Queue.maxsize">
+<code class="sig-name descname">maxsize</code><a class="headerlink" href="#asyncio.Queue.maxsize" title="정의 주소">¶</a></dt>
+<dd><p>큐에 허용되는 항목 수.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="asyncio.Queue.empty">
+<code class="sig-name descname">empty</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#asyncio.Queue.empty" title="정의 주소">¶</a></dt>
+<dd><p>큐가 비어 있으면 <code class="docutils literal notranslate"><span class="pre">True</span></code>를 반환하고, 그렇지 않으면 <code class="docutils literal notranslate"><span class="pre">False</span></code>를 반환합니다.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="asyncio.Queue.full">
+<code class="sig-name descname">full</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#asyncio.Queue.full" title="정의 주소">¶</a></dt>
+<dd><p>큐에 <a class="reference internal" href="#asyncio.Queue.maxsize" title="asyncio.Queue.maxsize"><code class="xref py py-attr docutils literal notranslate"><span class="pre">maxsize</span></code></a> 항목이 있으면 <code class="docutils literal notranslate"><span class="pre">True</span></code>를 반환합니다.</p>
+<p>큐가 <code class="docutils literal notranslate"><span class="pre">maxsize=0</span></code> (기본값)으로 초기화되었으면, <a class="reference internal" href="#asyncio.Queue.full" title="asyncio.Queue.full"><code class="xref py py-meth docutils literal notranslate"><span class="pre">full()</span></code></a>은 절대 <code class="docutils literal notranslate"><span class="pre">True</span></code>를 반환하지 않습니다.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="asyncio.Queue.get">
+<em class="property">coroutine </em><code class="sig-name descname">get</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#asyncio.Queue.get" title="정의 주소">¶</a></dt>
+<dd><p>큐에서 항목을 제거하고 반환합니다. 큐가 비어 있으면, 항목이 들어올 때까지 기다립니다.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="asyncio.Queue.get_nowait">
+<code class="sig-name descname">get_nowait</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#asyncio.Queue.get_nowait" title="정의 주소">¶</a></dt>
+<dd><p>항목을 즉시 사용할 수 있으면 항목을 반환하고, 그렇지 않으면 <a class="reference internal" href="#asyncio.QueueEmpty" title="asyncio.QueueEmpty"><code class="xref py py-exc docutils literal notranslate"><span class="pre">QueueEmpty</span></code></a>를 발생시킵니다.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="asyncio.Queue.join">
+<em class="property">coroutine </em><code class="sig-name descname">join</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#asyncio.Queue.join" title="정의 주소">¶</a></dt>
+<dd><p>큐의 모든 항목을 수신하여 처리할 때까지 블록합니다.</p>
+<p>완료되지 않은 작업 수는 항목이 큐에 추가될 때마다 증가합니다. 이 수는 소비자 코루틴이 항목을 수신했고 그 항목에 관한 작업이 모두 완료되었음을 나타내는 <a class="reference internal" href="#asyncio.Queue.task_done" title="asyncio.Queue.task_done"><code class="xref py py-meth docutils literal notranslate"><span class="pre">task_done()</span></code></a>를 호출할 때마다 감소합니다. 완료되지 않은 작업 수가 0으로 떨어지면 <a class="reference internal" href="#asyncio.Queue.join" title="asyncio.Queue.join"><code class="xref py py-meth docutils literal notranslate"><span class="pre">join()</span></code></a>가 블록 해제됩니다.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="asyncio.Queue.put">
+<em class="property">coroutine </em><code class="sig-name descname">put</code><span class="sig-paren">(</span><em class="sig-param">item</em><span class="sig-paren">)</span><a class="headerlink" href="#asyncio.Queue.put" title="정의 주소">¶</a></dt>
+<dd><p>큐에 항목을 넣습니다. 큐가 가득 차면, 항목을 추가할 빈자리가 생길 때까지 기다립니다.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="asyncio.Queue.put_nowait">
+<code class="sig-name descname">put_nowait</code><span class="sig-paren">(</span><em class="sig-param">item</em><span class="sig-paren">)</span><a class="headerlink" href="#asyncio.Queue.put_nowait" title="정의 주소">¶</a></dt>
+<dd><p>블록하지 않고 항목을 큐에 넣습니다.</p>
+<p>자리가 즉시 나지 않으면, <a class="reference internal" href="#asyncio.QueueFull" title="asyncio.QueueFull"><code class="xref py py-exc docutils literal notranslate"><span class="pre">QueueFull</span></code></a>를 일으킵니다.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="asyncio.Queue.qsize">
+<code class="sig-name descname">qsize</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#asyncio.Queue.qsize" title="정의 주소">¶</a></dt>
+<dd><p>큐에 있는 항목 수를 돌려줍니다.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="asyncio.Queue.task_done">
+<code class="sig-name descname">task_done</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#asyncio.Queue.task_done" title="정의 주소">¶</a></dt>
+<dd><p>이전에 큐에 넣은 작업이 완료되었음을 나타냅니다.</p>
+<p>큐 소비자가 사용합니다. 작업을 꺼내는 데 사용된 <a class="reference internal" href="#asyncio.Queue.get" title="asyncio.Queue.get"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get()</span></code></a> 마다, 뒤따르는 <a class="reference internal" href="#asyncio.Queue.task_done" title="asyncio.Queue.task_done"><code class="xref py py-meth docutils literal notranslate"><span class="pre">task_done()</span></code></a> 호출은 작업에 관한 처리가 완료되었음을 큐에 알려줍니다.</p>
+<p><a class="reference internal" href="#asyncio.Queue.join" title="asyncio.Queue.join"><code class="xref py py-meth docutils literal notranslate"><span class="pre">join()</span></code></a>이 현재 블록 중이면, 모든 항목이 처리될 때 다시 시작됩니다 (큐에 <a class="reference internal" href="#asyncio.Queue.put" title="asyncio.Queue.put"><code class="xref py py-meth docutils literal notranslate"><span class="pre">put()</span></code></a>한 모든 항목에 대해 <a class="reference internal" href="#asyncio.Queue.task_done" title="asyncio.Queue.task_done"><code class="xref py py-meth docutils literal notranslate"><span class="pre">task_done()</span></code></a> 호출이 수신되었음을 뜻합니다).</p>
+<p>큐에 넣은 항목보다 더 많이 호출되면 <a class="reference internal" href="exceptions.html#ValueError" title="ValueError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code></a>를 발생시킵니다.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="priority-queue">
+<h2>우선순위 큐<a class="headerlink" href="#priority-queue" title="제목 주소">¶</a></h2>
+<dl class="class">
+<dt id="asyncio.PriorityQueue">
+<em class="property">class </em><code class="sig-prename descclassname">asyncio.</code><code class="sig-name descname">PriorityQueue</code><a class="headerlink" href="#asyncio.PriorityQueue" title="정의 주소">¶</a></dt>
+<dd><p><a class="reference internal" href="#asyncio.Queue" title="asyncio.Queue"><code class="xref py py-class docutils literal notranslate"><span class="pre">Queue</span></code></a>의 변형; 우선순위 순서로 항목을 꺼냅니다 (가장 낮은 우선순위가 처음입니다).</p>
+<p>엔트리는 일반적으로 <code class="docutils literal notranslate"><span class="pre">(priority_number,</span> <span class="pre">data)</span></code> 형식의 튜플입니다.</p>
+</dd></dl>
+
+</section>
+<section id="lifo-queue">
+<h2>LIFO 큐<a class="headerlink" href="#lifo-queue" title="제목 주소">¶</a></h2>
+<dl class="class">
+<dt id="asyncio.LifoQueue">
+<em class="property">class </em><code class="sig-prename descclassname">asyncio.</code><code class="sig-name descname">LifoQueue</code><a class="headerlink" href="#asyncio.LifoQueue" title="정의 주소">¶</a></dt>
+<dd><p>가장 최근에 추가된 항목을 먼저 꺼내는 <a class="reference internal" href="#asyncio.Queue" title="asyncio.Queue"><code class="xref py py-class docutils literal notranslate"><span class="pre">Queue</span></code></a>의 변형 (후입 선출).</p>
+</dd></dl>
+
+</section>
+<section id="exceptions">
+<h2>예외<a class="headerlink" href="#exceptions" title="제목 주소">¶</a></h2>
+<dl class="exception">
+<dt id="asyncio.QueueEmpty">
+<em class="property">exception </em><code class="sig-prename descclassname">asyncio.</code><code class="sig-name descname">QueueEmpty</code><a class="headerlink" href="#asyncio.QueueEmpty" title="정의 주소">¶</a></dt>
+<dd><p>이 예외는 <a class="reference internal" href="#asyncio.Queue.get_nowait" title="asyncio.Queue.get_nowait"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_nowait()</span></code></a> 메서드가 빈 큐에 호출될 때 발생합니다.</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="asyncio.QueueFull">
+<em class="property">exception </em><code class="sig-prename descclassname">asyncio.</code><code class="sig-name descname">QueueFull</code><a class="headerlink" href="#asyncio.QueueFull" title="정의 주소">¶</a></dt>
+<dd><p><a class="reference internal" href="#asyncio.Queue.put_nowait" title="asyncio.Queue.put_nowait"><code class="xref py py-meth docutils literal notranslate"><span class="pre">put_nowait()</span></code></a> 메서드가 <em>maxsize</em>에 도달한 큐에 호출될 때 발생하는 예외입니다.</p>
+</dd></dl>
+
+</section>
+<section id="examples">
+<h2>예제<a class="headerlink" href="#examples" title="제목 주소">¶</a></h2>
+<p id="asyncio-example-queue-dist">큐를 사용하여 여러 동시 태스크로 작업 부하를 분산시킬 수 있습니다:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">asyncio</span>
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">worker</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">queue</span><span class="p">):</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="c1"># Get a &quot;work item&quot; out of the queue.</span>
+        <span class="n">sleep_for</span> <span class="o">=</span> <span class="k">await</span> <span class="n">queue</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+
+        <span class="c1"># Sleep for the &quot;sleep_for&quot; seconds.</span>
+        <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">sleep_for</span><span class="p">)</span>
+
+        <span class="c1"># Notify the queue that the &quot;work item&quot; has been processed.</span>
+        <span class="n">queue</span><span class="o">.</span><span class="n">task_done</span><span class="p">()</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1"> has slept for </span><span class="si">{</span><span class="n">sleep_for</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1"> seconds&#39;</span><span class="p">)</span>
+
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="c1"># Create a queue that we will use to store our &quot;workload&quot;.</span>
+    <span class="n">queue</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">Queue</span><span class="p">()</span>
+
+    <span class="c1"># Generate random timings and put them into the queue.</span>
+    <span class="n">total_sleep_time</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">20</span><span class="p">):</span>
+        <span class="n">sleep_for</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span>
+        <span class="n">total_sleep_time</span> <span class="o">+=</span> <span class="n">sleep_for</span>
+        <span class="n">queue</span><span class="o">.</span><span class="n">put_nowait</span><span class="p">(</span><span class="n">sleep_for</span><span class="p">)</span>
+
+    <span class="c1"># Create three worker tasks to process the queue concurrently.</span>
+    <span class="n">tasks</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+        <span class="n">task</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">create_task</span><span class="p">(</span><span class="n">worker</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;worker-</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">queue</span><span class="p">))</span>
+        <span class="n">tasks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">task</span><span class="p">)</span>
+
+    <span class="c1"># Wait until the queue is fully processed.</span>
+    <span class="n">started_at</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">monotonic</span><span class="p">()</span>
+    <span class="k">await</span> <span class="n">queue</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+    <span class="n">total_slept_for</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">monotonic</span><span class="p">()</span> <span class="o">-</span> <span class="n">started_at</span>
+
+    <span class="c1"># Cancel our worker tasks.</span>
+    <span class="k">for</span> <span class="n">task</span> <span class="ow">in</span> <span class="n">tasks</span><span class="p">:</span>
+        <span class="n">task</span><span class="o">.</span><span class="n">cancel</span><span class="p">()</span>
+    <span class="c1"># Wait until all worker tasks are cancelled.</span>
+    <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">gather</span><span class="p">(</span><span class="o">*</span><span class="n">tasks</span><span class="p">,</span> <span class="n">return_exceptions</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;====&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;3 workers slept in parallel for </span><span class="si">{</span><span class="n">total_slept_for</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1"> seconds&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;total expected sleep time: </span><span class="si">{</span><span class="n">total_sleep_time</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1"> seconds&#39;</span><span class="p">)</span>
+
+
+<span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">main</span><span class="p">())</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../contents.html">목차</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">큐</a><ul>
+<li><a class="reference internal" href="#queue">Queue</a></li>
+<li><a class="reference internal" href="#priority-queue">우선순위 큐</a></li>
+<li><a class="reference internal" href="#lifo-queue">LIFO 큐</a></li>
+<li><a class="reference internal" href="#exceptions">예외</a></li>
+<li><a class="reference internal" href="#examples">예제</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>이전 항목</h4>
+  <p class="topless"><a href="asyncio-subprocess.html"
+                        title="이전 장">서브 프로세스</a></p>
+  <h4>다음 항목</h4>
+  <p class="topless"><a href="asyncio-exceptions.html"
+                        title="다음 장">예외</a></p>
+  <div role="note" aria-label="source link">
+    <h3>현재 문서</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">버그 보고하기</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/3.9/Doc/library/asyncio-queue.rst"
+            rel="nofollow">소스 보기
+        </a>
+      </li>
+    </ul>
+  </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>탐색</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="전체 색인"
+             >색인</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 모듈 목록"
+             >모듈</a> |</li>
+        <li class="right" >
+          <a href="asyncio-exceptions.html" title="예외"
+             >다음</a> |</li>
+        <li class="right" >
+          <a href="asyncio-subprocess.html" title="서브 프로세스"
+             >이전</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.9.14 Documentation</a> &#187;
+    </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >파이썬 표준 라이브러리</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="ipc.html" >네트워킹과 프로세스 간 통신</a> &#187;</li>
+          <li class="nav-item nav-item-3"><a href="asyncio.html" ><code class="xref py py-mod docutils literal notranslate"><span class="pre">asyncio</span></code> — 비동기 I/O</a> &#187;</li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="빠른 검색" aria-label="빠른 검색" type="text" name="q" />
+          <input type="submit" value="이동" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </form>
+    </div>
+                     |
+                </li>
+            
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">저작권</a> 2001-2022, Python Software Foundation.
+    <br />
+    This page is licensed under the Python Software Foundation License Version 2.
+    <br />
+    Examples, recipes, and other code in the documentation are additionally licensed under the Zero Clause BSD License.
+    <br />
+    See <a href="/license.html">History and License</a> for more information.<br />
+    <br />
+
+    The Python Software Foundation is a non-profit corporation.
+<a href="https://www.python.org/psf/donations/">Please donate.</a>
+<br />
+    <br />
+
+    최종 업데이트: 9월 11, 2022
+    <a href="/bugs.html">Found a bug</a>?
+    <br />
+
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 2.4.4.
+    </div>
+
+  </body>
+</html>

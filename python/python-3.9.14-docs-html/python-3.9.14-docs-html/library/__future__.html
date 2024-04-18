@@ -1,0 +1,357 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ko">
+  <head>
+    <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>__future__ — 퓨처 문 정의 &#8212; Python 3.9.14 문서</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="../_static/pydoctheme.css?2022.1" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/translations.js"></script>
+    
+    <script src="../_static/sidebar.js"></script>
+    
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Python 3.9.14 문서에서 찾기"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="이 문서 정보" href="../about.html" />
+    <link rel="index" title="색인" href="../genindex.html" />
+    <link rel="search" title="검색" href="../search.html" />
+    <link rel="copyright" title="저작권" href="../copyright.html" />
+    <link rel="next" title="gc — 가비지 수거기 인터페이스" href="gc.html" />
+    <link rel="prev" title="traceback — 스택 트레이스백 인쇄와 조회" href="traceback.html" />
+    <link rel="canonical" href="https://docs.python.org/3/library/__future__.html" />
+    
+      
+    
+
+    
+    <style>
+      @media only screen {
+        table.full-width-table {
+            width: 100%;
+        }
+      }
+    </style>
+<link rel="shortcut icon" type="image/png" href="../_static/py.svg" />
+            <script type="text/javascript" src="../_static/copybutton.js"></script>
+            <script type="text/javascript" src="../_static/menu.js"></script> 
+
+  </head>
+<body>
+<div class="mobile-nav">
+    <input type="checkbox" id="menuToggler" class="toggler__input" aria-controls="navigation"
+           aria-pressed="false" aria-expanded="false" role="button" aria-label="Menu" />
+    <label for="menuToggler" class="toggler__label">
+        <span></span>
+    </label>
+    <nav class="nav-content" role="navigation">
+         <a href="https://www.python.org/" class="nav-logo">
+             <img src="../_static/py.svg" alt="Logo"/>
+         </a>
+        <div class="version_switcher_placeholder"></div>
+        <form role="search" class="search" action="../search.html" method="get">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" class="search-icon">
+                <path fill-rule="nonzero"
+                        d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 001.48-5.34c-.47-2.78-2.79-5-5.59-5.34a6.505 6.505 0 00-7.27 7.27c.34 2.8 2.56 5.12 5.34 5.59a6.5 6.5 0 005.34-1.48l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49 0 .41-.41.41-1.08 0-1.49L15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" fill="#444"></path>
+            </svg>
+            <input type="text" name="q" aria-label="빠른 검색"/>
+            <input type="submit" value="이동"/>
+        </form>
+    </nav>
+    <div class="menu-wrapper">
+        <nav class="menu" role="navigation" aria-label="main navigation">
+            <div class="language_switcher_placeholder"></div>
+  <h4>이전 항목</h4>
+  <p class="topless"><a href="traceback.html"
+                        title="이전 장"><code class="xref py py-mod docutils literal notranslate"><span class="pre">traceback</span></code> — 스택 트레이스백 인쇄와 조회</a></p>
+  <h4>다음 항목</h4>
+  <p class="topless"><a href="gc.html"
+                        title="다음 장"><code class="xref py py-mod docutils literal notranslate"><span class="pre">gc</span></code> — 가비지 수거기 인터페이스</a></p>
+  <div role="note" aria-label="source link">
+    <h3>현재 문서</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">버그 보고하기</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/3.9/Doc/library/__future__.rst"
+            rel="nofollow">소스 보기
+        </a>
+      </li>
+    </ul>
+  </div>
+        </nav>
+    </div>
+</div>
+
+  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>탐색</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="전체 색인"
+             accesskey="I">색인</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 모듈 목록"
+             >모듈</a> |</li>
+        <li class="right" >
+          <a href="gc.html" title="gc — 가비지 수거기 인터페이스"
+             accesskey="N">다음</a> |</li>
+        <li class="right" >
+          <a href="traceback.html" title="traceback — 스택 트레이스백 인쇄와 조회"
+             accesskey="P">이전</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.9.14 Documentation</a> &#187;
+    </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >파이썬 표준 라이브러리</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="python.html" accesskey="U">파이썬 실행시간 서비스</a> &#187;</li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="빠른 검색" aria-label="빠른 검색" type="text" name="q" />
+          <input type="submit" value="이동" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </form>
+    </div>
+                     |
+                </li>
+            
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="module-__future__">
+<span id="future-future-statement-definitions"></span><h1><a class="reference internal" href="#module-__future__" title="__future__: Future statement definitions"><code class="xref py py-mod docutils literal notranslate"><span class="pre">__future__</span></code></a> — 퓨처 문 정의<a class="headerlink" href="#module-__future__" title="제목 주소">¶</a></h1>
+<p><strong>소스 코드:</strong> <a class="reference external" href="https://github.com/python/cpython/tree/3.9/Lib/__future__.py">Lib/__future__.py</a></p>
+<hr class="docutils" />
+<p><a class="reference internal" href="#module-__future__" title="__future__: Future statement definitions"><code class="xref py py-mod docutils literal notranslate"><span class="pre">__future__</span></code></a> 는 실제 모듈이며 세 가지 용도로 사용됩니다:</p>
+<ul class="simple">
+<li><p>임포트 문을 분석하고 임포트하는 모듈을 발견하리라고 기대하는 기존 도구가 혼동하지 않게 하려고.</p></li>
+<li><p>2.1 이전의 배포에서 <a class="reference internal" href="../reference/simple_stmts.html#future"><span class="std std-ref">퓨처 문</span></a> 을 실행하면 최소한 실행시간 예외를 일으키도록 보장하기 위해 (2.1 이전에는 그런 이름의 모듈이 없으므로 <a class="reference internal" href="#module-__future__" title="__future__: Future statement definitions"><code class="xref py py-mod docutils literal notranslate"><span class="pre">__future__</span></code></a> 임포트는 실패합니다).</p></li>
+<li><p>호환되지 않는 변경 사항이 도입된 시점과 그것이 필수적일 때를 — 또는 이미 필수적으로 된 때를 — 문서로 만들기 위해. 이것은 실행 가능한 문서 형식이며, <a class="reference internal" href="#module-__future__" title="__future__: Future statement definitions"><code class="xref py py-mod docutils literal notranslate"><span class="pre">__future__</span></code></a> 를 임포트 해서 내용을 들여다봄으로써 프로그래밍 방식으로 검사 할 수 있습니다.</p></li>
+</ul>
+<p><code class="file docutils literal notranslate"><span class="pre">__future__.py</span></code> 의 각 문장은 다음과 같은 형식입니다:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">FeatureName</span> <span class="o">=</span> <span class="n">_Feature</span><span class="p">(</span><span class="n">OptionalRelease</span><span class="p">,</span> <span class="n">MandatoryRelease</span><span class="p">,</span>
+                       <span class="n">CompilerFlag</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>보통, <em>OptionalRelease</em> 는 <em>MandatoryRelease</em> 보다 작으며, 둘 다 <a class="reference internal" href="sys.html#sys.version_info" title="sys.version_info"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.version_info</span></code></a>와 같은 형태의 5-튜플입니다:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">PY_MAJOR_VERSION</span><span class="p">,</span> <span class="c1"># the 2 in 2.1.0a3; an int</span>
+ <span class="n">PY_MINOR_VERSION</span><span class="p">,</span> <span class="c1"># the 1; an int</span>
+ <span class="n">PY_MICRO_VERSION</span><span class="p">,</span> <span class="c1"># the 0; an int</span>
+ <span class="n">PY_RELEASE_LEVEL</span><span class="p">,</span> <span class="c1"># &quot;alpha&quot;, &quot;beta&quot;, &quot;candidate&quot; or &quot;final&quot;; string</span>
+ <span class="n">PY_RELEASE_SERIAL</span> <span class="c1"># the 3; an int</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p><em>OptionalRelease</em> 는 해당 기능이 승인된 첫 번째 배포를 기록합니다.</p>
+<p><em>MandatoryRelease</em> 가 아직 배포되지 않은 경우, <em>MandatoryRelease</em> 는 해당 기능이 언어 일부가 될 배포를 예측합니다.</p>
+<p>그렇지 않으면 <em>MandatoryRelease</em> 는 기능이 언어 일부가 된 때를 기록합니다; 그 배포와 그 이후의 배포에서, 모듈이 해당 기능을 사용하기 위해 더 퓨처 문을 요구하지 않지만, 그러한 임포트는 계속 사용할 수 있습니다.</p>
+<p><em>MandatoryRelease</em> 는 <code class="docutils literal notranslate"><span class="pre">None</span></code> 일 수도 있습니다. 이는 계획된 기능이 삭제되었음을 의미합니다.</p>
+<p>클래스 <code class="xref py py-class docutils literal notranslate"><span class="pre">_Feature</span></code> 의 인스턴스는 두 개의 상응하는 메서드인 <code class="xref py py-meth docutils literal notranslate"><span class="pre">getOptionalRelease()</span></code> 와 <code class="xref py py-meth docutils literal notranslate"><span class="pre">getMandatoryRelease()</span></code> 를 가지고 있습니다.</p>
+<p><em>CompilerFlag</em> 은 동적으로 컴파일되는 코드에서 해당 기능을 활성화하기 위해, 내장 함수 <a class="reference internal" href="functions.html#compile" title="compile"><code class="xref py py-func docutils literal notranslate"><span class="pre">compile()</span></code></a> 의 네 번째 인자로 전달되어야 하는 (비트 필드) 플래그입니다. 이 플래그는 <code class="xref py py-class docutils literal notranslate"><span class="pre">_Feature</span></code> 인스턴스의 <code class="xref py py-attr docutils literal notranslate"><span class="pre">compiler_flag</span></code> 어트리뷰트에 저장됩니다.</p>
+<p>어떤 기능 설명도 <a class="reference internal" href="#module-__future__" title="__future__: Future statement definitions"><code class="xref py py-mod docutils literal notranslate"><span class="pre">__future__</span></code></a> 에서 삭제되지 않습니다. 파이썬 2.1에서 소개된 이후로 이 메커니즘을 사용하여 다음과 같은 기능이 언어에 도입되었습니다:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 14%" />
+<col style="width: 16%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>기능</p></th>
+<th class="head"><p>선택적 버전</p></th>
+<th class="head"><p>필수적 버전</p></th>
+<th class="head"><p>효과</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>nested_scopes</p></td>
+<td><p>2.1.0b1</p></td>
+<td><p>2.2</p></td>
+<td><p><span class="target" id="index-20"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0227"><strong>PEP 227</strong></a>: <em>정적으로 중첩된 스코프</em></p></td>
+</tr>
+<tr class="row-odd"><td><p>generators</p></td>
+<td><p>2.2.0a1</p></td>
+<td><p>2.3</p></td>
+<td><p><span class="target" id="index-21"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0255"><strong>PEP 255</strong></a>: <em>단순 제너레이터</em></p></td>
+</tr>
+<tr class="row-even"><td><p>division</p></td>
+<td><p>2.2.0a2</p></td>
+<td><p>3.0</p></td>
+<td><p><span class="target" id="index-22"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0238"><strong>PEP 238</strong></a>: <em>나누기 연산자 변경</em></p></td>
+</tr>
+<tr class="row-odd"><td><p>absolute_import</p></td>
+<td><p>2.5.0a1</p></td>
+<td><p>3.0</p></td>
+<td><p><span class="target" id="index-23"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0328"><strong>PEP 328</strong></a>: <em>임포트: 복수 줄 및 절대/상대</em></p></td>
+</tr>
+<tr class="row-even"><td><p>with_statement</p></td>
+<td><p>2.5.0a1</p></td>
+<td><p>2.6</p></td>
+<td><p><span class="target" id="index-24"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0343"><strong>PEP 343</strong></a>: <em>“with” 문</em></p></td>
+</tr>
+<tr class="row-odd"><td><p>print_function</p></td>
+<td><p>2.6.0a2</p></td>
+<td><p>3.0</p></td>
+<td><p><span class="target" id="index-25"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-3105"><strong>PEP 3105</strong></a>: <em>print를 함수로 만들기</em></p></td>
+</tr>
+<tr class="row-even"><td><p>unicode_literals</p></td>
+<td><p>2.6.0a2</p></td>
+<td><p>3.0</p></td>
+<td><p><span class="target" id="index-26"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-3112"><strong>PEP 3112</strong></a>: <em>파이썬 3000의 바이트열 리터럴</em></p></td>
+</tr>
+<tr class="row-odd"><td><p>generator_stop</p></td>
+<td><p>3.5.0b1</p></td>
+<td><p>3.7</p></td>
+<td><p><span class="target" id="index-27"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0479"><strong>PEP 479</strong></a>: <em>제너레이터 내부의 StopIteration 처리</em></p></td>
+</tr>
+<tr class="row-even"><td><p>annotations</p></td>
+<td><p>3.7.0b1</p></td>
+<td><p>TBD <a class="footnote-reference brackets" href="#id2" id="id1">1</a></p></td>
+<td><p><span class="target" id="index-28"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0563"><strong>PEP 563</strong></a>: <em>어노테이션의 지연된 평가</em></p></td>
+</tr>
+</tbody>
+</table>
+<dl class="footnote brackets">
+<dt class="label" id="id2"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
+<dd><p><code class="docutils literal notranslate"><span class="pre">from</span> <span class="pre">__future__</span> <span class="pre">import</span> <span class="pre">annotations</span></code> was previously scheduled to
+become mandatory in Python 3.10, but the Python Steering Council
+twice decided to delay the change
+(<a class="reference external" href="https://mail.python.org/archives/list/python-dev&#64;python.org/message/CLVXXPQ2T2LQ5MP2Y53VVQFCXYWQJHKZ/">announcement for Python 3.10</a>;
+<a class="reference external" href="https://mail.python.org/archives/list/python-dev&#64;python.org/message/VIZEBX5EYMSYIJNDBF6DMUMZOCWHARSO/">announcement for Python 3.11</a>).
+No final decision has been made yet. See also <span class="target" id="index-9"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0563"><strong>PEP 563</strong></a> and <span class="target" id="index-10"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0649"><strong>PEP 649</strong></a>.</p>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">더 보기</p>
+<dl class="simple">
+<dt><a class="reference internal" href="../reference/simple_stmts.html#future"><span class="std std-ref">퓨처 문</span></a></dt><dd><p>컴파일러가 퓨처 임포트를 처리하는 방법.</p>
+</dd>
+</dl>
+</div>
+</section>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>이전 항목</h4>
+  <p class="topless"><a href="traceback.html"
+                        title="이전 장"><code class="xref py py-mod docutils literal notranslate"><span class="pre">traceback</span></code> — 스택 트레이스백 인쇄와 조회</a></p>
+  <h4>다음 항목</h4>
+  <p class="topless"><a href="gc.html"
+                        title="다음 장"><code class="xref py py-mod docutils literal notranslate"><span class="pre">gc</span></code> — 가비지 수거기 인터페이스</a></p>
+  <div role="note" aria-label="source link">
+    <h3>현재 문서</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">버그 보고하기</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/3.9/Doc/library/__future__.rst"
+            rel="nofollow">소스 보기
+        </a>
+      </li>
+    </ul>
+  </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>탐색</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="전체 색인"
+             >색인</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 모듈 목록"
+             >모듈</a> |</li>
+        <li class="right" >
+          <a href="gc.html" title="gc — 가비지 수거기 인터페이스"
+             >다음</a> |</li>
+        <li class="right" >
+          <a href="traceback.html" title="traceback — 스택 트레이스백 인쇄와 조회"
+             >이전</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.9.14 Documentation</a> &#187;
+    </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >파이썬 표준 라이브러리</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="python.html" >파이썬 실행시간 서비스</a> &#187;</li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="빠른 검색" aria-label="빠른 검색" type="text" name="q" />
+          <input type="submit" value="이동" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </form>
+    </div>
+                     |
+                </li>
+            
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">저작권</a> 2001-2022, Python Software Foundation.
+    <br />
+    This page is licensed under the Python Software Foundation License Version 2.
+    <br />
+    Examples, recipes, and other code in the documentation are additionally licensed under the Zero Clause BSD License.
+    <br />
+    See <a href="/license.html">History and License</a> for more information.<br />
+    <br />
+
+    The Python Software Foundation is a non-profit corporation.
+<a href="https://www.python.org/psf/donations/">Please donate.</a>
+<br />
+    <br />
+
+    최종 업데이트: 9월 11, 2022
+    <a href="/bugs.html">Found a bug</a>?
+    <br />
+
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 2.4.4.
+    </div>
+
+  </body>
+</html>

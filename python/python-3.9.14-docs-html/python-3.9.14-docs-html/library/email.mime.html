@@ -1,0 +1,357 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ko">
+  <head>
+    <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>email.mime: 처음부터 이메일과 MIME 객체 만들기 &#8212; Python 3.9.14 문서</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="../_static/pydoctheme.css?2022.1" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/translations.js"></script>
+    
+    <script src="../_static/sidebar.js"></script>
+    
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Python 3.9.14 문서에서 찾기"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="이 문서 정보" href="../about.html" />
+    <link rel="index" title="색인" href="../genindex.html" />
+    <link rel="search" title="검색" href="../search.html" />
+    <link rel="copyright" title="저작권" href="../copyright.html" />
+    <link rel="next" title="email.header: 국제화된 헤더" href="email.header.html" />
+    <link rel="prev" title="email.message.Message: compat32 API를 사용하여 이메일 메시지 표현하기" href="email.compat32-message.html" />
+    <link rel="canonical" href="https://docs.python.org/3/library/email.mime.html" />
+    
+      
+    
+
+    
+    <style>
+      @media only screen {
+        table.full-width-table {
+            width: 100%;
+        }
+      }
+    </style>
+<link rel="shortcut icon" type="image/png" href="../_static/py.svg" />
+            <script type="text/javascript" src="../_static/copybutton.js"></script>
+            <script type="text/javascript" src="../_static/menu.js"></script> 
+
+  </head>
+<body>
+<div class="mobile-nav">
+    <input type="checkbox" id="menuToggler" class="toggler__input" aria-controls="navigation"
+           aria-pressed="false" aria-expanded="false" role="button" aria-label="Menu" />
+    <label for="menuToggler" class="toggler__label">
+        <span></span>
+    </label>
+    <nav class="nav-content" role="navigation">
+         <a href="https://www.python.org/" class="nav-logo">
+             <img src="../_static/py.svg" alt="Logo"/>
+         </a>
+        <div class="version_switcher_placeholder"></div>
+        <form role="search" class="search" action="../search.html" method="get">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" class="search-icon">
+                <path fill-rule="nonzero"
+                        d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 001.48-5.34c-.47-2.78-2.79-5-5.59-5.34a6.505 6.505 0 00-7.27 7.27c.34 2.8 2.56 5.12 5.34 5.59a6.5 6.5 0 005.34-1.48l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49 0 .41-.41.41-1.08 0-1.49L15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" fill="#444"></path>
+            </svg>
+            <input type="text" name="q" aria-label="빠른 검색"/>
+            <input type="submit" value="이동"/>
+        </form>
+    </nav>
+    <div class="menu-wrapper">
+        <nav class="menu" role="navigation" aria-label="main navigation">
+            <div class="language_switcher_placeholder"></div>
+  <h4>이전 항목</h4>
+  <p class="topless"><a href="email.compat32-message.html"
+                        title="이전 장"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.message.Message</span></code>: <code class="xref py py-data docutils literal notranslate"><span class="pre">compat32</span></code> API를 사용하여 이메일 메시지 표현하기</a></p>
+  <h4>다음 항목</h4>
+  <p class="topless"><a href="email.header.html"
+                        title="다음 장"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.header</span></code>: 국제화된 헤더</a></p>
+  <div role="note" aria-label="source link">
+    <h3>현재 문서</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">버그 보고하기</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/3.9/Doc/library/email.mime.rst"
+            rel="nofollow">소스 보기
+        </a>
+      </li>
+    </ul>
+  </div>
+        </nav>
+    </div>
+</div>
+
+  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>탐색</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="전체 색인"
+             accesskey="I">색인</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 모듈 목록"
+             >모듈</a> |</li>
+        <li class="right" >
+          <a href="email.header.html" title="email.header: 국제화된 헤더"
+             accesskey="N">다음</a> |</li>
+        <li class="right" >
+          <a href="email.compat32-message.html" title="email.message.Message: compat32 API를 사용하여 이메일 메시지 표현하기"
+             accesskey="P">이전</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.9.14 Documentation</a> &#187;
+    </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >파이썬 표준 라이브러리</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="netdata.html" >인터넷 데이터 처리</a> &#187;</li>
+          <li class="nav-item nav-item-3"><a href="email.html" accesskey="U"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email</span></code> — 전자 메일과 MIME 처리 패키지</a> &#187;</li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="빠른 검색" aria-label="빠른 검색" type="text" name="q" />
+          <input type="submit" value="이동" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </form>
+    </div>
+                     |
+                </li>
+            
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="module-email.mime">
+<span id="email-mime-creating-email-and-mime-objects-from-scratch"></span><h1><a class="reference internal" href="#module-email.mime" title="email.mime: Build MIME messages."><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.mime</span></code></a>: 처음부터 이메일과 MIME 객체 만들기<a class="headerlink" href="#module-email.mime" title="제목 주소">¶</a></h1>
+<p><strong>소스 코드:</strong> <a class="reference external" href="https://github.com/python/cpython/tree/3.9/Lib/email/mime/">Lib/email/mime/</a></p>
+<hr class="docutils" />
+<p>이 모듈은 레거시 (<code class="docutils literal notranslate"><span class="pre">Compat32</span></code>) 이메일 API의 일부입니다. 새로운 API에서는 기능이 <a class="reference internal" href="email.contentmanager.html#module-email.contentmanager" title="email.contentmanager: Storing and Retrieving Content from MIME Parts"><code class="xref py py-mod docutils literal notranslate"><span class="pre">contentmanager</span></code></a>로 부분적으로 대체되지만, 특정 응용 프로그램에서는 이 클래스들이 레거시 코드가 아닌 곳에서도 여전히 유용할 수 있습니다.</p>
+<p>일반적으로, 파일이나 일부 텍스트를, 텍스트를 구문 분석하고 루트 메시지 객체를 반환하는 구문 분석기에 전달하여 메시지 객체 구조를 얻습니다. 그러나 처음부터 완전한 메시지 구조를 만들거나, 개별 <a class="reference internal" href="email.compat32-message.html#email.message.Message" title="email.message.Message"><code class="xref py py-class docutils literal notranslate"><span class="pre">Message</span></code></a> 객체를 직접 만들 수도 있습니다. 실제로, 기존 구조를 가져와서 새로운 <a class="reference internal" href="email.compat32-message.html#email.message.Message" title="email.message.Message"><code class="xref py py-class docutils literal notranslate"><span class="pre">Message</span></code></a> 객체를 추가하거나 이동시킬 수도 있습니다. 이렇게 하면 MIME 메시지를 잘게 자르고 재배치하는 매우 편리한 인터페이스가 만들어집니다.</p>
+<p><a class="reference internal" href="email.compat32-message.html#email.message.Message" title="email.message.Message"><code class="xref py py-class docutils literal notranslate"><span class="pre">Message</span></code></a> 인스턴스를 만들고 첨부 파일과 모든 적절한 헤더를 수동으로 추가하여 새 객체 구조를 만들 수 있습니다. 그러나 MIME 메시지의 경우, <a class="reference internal" href="email.html#module-email" title="email: Package supporting the parsing, manipulating, and generating email messages."><code class="xref py py-mod docutils literal notranslate"><span class="pre">email</span></code></a> 패키지는 작업을 쉽게 하기 위해 편리한 서브 클래스를 제공합니다.</p>
+<p>클래스는 다음과 같습니다:</p>
+<dl class="class">
+<dt id="email.mime.base.MIMEBase">
+<em class="property">class </em><code class="sig-prename descclassname">email.mime.base.</code><code class="sig-name descname">MIMEBase</code><span class="sig-paren">(</span><em class="sig-param">_maintype</em>, <em class="sig-param">_subtype</em>, <em class="sig-param">*</em>, <em class="sig-param">policy=compat32</em>, <em class="sig-param">**_params</em><span class="sig-paren">)</span><a class="headerlink" href="#email.mime.base.MIMEBase" title="정의 주소">¶</a></dt>
+<dd><p>모듈: <code class="xref py py-mod docutils literal notranslate"><span class="pre">email.mime.base</span></code></p>
+<p>이것은 <a class="reference internal" href="email.compat32-message.html#email.message.Message" title="email.message.Message"><code class="xref py py-class docutils literal notranslate"><span class="pre">Message</span></code></a>의 모든 MIME 특정 서브 클래스의 베이스 클래스입니다. 일반적으로, 할 수는 있지만, <a class="reference internal" href="#email.mime.base.MIMEBase" title="email.mime.base.MIMEBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">MIMEBase</span></code></a>의 인스턴스를 만들지는 않습니다. <a class="reference internal" href="#email.mime.base.MIMEBase" title="email.mime.base.MIMEBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">MIMEBase</span></code></a>는 주로 더 구체적인 MIME 인식 서브 클래스를 위한 편리한 베이스 클래스로 제공됩니다.</p>
+<p><em>_maintype</em>은 <em class="mailheader">Content-Type</em> 주 유형(예를 들어 <em class="mimetype">text</em>나 <em class="mimetype">image</em>)이고, <em>_subtype</em>은 <em class="mailheader">Content-Type</em> 부 유형(예를 들어 <em class="mimetype">plain</em>이나 <em class="mimetype">gif</em>)입니다. <em>_params</em>는 매개 변수 키/값 딕셔너리이며 <a class="reference internal" href="email.compat32-message.html#email.message.Message.add_header" title="email.message.Message.add_header"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Message.add_header</span></code></a>로 직접 전달됩니다.</p>
+<p><em>policy</em>가 지정되면 (기본값은 <a class="reference internal" href="email.policy.html#email.policy.Compat32" title="email.policy.Compat32"><code class="xref py py-class docutils literal notranslate"><span class="pre">compat32</span></code></a> 정책입니다), <a class="reference internal" href="email.compat32-message.html#email.message.Message" title="email.message.Message"><code class="xref py py-class docutils literal notranslate"><span class="pre">Message</span></code></a>로 전달됩니다.</p>
+<p><a class="reference internal" href="#email.mime.base.MIMEBase" title="email.mime.base.MIMEBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">MIMEBase</span></code></a> 클래스는 항상 (<em>_maintype</em>, <em>_subtype</em> 및 <em>_params</em>에 기반하는) <em class="mailheader">Content-Type</em> 헤더와 (항상 <code class="docutils literal notranslate"><span class="pre">1.0</span></code>으로 설정되는) <em class="mailheader">MIME-Version</em> 헤더를 추가합니다.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">버전 3.6에서 변경: </span><em>policy</em> 키워드 전용 매개 변수를 추가했습니다.</p>
+</div>
+</dd></dl>
+
+<dl class="class">
+<dt id="email.mime.nonmultipart.MIMENonMultipart">
+<em class="property">class </em><code class="sig-prename descclassname">email.mime.nonmultipart.</code><code class="sig-name descname">MIMENonMultipart</code><a class="headerlink" href="#email.mime.nonmultipart.MIMENonMultipart" title="정의 주소">¶</a></dt>
+<dd><p>모듈: <code class="xref py py-mod docutils literal notranslate"><span class="pre">email.mime.nonmultipart</span></code></p>
+<p><a class="reference internal" href="#email.mime.base.MIMEBase" title="email.mime.base.MIMEBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">MIMEBase</span></code></a>의 서브 클래스, <em class="mimetype">multipart</em> 가 아닌 MIME 메시지의 중간 베이스 클래스입니다. 이 클래스의 기본 목적은 <em class="mimetype">multipart</em> 메시지에만 적합한 <a class="reference internal" href="email.compat32-message.html#email.message.Message.attach" title="email.message.Message.attach"><code class="xref py py-meth docutils literal notranslate"><span class="pre">attach()</span></code></a> 메서드 사용을 방지하는 것입니다. <a class="reference internal" href="email.compat32-message.html#email.message.Message.attach" title="email.message.Message.attach"><code class="xref py py-meth docutils literal notranslate"><span class="pre">attach()</span></code></a>가 호출되면 <a class="reference internal" href="email.errors.html#email.errors.MultipartConversionError" title="email.errors.MultipartConversionError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">MultipartConversionError</span></code></a> 예외가 발생합니다.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="email.mime.multipart.MIMEMultipart">
+<em class="property">class </em><code class="sig-prename descclassname">email.mime.multipart.</code><code class="sig-name descname">MIMEMultipart</code><span class="sig-paren">(</span><em class="sig-param">_subtype='mixed'</em>, <em class="sig-param">boundary=None</em>, <em class="sig-param">_subparts=None</em>, <em class="sig-param">*</em>, <em class="sig-param">policy=compat32</em>, <em class="sig-param">**_params</em><span class="sig-paren">)</span><a class="headerlink" href="#email.mime.multipart.MIMEMultipart" title="정의 주소">¶</a></dt>
+<dd><p>모듈: <code class="xref py py-mod docutils literal notranslate"><span class="pre">email.mime.multipart</span></code></p>
+<p><a class="reference internal" href="#email.mime.base.MIMEBase" title="email.mime.base.MIMEBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">MIMEBase</span></code></a>의 서브 클래스, <em class="mimetype">multipart</em> 인 MIME 메시지의 중간 베이스 클래스입니다. 선택적 <em>_subtype</em>의 기본값은 <em class="mimetype">mixed</em>이지만, 메시지의 부 유형을 지정하는 데 사용할 수 있습니다. <em class="mimetype">multipart/_subtype</em>의 <em class="mailheader">Content-Type</em> 헤더가 메시지 객체에 추가됩니다. <em class="mailheader">MIME-Version</em> 헤더도 추가됩니다.</p>
+<p>선택적 <em>boundary</em>는 멀티 파트 경계 문자열입니다. <code class="docutils literal notranslate"><span class="pre">None</span></code>(기본값)이면, 경계는 필요할 때 (예를 들어 메시지가 직렬화될 때) 계산됩니다.</p>
+<p><em>_subparts</em>는 페이 로드의 초기 서브 파트 시퀀스입니다. 이 시퀀스를 리스트로 변환할 수 있어야 합니다. <a class="reference internal" href="email.compat32-message.html#email.message.Message.attach" title="email.message.Message.attach"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Message.attach</span></code></a> 메서드를 사용하여 항상 메시지에 새 서브 파트를 첨부할 수 있습니다.</p>
+<p>선택적 <em>policy</em> 인자의 기본값은 <a class="reference internal" href="email.policy.html#email.policy.Compat32" title="email.policy.Compat32"><code class="xref py py-class docutils literal notranslate"><span class="pre">compat32</span></code></a>입니다.</p>
+<p><em class="mailheader">Content-Type</em> 헤더에 대한 추가 매개 변수는 키워드 인자에서 취하거나, 키워드 딕셔너리인 <em>_params</em> 인자로 전달됩니다.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">버전 3.6에서 변경: </span><em>policy</em> 키워드 전용 매개 변수를 추가했습니다.</p>
+</div>
+</dd></dl>
+
+<dl class="class">
+<dt id="email.mime.application.MIMEApplication">
+<em class="property">class </em><code class="sig-prename descclassname">email.mime.application.</code><code class="sig-name descname">MIMEApplication</code><span class="sig-paren">(</span><em class="sig-param">_data</em>, <em class="sig-param">_subtype='octet-stream'</em>, <em class="sig-param">_encoder=email.encoders.encode_base64</em>, <em class="sig-param">*</em>, <em class="sig-param">policy=compat32</em>, <em class="sig-param">**_params</em><span class="sig-paren">)</span><a class="headerlink" href="#email.mime.application.MIMEApplication" title="정의 주소">¶</a></dt>
+<dd><p>모듈: <code class="xref py py-mod docutils literal notranslate"><span class="pre">email.mime.application</span></code></p>
+<p><a class="reference internal" href="#email.mime.nonmultipart.MIMENonMultipart" title="email.mime.nonmultipart.MIMENonMultipart"><code class="xref py py-class docutils literal notranslate"><span class="pre">MIMENonMultipart</span></code></a> 의 서브 클래스, <a class="reference internal" href="#email.mime.application.MIMEApplication" title="email.mime.application.MIMEApplication"><code class="xref py py-class docutils literal notranslate"><span class="pre">MIMEApplication</span></code></a> 클래스는 주 유형 <em class="mimetype">application</em>의 MIME 메시지 객체를 나타내는 데 사용됩니다. <em>_data</em>는 원시 바이트 데이터를 포함하는 문자열입니다. 선택적 <em>_subtype</em>은 MIME 부 유형을 지정하고 기본값은 <em class="mimetype">octet-stream</em>입니다.</p>
+<p>선택적 <em>_encoder</em>는 전송을 위해 데이터의 실제 인코딩을 수행할 콜러블(즉, 함수)입니다. 이 콜러블은 <a class="reference internal" href="#email.mime.application.MIMEApplication" title="email.mime.application.MIMEApplication"><code class="xref py py-class docutils literal notranslate"><span class="pre">MIMEApplication</span></code></a> 인스턴스인 하나의 인자를 취합니다. 페이 로드를 인코딩된 형식으로 변경하려면 <a class="reference internal" href="email.compat32-message.html#email.message.Message.get_payload" title="email.message.Message.get_payload"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_payload()</span></code></a>와 <a class="reference internal" href="email.compat32-message.html#email.message.Message.set_payload" title="email.message.Message.set_payload"><code class="xref py py-meth docutils literal notranslate"><span class="pre">set_payload()</span></code></a>를 사용해야 합니다. 또한, 필요에 따라 <em class="mailheader">Content-Transfer-Encoding</em>이나 기타 헤더를 메시지 객체에 추가해야 합니다. 기본 인코딩은 base64입니다. 내장 인코더의 목록은 <a class="reference internal" href="email.encoders.html#module-email.encoders" title="email.encoders: Encoders for email message payloads."><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.encoders</span></code></a> 모듈을 참조하십시오.</p>
+<p>선택적 <em>policy</em> 인자의 기본값은 <a class="reference internal" href="email.policy.html#email.policy.Compat32" title="email.policy.Compat32"><code class="xref py py-class docutils literal notranslate"><span class="pre">compat32</span></code></a>입니다.</p>
+<p><em>_params</em>는 베이스 클래스 생성자로 바로 전달됩니다.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">버전 3.6에서 변경: </span><em>policy</em> 키워드 전용 매개 변수를 추가했습니다.</p>
+</div>
+</dd></dl>
+
+<dl class="class">
+<dt id="email.mime.audio.MIMEAudio">
+<em class="property">class </em><code class="sig-prename descclassname">email.mime.audio.</code><code class="sig-name descname">MIMEAudio</code><span class="sig-paren">(</span><em class="sig-param">_audiodata</em>, <em class="sig-param">_subtype=None</em>, <em class="sig-param">_encoder=email.encoders.encode_base64</em>, <em class="sig-param">*</em>, <em class="sig-param">policy=compat32</em>, <em class="sig-param">**_params</em><span class="sig-paren">)</span><a class="headerlink" href="#email.mime.audio.MIMEAudio" title="정의 주소">¶</a></dt>
+<dd><p>모듈: <code class="xref py py-mod docutils literal notranslate"><span class="pre">email.mime.audio</span></code></p>
+<p><a class="reference internal" href="#email.mime.nonmultipart.MIMENonMultipart" title="email.mime.nonmultipart.MIMENonMultipart"><code class="xref py py-class docutils literal notranslate"><span class="pre">MIMENonMultipart</span></code></a> 의 서브 클래스, <a class="reference internal" href="#email.mime.audio.MIMEAudio" title="email.mime.audio.MIMEAudio"><code class="xref py py-class docutils literal notranslate"><span class="pre">MIMEAudio</span></code></a> 클래스는 주 유형 <em class="mimetype">audio</em>의 MIME 메시지 객체를 만드는 데 사용됩니다. <em>_audiodata</em>는 원시 오디오 데이터를 포함하는 문자열입니다. 이 데이터를 표준 파이썬 모듈 <a class="reference internal" href="sndhdr.html#module-sndhdr" title="sndhdr: Determine type of a sound file. (deprecated)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sndhdr</span></code></a>로 디코딩 할 수 있으면, 부 유형이 <em class="mailheader">Content-Type</em> 헤더에 자동으로 포함됩니다. 그렇지 않으면 <em>_subtype</em> 인자를 통해 audio 부 유형을 명시적으로 지정할 수 있습니다. 부 유형을 추측할 수 없고 <em>_subtype</em>이 제공되지 않으면, <a class="reference internal" href="exceptions.html#TypeError" title="TypeError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">TypeError</span></code></a>가 발생합니다.</p>
+<p>선택적 <em>_encoder</em>는 전송을 위해 오디오 데이터의 실제 인코딩을 수행할 콜러블(즉, 함수)입니다. 이 콜러블은 <a class="reference internal" href="#email.mime.audio.MIMEAudio" title="email.mime.audio.MIMEAudio"><code class="xref py py-class docutils literal notranslate"><span class="pre">MIMEAudio</span></code></a> 인스턴스인 하나의 인자를 취합니다. 페이 로드를 인코딩된 형식으로 변경하려면 <a class="reference internal" href="email.compat32-message.html#email.message.Message.get_payload" title="email.message.Message.get_payload"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_payload()</span></code></a>와 <a class="reference internal" href="email.compat32-message.html#email.message.Message.set_payload" title="email.message.Message.set_payload"><code class="xref py py-meth docutils literal notranslate"><span class="pre">set_payload()</span></code></a>를 사용해야 합니다. 또한 필요에 따라 <em class="mailheader">Content-Transfer-Encoding</em>이나 기타 헤더를 메시지 객체에 추가해야 합니다. 기본 인코딩은 base64입니다. 내장 인코더의 목록은 <a class="reference internal" href="email.encoders.html#module-email.encoders" title="email.encoders: Encoders for email message payloads."><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.encoders</span></code></a> 모듈을 참조하십시오.</p>
+<p>선택적 <em>policy</em> 인자의 기본값은 <a class="reference internal" href="email.policy.html#email.policy.Compat32" title="email.policy.Compat32"><code class="xref py py-class docutils literal notranslate"><span class="pre">compat32</span></code></a>입니다.</p>
+<p><em>_params</em>는 베이스 클래스 생성자로 바로 전달됩니다.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">버전 3.6에서 변경: </span><em>policy</em> 키워드 전용 매개 변수를 추가했습니다.</p>
+</div>
+</dd></dl>
+
+<dl class="class">
+<dt id="email.mime.image.MIMEImage">
+<em class="property">class </em><code class="sig-prename descclassname">email.mime.image.</code><code class="sig-name descname">MIMEImage</code><span class="sig-paren">(</span><em class="sig-param">_imagedata</em>, <em class="sig-param">_subtype=None</em>, <em class="sig-param">_encoder=email.encoders.encode_base64</em>, <em class="sig-param">*</em>, <em class="sig-param">policy=compat32</em>, <em class="sig-param">**_params</em><span class="sig-paren">)</span><a class="headerlink" href="#email.mime.image.MIMEImage" title="정의 주소">¶</a></dt>
+<dd><p>모듈: <code class="xref py py-mod docutils literal notranslate"><span class="pre">email.mime.image</span></code></p>
+<p><a class="reference internal" href="#email.mime.nonmultipart.MIMENonMultipart" title="email.mime.nonmultipart.MIMENonMultipart"><code class="xref py py-class docutils literal notranslate"><span class="pre">MIMENonMultipart</span></code></a> 의 서브 클래스, <a class="reference internal" href="#email.mime.image.MIMEImage" title="email.mime.image.MIMEImage"><code class="xref py py-class docutils literal notranslate"><span class="pre">MIMEImage</span></code></a> 클래스는 주 유형 <em class="mimetype">image</em>의 MIME 메시지 객체를 만드는 데 사용됩니다. <em>_imagedata</em>는 원시 이미지 데이터를 포함하는 문자열입니다. 이 데이터를 표준 파이썬 모듈 <a class="reference internal" href="imghdr.html#module-imghdr" title="imghdr: Determine the type of image contained in a file or byte stream. (deprecated)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">imghdr</span></code></a>로 디코딩 할 수 있으면, 부 유형이 <em class="mailheader">Content-Type</em> 헤더에 자동으로 포함됩니다. 그렇지 않으면 <em>_subtype</em> 인자를 통해 image 부 유형을 명시적으로 지정할 수 있습니다. 부 유형을 추측할 수 없고 <em>_subtype</em>이 제공되지 않으면, <a class="reference internal" href="exceptions.html#TypeError" title="TypeError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">TypeError</span></code></a>가 발생합니다.</p>
+<p>선택적 <em>_encoder</em>는 전송을 위해 이미지 데이터의 실제 인코딩을 수행할 콜러블(즉, 함수)입니다. 이 콜러블은 <a class="reference internal" href="#email.mime.image.MIMEImage" title="email.mime.image.MIMEImage"><code class="xref py py-class docutils literal notranslate"><span class="pre">MIMEImage</span></code></a> 인스턴스인 하나의 인자를 취합니다. 페이 로드를 인코딩된 형식으로 변경하려면 <a class="reference internal" href="email.compat32-message.html#email.message.Message.get_payload" title="email.message.Message.get_payload"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_payload()</span></code></a>와 <a class="reference internal" href="email.compat32-message.html#email.message.Message.set_payload" title="email.message.Message.set_payload"><code class="xref py py-meth docutils literal notranslate"><span class="pre">set_payload()</span></code></a>를 사용해야 합니다. 또한 필요에 따라 <em class="mailheader">Content-Transfer-Encoding</em>이나 기타 헤더를 메시지 객체에 추가해야 합니다. 기본 인코딩은 base64입니다. 내장 인코더의 목록은 <a class="reference internal" href="email.encoders.html#module-email.encoders" title="email.encoders: Encoders for email message payloads."><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.encoders</span></code></a> 모듈을 참조하십시오.</p>
+<p>선택적 <em>policy</em> 인자의 기본값은 <a class="reference internal" href="email.policy.html#email.policy.Compat32" title="email.policy.Compat32"><code class="xref py py-class docutils literal notranslate"><span class="pre">compat32</span></code></a>입니다.</p>
+<p><em>_params</em>는 <a class="reference internal" href="#email.mime.base.MIMEBase" title="email.mime.base.MIMEBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">MIMEBase</span></code></a> 생성자로 바로 전달됩니다.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">버전 3.6에서 변경: </span><em>policy</em> 키워드 전용 매개 변수를 추가했습니다.</p>
+</div>
+</dd></dl>
+
+<dl class="class">
+<dt id="email.mime.message.MIMEMessage">
+<em class="property">class </em><code class="sig-prename descclassname">email.mime.message.</code><code class="sig-name descname">MIMEMessage</code><span class="sig-paren">(</span><em class="sig-param">_msg</em>, <em class="sig-param">_subtype='rfc822'</em>, <em class="sig-param">*</em>, <em class="sig-param">policy=compat32</em><span class="sig-paren">)</span><a class="headerlink" href="#email.mime.message.MIMEMessage" title="정의 주소">¶</a></dt>
+<dd><p>모듈: <code class="xref py py-mod docutils literal notranslate"><span class="pre">email.mime.message</span></code></p>
+<p><a class="reference internal" href="#email.mime.nonmultipart.MIMENonMultipart" title="email.mime.nonmultipart.MIMENonMultipart"><code class="xref py py-class docutils literal notranslate"><span class="pre">MIMENonMultipart</span></code></a> 의 서브 클래스, <a class="reference internal" href="#email.mime.message.MIMEMessage" title="email.mime.message.MIMEMessage"><code class="xref py py-class docutils literal notranslate"><span class="pre">MIMEMessage</span></code></a> 클래스는 주 유형 <em class="mimetype">message</em>의 MIME 객체를 만드는 데 사용됩니다. <em>_msg</em>는 페이 로드로 사용되며, <a class="reference internal" href="email.compat32-message.html#email.message.Message" title="email.message.Message"><code class="xref py py-class docutils literal notranslate"><span class="pre">Message</span></code></a> 클래스(또는 그 서브 클래스)의 인스턴스여야 합니다, 그렇지 않으면 <a class="reference internal" href="exceptions.html#TypeError" title="TypeError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">TypeError</span></code></a>가 발생합니다.</p>
+<p>선택적 <em>_subtype</em>은 메시지의 부 유형을 설정합니다; 기본값은 <em class="mimetype">rfc822</em>입니다.</p>
+<p>선택적 <em>policy</em> 인자의 기본값은 <a class="reference internal" href="email.policy.html#email.policy.Compat32" title="email.policy.Compat32"><code class="xref py py-class docutils literal notranslate"><span class="pre">compat32</span></code></a>입니다.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">버전 3.6에서 변경: </span><em>policy</em> 키워드 전용 매개 변수를 추가했습니다.</p>
+</div>
+</dd></dl>
+
+<dl class="class">
+<dt id="email.mime.text.MIMEText">
+<em class="property">class </em><code class="sig-prename descclassname">email.mime.text.</code><code class="sig-name descname">MIMEText</code><span class="sig-paren">(</span><em class="sig-param">_text</em>, <em class="sig-param">_subtype='plain'</em>, <em class="sig-param">_charset=None</em>, <em class="sig-param">*</em>, <em class="sig-param">policy=compat32</em><span class="sig-paren">)</span><a class="headerlink" href="#email.mime.text.MIMEText" title="정의 주소">¶</a></dt>
+<dd><p>모듈: <code class="xref py py-mod docutils literal notranslate"><span class="pre">email.mime.text</span></code></p>
+<p><a class="reference internal" href="#email.mime.nonmultipart.MIMENonMultipart" title="email.mime.nonmultipart.MIMENonMultipart"><code class="xref py py-class docutils literal notranslate"><span class="pre">MIMENonMultipart</span></code></a> 의 서브 클래스, <a class="reference internal" href="#email.mime.text.MIMEText" title="email.mime.text.MIMEText"><code class="xref py py-class docutils literal notranslate"><span class="pre">MIMEText</span></code></a> 클래스는 주 유형 <em class="mimetype">text</em>의 MIME 객체를 만드는 데 사용됩니다. <em>_text</em>는 페이 로드의 문자열입니다. <em>_subtype</em>은 부 유형이며 기본값은 <em class="mimetype">plain</em>입니다. <em>_charset</em>은 텍스트의 문자 집합이며 <a class="reference internal" href="#email.mime.nonmultipart.MIMENonMultipart" title="email.mime.nonmultipart.MIMENonMultipart"><code class="xref py py-class docutils literal notranslate"><span class="pre">MIMENonMultipart</span></code></a> 생성자에 인자로 전달됩니다; 기본값은 문자열에 <code class="docutils literal notranslate"><span class="pre">ascii</span></code> 코드 포인트만 포함되어 있으면 <code class="docutils literal notranslate"><span class="pre">us-ascii</span></code>이고, 그렇지 않으면 <code class="docutils literal notranslate"><span class="pre">utf-8</span></code>입니다. <em>_charset</em> 매개 변수는 문자열이나 <a class="reference internal" href="email.charset.html#email.charset.Charset" title="email.charset.Charset"><code class="xref py py-class docutils literal notranslate"><span class="pre">Charset</span></code></a> 인스턴스를 받아들입니다.</p>
+<p><em>_charset</em> 인자가 명시적으로 <code class="docutils literal notranslate"><span class="pre">None</span></code>으로 설정되어 있지 않은 한, 만들어진 MIMEText 객체에는 <code class="docutils literal notranslate"><span class="pre">charset</span></code> 매개 변수가 있는 <em class="mailheader">Content-Type</em> 헤더와 <em class="mailheader">Content-Transfer-Encoding</em> 헤더가 모두 있습니다. 이는 charset이 <code class="docutils literal notranslate"><span class="pre">set_payload</span></code> 명령으로 전달되더라도, 후속 <code class="docutils literal notranslate"><span class="pre">set_payload</span></code> 호출이 인코딩된 페이 로드를 만들지 않음을 의미합니다. <code class="docutils literal notranslate"><span class="pre">Content-Transfer-Encoding</span></code> 헤더를 삭제하여 이 동작을 “재설정”할 수 있으며, 그 후에 <code class="docutils literal notranslate"><span class="pre">set_payload</span></code> 호출은 자동으로 새 페이 로드를 인코딩합니다 (그리고 새 <em class="mailheader">Content-Transfer-Encoding</em> 헤더를 추가합니다).</p>
+<p>선택적 <em>policy</em> 인자의 기본값은 <a class="reference internal" href="email.policy.html#email.policy.Compat32" title="email.policy.Compat32"><code class="xref py py-class docutils literal notranslate"><span class="pre">compat32</span></code></a>입니다.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">버전 3.5에서 변경: </span><em>_charset</em>은 <a class="reference internal" href="email.charset.html#email.charset.Charset" title="email.charset.Charset"><code class="xref py py-class docutils literal notranslate"><span class="pre">Charset</span></code></a> 인스턴스도 받아들입니다.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">버전 3.6에서 변경: </span><em>policy</em> 키워드 전용 매개 변수를 추가했습니다.</p>
+</div>
+</dd></dl>
+
+</section>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>이전 항목</h4>
+  <p class="topless"><a href="email.compat32-message.html"
+                        title="이전 장"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.message.Message</span></code>: <code class="xref py py-data docutils literal notranslate"><span class="pre">compat32</span></code> API를 사용하여 이메일 메시지 표현하기</a></p>
+  <h4>다음 항목</h4>
+  <p class="topless"><a href="email.header.html"
+                        title="다음 장"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.header</span></code>: 국제화된 헤더</a></p>
+  <div role="note" aria-label="source link">
+    <h3>현재 문서</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">버그 보고하기</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/3.9/Doc/library/email.mime.rst"
+            rel="nofollow">소스 보기
+        </a>
+      </li>
+    </ul>
+  </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>탐색</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="전체 색인"
+             >색인</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 모듈 목록"
+             >모듈</a> |</li>
+        <li class="right" >
+          <a href="email.header.html" title="email.header: 국제화된 헤더"
+             >다음</a> |</li>
+        <li class="right" >
+          <a href="email.compat32-message.html" title="email.message.Message: compat32 API를 사용하여 이메일 메시지 표현하기"
+             >이전</a> |</li>
+
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+          </li>
+    <li id="cpython-language-and-version">
+      <a href="../index.html">3.9.14 Documentation</a> &#187;
+    </li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >파이썬 표준 라이브러리</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="netdata.html" >인터넷 데이터 처리</a> &#187;</li>
+          <li class="nav-item nav-item-3"><a href="email.html" ><code class="xref py py-mod docutils literal notranslate"><span class="pre">email</span></code> — 전자 메일과 MIME 처리 패키지</a> &#187;</li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="빠른 검색" aria-label="빠른 검색" type="text" name="q" />
+          <input type="submit" value="이동" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </form>
+    </div>
+                     |
+                </li>
+            
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; <a href="../copyright.html">저작권</a> 2001-2022, Python Software Foundation.
+    <br />
+    This page is licensed under the Python Software Foundation License Version 2.
+    <br />
+    Examples, recipes, and other code in the documentation are additionally licensed under the Zero Clause BSD License.
+    <br />
+    See <a href="/license.html">History and License</a> for more information.<br />
+    <br />
+
+    The Python Software Foundation is a non-profit corporation.
+<a href="https://www.python.org/psf/donations/">Please donate.</a>
+<br />
+    <br />
+
+    최종 업데이트: 9월 11, 2022
+    <a href="/bugs.html">Found a bug</a>?
+    <br />
+
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 2.4.4.
+    </div>
+
+  </body>
+</html>
