@@ -23,7 +23,7 @@
   - [Ctf](#ctf)
   - [1-day](#1-day)
   - [Bug Bounty](#bug-bounty)
-  - [정보보안기사 실기](#정보보안기사-실기)
+  - [Certificate](#certificate)
   - [etc](#etc)
   - [white paper](#white-paper)
 
@@ -129,16 +129,18 @@ CTF → Bug hunting(`1-day`) → Bug hunting(`fuzzer`)
 
 ## 1-day
 - [1day Analysis](1day/1day.md)
-- itm4n(`blog`)
-- project-zero(`blog`)
-- exploit-db(`blog`)
+- [cve repo](https://github.com/trickest/cve)(`github`)
+- [itm4n](https://itm4n.github.io/)(`blog`)
+- [project-zero](https://googleprojectzero.blogspot.com/)(`blog`)
+- [exploit-db](https://www.exploit-db.com/)(`blog`)
 
 ## Bug Bounty
 - [x] 2020 금융권 하반기 버그바운티 수상
 - [x] 2020 금융권 상반기 버그바운티 수상
 
-## 정보보안기사 실기
+## Certificate
 - [x] 2023 알기사 정보보안기사 실기
+- [ ] [TOEIC® Speaking Test](Certificate/TOEIC_Speaking.md)
 
 ## etc
 - [ ] [coding test](coding_test)
