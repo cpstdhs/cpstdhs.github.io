@@ -1,7 +1,20 @@
 # fuzzing
 - [fuzzing](#fuzzing)
   - [Libfuzzer](#libfuzzer)
+    - [Split inputs](#split-inputs)
+  - [AFL++](#afl)
+    - [Compile with afl-cc](#compile-with-afl-cc)
+    - [Run](#run)
+    - [AFL with ASAN](#afl-with-asan)
+    - [lcov](#lcov)
+    - [AFL with lcov](#afl-with-lcov)
+    - [Dictionary and parallel fuzzing](#dictionary-and-parallel-fuzzing)
+    - [binary-only](#binary-only)
+    - [partial instrumentation (whitelist)](#partial-instrumentation-whitelist)
+    - [persistent mode](#persistent-mode)
   - [WinAFL](#winafl)
+    - [check with dynamorio](#check-with-dynamorio)
+    - [run](#run-1)
   - [Sanitizer](#sanitizer)
 
 ## Libfuzzer
@@ -61,7 +74,77 @@ extern "C" int LLVMFuzzerTestOneInput(const uint8_t *data, size_t size) {
 }
 ```
 
+## AFL++
+### Compile with afl-cc
+```sh
+export LLVM_CONFIG="llvm-config-14"
+CC=$HOME/AFLplusplus/afl-clang-fast CXX=$HOME/AFLplusplus/afl-clang-fast++ ./configure --disable-shared --prefix="$HOME/fuzzing_xpdf/install/"
+make
+make install
+```
+### Run
+```sh
+afl-fuzz -m none -i $HOME/fuzzing_xpdf/pdf_examples/ -o $HOME/fuzzing_xpdf/out/ -s 123 -- $HOME/fuzzing_xpdf/install/bin/pdftotext @@ $HOME/fuzzing_xpdf/output
+
+```
+
+### AFL with ASAN
+```sh
+~~ configure
+AFL_USE_ASAN=1 make
+AFL_USE_ASAN=1 sudo make install
+```
+
+### lcov
+- build
+```sh
+CFLAGS="--coverage" LDFLAGS="--coverage" ./configure --prefix="$HOME/fuzzing_tiff/install/" --disable-shared
+make
+make install
+```
+- collect code coverage data
+```sh
+cd $HOME/fuzzing_tiff/tiff-4.0.4/
+lcov --zerocounters --directory ./
+lcov --capture --initial --directory ./ --output-file app.info
+$HOME/fuzzing_tiff/install/bin/tiffinfo -D -j -c -r -s -w $HOME/fuzzing_tiff/tiff-4.0.4/test/images/palette-1c-1b.tiff
+lcov --no-checksum --directory ./ --capture --output-file app2.info
+```
+- generate html output
+```sh
+genhtml --highlight --legend -output-directory ./html-coverage/ ./app2.info
+```
+
+### AFL with lcov
+```sh
+CC=$(which afl-clang-lto) CXX=$(which afl-clang-lto++) CFLAGS="-fsanitize=address" CXXFLAGS="-fsanitize=address" LDFLAGS="-fsanitize=address" ./configure --prefix="$HOME/Fuzzing_libxml2/libxml2-2.9.4/install" --disable-shared --without-debug --without-ftp --without-http --without-legacy --without-python LIBS='-ldl'
+make -j$(nproc)
+make install
+```
+
+### Dictionary and parallel fuzzing
+```sh
+afl-fuzz -m none -i ./afl_in -o afl_out -s 123 -x ./dictionaries/xml.dict -D -M master -- ./xmllint --memory --noenc --nocdata --dtdattr --loaddtd --valid --xinclude @@
+```
+
+### binary-only
+- afl-qemu
+- QASAN
+### partial instrumentation (whitelist)
+### persistent mode
 ## WinAFL
+### check with dynamorio
+```sh
+C:\Users\IEUser\Desktop\DynamoRIO-Windows-8.0.0-1\bin32\drrun.exe -c winafl.dll -debug -target_module 7z.exe -target_offset 0x02F3B3 -fuzz_iterations 10 -nargs 2 -- "C:\Program Files (x86)\7-Zip\7z.exe" l C:\Users\IEUser\Desktop\input\test.img
+
+```
+### run
+```sh
+D:\Fuzzing\winafl\build64\bin\Release\afl-fuzz -i example -o out -t 2000 -D D:\Fuzzing\DynamoRIO-Windows-10.90.19845\bin64 -- -coverage_module 7z.exe -coverage_module 7z.dll -target_module 7z.exe -target_offset 0x47B98 -nargs 2 -- "C:\Program Files\7-Zip\7z.exe" e -y @@
+```
+```sh
+afl-fuzz.exe -i in_monkey -o out_monkey -M fuzzer01 -x C:\winafl-master\build32\bin\Release\dictionary\wav.dict -t 100000 -f input.wav -D C:\DynamoRIO-Windows-10.0.0\bin32 -- -fuzz_iterations 10 -coverage_module Console.exe -target_module Console.exe -target_offset 0x0030A0 -nargs 5 -- Console.exe @@ asdf.ape -c1000
+```
 ## Sanitizer
 - AddressSanitizer (detects addressability issues)
     > https://github.com/google/sanitizers/wiki/AddressSanitizer
