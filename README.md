@@ -79,14 +79,22 @@ CTF → Bug hunting(`1-day`) → Bug hunting(`fuzzer`)
 
 
 ## Static Analysis
-- [ ] clang(`pdf`)
-- [ ] codeql(`pdf`)
-- [ ] weggli(`pdf`)
+- opensource
+  - [ ] codeql(`github`)
+  - [ ] weggli(`github`)
+- binary
+  - [ ] bincat(`github`)
+- [ ] clang(`github`)
 
 
 ## Fuzzer Anlaysis
-- [x] winafl(`github`)
-- [ ] winfuzz(`github`)
+- binary / opensource (User-land)
+  - [x] winafl(`github`)
+  - [x] afl++(`github`)
+- binary (Kernel-land)
+  - [ ] syzkaller(`github`)
+  - [ ] msFuzz(`github`)
+- [x] [Fuzzing-101](fuzzing/fuzzing.md)(`github`)
 
 
 ## Dynamic Analysis
@@ -97,12 +105,14 @@ CTF → Bug hunting(`1-day`) → Bug hunting(`fuzzer`)
 
 ## Static Binary Instrumentation
 - [ ] Dyninst(doesn't need symbol)(`pdf`)
+- [ ] Tinyinst(`github`)
 - PEBIL(need symbol)(`pdf`)
 
 
 ## Dynamic Binary Instrumentation
 - [ ] dynamorio(`pdf`)
 - [ ] llvm(`pdf`)
+- [ ] intel pt(`pdf`)
 
 
 ## Disassembler
@@ -140,7 +150,7 @@ CTF → Bug hunting(`1-day`) → Bug hunting(`fuzzer`)
 
 ## Certificate
 - [x] 2023 알기사 정보보안기사 실기
-- [ ] [TOEIC® Speaking Test](Certificate/TOEIC_Speaking.md)
+- [x] [TOEIC® Speaking Test](Certificate/TOEIC_Speaking.md)
 
 ## etc
 - [ ] [coding test](coding_test)

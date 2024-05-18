@@ -1,19 +1,11 @@
-from itertools import permutations
+from itertools import product
 
-def solution(k, dungeons):
-    max_result = 0
-    print("what")
-    for i in range(len(dungeons), 0, -1):
-        for p in permutations(dungeons, i):
-            print(p)
-            pirodo = k
-            result = 0
-            for least, consume in p:
-                if pirodo >= least and pirodo >= consume:
-                    pirodo -= consume
-                    result += 1
-            if result > max_result:
-                max_result = result
-    return max_result
+if __name__ == "__main__":
+    dic1 = list(product(["A", "E", "I", "O", "U"], repeat = 1))
+    dic2 = list(product(["A", "E", "I", "O", "U"], repeat = 2))
+    dic3 = list(product(["A", "E", "I", "O", "U"], repeat = 3))
+    dic4 = list(product(["A", "E", "I", "O", "U"], repeat = 4))
+    dic5 = list(product(["A", "E", "I", "O", "U"], repeat = 5))
 
-print(solution(80, [[80,20],[50,40],[30,10]]))
+    all_dic = sorted(dic1 + dic2 + dic3 + dic4 + dic5)
+    print(all_dic)
