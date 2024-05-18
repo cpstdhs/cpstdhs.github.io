@@ -2,6 +2,7 @@
 .bundle
 vendor
 Gemfile.lock
+Gemfile
 
 # Jekyll cache
 .jekyll-cache
@@ -21,6 +22,15 @@ package-lock.json
 !.vscode/settings.json
 !.vscode/extensions.json
 
+# Jekyll Use
+/_site/
+_site/
+.sass-cache/
+
+# Google Sitemap Auth
+.googlef64a5546941600da.html
+
 # Misc
+example/
 # _sass/dist
 # assets/js/dist
